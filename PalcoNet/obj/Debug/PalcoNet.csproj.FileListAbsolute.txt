@@ -1,0 +1,2 @@
+\\VBOXSVR\PalcoNet\src\PalcoNet\bin\Debug\PalcoNet.exe.config
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe.config
