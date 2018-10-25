@@ -132,7 +132,7 @@ cliente_estado int default 1,
 cliente_cuit varchar(20) unique CHECK (cliente_cuit LIKE '%cliente_numero_documento%'),
 		--##-NRODOCUMENTO-X EJEMPLO CIUL/CUIT
 cliente_domicilio int references [SQLEADOS].Domicilio,
-PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
+--PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
 		--EJ: DNI 18563520
 )
 
@@ -200,5 +200,33 @@ compra_cantidad numeric(18,0) not null,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 
------DEFINICION DE CONSTRAINTS
+--BORRAR DATOS DE LAS TABLAS
+ALTER TABLE [SQLeados].compra DROP CONSTRAINT compra_publicacion_codigo
+--ALTER TABLE [SQLeados].compra DROP CONSTRAINT (compra_cliente_tipo_documento, compra_cliente_numero_documento)
 
+
+
+Truncate table [SQLEADOS].Compra
+Truncate table [SQLEADOS].ubicacionXpublicacion
+Truncate table [SQLEADOS].Publicacion
+Truncate table [SQLEADOS].Ubicacion
+Truncate table [SQLEADOS].Rubro
+Truncate table [SQLEADOS].Empresa
+Truncate table [SQLEADOS].Usuario
+Truncate table [SQLEADOS].Cliente
+Truncate table [SQLEADOS].Domicilio
+Truncate table [SQLEADOS].FuncionalidadXRol
+Truncate table [SQLEADOS].Funcionalidad
+Truncate table [SQLEADOS].Rol
+
+DROP TABLE[SQLeados].Rol
+DROP TABLE[SQLeados].Funcionalidad
+DROP TABLE[SQLeados].FuncionalidadXRol
+DROP TABLE[SQLeados].Domicilio
+DROP TABLE[SQLeados].Cliente
+DROP TABLE[SQLeados].Usuario
+DROP TABLE[SQLeados].Empresa
+DROP TABLE[SQLeados].Rubro
+DROP TABLE[SQLeados].Publicacion
+DROP TABLE[SQLeados].ubicacionXpublicacion
+DROP TABLE[SQLeados].Compra
