@@ -78,7 +78,7 @@ rol_estado bit default 1
 create table [SQLEADOS].FuncionalidadXRol(
 funcionalidadXRol_Id int primary key identity,
 funcionalidadXRol_rol int not null references [SQLEADOS].Rol,
-funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad ,
+funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad,
 )
 
 create table [SQLEADOS].Usuario(
@@ -94,34 +94,55 @@ usuario_intentos int default 0,
 create table [SQLEADOS].Domicilio(
 domicilio_id int primary key identity,
 domicilio_calle varchar(255) not null,
-domicilio_numero int not null,
-domicilio_piso int,
+domicilio_numero int not null CHECK (domicilio_numero >= 0),
+domicilio_piso int CHECK (domicilio_piso >= 0),
 domicilio_dto varchar(2),
 domicilio_localidad varchar(255),
 domicilio_codigo_postal int not null,
 )
 
 create table [SQLEADOS].Cliente(
+--cliente_id int primary key identity,
+
 cliente_nombre varchar(255) not null,
 cliente_apellido varchar(255) not null,
 cliente_usuario int not null references [SQLEADOS].Usuario,
 cliente_tipo_documento varchar(5) not null,
-cliente_numero_documento numeric(18,0) not null,
-cliente_fecha_nacimiento datetime not null,
+cliente_numero_documento numeric(18,0) not null CHECK (cliente_numero_documento >= 0),
+cliente_fecha_nacimiento datetime not null CHECK (YEAR(cliente_fecha_nacimiento) >= 1900),
 cliente_fecha_creacion datetime not null,
+/*	CHECK((YEAR(cliente_fecha_creacion) >= YEAR(cliente_fecha_nacimiento)
+		AND MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento)
+		AND DAY(cliente_fecha_creacion) >= DAY(cliente_fecha_nacimiento))
+			OR
+			(YEAR(cliente_fecha_creacion) >= YEAR(cliente_fecha_nacimiento)
+			AND MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento))
+			OR
+			 (MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento)
+			AND DAY(cliente_fecha_creacion) >= DAY(cliente_fecha_nacimiento))
+		),
+		NO SE SI ANDA ESTE CHECK, 
+		TRATO DE VER SI LA FECHA DE CREACIÓN ES MAYOR QUE LA FECHA DE NACIMIENTO.
+		*/
 cliente_datos_tarjeta varchar(255),
 cliente_puntaje int default 0,
-cliente_email varchar(255) not null,
+cliente_email varchar(255) not null unique,
 cliente_telefono varchar(255),
 cliente_estado int default 1,
-cliente_cuit varchar(20),
+cliente_cuit varchar(20) unique CHECK (cliente_cuit LIKE '%cliente_numero_documento%'),
+		--##-NRODOCUMENTO-X EJEMPLO CIUL/CUIT
 cliente_domicilio int references [SQLEADOS].Domicilio,
 PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
+		--EJ: DNI 18563520
 )
 
+
 create table [SQLEADOS].Empresa(
+
+-- empresa_id int primary key identity  NO ES NECESARIO PERO TENDRIAMOS QUE IMPLEMENTAR LÓGICA EN CUIT AL AUTOGENERARLO,
+
 empresa_cuit nvarchar(255) primary key,
-empresa_razon_social varchar(255) not null,
+empresa_razon_social varchar(255) not null unique,
 empresa_usuario int not null references [SQLEADOS].Usuario,
 empresa_domicilio int references [SQLEADOS].Domicilio,
 empresa_ciudad varchar(255) not null,
@@ -155,7 +176,7 @@ publicacion_usuario_responsable int references [SQLEADOS].Usuario,
 publicacion_rubro int references [SQLEADOS].Rubro not null,
 publicacion_grado int references [SQLEADOS].GradoPrioridad not null,
 publicacion_descripcion varchar(255),
-publicacion_precio numeric(20,2) not null,
+publicacion_precio numeric(20,2) not null CHECK (publicacion_precio > 0),
 publicacion_stock int not null,
 publicacion_estado varchar(20) not null,
 publicacion_puntaje_venta int not null,
@@ -179,8 +200,5 @@ compra_cantidad numeric(18,0) not null,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 
+-----DEFINICION DE CONSTRAINTS
 
-
-
-
------okokopkokok
