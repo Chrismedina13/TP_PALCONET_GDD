@@ -87,8 +87,8 @@ usuario_username varchar(255) unique not null,
 usuario_password varchar(255) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
-usuario_estado int default 1,
-usuario_intentos int default 0,
+usuario_estado int default 1, --Indicador para saber si está habilitado o no
+usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
 )
 
 create table [SQLEADOS].Cliente(
@@ -285,3 +285,24 @@ select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,
 insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
 select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
 
+--UBICACION
+
+insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
+select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio, 
+	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
+	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
+
+
+--USUARIO
+
+--Usuarios clientes
+
+select distinct 
+	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido) as nombre_user,
+	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number) as contraseñas_autogeneradas,
+	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA
+	3 as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
+	'Cliente' as tipo_user --TIPO USER
+	from gd_esquema.Maestra A 
+	where A.Cli_Dni is not null order by 1
+	
