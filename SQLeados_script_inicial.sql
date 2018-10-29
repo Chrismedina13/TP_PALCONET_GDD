@@ -21,6 +21,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Func
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Compra'))
     DROP TABLE SQLEADOS.Compra
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Domicilio'))
+    DROP TABLE SQLEADOS.Domicilio
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.ubicacionXpublicacion'))
     DROP TABLE SQLEADOS.ubicacionXpublicacion
 
@@ -50,9 +53,6 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Grad
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Rubro'))
     DROP TABLE SQLEADOS.Rubro
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Domicilio'))
-    DROP TABLE SQLEADOS.Domicilio
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Funcionalidad'))
     DROP TABLE SQLEADOS.Funcionalidad
@@ -91,22 +91,12 @@ usuario_estado int default 1,
 usuario_intentos int default 0,
 )
 
-create table [SQLEADOS].Domicilio(
-domicilio_id int primary key identity,
-domicilio_calle varchar(255) not null,
-domicilio_numero int not null CHECK (domicilio_numero >= 0),
-domicilio_piso int CHECK (domicilio_piso >= 0),
-domicilio_dto varchar(2),
-domicilio_localidad varchar(255),
-domicilio_codigo_postal int not null,
-)
-
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
 cliente_nombre varchar(255) not null,
 cliente_apellido varchar(255) not null,
-cliente_usuario int not null references [SQLEADOS].Usuario,
+cliente_usuario int references [SQLEADOS].Usuario,
 cliente_tipo_documento varchar(5) not null,
 cliente_numero_documento numeric(18,0) not null CHECK (cliente_numero_documento >= 0),
 cliente_fecha_nacimiento datetime not null CHECK (YEAR(cliente_fecha_nacimiento) >= 1900),
@@ -126,28 +116,42 @@ cliente_fecha_creacion datetime not null,
 		*/
 cliente_datos_tarjeta varchar(255),
 cliente_puntaje int default 0,
-cliente_email varchar(255) not null unique,
+cliente_email varchar(255) not null,
 cliente_telefono varchar(255),
 cliente_estado int default 1,
-cliente_cuit varchar(20) unique CHECK (cliente_cuit LIKE '%cliente_numero_documento%'),
-		--##-NRODOCUMENTO-X EJEMPLO CIUL/CUIT
-cliente_domicilio int references [SQLEADOS].Domicilio,
---PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
+cliente_cuit varchar(20) unique, 
+PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
 		--EJ: DNI 18563520
 )
 
 
 create table [SQLEADOS].Empresa(
-
--- empresa_id int primary key identity  NO ES NECESARIO PERO TENDRIAMOS QUE IMPLEMENTAR LÓGICA EN CUIT AL AUTOGENERARLO,
-
-empresa_cuit nvarchar(255) primary key,
+empresa_cuit nvarchar(255),
 empresa_razon_social varchar(255) not null unique,
-empresa_usuario int not null references [SQLEADOS].Usuario,
-empresa_domicilio int references [SQLEADOS].Domicilio,
-empresa_ciudad varchar(255) not null,
+empresa_fecha_creacion datetime,
+empresa_email nvarchar(50),
+empresa_usuario int references [SQLEADOS].Usuario,
+empresa_ciudad varchar(255) ,
 empresa_estado int default 1,
+PRIMARY KEY (empresa_cuit,empresa_razon_social)
 )
+
+create table [SQLEADOS].Domicilio(
+domicilio_id int primary key identity,
+domicilio_calle varchar(255) not null,
+domicilio_numero int not null CHECK (domicilio_numero >= 0),
+domicilio_piso int CHECK (domicilio_piso >= 0),
+domicilio_dto varchar(2),
+domicilio_localidad varchar(255),
+domicilio_codigo_postal int not null,
+domicilio_cliente_tipo_documento varchar(5),
+domicilio_cliente_numero_documento numeric(18,0),
+domicilio_empresa_razon_social varchar(255),
+domicilio_empresa_cuit nvarchar(255),
+FOREIGN KEY (domicilio_cliente_tipo_documento, domicilio_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+FOREIGN KEY (domicilio_empresa_cuit,domicilio_empresa_razon_social)	REFERENCES [SQLEADOS].Empresa(empresa_cuit,empresa_razon_social)
+)
+
 
 create table [SQLEADOS].Rubro(
 rubro_id int primary key identity,
@@ -200,11 +204,14 @@ compra_cantidad numeric(18,0) not null,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 
+
+
+
+/*
+
 --BORRAR DATOS DE LAS TABLAS
 ALTER TABLE [SQLeados].compra DROP CONSTRAINT compra_publicacion_codigo
 --ALTER TABLE [SQLeados].compra DROP CONSTRAINT (compra_cliente_tipo_documento, compra_cliente_numero_documento)
-
-
 
 Truncate table [SQLEADOS].Compra
 Truncate table [SQLEADOS].ubicacionXpublicacion
@@ -229,4 +236,52 @@ DROP TABLE[SQLeados].Empresa
 DROP TABLE[SQLeados].Rubro
 DROP TABLE[SQLeados].Publicacion
 DROP TABLE[SQLeados].ubicacionXpublicacion
-DROP TABLE[SQLeados].Compra
+DROP TABLE[SQLeados].Compra  */
+
+
+----------------------------------------------------------------------------------------------
+								/** insertar en tablas **/
+----------------------------------------------------------------------------------------------
+
+--ROL
+go
+insert into [SQLeados].Rol (rol_nombre) values
+('Administrativo'), 
+('Empresa'),
+('Cliente');
+
+---FUNCIONALIDAD
+go
+insert into SQLeados.Funcionalidad (funcionalidad_descripcion) values
+('ABM de Rol'),
+('Registro de usuarios'),
+('ABM de Clientes'),
+('ABM de Empresa de espectaculo'),
+('ABM de Rubro'),
+('ABM Grado de publicacion'),
+('Generar Publicacion'),
+('Editar Publicacion'),
+('Comprar'),
+('Historial de cliente'),
+('Canje y Administracion de puntos'),
+('Generar rendicion de comisiones'),
+('Listado Estadistico');
+
+--EMPRESA
+insert into SQLeados.Empresa(empresa_razon_social,empresa_cuit,empresa_fecha_creacion,empresa_email)
+select distinct Espec_Empresa_Razon_Social,Espec_Empresa_Cuit,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Mail from gd_esquema.Maestra order by Espec_Empresa_Razon_Social 
+
+--DOMICILIO_EMPRESA
+insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit)
+select distinct Espec_Empresa_Dom_Calle,Espec_Empresa_Nro_Calle,Espec_Empresa_Piso,Espec_Empresa_Depto,Espec_Empresa_Cod_Postal,Espec_Empresa_Razon_Social,Espec_Empresa_Cuit from gd_esquema.Maestra order by Espec_Empresa_Razon_Social
+
+--CLIENTE
+
+insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
+select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
+
+--DOMICILIO_CLIENTE
+
+insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
+select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
+
