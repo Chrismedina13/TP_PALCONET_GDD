@@ -66,9 +66,6 @@ create table [SQLEADOS].Funcionalidad(
 funcionalidad_Id int primary key identity,
 funcionalidad_descripcion nvarchar(255) not null,)
 
-
-
-
 create table [SQLEADOS].Rol(
 rol_Id int primary key identity,
 rol_nombre nvarchar(255) not null,
@@ -101,19 +98,6 @@ cliente_tipo_documento varchar(5) not null,
 cliente_numero_documento numeric(18,0) not null CHECK (cliente_numero_documento >= 0),
 cliente_fecha_nacimiento datetime not null CHECK (YEAR(cliente_fecha_nacimiento) >= 1900),
 cliente_fecha_creacion datetime not null,
-/*	CHECK((YEAR(cliente_fecha_creacion) >= YEAR(cliente_fecha_nacimiento)
-		AND MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento)
-		AND DAY(cliente_fecha_creacion) >= DAY(cliente_fecha_nacimiento))
-			OR
-			(YEAR(cliente_fecha_creacion) >= YEAR(cliente_fecha_nacimiento)
-			AND MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento))
-			OR
-			 (MONTH(cliente_fecha_creacion) >=  MONTH(cliente_fecha_nacimiento)
-			AND DAY(cliente_fecha_creacion) >= DAY(cliente_fecha_nacimiento))
-		),
-		NO SE SI ANDA ESTE CHECK, 
-		TRATO DE VER SI LA FECHA DE CREACIÓN ES MAYOR QUE LA FECHA DE NACIMIENTO.
-		*/
 cliente_datos_tarjeta varchar(255),
 cliente_puntaje int default 0,
 cliente_email varchar(255) not null,
@@ -183,9 +167,11 @@ publicacion_descripcion varchar(255),
 publicacion_precio numeric(20,2) not null CHECK (publicacion_precio > 0),
 publicacion_stock int not null,
 publicacion_estado varchar(20) not null,
-publicacion_puntaje_venta int not null,
+publicacion_puntaje_venta int not null default 100, -- DEFAULT 100 ES ARBITRARIO
 publicacion_ubicaciones int references [SQLEADOS].Ubicacion not null,
-publicacion_fecha datetime not null
+publicacion_fecha datetime not null,
+publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
+publicacion_estado_validacion int default 0		--NUEVO CAMPO
 )
 
 create table [SQLEADOS].ubicacionXpublicacion(
@@ -245,14 +231,14 @@ DROP TABLE[SQLeados].Compra  */
 
 --ROL
 go
-insert into [SQLeados].Rol (rol_nombre) values
+insert into SQLEADOS.Rol (rol_nombre) values
 ('Administrativo'), 
 ('Empresa'),
 ('Cliente');
 
 ---FUNCIONALIDAD
 go
-insert into SQLeados.Funcionalidad (funcionalidad_descripcion) values
+insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 ('ABM de Rol'),
 ('Registro de usuarios'),
 ('ABM de Clientes'),
@@ -267,27 +253,40 @@ insert into SQLeados.Funcionalidad (funcionalidad_descripcion) values
 ('Generar rendicion de comisiones'),
 ('Listado Estadistico');
 
+--FUNCIONALIDAD POR ROL
+
+
 --EMPRESA
-insert into SQLeados.Empresa(empresa_razon_social,empresa_cuit,empresa_fecha_creacion,empresa_email)
-select distinct Espec_Empresa_Razon_Social,Espec_Empresa_Cuit,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Mail from gd_esquema.Maestra order by Espec_Empresa_Razon_Social 
+go
+insert into SQLEADOS.Empresa(empresa_razon_social,empresa_cuit,empresa_fecha_creacion,empresa_email)
+select distinct Espec_Empresa_Razon_Social,Espec_Empresa_Cuit,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Mail from gd_esquema.Maestra 
+				order by Espec_Empresa_Razon_Social 
 
 --DOMICILIO_EMPRESA
-insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit)
-select distinct Espec_Empresa_Dom_Calle,Espec_Empresa_Nro_Calle,Espec_Empresa_Piso,Espec_Empresa_Depto,Espec_Empresa_Cod_Postal,Espec_Empresa_Razon_Social,Espec_Empresa_Cuit from gd_esquema.Maestra order by Espec_Empresa_Razon_Social
+go
+insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,
+								domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit)
+select distinct Espec_Empresa_Dom_Calle,Espec_Empresa_Nro_Calle,Espec_Empresa_Piso,
+				Espec_Empresa_Depto,Espec_Empresa_Cod_Postal,Espec_Empresa_Razon_Social,Espec_Empresa_Cuit from gd_esquema.Maestra 
+				order by Espec_Empresa_Razon_Social
 
 --CLIENTE
-
-insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
-select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
+go
+insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_documento,cliente_numero_documento,
+							cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
+select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') 
+	from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
 
 --DOMICILIO_CLIENTE
-
-insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
+go
+insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,
+								domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
 select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
 
 --UBICACION
 
-insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
+insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,
+								ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
 select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio, 
 	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
 	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
@@ -296,13 +295,71 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio,
 --USUARIO
 
 --Usuarios clientes
-
+go
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
-	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido) as nombre_user,
-	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number) as contraseñas_autogeneradas,
+	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
+	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number), --  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA
-	3 as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
-	'Cliente' as tipo_user --TIPO USER
+	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
+	'Cliente' -- as tipo_user --TIPO USER
 	from gd_esquema.Maestra A 
 	where A.Cli_Dni is not null order by 1
 	
+--Usuarios Empresas
+go
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
+select distinct 
+	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
+	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number),  --contraseñas_autogeneradas
+	2, -- 2 REFERIDO A ROL DE EMPRESA
+	'Empresa'
+	from gd_esquema.Maestra
+
+--RUBRO
+
+insert into SQLEADOS.Rubro(rubro_descripcion)
+select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
+
+--PUBLICACION
+
+go
+insert into SQLEADOS.Publicacion(publicacion_codigo,publicacion_descripcion,publicacion_estado,publicacion_fecha,
+									publicacion_stock,publicacion_ubicaciones,
+									publicacion_usuario_responsable)
+
+select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,A.Espectaculo_Estado,A.Espectaculo_Fecha, 
+				
+				A.Espectaculo_Fecha_Venc,
+				U.usuario_Id
+				from gd_esquema.Maestra A
+				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
+				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
+				order by 1 asc
+
+
+CREATE TRIGGER trig_evaluar_fechas_publicada_y_vencimiento on [SQLEADOS].[Publicacion]
+for insert as
+	begin 
+		declare @fecha1 datetime
+		declare @fecha2 datetime
+			set	
+				@fecha1 = (select publicacion_fecha from SQLEADOS.Publicacion)
+				@fecha2 = (select publicacion_fecha_venc from SQLEADOS.Publicacion)
+
+			WHERE NOT((YEAR(@fecha1) < YEAR(@fecha2)
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2))))
+					THEN 
+						update SQLEADOS.Publicacion
+							set SQLEADOS.Publicacion.publicacion_estado_validacion = 1
+	END
+	/*			IF( 
+					(YEAR(@fecha1) < YEAR(@fecha2)
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2)))
+				)
+				else 
+					insert into SQLEADOS.Publicacion(publicacion_estado_validacion)
+					values (1)
+					*/
