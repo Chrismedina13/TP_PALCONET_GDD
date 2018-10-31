@@ -255,6 +255,27 @@ insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 
 --FUNCIONALIDAD POR ROL
 
+go
+insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) 
+select distinct A.funcionalidad_Id, 'Administrativo' from SQLEADOS.Funcionalidad A
+	order by 1
+
+go
+insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) values
+('Comprar', 'Cliente'),
+('Historial de cliente','Cliente'),
+('ABM de Clientes', 'Cliente'),
+('Generar Publicacion', 'Empresa'),
+('Editar Publicacion', 'Empresa'),
+('ABM de Empresas de espectaculo', 'Empresa'),
+('Registro de usuarios', 'Cliente'),
+('Registro de usuarios', 'Empresa'),
+('ABM de Rubro', 'Empresa'),
+('Canje y Administracion de puntos', 'Cliente'),
+('Generar rendicion de comisiones', 'Empresa');
+
+
+
 
 --EMPRESA
 go
