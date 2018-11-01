@@ -383,18 +383,18 @@ select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,
 				--STOCK FALTA
 				--UBICACIONES
 				U.usuario_Id,
-				CASE 
+				CASE							--VALIDACION SI LA FECHA DE VNECIMIENTO DEL ESPECTACULO ES MAYOR QUE LA ANUNCIADA
 					WHEN 
 						(
 						NOT(YEAR(Espectaculo_Fecha) < YEAR(Espectaculo_Fecha_Venc)
 						OR (YEAR(Espectaculo_Fecha) = YEAR(Espectaculo_Fecha_Venc) AND MONTH(Espectaculo_Fecha) < MONTH(Espectaculo_Fecha_Venc))
 						OR (YEAR(Espectaculo_Fecha) = YEAR(Espectaculo_Fecha_Venc) AND MONTH(Espectaculo_Fecha) = MONTH(Espectaculo_Fecha_Venc) 
-						AND DAY(Espectaculo_Fecha) < DAY(Espectaculo_Fecha_Venc))))
+							AND DAY(Espectaculo_Fecha) < DAY(Espectaculo_Fecha_Venc)))
+						)
 						THEN 1
 					ELSE 
 						0
-					END
-				
+				END
 				from gd_esquema.Maestra A
 				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
 				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
