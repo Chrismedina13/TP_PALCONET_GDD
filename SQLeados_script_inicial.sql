@@ -367,42 +367,76 @@ select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
 --PUBLICACION
 
 go
-insert into SQLEADOS.Publicacion(publicacion_codigo,publicacion_descripcion,publicacion_estado,publicacion_fecha,
-									publicacion_stock,publicacion_ubicaciones,
-									publicacion_usuario_responsable)
+insert into SQLEADOS.Publicacion(
+			publicacion_codigo,
+			publicacion_descripcion,
+			publicacion_estado,publicacion_fecha,
+			publicacion_fecha_venc,
+			publicacion_stock,publicacion_ubicaciones,
+			publicacion_usuario_responsable, 
+			publicacion_estado_validacion)
 
-select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,A.Espectaculo_Estado,A.Espectaculo_Fecha, 
-				
+select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,
+				A.Espectaculo_Estado,
+				A.Espectaculo_Fecha, 
 				A.Espectaculo_Fecha_Venc,
-				U.usuario_Id
+				--STOCK FALTA
+				--UBICACIONES
+				U.usuario_Id,
+				CASE 
+					WHEN 
+						(
+						NOT(YEAR(Espectaculo_Fecha) < YEAR(Espectaculo_Fecha_Venc)
+						OR (YEAR(Espectaculo_Fecha) = YEAR(Espectaculo_Fecha_Venc) AND MONTH(Espectaculo_Fecha) < MONTH(Espectaculo_Fecha_Venc))
+						OR (YEAR(Espectaculo_Fecha) = YEAR(Espectaculo_Fecha_Venc) AND MONTH(Espectaculo_Fecha) = MONTH(Espectaculo_Fecha_Venc) 
+						AND DAY(Espectaculo_Fecha) < DAY(Espectaculo_Fecha_Venc))))
+						THEN 1
+					ELSE 
+						0
+					END
+				
 				from gd_esquema.Maestra A
 				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
 				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
+				
 				order by 1 asc
 
 
-CREATE TRIGGER trig_evaluar_fechas_publicada_y_vencimiento on [SQLEADOS].[Publicacion]
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------
+								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
+----------------------------------------------------------------------------------------------
+GO
+CREATE TRIGGER 
+	TRIG_fecha_publicada_es_menor_a_vencimiento on [SQLEADOS].[Publicacion]
 for insert as
 	begin 
 		declare @fecha1 datetime
 		declare @fecha2 datetime
-			set	
-				@fecha1 = (select publicacion_fecha from SQLEADOS.Publicacion)
-				@fecha2 = (select publicacion_fecha_venc from SQLEADOS.Publicacion)
-
-			WHERE NOT((YEAR(@fecha1) < YEAR(@fecha2)
-					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
-					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2))))
-					THEN 
-						update SQLEADOS.Publicacion
-							set SQLEADOS.Publicacion.publicacion_estado_validacion = 1
-	END
-	/*			IF( 
-					(YEAR(@fecha1) < YEAR(@fecha2)
+		declare @indice int
+			select 
+				@fecha1 = publicacion_fecha,
+				@fecha2 = publicacion_fecha_venc,
+				@indice = publicacion_codigo
+				from SQLEADOS.Publicacion
+				
+				IF( 
+					NOT(YEAR(@fecha1) < YEAR(@fecha2)
 					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
 					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2)))
-				)
-				else 
-					insert into SQLEADOS.Publicacion(publicacion_estado_validacion)
-					values (1)
-					*/
+				) 
+					update SQLEADOS.Publicacion
+					set publicacion_estado_validacion = 1
+					where 
+				--		(NOT(YEAR(@fecha1) < YEAR(@fecha2)
+				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
+				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2))))
+				--		AND 
+						publicacion_codigo=@indice;
+		END
