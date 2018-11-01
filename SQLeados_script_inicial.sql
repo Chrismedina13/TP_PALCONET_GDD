@@ -236,7 +236,7 @@ insert into SQLEADOS.Rol (rol_nombre) values
 ('Empresa'),
 ('Cliente');
 
----FUNCIONALIDAD
+---/** FUNCIONALIDAD **/
 go
 insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 ('ABM de Rol'),
@@ -255,26 +255,45 @@ insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 
 --FUNCIONALIDAD POR ROL
 
+--FUNCIONALIDADXROL ADMIN
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) 
-select distinct A.funcionalidad_Id, 'Administrativo' from SQLEADOS.Funcionalidad A
+select distinct A.funcionalidad_Id, 
+	1-- Referencia a administrativo
+	from SQLEADOS.Funcionalidad A
 	order by 1
 
+--FUNCIONALIDADXROL de CLIENTES
 go
-insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) values
-('Comprar', 'Cliente'),
-('Historial de cliente','Cliente'),
-('ABM de Clientes', 'Cliente'),
-('Generar Publicacion', 'Empresa'),
-('Editar Publicacion', 'Empresa'),
-('ABM de Empresas de espectaculo', 'Empresa'),
-('Registro de usuarios', 'Cliente'),
-('Registro de usuarios', 'Empresa'),
-('ABM de Rubro', 'Empresa'),
-('Canje y Administracion de puntos', 'Cliente'),
-('Generar rendicion de comisiones', 'Empresa');
+insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
+select distinct 
+	funcionalidad_Id, 
+	3												-- REFERENTE DE CLIENTES
+	from SQLEADOS.Funcionalidad
+	where 
+		funcionalidad_descripcion LIKE 'Comprar' 
+		OR funcionalidad_descripcion LIKE 'Historial de cliente' 
+		OR funcionalidad_descripcion LIKE 'ABM de Clientes'
+		OR funcionalidad_descripcion LIKE 'Canje y Administracion de puntos'
+		OR funcionalidad_descripcion LIKE 'Registro de usuarios'
+	order by 1
 
 
+--	FUNCIONALIDADXROL DE EMPRESAS
+go
+insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
+select distinct 
+	funcionalidad_Id, 
+	2												-- REFERENTE DE EMPRESAS
+	from SQLEADOS.Funcionalidad
+	where 
+		funcionalidad_descripcion LIKE 'Generar Publicacion' 
+		OR funcionalidad_descripcion LIKE 'ABM de Rubro' 
+		OR funcionalidad_descripcion LIKE 'Generar rendicion de comisiones'
+		OR funcionalidad_descripcion LIKE 'Editar Publicacion'
+		OR funcionalidad_descripcion LIKE 'Registro de usuarios'
+		OR funcionalidad_descripcion LIKE 'ABM de Empresas de espectaculo'
+	order by 1
 
 
 --EMPRESA
