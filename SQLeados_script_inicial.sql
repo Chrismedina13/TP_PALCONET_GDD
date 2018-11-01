@@ -259,23 +259,25 @@ insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) 
 select distinct A.funcionalidad_Id, 
-	1-- Referencia a administrativo
-	from SQLEADOS.Funcionalidad A
+	R.rol_Id												-- Referencia a administrativo
+	from SQLEADOS.Funcionalidad A, SQLEADOS.Rol R
+		where R.rol_nombre like 'Administrativo'
 	order by 1
 
 --FUNCIONALIDADXROL de CLIENTES
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
-select distinct 
+select  
 	funcionalidad_Id, 
-	3												-- REFERENTE DE CLIENTES
-	from SQLEADOS.Funcionalidad
+	R.rol_Id												-- REFERENTE DE CLIENTES
+	from SQLEADOS.Funcionalidad, SQLEADOS.Rol R
 	where 
-		funcionalidad_descripcion LIKE 'Comprar' 
+		(funcionalidad_descripcion LIKE 'Comprar' 
 		OR funcionalidad_descripcion LIKE 'Historial de cliente' 
 		OR funcionalidad_descripcion LIKE 'ABM de Clientes'
 		OR funcionalidad_descripcion LIKE 'Canje y Administracion de puntos'
-		OR funcionalidad_descripcion LIKE 'Registro de usuarios'
+		OR funcionalidad_descripcion LIKE 'Registro de usuarios')
+		AND R.rol_nombre like 'Cliente'
 	order by 1
 
 
@@ -283,16 +285,17 @@ select distinct
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
 select distinct 
-	funcionalidad_Id, 
-	2												-- REFERENTE DE EMPRESAS
-	from SQLEADOS.Funcionalidad
+	F.funcionalidad_Id, 
+	R.rol_Id												-- REFERENTE DE EMPRESAS
+	from SQLEADOS.Funcionalidad F, SQLEADOS.Rol R
 	where 
-		funcionalidad_descripcion LIKE 'Generar Publicacion' 
+		(funcionalidad_descripcion LIKE 'Generar Publicacion' 
 		OR funcionalidad_descripcion LIKE 'ABM de Rubro' 
 		OR funcionalidad_descripcion LIKE 'Generar rendicion de comisiones'
 		OR funcionalidad_descripcion LIKE 'Editar Publicacion'
 		OR funcionalidad_descripcion LIKE 'Registro de usuarios'
-		OR funcionalidad_descripcion LIKE 'ABM de Empresas de espectaculo'
+		OR funcionalidad_descripcion LIKE 'ABM de Empresas de espectaculo')
+		AND R.rol_nombre like 'Empresa'
 	order by 1
 
 
