@@ -159,20 +159,20 @@ ubicacion_Tipo_Descripcion nvarchar(255),
 )
 
 create table [SQLEADOS].Publicacion(
-publicacion_codigo int primary key identity,
+publicacion_codigo int primary key identity(12353,1),
 publicacion_usuario_responsable int references [SQLEADOS].Usuario,
 publicacion_rubro int references [SQLEADOS].Rubro not null,
 publicacion_grado int references [SQLEADOS].GradoPrioridad not null,
 publicacion_descripcion varchar(255),
-publicacion_precio numeric(20,2) not null CHECK (publicacion_precio > 0),
 publicacion_stock int not null,
 publicacion_estado varchar(20) not null,
 publicacion_puntaje_venta int not null default 100, -- DEFAULT 100 ES ARBITRARIO
-publicacion_ubicaciones int references [SQLEADOS].Ubicacion not null,
+pubicacion_putaje_compra int not null default 30, -- DEFAULT 30 ES ARBITRARIO (Cantidad de puntos que necesitas para comprarlo)
 publicacion_fecha datetime not null,
 publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
 publicacion_estado_validacion int default 0		--NUEVO CAMPO
 )
+
 
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_ID int primary key identity,
@@ -359,29 +359,47 @@ select distinct
 	'Empresa'
 	from gd_esquema.Maestra
 
---RUBRO
+
+--RUBRO 
 
 insert into SQLEADOS.Rubro(rubro_descripcion)
 select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
+
+insert into SQLeados.Rubro(rubro_descripcion) values
+('Musical'),
+('Infaltil'),
+('Comedia');
+
+--Grado Publicacion
+insert into SQLeados.GradoPrioridad(grado_nombre,grado_comision) values
+('Alta',15),
+('Media',10),
+('Baja',5);
+
+
+
 
 --PUBLICACION
 
 go
 insert into SQLEADOS.Publicacion(
-			publicacion_codigo,
+			publicacion_rubro,
+			publicacion_grado,
 			publicacion_descripcion,
-			publicacion_estado,publicacion_fecha,
+			publicacion_estado,
+			publicacion_fecha,
 			publicacion_fecha_venc,
-			publicacion_stock,publicacion_ubicaciones,
+			publicacion_stock,
 			publicacion_usuario_responsable, 
 			publicacion_estado_validacion)
 
-select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,
+select			2,  --Le asigno un rubro y grado por defecto
+				2,
+				A.Espectaculo_Descripcion,
 				A.Espectaculo_Estado,
 				A.Espectaculo_Fecha, 
 				A.Espectaculo_Fecha_Venc,
-				--STOCK FALTA
-				--UBICACIONES
+				count(*) - count(Cli_Nombre),
 				U.usuario_Id,
 				CASE							--VALIDACION SI LA FECHA DE VNECIMIENTO DEL ESPECTACULO ES MAYOR QUE LA ANUNCIADA
 					WHEN 
@@ -398,14 +416,8 @@ select distinct A.Espectaculo_Cod,A.Espectaculo_Descripcion,
 				from gd_esquema.Maestra A
 				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
 				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
+				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id order by Espectaculo_Cod,usuario_Id
 				
-				order by 1 asc
-
-
-
-
-
-
 
 
 
