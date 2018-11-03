@@ -1,6 +1,40 @@
 --Me conecto a la base de datos a usar
 USE [GD2C2018]
 GO
+
+----------------------------------------------------------------------------------------------
+								/** ELIMINACIÓN DE CONSTRAINS DE TABLAS ANTERIORES **/
+----------------------------------------------------------------------------------------------
+IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
+BEGIN
+	DECLARE @Sql NVARCHAR(MAX) = '';
+
+-------------------------------------
+--		ELIMINACION DE CONSTRAINTS
+-------------------------------------
+
+	SELECT @Sql = @Sql + 'ALTER TABLE ' + QUOTENAME('SQLEADOS') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' 
+																		+ QUOTENAME(f.name)  + ';' + CHAR(13)
+	FROM SYS.TABLES t 
+	INNER JOIN SYS.FOREIGN_KEYS f ON f.parent_object_id = t.object_id 
+	INNER JOIN SYS.SCHEMAS s ON t.SCHEMA_ID = s.SCHEMA_ID
+	WHERE s.name = 'SQLEADOS'
+	ORDER BY t.name;
+	PRINT @Sql
+	EXEC  (@Sql)
+-------------------------------------
+--		ELIMINACION DE TABLAS
+-------------------------------------
+	DECLARE @SqlStatement NVARCHAR(MAX)
+	SELECT @SqlStatement = COALESCE(@SqlStatement, N'') + N'DROP TABLE [SQLEADOS].' + QUOTENAME(TABLE_NAME) + N';' + CHAR(13)
+	FROM INFORMATION_SCHEMA.TABLES
+	WHERE TABLE_SCHEMA = 'SQLEADOS' AND TABLE_TYPE = 'BASE TABLE'
+	PRINT @SqlStatement
+	EXEC  (@SqlStatement)
+	DROP SCHEMA SQLEADOS
+END
+GO
+
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
@@ -10,9 +44,8 @@ BEGIN
 END
 GO
 
-
 ----------------------------------------------------------------------------------------------
-								/** VAlidacion tablas **/
+								/** VALIDACION TABLAS **/
 ----------------------------------------------------------------------------------------------
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.FuncionalidadXRol'))
@@ -73,7 +106,8 @@ rol_estado bit default 1
 )
 
 create table [SQLEADOS].FuncionalidadXRol(
-funcionalidadXRol_Id int primary key identity,
+--ELIMINO FUNCIONALIDADXROL_ID
+--	MOTIVO: La tabla solo referencia funcionalidad y rol, lo cual el ID deja de tener mucho sentido
 funcionalidadXRol_rol int not null references [SQLEADOS].Rol,
 funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad,
 )
@@ -81,7 +115,7 @@ funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad
 create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
 usuario_username varchar(255) unique not null,
-usuario_password varchar(255) not null,
+usuario_password varbinary(100) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
@@ -190,41 +224,6 @@ compra_cantidad numeric(18,0) not null,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 
-
-
-
-/*
-
---BORRAR DATOS DE LAS TABLAS
-ALTER TABLE [SQLeados].compra DROP CONSTRAINT compra_publicacion_codigo
---ALTER TABLE [SQLeados].compra DROP CONSTRAINT (compra_cliente_tipo_documento, compra_cliente_numero_documento)
-
-Truncate table [SQLEADOS].Compra
-Truncate table [SQLEADOS].ubicacionXpublicacion
-Truncate table [SQLEADOS].Publicacion
-Truncate table [SQLEADOS].Ubicacion
-Truncate table [SQLEADOS].Rubro
-Truncate table [SQLEADOS].Empresa
-Truncate table [SQLEADOS].Usuario
-Truncate table [SQLEADOS].Cliente
-Truncate table [SQLEADOS].Domicilio
-Truncate table [SQLEADOS].FuncionalidadXRol
-Truncate table [SQLEADOS].Funcionalidad
-Truncate table [SQLEADOS].Rol
-
-DROP TABLE[SQLeados].Rol
-DROP TABLE[SQLeados].Funcionalidad
-DROP TABLE[SQLeados].FuncionalidadXRol
-DROP TABLE[SQLeados].Domicilio
-DROP TABLE[SQLeados].Cliente
-DROP TABLE[SQLeados].Usuario
-DROP TABLE[SQLeados].Empresa
-DROP TABLE[SQLeados].Rubro
-DROP TABLE[SQLeados].Publicacion
-DROP TABLE[SQLeados].ubicacionXpublicacion
-DROP TABLE[SQLeados].Compra  */
-
-
 ----------------------------------------------------------------------------------------------
 								/** insertar en tablas **/
 ----------------------------------------------------------------------------------------------
@@ -235,6 +234,10 @@ insert into SQLEADOS.Rol (rol_nombre) values
 ('Administrativo'), 
 ('Empresa'),
 ('Cliente');
+
+select * from SQLEADOS.Rol
+select * from SQLeados.Funcionalidad
+select * from SQLeados.FuncionalidadXRol
 
 ---/** FUNCIONALIDAD **/
 go
@@ -337,12 +340,25 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio,
 
 --USUARIO
 
+--Usuarios ADMIN
+/************************************************************
+ USER ADMIN ->
+	NOMBRE: admin
+	CONTRA: pass123
+***********************************************************/
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
+('admin',
+HASHBYTES('SHA2_256', 'pass123'),
+1,
+'Administrativo')
+
 --Usuarios clientes
+
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
-	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number), --  contraseñas_autogeneradas,
+	HASHBYTES('SHA2_256', (select top 1 STR(10*RAND(convert(varbinary, newid()))) magic_number)), --  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA
 	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
 	'Cliente' -- as tipo_user --TIPO USER
@@ -354,10 +370,15 @@ go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
-	(select top 1 STR(floor(10000000 * RAND(convert(varbinary, newid())))) magic_number),  --contraseñas_autogeneradas
+	HASHBYTES('SHA2_256', (select top 1 STR(10*RAND(convert(varbinary, newid()))) magic_number)),  --contraseñas_autogeneradas
 	2, -- 2 REFERIDO A ROL DE EMPRESA
 	'Empresa'
 	from gd_esquema.Maestra
+	order by 1
+
+
+
+
 
 
 --RUBRO 
