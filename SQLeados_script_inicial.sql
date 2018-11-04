@@ -329,14 +329,6 @@ insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,d
 								domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
 select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
 
---UBICACION
-
-insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,
-								ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
-select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio, 
-	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
-	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
-
 
 --USUARIO
 
@@ -358,19 +350,19 @@ go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
-	HASHBYTES('SHA2_256', (select top 1 STR(10*RAND(convert(varbinary, newid()))) magic_number)), --  contraseñas_autogeneradas,
+	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA
 	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
 	'Cliente' -- as tipo_user --TIPO USER
 	from gd_esquema.Maestra A 
-	where A.Cli_Dni is not null order by 1
+	where A.cli_mail is not null order by 1
 	
 --Usuarios Empresas
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
-	HASHBYTES('SHA2_256', (select top 1 STR(10*RAND(convert(varbinary, newid()))) magic_number)),  --contraseñas_autogeneradas
+	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))),  --contraseñas_autogeneradas
 	2, -- 2 REFERIDO A ROL DE EMPRESA
 	'Empresa'
 	from gd_esquema.Maestra
@@ -422,7 +414,7 @@ select			2,  --Le asigno un rubro y grado por defecto
 				A.Espectaculo_Fecha_Venc,
 				count(*) - count(Cli_Nombre),
 				U.usuario_Id,
-				CASE							--VALIDACION SI LA FECHA DE VNECIMIENTO DEL ESPECTACULO ES MAYOR QUE LA ANUNCIADA
+				CASE							--VALIDACION SI LA FECHA DE VENCIMIENTO DEL ESPECTACULO ES MAYOR QUE LA ANUNCIADA
 					WHEN 
 						(
 						NOT(YEAR(Espectaculo_Fecha) < YEAR(Espectaculo_Fecha_Venc)
@@ -440,6 +432,33 @@ select			2,  --Le asigno un rubro y grado por defecto
 				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id order by Espectaculo_Cod,usuario_Id
 				
 
+--UBICACION
+
+insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,
+								ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
+select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio, 
+	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
+	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
+
+
+--UBICACIONXPUBLICACION
+create table [SQLEADOS].ubicacionXpublicacion(
+ubiXpubli_ID int primary key identity,
+ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
+ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
+)
+
+go
+insert into SQLEADOS.ubicacionXpublicacion(
+			ubiXpubli_Publicacion,
+			ubiXpubli_Ubicacion)
+select distinct Ubicacion_Asiento, Ubicacion_Fila, Espectaculo_Cod, Factura_Nro from gd_esquema.Maestra
+	where Factura_Nro is not null
+	order by 3
+
+select distinct ubicacion_asiento, ubicacion_fila from SQLeados.Ubicacion
+order by ubicacion_asiento, ubicacion_fila
+select publicacion_codigo from SQLeados.Publicacion
 
 
 ----------------------------------------------------------------------------------------------
