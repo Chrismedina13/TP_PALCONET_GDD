@@ -466,6 +466,21 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio,
 
 /*
 
+select * from SQLeados.Ubicacion
+select DISTINCT ubicacion_Tipo_codigo, ubicacion_Tipo_Descripcion from SQLeados.Ubicacion
+	order by 1 asc
+
+SELECT DISTINCT Espectaculo_Cod, U.ubicacion_id from gd_esquema.Maestra A
+	JOIN SQLeados.Ubicacion U on U.ubicacion_asiento = A.Ubicacion_Asiento AND
+							u.ubicacion_fila = A.Ubicacion_Fila AND
+							u.ubicacion_precio = A.Ubicacion_Precio AND
+							u.ubicacion_Tipo_codigo =A.Ubicacion_Tipo_Codigo
+				order by 1 asc
+*/
+
+
+/*
+
  DUDAS EN ESTA PARTE, NO SE COMO CONTINUARLO
 
 */
@@ -525,18 +540,18 @@ insert into SQLEADOS.FacturaXItemFactura(factxitem_factura,factxitem_item)
 /*ubicacion*/
 
 --UBICACIONXPUBLICACION
+/* SOLO RECORDATORIO DE LOS DATOS
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_ID int primary key identity,
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
-)
+)*/
 
 go
 insert into SQLEADOS.ubicacionXpublicacion(
 			ubiXpubli_Publicacion,
 			ubiXpubli_Ubicacion)
-select distinct Ubicacion_Asiento, Ubicacion_Fila, Espectaculo_Cod, Factura_Nro from gd_esquema.Maestra
-	where Factura_Nro is not null
+select distinct publicacion_codigo, ubicacion_id from SQLEADOS.Ubicacion, SQLEADOS.Publicacion
 	order by 1
 
 select distinct ubicacion_asiento, ubicacion_fila from SQLeados.Ubicacion
