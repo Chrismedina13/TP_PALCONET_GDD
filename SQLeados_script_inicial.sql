@@ -235,10 +235,6 @@ insert into SQLEADOS.Rol (rol_nombre) values
 ('Empresa'),
 ('Cliente');
 
-select * from SQLEADOS.Rol
-select * from SQLeados.Funcionalidad
-select * from SQLeados.FuncionalidadXRol
-
 ---/** FUNCIONALIDAD **/
 go
 insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
@@ -441,6 +437,37 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio,
 	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
 
 
+/*
+
+ DUDAS EN ESTA PARTE, NO SE COMO CONTINUARLO
+
+*/
+-- COMPRA
+/*
+create table [SQLEADOS].Compra(
+compra_id int primary key identity,
+compra_cliente_tipo_documento varchar(5),
+compra_cliente_numero_documento numeric(18,0),
+compra_publicacion_codigo int references [SQLEADOS].Publicacion,
+compra_fecha datetime not null,
+compra_cantidad numeric(18,0) not null,
+FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+)
+*/
+go
+insert into SQLEADOS.Compra(
+			compra_id,
+			compra_cliente_tipo_documento,
+			compra_cliente_numero_documento,
+			compra_fecha,
+			compra_publicacion_codigo,
+			compra_cantidad)
+select distinct Factura_Nro, 'DNI', Cli_Dni, Espectaculo_Cod, Compra_Fecha, Compra_Cantidad  from gd_esquema.Maestra A
+	JOIN SQLeados.Publicacion P on Compra_Fecha between P.publicacion_fecha_venc AND p.publicacion_fecha
+	where Factura_Nro is not null
+	order by 1
+
+
 --UBICACIONXPUBLICACION
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_ID int primary key identity,
@@ -454,7 +481,7 @@ insert into SQLEADOS.ubicacionXpublicacion(
 			ubiXpubli_Ubicacion)
 select distinct Ubicacion_Asiento, Ubicacion_Fila, Espectaculo_Cod, Factura_Nro from gd_esquema.Maestra
 	where Factura_Nro is not null
-	order by 3
+	order by 1
 
 select distinct ubicacion_asiento, ubicacion_fila from SQLeados.Ubicacion
 order by ubicacion_asiento, ubicacion_fila
