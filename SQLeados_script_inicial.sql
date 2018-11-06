@@ -142,7 +142,6 @@ PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
 		--EJ: DNI 18563520
 )
 
-
 create table [SQLEADOS].Empresa(
 empresa_cuit nvarchar(255),
 empresa_razon_social varchar(255) not null unique,
@@ -209,7 +208,6 @@ publicacion_estado_validacion int default 0		--NUEVO CAMPO
 
 
 create table [SQLEADOS].ubicacionXpublicacion(
-ubiXpubli_ID int primary key identity,
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
 )
@@ -242,13 +240,14 @@ factura_fecha datetime,
 factura_total int not null CHECK (factura_total>0),
 factura_forma_de_pago nvarchar(255),
 factura_itemfactura int REFERENCES [SQLEADOS].ItemFactura not null,
+factura_compra int REFERENCES [SQLEADOS].Compra not null, -- Agrego este campo que es importante
 FOREIGN KEY (factura_empresa_cuit, factura_empresa_razon_social) REFERENCES [SQLEADOS].Empresa(empresa_cuit, empresa_razon_social),
 )
 
 --TABLA NUEVA
 CREATE TABLE SQLEADOS.FacturaXItemFactura(
-factxitem_factura int not null,
-factxitem_item int not null,
+factxitem_factura int references [SQLEADOS].Factura,
+factxitem_item int references [SQLEADOS].ItemFactura,
 )
 
 ----------------------------------------------------------------------------------------------
@@ -373,8 +372,9 @@ go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
-	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --  contraseñas_autogeneradas,
-	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA
+	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
+	--  contraseñas_autogeneradas,
+	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 1000000
 	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
 	'Cliente' -- as tipo_user --TIPO USER
 	from gd_esquema.Maestra A 
@@ -385,7 +385,7 @@ go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
-	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))),  --contraseñas_autogeneradas
+	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
 	2, -- 2 REFERIDO A ROL DE EMPRESA
 	'Empresa'
 	from gd_esquema.Maestra
@@ -452,7 +452,8 @@ select			2,  --Le asigno un rubro y grado por defecto
 				from gd_esquema.Maestra A
 				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
 				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
-				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id order by Espectaculo_Cod,usuario_Id
+				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id 
+				order by Espectaculo_Cod,usuario_Id
 				
 
 --UBICACION
@@ -463,20 +464,19 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio,
 	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
 	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
 
+--UBICACIONXPUBLICACION
 
-/*
-
-select * from SQLeados.Ubicacion
-select DISTINCT ubicacion_Tipo_codigo, ubicacion_Tipo_Descripcion from SQLeados.Ubicacion
-	order by 1 asc
-
-SELECT DISTINCT Espectaculo_Cod, U.ubicacion_id from gd_esquema.Maestra A
-	JOIN SQLeados.Ubicacion U on U.ubicacion_asiento = A.Ubicacion_Asiento AND
-							u.ubicacion_fila = A.Ubicacion_Fila AND
-							u.ubicacion_precio = A.Ubicacion_Precio AND
-							u.ubicacion_Tipo_codigo =A.Ubicacion_Tipo_Codigo
-				order by 1 asc
-*/
+insert into SQLEADOS.ubicacionXpublicacion(
+			ubiXpubli_Publicacion,
+			ubiXpubli_Ubicacion)
+select distinct a.Espectaculo_Cod, u.ubicacion_id from gd_esquema.Maestra a
+	JOIN SQLeados.ubicacion u on u.ubicacion_asiento = a.Ubicacion_Asiento
+								AND u.ubicacion_fila = a.Ubicacion_Fila
+								AND u.ubicacion_precio = a.Ubicacion_Precio
+								AND u.ubicacion_sin_numerar = a.Ubicacion_Sin_numerar
+								AND u.ubicacion_Tipo_codigo = a.Ubicacion_Tipo_Codigo
+								AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
+	order by 1
 
 
 /*
@@ -493,7 +493,8 @@ compra_cliente_numero_documento numeric(18,0),
 compra_publicacion_codigo int references [SQLEADOS].Publicacion,
 compra_fecha datetime not null,
 compra_cantidad numeric(18,0) not null,
-FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) 
+	REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 */
 go
@@ -533,31 +534,6 @@ insert into SQLEADOS.FacturaXItemFactura(factxitem_factura,factxitem_item)
 	JOIN SQLEADOS.ItemFactura I on I.item_factura_nro = Factura_Nro
 	where Factura_Nro is not null
 	order by 1
-
-
-
-
-/*ubicacion*/
-
---UBICACIONXPUBLICACION
-/* SOLO RECORDATORIO DE LOS DATOS
-create table [SQLEADOS].ubicacionXpublicacion(
-ubiXpubli_ID int primary key identity,
-ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
-ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
-)*/
-
-go
-insert into SQLEADOS.ubicacionXpublicacion(
-			ubiXpubli_Publicacion,
-			ubiXpubli_Ubicacion)
-select distinct publicacion_codigo, ubicacion_id from SQLEADOS.Ubicacion, SQLEADOS.Publicacion
-	order by 1
-
-select distinct ubicacion_asiento, ubicacion_fila from SQLeados.Ubicacion
-order by ubicacion_asiento, ubicacion_fila
-select publicacion_codigo from SQLeados.Publicacion
-
 
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
