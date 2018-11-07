@@ -186,7 +186,6 @@ ubicacion_id int primary key identity,
 ubicacion_fila nvarchar(3) not null,
 ubicacion_asiento numeric(18,0) not null,
 ubicacion_sin_numerar bit,
-ubicacion_precio numeric(18,0) ,
 ubicacion_Tipo_codigo numeric(18,0),
 ubicacion_Tipo_Descripcion nvarchar(255),
 )
@@ -210,6 +209,7 @@ publicacion_estado_validacion int default 0		--NUEVO CAMPO
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
+ubiXpubli_precio int 
 )
 
 create table [SQLEADOS].Compra(
@@ -458,11 +458,11 @@ select			2,  --Le asigno un rubro y grado por defecto
 
 --UBICACION
 
-insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_precio,ubicacion_sin_numerar,
+insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_sin_numerar,
 								ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
-select distinct Ubicacion_Asiento, Ubicacion_Fila, Ubicacion_Precio, 
+select distinct Ubicacion_Asiento, Ubicacion_Fila, 
 	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
-	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra
+	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra 
 
 --UBICACIONXPUBLICACION
 
@@ -477,6 +477,9 @@ select distinct a.Espectaculo_Cod, u.ubicacion_id from gd_esquema.Maestra a
 								AND u.ubicacion_Tipo_codigo = a.Ubicacion_Tipo_Codigo
 								AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
 	order by 1
+
+	select distinct Ubicacion_Asiento,Ubicacion_Fila,Ubicacion_Sin_numerar,Ubicacion_Tipo_Codigo,Ubicacion_Tipo_Descripcion  from gd_esquema.Maestra order by Ubicacion_Tipo_Codigo
+	select * from gd_esquema.Maestra
 
 
 /*
