@@ -248,6 +248,16 @@ item_factura_cantidad numeric(18,0),
 item_factura_descripcion nvarchar(60),
 )
 
+-- TABLA NUEVA
+create table [SQLEADOS].puntaje(
+punt_id int primary key identity,
+punt_cliente_tipo_documento  varchar(5),
+punt_cliente_numero_documento numeric(18,0),
+--punt_premio varchar(255),
+punt_puntaje int
+FOREIGN KEY (punt_cliente_tipo_documento, punt_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+)
+
 ----------------------------------------------------------------------------------------------
 								/** insertar en tablas **/
 ----------------------------------------------------------------------------------------------
@@ -511,7 +521,17 @@ join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubi
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
+--PUNTAJE
+go insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje)
 
+select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra) as 'Puntaje'
+	from SQLEADOS.Cliente c
+	join SQLEADOS.Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento
+								AND c.cliente_tipo_documento = com.compra_cliente_tipo_documento
+	join SQLEADOS.ubicacionXpublicacion ubxp ON ubxp.ubiXpubli_ID = com.compra_ubiXpubli
+	join SQLEADOS.Publicacion p on p.publicacion_codigo = ubxp.ubiXpubli_Publicacion
+	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento
+	
 
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
