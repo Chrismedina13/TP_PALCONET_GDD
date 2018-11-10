@@ -213,9 +213,21 @@ ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
 ubiXpubli_precio int 
 )
 
+
+--TABLA NUEVA
+create table [SQLEADOS].Factura(
+factura_nro int primary key ,
+factura_empresa_cuit nvarchar(255),
+factura_empresa_razon_social varchar(255),
+factura_fecha datetime,
+factura_total decimal(14,2) not null CHECK (factura_total>0),
+factura_forma_de_pago nvarchar(255),
+FOREIGN KEY (factura_empresa_cuit, factura_empresa_razon_social) REFERENCES [SQLEADOS].Empresa(empresa_cuit, empresa_razon_social),
+)
+
 create table [SQLEADOS].Compra(
 compra_id int primary key identity,
-compra_factura int,
+compra_factura int references SQLEADOS.Factura,
 compra_cliente_tipo_documento varchar(5),
 compra_cliente_numero_documento numeric(18,0),
 compra_fecha datetime not null,
@@ -230,29 +242,10 @@ FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REF
 --TABLA NUEVA
 create table [SQLEADOS].ItemFactura(
 item_factura_id int primary key identity,
-item_factura_nro int,
-item_factura_monto numeric(18,0),
+item_factura_nro int References SQLEADOS.FACTURA,
+item_factura_monto decimal(16,2),
 item_factura_cantidad numeric(18,0),
 item_factura_descripcion nvarchar(60),
-)
-
---TABLA NUEVA
-create table [SQLEADOS].Factura(
-factura_id int primary key identity,
-factura_empresa_cuit nvarchar(255),
-factura_empresa_razon_social varchar(255),
-factura_fecha datetime,
-factura_total int not null CHECK (factura_total>0),
-factura_forma_de_pago nvarchar(255),
-factura_itemfactura int REFERENCES [SQLEADOS].ItemFactura not null,
-factura_compra int REFERENCES [SQLEADOS].Compra not null, -- Agrego este campo que es importante
-FOREIGN KEY (factura_empresa_cuit, factura_empresa_razon_social) REFERENCES [SQLEADOS].Empresa(empresa_cuit, empresa_razon_social),
-)
-
---TABLA NUEVA
-CREATE TABLE SQLEADOS.FacturaXItemFactura(
-factxitem_factura int references [SQLEADOS].Factura,
-factxitem_item int references [SQLEADOS].ItemFactura,
 )
 
 ----------------------------------------------------------------------------------------------
@@ -480,8 +473,28 @@ select distinct a.Espectaculo_Cod, u.ubicacion_id,a.Ubicacion_Precio from gd_esq
 								AND u.ubicacion_fila = a.Ubicacion_Fila
 								AND u.ubicacion_sin_numerar = a.Ubicacion_Sin_numerar
 								AND u.ubicacion_Tipo_codigo = a.Ubicacion_Tipo_Codigo
-								AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
+							AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
 	order by 1
+
+/* ITEM FACTURA Y FACTURA */
+
+
+--Factura
+GO
+insert into [SQLEADOS].Factura(factura_nro, factura_empresa_cuit, 
+								factura_empresa_razon_social, factura_fecha, 
+								factura_total, factura_forma_de_pago)
+	select distinct Factura_Nro, Espec_Empresa_Cuit, Espec_Empresa_Razon_Social, Factura_Fecha, Factura_Total, Forma_Pago_Desc
+	from gd_esquema.Maestra
+	where Factura_Nro is not null
+	order by 1
+
+
+--ItemFactura
+GO
+insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
+select Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra where Factura_Nro is not null order by Factura_Nro
+
 --COMPRA
 go
 insert into SQLEADOS.Compra(
@@ -498,30 +511,7 @@ join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubi
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
-/* ITEM FACTURA Y FACTURA */
---ItemFactura
-GO
-insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
-select distinct Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra
 
---Factura
-GO
-insert into [SQLEADOS].Factura(factura_id, factura_empresa_cuit, 
-								factura_empresa_razon_social, factura_fecha, 
-								factura_total, factura_forma_de_pago, factura_itemfactura)
-	select distinct Factura_Nro, Espec_Empresa_Cuit, Espec_Empresa_Razon_Social, Factura_Fecha, Factura_Total, Forma_Pago_Desc, I.item_factura_id
-	from gd_esquema.Maestra
-	JOIN SQLEADOS.ItemFactura I on I.item_factura_nro = Factura_Nro
-	where Factura_Nro is not null
-	order by 1
-
---FacturaXItemFactura
-GO
-insert into SQLEADOS.FacturaXItemFactura(factxitem_factura,factxitem_item)
-	select distinct Factura_Nro, I.item_factura_id from gd_esquema.Maestra
-	JOIN SQLEADOS.ItemFactura I on I.item_factura_nro = Factura_Nro
-	where Factura_Nro is not null
-	order by 1
 
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
