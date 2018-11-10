@@ -207,6 +207,7 @@ publicacion_estado_validacion int default 0		--NUEVO CAMPO
 
 
 create table [SQLEADOS].ubicacionXpublicacion(
+ubiXpubli_ID int primary key identity,
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
 ubiXpubli_precio int 
@@ -214,13 +215,17 @@ ubiXpubli_precio int
 
 create table [SQLEADOS].Compra(
 compra_id int primary key identity,
+compra_factura int,
 compra_cliente_tipo_documento varchar(5),
 compra_cliente_numero_documento numeric(18,0),
-compra_publicacion_codigo int references [SQLEADOS].Publicacion,
 compra_fecha datetime not null,
 compra_cantidad numeric(18,0) not null,
+compra_precio int not null,
+compra_ubiXpubli int references [SQLEADOS].ubicacionXpublicacion,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+
 )
+
 
 --TABLA NUEVA
 create table [SQLEADOS].ItemFactura(
@@ -435,7 +440,7 @@ select			2,  --Le asigno un rubro y grado por defecto
 				A.Espectaculo_Estado,
 				A.Espectaculo_Fecha, 
 				A.Espectaculo_Fecha_Venc,
-				count(*) - count(Cli_Nombre),
+				count(*) - count(Cli_Nombre) -(count(Cli_Nombre)/2),  --por cada asiento comprado hay 3 registros uno en null otro con la compra y otro con la facturacion por eso esta cuenta 
 				U.usuario_Id,
 				CASE							--VALIDACION SI LA FECHA DE VENCIMIENTO DEL ESPECTACULO ES MAYOR QUE LA ANUNCIADA
 					WHEN 
@@ -468,50 +473,30 @@ select distinct Ubicacion_Asiento, Ubicacion_Fila,
 
 insert into SQLEADOS.ubicacionXpublicacion(
 			ubiXpubli_Publicacion,
-			ubiXpubli_Ubicacion)
-select distinct a.Espectaculo_Cod, u.ubicacion_id from gd_esquema.Maestra a
+			ubiXpubli_Ubicacion,
+			ubiXpubli_precio)
+select distinct a.Espectaculo_Cod, u.ubicacion_id,a.Ubicacion_Precio from gd_esquema.Maestra a
 	JOIN SQLeados.ubicacion u on u.ubicacion_asiento = a.Ubicacion_Asiento
 								AND u.ubicacion_fila = a.Ubicacion_Fila
-								AND u.ubicacion_precio = a.Ubicacion_Precio
 								AND u.ubicacion_sin_numerar = a.Ubicacion_Sin_numerar
 								AND u.ubicacion_Tipo_codigo = a.Ubicacion_Tipo_Codigo
 								AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
 	order by 1
-
-	select distinct Ubicacion_Asiento,Ubicacion_Fila,Ubicacion_Sin_numerar,Ubicacion_Tipo_Codigo,Ubicacion_Tipo_Descripcion  from gd_esquema.Maestra order by Ubicacion_Tipo_Codigo
-	select * from gd_esquema.Maestra
-
-
-/*
-
- DUDAS EN ESTA PARTE, NO SE COMO CONTINUARLO
-
-*/
--- COMPRA
-/*
-create table [SQLEADOS].Compra(
-compra_id int primary key identity,
-compra_cliente_tipo_documento varchar(5),
-compra_cliente_numero_documento numeric(18,0),
-compra_publicacion_codigo int references [SQLEADOS].Publicacion,
-compra_fecha datetime not null,
-compra_cantidad numeric(18,0) not null,
-FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) 
-	REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
-)
-*/
+--COMPRA
 go
 insert into SQLEADOS.Compra(
-			compra_id,
+			compra_factura,
 			compra_cliente_tipo_documento,
 			compra_cliente_numero_documento,
 			compra_fecha,
-			compra_publicacion_codigo,
-			compra_cantidad)
-select distinct Factura_Nro, 'DNI', Cli_Dni, Espectaculo_Cod, Compra_Fecha, Compra_Cantidad  from gd_esquema.Maestra A
-	JOIN SQLeados.Publicacion P on Compra_Fecha between P.publicacion_fecha_venc AND p.publicacion_fecha
-	where Factura_Nro is not null
-	order by 1
+			compra_cantidad,
+			compra_precio,
+			compra_ubiXpubli)
+select distinct m.Factura_Nro,'DNI',m.Cli_Dni,m.Compra_Fecha, m.Compra_Cantidad,x.ubiXpubli_precio,x.ubiXpubli_ID from gd_esquema.Maestra m
+join SQLeados.ubicacionXpublicacion x on m.Espectaculo_Cod = x.ubiXpubli_Publicacion 
+join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubicacion_Fila = u.ubicacion_fila and m.Ubicacion_Sin_numerar = u.Ubicacion_Sin_numerar
+and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
+where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
 /* ITEM FACTURA Y FACTURA */
 --ItemFactura
