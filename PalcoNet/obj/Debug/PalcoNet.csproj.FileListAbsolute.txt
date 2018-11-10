@@ -1,2 +1,13 @@
 \\VBOXSVR\PalcoNet\src\PalcoNet\bin\Debug\PalcoNet.exe.config
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe.config
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.AltaEmpresa.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.EliminarEmpresa.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificacionEmpresa.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificarEmpresaElegida.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.resources
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb

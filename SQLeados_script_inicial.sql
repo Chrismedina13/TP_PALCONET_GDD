@@ -47,7 +47,7 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** VALIDACION TABLAS **/
 ----------------------------------------------------------------------------------------------
-
+/*
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.FuncionalidadXRol'))
     DROP TABLE SQLEADOS.FuncionalidadXRol
 
@@ -90,7 +90,7 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Rubr
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Funcionalidad'))
     DROP TABLE SQLEADOS.Funcionalidad
 
-
+*/
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
@@ -150,6 +150,7 @@ empresa_email nvarchar(50),
 empresa_usuario int references [SQLEADOS].Usuario,
 empresa_ciudad varchar(255) ,
 empresa_estado int default 1,
+empresa_telefono varchar(20),
 PRIMARY KEY (empresa_cuit,empresa_razon_social)
 )
 
@@ -254,7 +255,7 @@ punt_id int primary key identity,
 punt_cliente_tipo_documento  varchar(5),
 punt_cliente_numero_documento numeric(18,0),
 --punt_premio varchar(255),
-punt_puntaje int
+punt_puntaje int,
 FOREIGN KEY (punt_cliente_tipo_documento, punt_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 
@@ -500,12 +501,12 @@ insert into [SQLEADOS].Factura(factura_nro, factura_empresa_cuit,
 	order by 1
 
 
---ItemFactura
+--ItemFactura--
 GO
 insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
 select Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra where Factura_Nro is not null order by Factura_Nro
 
---COMPRA
+--COMPRA--
 go
 insert into SQLEADOS.Compra(
 			compra_factura,
@@ -522,8 +523,8 @@ and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descr
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
 --PUNTAJE
-go insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje)
-
+go 
+insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje)
 select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra) as 'Puntaje'
 	from SQLEADOS.Cliente c
 	join SQLEADOS.Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento
@@ -564,3 +565,6 @@ for insert as
 				--		AND 
 						publicacion_codigo=@indice;
 		END
+
+
+select * from SQLeados.Empresa
