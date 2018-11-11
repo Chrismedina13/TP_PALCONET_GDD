@@ -42,6 +42,7 @@
             this.buttonALTA.TabIndex = 0;
             this.buttonALTA.Text = "ALTA EMPRESA";
             this.buttonALTA.UseVisualStyleBackColor = true;
+            this.buttonALTA.Click += new System.EventHandler(this.buttonALTA_Click);
             // 
             // buttonMODIFICAR
             // 
@@ -51,15 +52,17 @@
             this.buttonMODIFICAR.TabIndex = 1;
             this.buttonMODIFICAR.Text = "MODIFICAR EMPRESA";
             this.buttonMODIFICAR.UseVisualStyleBackColor = true;
+            this.buttonMODIFICAR.Click += new System.EventHandler(this.buttonMODIFICAR_Click);
             // 
             // buttonBAJA
             // 
-            this.buttonBAJA.Location = new System.Drawing.Point(89, 215);
+            this.buttonBAJA.Location = new System.Drawing.Point(89, 206);
             this.buttonBAJA.Name = "buttonBAJA";
             this.buttonBAJA.Size = new System.Drawing.Size(131, 45);
             this.buttonBAJA.TabIndex = 2;
             this.buttonBAJA.Text = "BAJA EMPRESA";
             this.buttonBAJA.UseVisualStyleBackColor = true;
+            this.buttonBAJA.Click += new System.EventHandler(this.buttonBAJA_Click);
             // 
             // buttonVolver
             // 
@@ -69,6 +72,7 @@
             this.buttonVolver.TabIndex = 3;
             this.buttonVolver.Text = "Volver";
             this.buttonVolver.UseVisualStyleBackColor = true;
+            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
             // ABMEmpresa
             // 

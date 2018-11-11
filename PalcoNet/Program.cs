@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Abm_Empresa_Espectaculo;
 
 namespace PalcoNet
 {
@@ -14,9 +15,10 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
+            int usuario = 1;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new ABMEmpresa(usuario));
         }
     }
 }
