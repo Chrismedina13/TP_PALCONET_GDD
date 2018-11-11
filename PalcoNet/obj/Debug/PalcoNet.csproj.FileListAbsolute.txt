@@ -11,3 +11,4 @@ C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb
+C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache

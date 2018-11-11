@@ -34,7 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxCuit = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxRazonSocial = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(519, 348);
+            this.btnModificar.Location = new System.Drawing.Point(551, 415);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 34;
@@ -52,19 +52,20 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(28, 348);
+            this.btnVolver.Location = new System.Drawing.Point(28, 415);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(91, 35);
             this.btnVolver.TabIndex = 33;
             this.btnVolver.Text = "VOLVER";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(28, 196);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(582, 124);
+            this.dataGridView1.Size = new System.Drawing.Size(614, 213);
             this.dataGridView1.TabIndex = 32;
             // 
             // label3
@@ -93,12 +94,12 @@
             this.label5.TabIndex = 28;
             this.label5.Text = "CUIT";
             // 
-            // textBox2
+            // textBoxMail
             // 
-            this.textBox2.Location = new System.Drawing.Point(235, 75);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(209, 20);
-            this.textBox2.TabIndex = 27;
+            this.textBoxMail.Location = new System.Drawing.Point(235, 75);
+            this.textBoxMail.Name = "textBoxMail";
+            this.textBoxMail.Size = new System.Drawing.Size(209, 20);
+            this.textBoxMail.TabIndex = 27;
             // 
             // textBoxRazonSocial
             // 
@@ -129,19 +130,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 410);
+            this.ClientSize = new System.Drawing.Size(663, 463);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxMail);
             this.Controls.Add(this.textBoxRazonSocial);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "EliminarEmpresa";
             this.Text = "Eliminar Empresa";
+            this.Load += new System.EventHandler(this.eliminar_empresa_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -156,7 +158,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxCuit;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxMail;
         private System.Windows.Forms.TextBox textBoxRazonSocial;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

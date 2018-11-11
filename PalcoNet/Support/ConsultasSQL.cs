@@ -77,6 +77,24 @@ namespace PalcoNet.Support
 
         }
 
+        internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario] FROM [GD2C2018].[SQLEADOS].[Empresa] where [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
 
 
 
