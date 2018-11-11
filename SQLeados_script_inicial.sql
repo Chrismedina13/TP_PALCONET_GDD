@@ -255,8 +255,17 @@ punt_id int primary key identity,
 punt_cliente_tipo_documento  varchar(5),
 punt_cliente_numero_documento numeric(18,0),
 --punt_premio varchar(255),
+punt_fecha_vencimiento date,
 punt_puntaje int,
+punt_vencido int,	
 FOREIGN KEY (punt_cliente_tipo_documento, punt_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+)
+
+--TABLA CANJE DE PREMIOS
+create table [SQLEADOS].canjeproducto(
+canj_id int primary key identity,
+canj_costo_puntaje int,
+canj_producto varchar(50),
 )
 
 ----------------------------------------------------------------------------------------------
@@ -522,10 +531,32 @@ join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubi
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
+
+select 
+	Convert(varchar(30),CONVERT(varchar(4), (YEAR(GETDATE())+1))
+			 + '-'+ 
+			 CONVERT(varchar(2), MONTH(GETDATE()))
+			  +'-'+ 
+			   CONVERT(varchar(2),  DAY(GETDATE())) + ' 00:00:00'
+			  ,102)
+select GETDATE()
+
 --PUNTAJE
 go 
-insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje)
-select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra) as 'Puntaje'
+insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
+select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra),
+	Convert(varchar(30),CONVERT(varchar(4), (com.compra_fecha+1))
+			 + '-'+ 
+			 CONVERT(varchar(2), MONTH(com.compra_fecha))
+			  +'-'+ 
+			   CONVERT(varchar(2),  DAY(com.compra_fecha)) + ' 00:00:00'
+			  ,102),
+		CASE
+			WHEN YEAR(com.compra_fecha)+1 < YEAR(GETDATE())
+					OR (YEAR(com.compra_fecha)+1 = YEAR(GETDATE()) AND MONTH(com.compra_fecha) < MONTH(GETDATE()))
+					OR (YEAR(com.compra_fecha)+1 = YEAR(GETDATE()) AND MONTH(com.compra_fecha) = MONTH(GETDATE()) AND DAY(com.compra_fecha) < DAY(GETDATE()))
+				THEN 0
+			ELSE 1 END 
 	from SQLEADOS.Cliente c
 	join SQLEADOS.Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento
 								AND c.cliente_tipo_documento = com.compra_cliente_tipo_documento
@@ -533,6 +564,15 @@ select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubi
 	join SQLEADOS.Publicacion p on p.publicacion_codigo = ubxp.ubiXpubli_Publicacion
 	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento
 	
+
+--CANJE DE PREMIOS
+go
+insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
+(1000, 'Taza PALCONET'), 
+(2000, 'Gorra PALCONET'),
+(3000, 'Remera PALCONET'),
+(4000, 'Campera PALCONET'),
+(5000, 'Viaje a Orlando Resort');
 
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
