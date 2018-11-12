@@ -77,6 +77,7 @@
             this.label3.Size = new System.Drawing.Size(223, 16);
             this.label3.TabIndex = 30;
             this.label3.Text = "Seleccione empresa a eliminar";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBoxCuit
             // 
@@ -84,6 +85,7 @@
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 29;
+            this.textBoxCuit.TextChanged += new System.EventHandler(this.textBoxCuit_TextChanged);
             // 
             // label5
             // 
@@ -93,6 +95,7 @@
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 28;
             this.label5.Text = "CUIT";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // textBoxMail
             // 
@@ -100,6 +103,7 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(209, 20);
             this.textBoxMail.TabIndex = 27;
+            this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             // 
             // textBoxRazonSocial
             // 
@@ -107,6 +111,7 @@
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(209, 20);
             this.textBoxRazonSocial.TabIndex = 26;
+            this.textBoxRazonSocial.TextChanged += new System.EventHandler(this.textBoxRazonSocial_TextChanged);
             // 
             // label2
             // 
@@ -116,6 +121,7 @@
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 25;
             this.label2.Text = "Mail:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -125,6 +131,7 @@
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 24;
             this.label1.Text = "Razon social:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // EliminarEmpresa
             // 

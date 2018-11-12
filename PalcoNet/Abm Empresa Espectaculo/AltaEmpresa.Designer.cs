@@ -387,6 +387,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AltaEmpresa";
             this.Text = "ALTA EMPRESA";
+            this.Load += new System.EventHandler(this.AltaEmpresa_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

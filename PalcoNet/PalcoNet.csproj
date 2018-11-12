@@ -44,11 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Cliente\Form1.cs">
+    <Compile Include="Abm Cliente\ABMCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Cliente\ABMCliente.Designer.cs">
+      <DependentUpon>ABMCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\AltaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\EliminarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\EliminarCliente.Designer.cs">
+      <DependentUpon>EliminarCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABMEmpresa.cs">
       <SubType>Form</SubType>
@@ -155,6 +167,15 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Support\ConsultasSQL.cs" />
+    <EmbeddedResource Include="Abm Cliente\ABMCliente.resx">
+      <DependentUpon>ABMCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\EliminarCliente.resx">
+      <DependentUpon>EliminarCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABMEmpresa.resx">
       <DependentUpon>ABMEmpresa.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ModificarEmpresaElegida.resx">
       <DependentUpon>ModificarEmpresaElegida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

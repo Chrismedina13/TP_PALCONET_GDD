@@ -20,7 +20,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void eliminar_empresa_Load(object sender, EventArgs e)
         {
-            ConsultasSQL.cargarGriddEmpresa(dataGridView1, "", "", "");
+            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGridView1, "", "", "");
             dataGridView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
         }
 
@@ -39,6 +39,41 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBoxRazonSocial_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxCuit_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

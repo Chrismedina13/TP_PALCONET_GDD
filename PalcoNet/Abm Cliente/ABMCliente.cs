@@ -8,26 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PalcoNet
+namespace PalcoNet.Abm_Cliente
 {
-    public partial class Form1 : Form
+    public partial class ABMCliente : Form
     {
-        public Form1()
+        public ABMCliente()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonALTA_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void buttonBAJA_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void textBoxNombre_TextChanged(object sender, EventArgs e)
+        private void buttonMODIFICAR_Click(object sender, EventArgs e)
         {
 
         }
@@ -37,7 +37,7 @@ namespace PalcoNet
 
         }
 
-        private void buttonAgregar_Click(object sender, EventArgs e)
+        private void ABMCliente_Load(object sender, EventArgs e)
         {
 
         }
