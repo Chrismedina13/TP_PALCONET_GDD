@@ -20,16 +20,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void eliminar_empresa_Load(object sender, EventArgs e)
         {
-            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGridView1, "", "", "");
-            dataGridView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
+            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGriddView1, "", "", "");
+            dataGriddView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
         }
 
 
         void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGriddView1.SelectedRows.Count > 0)
             {
-                var row = dataGridView1.SelectedRows[0];
+                var row = dataGriddView1.SelectedRows[0];
                 textBoxRazonSocial .Text = row.Cells["empresa_razon_social"].Value.ToString();
                 textBoxCuit.Text = row.Cells["empresa_cuit"].Value.ToString();
                 textBoxMail.Text = row.Cells["empresa_email"].Value.ToString();
@@ -72,6 +72,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGriddView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

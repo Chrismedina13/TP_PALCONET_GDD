@@ -12,6 +12,17 @@ using System.Data;
 namespace PalcoNet.Support
 {
     class ConsultasSQL {
+        public static SqlConnection conectar()
+        {
+            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        }
+
+        public void cerrarConeccion(SqlConnection sql)
+        {
+            sql.Close();
+            return;
+        }
+
         internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, int codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
         {
 
@@ -54,6 +65,22 @@ namespace PalcoNet.Support
             connection.Close();
             return RS != null;
 
+        }
+
+        internal static void darDeBaja(DataGridView dgv, string usuario)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET usuario_estado = 0 WHERE usuario_username LIKE " + usuario;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo dar de baja al usuario: "+ usuario);
+            }
+            connection.Close();
+            return;
         }
     }
     class ConsultasSQLEmpresa : ConsultasSQL
@@ -99,7 +126,6 @@ namespace PalcoNet.Support
 
         }
 
-
         internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
         {
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
@@ -125,13 +151,52 @@ namespace PalcoNet.Support
 
     class consultasSQLCliente : ConsultasSQL
     {
-        internal static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
+        internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
         {
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
             connection.Open();
             try
             {
-                String query = "SELECT [usuario_username],[cliente_nombre],[cliente_apellido],[cliente_tipo_documento],[cliente_numero_documento] FROM [GD2C2018].[SQLEADOS].[Empresa] where [cliente_nombre] like '%" + nombre + "%' or [cliente_apellido] like '%" + apellido + "%' or [cliente_email] like '" + mail + "%' or [cliente_numero_documento] = "+ numeroDNI;
+                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario] FROM [GD2C2018].[SQLEADOS].[Empresa] where [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
+
+        internal static void llenarDGVCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "SELECT [usuario_username],[cliente_nombre],[cliente_apellido],[cliente_tipo_documento],[cliente_numero_documento] FROM [GD2C2018].[SQLEADOS].[Cliente] where [cliente_nombre] like '%" + nombre + "%' or [cliente_apellido] like '%" + apellido + "%' or [cliente_email] like '" + mail + "%' or [cliente_numero_documento] = " + numeroDNI;
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+            return;
+        }
+
+        public static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "SELECT [usuario_username],[cliente_nombre],[cliente_apellido],[cliente_tipo_documento],[cliente_numero_documento] FROM [GD2C2018].[SQLEADOS].[cliente] c JOIN [GD2C2018].[SQLEADOS].[usuario] u on u.usuario_Id = c.cliente_usuario and u.usuario_estado = 1  where ([cliente_nombre] like '%" + nombre + "%' and [cliente_apellido] like '%" + apellido + "%' and [cliente_email] like '" + mail + "%') or [cliente_numero_documento] = " + numeroDNI;
                 SqlDataAdapter da = new SqlDataAdapter(query, connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -160,6 +225,24 @@ namespace PalcoNet.Support
             return clienteRS != null;
         }
          */
+        internal static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string nroDNI, string mail)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "SELECT [cliente_nombre],[cliente_apellido],[cliente_numero_documento],[cliente_email],[usuario_username] FROM [GD2C2018].[SQLEADOS].[Cliente] where [cliente_nombre] like '%" + nombre + "%' and [cliente_apellido] like '%" + apellido + "%' and [cliente_email] like '%" + mail + "%' and [cliente_numero_documento] = " + Int32.Parse(nroDNI);
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
 
         internal static void AgregarCliente(string nombre, string apellido, string tipo_documento, string nro_documento,
             int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, DateTime fecha_nacimiento,

@@ -133,10 +133,11 @@ namespace PalcoNet.Abm_Cliente
 
         public String armarCuit(String cuitSinArmar)
         {
-
+            int n = cuitSinArmar.Length;
             String primeraParte = cuitSinArmar.Substring(0, 2);
-            String SegundaParte = cuitSinArmar.Substring(2, 8);
-            String TerceraParte = cuitSinArmar.Substring(9, 2);
+            String SegundaParte = cuitSinArmar.Substring(2, n-2);
+            String TerceraParte = cuitSinArmar.Substring(9, n);
+
             String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
 
             return cuitArmado;
@@ -159,6 +160,11 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void AltaCliente_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label30_Click(object sender, EventArgs e)
         {
 
         }

@@ -18,13 +18,15 @@ namespace PalcoNet.Abm_Cliente
             InitializeComponent();
         }
         
+
+        /*CARGA LA TABLA, COMIENZA SIN NADA PORQUE NO HAY NADA PARA MOSTRAR, AUNQUE SE PODRÍA TAMBIÉN
+         PONER POR DEFAULT QUE ME PONGA TODOS, PERO PARA EVITAR QUE SE TARDE SEGUNDOS EN ENTRAR MEJOR QUE
+         COMIENCE SIN NADA*/
         private void EliminarCliente_Load(object sender, EventArgs e)
         {
-            /* ESTO LO REVISO MAS TARDE
-            consultasSQLCliente.cargarGriddCliente(dataGridCliente, "", "", "","");
-            dataGridCliente.SelectionChanged += new EventHandler(dataGridCliente_SelectionChanged);
-             * 
-             * */
+            consultasSQLCliente.llenarDGVCliente(dataGridView1, "", "", "", "");
+            
+            dataGridView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
         }
 
       
@@ -45,16 +47,82 @@ namespace PalcoNet.Abm_Cliente
         }
 
         /* BOTON BUSCAR */
+
+        void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var row = dataGridView1.SelectedRows[0];
+                
+                textBoxEmail.Text = row.Cells["cliente_email"].Value.ToString();
+                textBoxApellido.Text = row.Cells["cliente_apellido"].Value.ToString();
+                textBoxNombre.Text = row.Cells["cliente_nombre"].Value.ToString();
+                textBoxDNI.Text = row.Cells["cliente_cliente_numero_documento"].Value.ToString();
+            }
+        }
+
+        private bool esVacio(String n)
+        {
+            return n == "";
+        }
+
+
+        /* BOTON BUSCAR*/
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dataGridCliente.Rows.Count == 0)
+            if (esVacio(textBoxDNI.Text.Trim()) && esVacio(textBoxEmail.Text.Trim()) && esVacio(textBoxApellido.Text.Trim()) && esVacio(textBoxNombre.Text.Trim()))
             {
+                MessageBox.Show("Usted no ha puesto ningún criterio de busquedad. Rellene los campos por favor");
                 return;
             }
             else {
-                DialogResult = DialogResult.OK;
+                String nombre="", apellido="", email="", numeroDNI="";
+                if (!esVacio(textBoxDNI.Text.Trim())) {
+                    numeroDNI = textBoxDNI.Text;
+                }
+                if (!esVacio(textBoxEmail.Text.Trim())) {
+                    email = textBoxEmail.Text;
+                }
+
+                if (!esVacio(textBoxNombre.Text.Trim()))
+                {
+                    nombre = textBoxNombre.Text;
+                }
+                if (!esVacio(textBoxApellido.Text.Trim()))
+                {
+                    apellido = textBoxApellido.Text;
+                }
+                consultasSQLCliente.llenarDGVCliente(dataGridView1, nombre, apellido, numeroDNI, email);
+
+       /*         DialogResult = DialogResult.OK;  */
                 return;
             }
+        }
+
+        /*BOTON DAR DE BAJA, LA BAJA ES LÓGICA*/
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+           
+            if (dataGridView1.RowCount == 0)
+            {
+                MessageBox.Show("No has buscado a ningún usuario aún");
+                return;
+            }
+            else
+            {
+                String user = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
+                ConsultasSQL.darDeBaja(dataGridView1, user);
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+
+       /*         DialogResult = DialogResult.OK;
+        * */
+                Close();
+            }
+        }
+
+        private void dataGridEliminarEmpresa_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
     }

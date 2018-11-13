@@ -30,7 +30,6 @@
         {
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.dataGridCliente = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,7 +40,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btt_buscar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridCliente)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tcol_user = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tcol_nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tcol_Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tcol_tipo_documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tcol_numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tcol_email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnModificar
@@ -50,8 +56,9 @@
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 44;
-            this.btnModificar.Text = "ELIMINAR EMPRESA";
+            this.btnModificar.Text = "DAR DE BAJA";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnVolver
             // 
@@ -63,24 +70,15 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // dataGridCliente
-            // 
-            this.dataGridCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridCliente.Location = new System.Drawing.Point(12, 215);
-            this.dataGridCliente.Name = "dataGridCliente";
-            this.dataGridCliente.Size = new System.Drawing.Size(614, 213);
-            this.dataGridCliente.TabIndex = 42;
-            this.dataGridCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(9, 184);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(208, 16);
+            this.label3.Size = new System.Drawing.Size(233, 16);
             this.label3.TabIndex = 41;
-            this.label3.Text = "Seleccione cliente a eliminar";
+            this.label3.Text = "Seleccione cliente a dar de baja";
             // 
             // textBoxEmail
             // 
@@ -156,11 +154,61 @@
             this.btt_buscar.UseVisualStyleBackColor = true;
             this.btt_buscar.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.tcol_user,
+            this.tcol_nombre,
+            this.tcol_Apellido,
+            this.tcol_tipo_documento,
+            this.tcol_numero,
+            this.tcol_email});
+            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 203);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(614, 225);
+            this.dataGridView1.TabIndex = 54;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridEliminarEmpresa_CellContentClick);
+            // 
+            // tcol_user
+            // 
+            this.tcol_user.HeaderText = "Usuario";
+            this.tcol_user.Name = "tcol_user";
+            // 
+            // tcol_nombre
+            // 
+            this.tcol_nombre.HeaderText = "Nombre";
+            this.tcol_nombre.Name = "tcol_nombre";
+            // 
+            // tcol_Apellido
+            // 
+            this.tcol_Apellido.HeaderText = "Apellido";
+            this.tcol_Apellido.Name = "tcol_Apellido";
+            // 
+            // tcol_tipo_documento
+            // 
+            this.tcol_tipo_documento.HeaderText = "Documento";
+            this.tcol_tipo_documento.Name = "tcol_tipo_documento";
+            // 
+            // tcol_numero
+            // 
+            this.tcol_numero.HeaderText = "Número";
+            this.tcol_numero.Name = "tcol_numero";
+            // 
+            // tcol_email
+            // 
+            this.tcol_email.HeaderText = "Email";
+            this.tcol_email.Name = "tcol_email";
+            // 
             // EliminarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(638, 478);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btt_buscar);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.label4);
@@ -172,12 +220,11 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dataGridCliente);
             this.Controls.Add(this.label3);
             this.Name = "EliminarCliente";
             this.Text = "Eliminar Cliente";
             this.Load += new System.EventHandler(this.EliminarCliente_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridCliente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,7 +234,6 @@
 
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.DataGridView dataGridCliente;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label label4;
@@ -198,5 +244,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btt_buscar;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_user;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_Apellido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_tipo_documento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_numero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_email;
     }
 }

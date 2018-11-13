@@ -30,7 +30,7 @@
         {
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGriddView1 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxCuit = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -38,7 +38,8 @@
             this.textBoxRazonSocial = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGriddView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnModificar
@@ -47,8 +48,9 @@
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 34;
-            this.btnModificar.Text = "ELIMINAR EMPRESA";
+            this.btnModificar.Text = "DAR DE BAJA";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnVolver
             // 
@@ -60,13 +62,14 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // dataGridView1
+            // dataGriddView1
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(28, 196);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(614, 213);
-            this.dataGridView1.TabIndex = 32;
+            this.dataGriddView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGriddView1.Location = new System.Drawing.Point(28, 196);
+            this.dataGriddView1.Name = "dataGriddView1";
+            this.dataGriddView1.Size = new System.Drawing.Size(614, 213);
+            this.dataGriddView1.TabIndex = 32;
+            this.dataGriddView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGriddView1_CellContentClick);
             // 
             // label3
             // 
@@ -74,9 +77,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(25, 165);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(223, 16);
+            this.label3.Size = new System.Drawing.Size(248, 16);
             this.label3.TabIndex = 30;
-            this.label3.Text = "Seleccione empresa a eliminar";
+            this.label3.Text = "Seleccione empresa a dar de baja";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBoxCuit
@@ -140,7 +143,7 @@
             this.ClientSize = new System.Drawing.Size(663, 463);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGriddView1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.label5);
@@ -151,7 +154,7 @@
             this.Name = "EliminarEmpresa";
             this.Text = "Eliminar Empresa";
             this.Load += new System.EventHandler(this.eliminar_empresa_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGriddView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,7 +164,7 @@
 
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGriddView1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxCuit;
         private System.Windows.Forms.Label label5;
@@ -169,5 +172,6 @@
         private System.Windows.Forms.TextBox textBoxRazonSocial;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
