@@ -15,10 +15,12 @@ namespace PalcoNet.Abm_Cliente
     {
         int usuario;
 
-        public AltaCliente(int usuarioRecibido)
+        public AltaCliente()
         {
+            /*
             InitializeComponent();
             usuario = usuarioRecibido;
+             * */
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
@@ -106,8 +108,20 @@ namespace PalcoNet.Abm_Cliente
             String localidad = textBoxLocalidad.Text;
             DateTime fecha_creacion = DateTime.Today;
 
-            consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuario, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
-            consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, null, null, tipo_documento, numero_documento);
+            bool creacionAbortada = false;
+
+            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "");
+            if (creacionAbortada == false)
+            {
+                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuario, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
+                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, null, null, tipo_documento, numero_documento);
+            }
+            else {
+                MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             this.limpiarCuadrosDeTexto();
 
         }

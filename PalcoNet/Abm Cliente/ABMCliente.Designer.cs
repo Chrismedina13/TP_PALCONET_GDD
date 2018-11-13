@@ -28,21 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonVolver = new System.Windows.Forms.Button();
             this.buttonBAJACLIENTE = new System.Windows.Forms.Button();
             this.buttonMODIFICARCLIENTE = new System.Windows.Forms.Button();
             this.buttonALTACLIENTE = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // buttonVolver
-            // 
-            this.buttonVolver.Location = new System.Drawing.Point(112, 267);
-            this.buttonVolver.Name = "buttonVolver";
-            this.buttonVolver.Size = new System.Drawing.Size(75, 23);
-            this.buttonVolver.TabIndex = 7;
-            this.buttonVolver.Text = "Volver";
-            this.buttonVolver.UseVisualStyleBackColor = true;
-            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
             // buttonBAJACLIENTE
             // 
@@ -79,7 +68,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(288, 318);
-            this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.buttonBAJACLIENTE);
             this.Controls.Add(this.buttonMODIFICARCLIENTE);
             this.Controls.Add(this.buttonALTACLIENTE);
@@ -92,7 +80,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonVolver;
         private System.Windows.Forms.Button buttonBAJACLIENTE;
         private System.Windows.Forms.Button buttonMODIFICARCLIENTE;
         private System.Windows.Forms.Button buttonALTACLIENTE;

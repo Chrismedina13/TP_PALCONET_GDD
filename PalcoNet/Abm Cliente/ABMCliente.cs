@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
@@ -19,12 +20,14 @@ namespace PalcoNet.Abm_Cliente
 
         private void buttonALTA_Click(object sender, EventArgs e)
         {
-
+            AltaCliente al = new AltaCliente();
+            al.Show();
         }
 
         private void buttonBAJA_Click(object sender, EventArgs e)
         {
-
+            EliminarCliente el = new EliminarCliente();
+            el.Show();
         }
 
         private void buttonMODIFICAR_Click(object sender, EventArgs e)
@@ -32,10 +35,6 @@ namespace PalcoNet.Abm_Cliente
 
         }
 
-        private void buttonVolver_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void ABMCliente_Load(object sender, EventArgs e)
         {

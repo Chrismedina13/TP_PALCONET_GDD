@@ -82,7 +82,116 @@ namespace PalcoNet.Support
             connection.Close();
             return;
         }
+
+        internal static bool nombreUsuarioDisponible(String nombre, bool casoEspecial) {
+            SqlConnection sql = conectar();
+            String RS = null;
+            try
+            {
+                SqlCommand buscarUserConEseNombre = new SqlCommand("SELECT count(*) from [GD2C2018].[SQLEADOS].[Usuario] where WHERE usuario_username LIKE " + nombre);
+                buscarUserConEseNombre.Connection = sql;
+                sql.Open();
+
+                SqlDataReader reader = buscarUserConEseNombre.ExecuteReader();
+                while (reader.Read())
+                {
+                    RS = reader[0].ToString();
+                }
+                sql.Close();
+                if (Convert.ToInt32(RS) > 0)
+                {
+                    return false;
+                }
+                return true;
+                   
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se realizó la conexión con la base de datos");
+                casoEspecial = true;
+                
+                return true;
+            }
+        }
+
+        /*Crea un usuario y devuelve su ID si todo va bien*/
+        internal static int crearUser(String nombre, String apellido, bool caso, String contra)
+        {
+            string nombreUserCreado ="";
+            bool creado = false;
+            int i = 0, iniciado = 0;
+            
+
+            while (!creado)
+            {
+                /* CREA USUARIOS NUEVOS EN FORMATO <nombre>_<apellido>, SI EXISTEN, EMPIEZA A PONERLES UN NUMERO EL CUAL SE VA INCREMENTANDO
+                 SI CONTINUAN LAS CONCIDENCIAS*/
+                if (iniciado == 0)
+                {
+                    nombreUserCreado = nombre.ToLower().Replace(" ", "_") + "_" + apellido.ToLower().Replace(" ", "_");
+                    iniciado++;
+                }
+                else {
+                    nombreUserCreado = nombre.ToLower().Replace(" ", "_") + "_" + apellido.ToLower().Replace(" ", "_") + i.ToString();
+                    i++;
+                }
+                /*El caso especial es por si ocurre un error en la conexión. Si hay se aborta todo*/
+                if (nombreUsuarioDisponible(nombreUserCreado, caso))
+                {
+                    creado = true;
+                }
+            }
+            if (caso == false) {
+                return crearUnNuevoUserConNombre(nombreUserCreado, contra, "3", "Cliente");
+            }
+            return 0;
+        }
+
+        internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
+            if (contra == "")
+            {
+                contra = "(SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number)))";
+            }            
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo) values (@nombre,@contra,@rol,@tipo)");
+            addUserCommand.Parameters.AddWithValue("nombre", nombre);
+            addUserCommand.Parameters.AddWithValue("contra", contra);
+            addUserCommand.Parameters.AddWithValue("rol", rol);
+            addUserCommand.Parameters.AddWithValue("tipo", tipo);
+
+            addUserCommand.Connection = connection;
+            connection.Open();
+            int registrosModificados = addUserCommand.ExecuteNonQuery();
+            
+            if (registrosModificados > 0) {
+                connection.Close();
+
+                MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SqlConnection connection1 = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+                SqlCommand buscarID = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre);
+
+                buscarID.Connection = connection1;
+                connection1.Open();
+                SqlDataReader reader = buscarID.ExecuteReader();
+                String RS = null;
+                while (reader.Read())
+                {
+                    RS = reader[0].ToString();
+                }
+                connection1.Close();
+                return Convert.ToInt32(RS);
+            }           
+            else 
+            {
+                MessageBox.Show("Error al cargar registro Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+                
+        }
+
+
     }
+
     class ConsultasSQLEmpresa : ConsultasSQL
     {
       /*  
@@ -225,6 +334,7 @@ namespace PalcoNet.Support
             return clienteRS != null;
         }
          */
+        /* ESTO NO ES USADO
         internal static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string nroDNI, string mail)
         {
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
@@ -243,7 +353,7 @@ namespace PalcoNet.Support
             }
             connection.Close();
         }
-
+        */
         internal static void AgregarCliente(string nombre, string apellido, string tipo_documento, string nro_documento,
             int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, DateTime fecha_nacimiento,
             DateTime fecha_creacion)
