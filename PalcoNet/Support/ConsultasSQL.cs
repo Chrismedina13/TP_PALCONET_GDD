@@ -11,6 +11,13 @@ using System.Data;
 
 namespace PalcoNet.Support
 {
+    class ConsultaGeneral {
+        internal static bool esVacio(String n)
+        {
+            return n == "";
+        }
+    }
+
     class ConsultasSQL {
         public static SqlConnection conectar()
         {

@@ -21,18 +21,21 @@ namespace PalcoNet.Abm_Cliente
         private void buttonALTA_Click(object sender, EventArgs e)
         {
             AltaCliente al = new AltaCliente();
+            this.Close();
             al.Show();
         }
 
         private void buttonBAJA_Click(object sender, EventArgs e)
         {
             EliminarCliente el = new EliminarCliente();
+            this.Close();
             el.Show();
         }
 
         private void buttonMODIFICAR_Click(object sender, EventArgs e)
         {
             ModificarCliente Ml = new ModificarCliente();
+            this.Close();
             Ml.Show();
         }
 

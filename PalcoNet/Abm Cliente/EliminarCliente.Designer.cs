@@ -73,6 +73,7 @@
             this.label3.Size = new System.Drawing.Size(233, 16);
             this.label3.TabIndex = 41;
             this.label3.Text = "Seleccione cliente a dar de baja";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBoxEmail
             // 
@@ -80,6 +81,7 @@
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(209, 20);
             this.textBoxEmail.TabIndex = 52;
+            this.textBoxEmail.TextChanged += new System.EventHandler(this.textBoxEmail_TextChanged);
             // 
             // label4
             // 
@@ -89,6 +91,7 @@
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 51;
             this.label4.Text = "Email:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // textBoxDNI
             // 
@@ -96,6 +99,7 @@
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(209, 20);
             this.textBoxDNI.TabIndex = 50;
+            this.textBoxDNI.TextChanged += new System.EventHandler(this.textBoxDNI_TextChanged);
             // 
             // label6
             // 
@@ -105,6 +109,7 @@
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 49;
             this.label6.Text = "DNI:";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // textBoxApellido
             // 
@@ -112,6 +117,7 @@
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(209, 20);
             this.textBoxApellido.TabIndex = 48;
+            this.textBoxApellido.TextChanged += new System.EventHandler(this.textBoxApellido_TextChanged);
             // 
             // textBoxNombre
             // 
@@ -119,6 +125,7 @@
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(209, 20);
             this.textBoxNombre.TabIndex = 47;
+            this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label7
             // 
@@ -128,6 +135,7 @@
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 46;
             this.label7.Text = "Apellido:";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -137,6 +145,7 @@
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 45;
             this.label8.Text = "Nombre:";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // btt_buscar
             // 
