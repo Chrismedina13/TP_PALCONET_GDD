@@ -148,6 +148,7 @@ cliente_fecha_nacimiento datetime not null CHECK (YEAR(cliente_fecha_nacimiento)
 cliente_fecha_creacion datetime not null,
 cliente_datos_tarjeta varchar(255),
 cliente_puntaje int default 0,
+--cliente_compra int references [SQLEADOS].Compra,
 cliente_email varchar(255) not null,
 cliente_telefono varchar(255),
 cliente_estado int default 1,
