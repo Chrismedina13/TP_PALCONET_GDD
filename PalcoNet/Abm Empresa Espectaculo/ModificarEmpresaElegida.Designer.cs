@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonVolver = new System.Windows.Forms.Button();
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -60,14 +59,11 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonVolver
+            // volver_boton
             // 
-            this.buttonVolver.Location = new System.Drawing.Point(18, 463);
-            this.buttonVolver.Name = "buttonVolver";
-            this.buttonVolver.Size = new System.Drawing.Size(89, 22);
-            this.buttonVolver.TabIndex = 25;
-            this.buttonVolver.Text = "VOLVER";
-            this.buttonVolver.UseVisualStyleBackColor = true;
+            this.volver_boton.Location = new System.Drawing.Point(28, 462);
+            this.volver_boton.Size = new System.Drawing.Size(89, 23);
+            this.volver_boton.Text = "VOLVER";
             // 
             // buttonAgregar
             // 
@@ -262,7 +258,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 88);
+            this.label2.Location = new System.Drawing.Point(32, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 14;
@@ -321,7 +317,6 @@
             this.Controls.Add(this.txtHabilitado);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxCuit);
@@ -336,6 +331,23 @@
             this.Controls.Add(this.label1);
             this.Name = "ModificarEmpresaElegida";
             this.Text = "Modificar Empresa";
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.textBoxRazonSocial, 0);
+            this.Controls.SetChildIndex(this.textBox2, 0);
+            this.Controls.SetChildIndex(this.textBoxTelefono, 0);
+            this.Controls.SetChildIndex(this.textBoxCiudad, 0);
+            this.Controls.SetChildIndex(this.textBoxCuit, 0);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.buttonAgregar, 0);
+            this.Controls.SetChildIndex(this.label12, 0);
+            this.Controls.SetChildIndex(this.label14, 0);
+            this.Controls.SetChildIndex(this.txtHabilitado, 0);
+            this.Controls.SetChildIndex(this.label13, 0);
+            this.Controls.SetChildIndex(this.volver_boton, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -345,7 +357,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonVolver;
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
@@ -360,19 +371,19 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxCalle;
-        private System.Windows.Forms.TextBox textBoxCuit;
-        private System.Windows.Forms.TextBox textBoxCiudad;
-        private System.Windows.Forms.TextBox textBoxTelefono;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBoxRazonSocial;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtHabilitado;
         private System.Windows.Forms.Label label14;
+        public System.Windows.Forms.TextBox textBoxCuit;
+        public System.Windows.Forms.TextBox textBoxCiudad;
+        public System.Windows.Forms.TextBox textBoxTelefono;
+        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox textBoxRazonSocial;
+        public System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label label1;
     }
 }

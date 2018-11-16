@@ -31,3 +31,5 @@ C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSeleccionado.resources
+C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarCliente.resources

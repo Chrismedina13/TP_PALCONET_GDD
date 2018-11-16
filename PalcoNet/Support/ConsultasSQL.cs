@@ -260,7 +260,7 @@ namespace PalcoNet.Support
 
     class consultasSQLCliente : ConsultasSQL
     {
-        internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
+        public void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
         {
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
             connection.Open();

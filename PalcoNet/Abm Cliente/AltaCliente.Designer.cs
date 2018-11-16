@@ -43,7 +43,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.buttonVolver = new System.Windows.Forms.Button();
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -79,6 +78,13 @@
             this.label30 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // volver_boton
+            // 
+            this.volver_boton.Location = new System.Drawing.Point(21, 423);
+            this.volver_boton.Size = new System.Drawing.Size(89, 23);
+            this.volver_boton.Text = "VOLVER";
+            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // label25
             // 
@@ -207,15 +213,6 @@
             this.label12.Size = new System.Drawing.Size(11, 13);
             this.label12.TabIndex = 60;
             this.label12.Text = "*";
-            // 
-            // buttonVolver
-            // 
-            this.buttonVolver.Location = new System.Drawing.Point(44, 424);
-            this.buttonVolver.Name = "buttonVolver";
-            this.buttonVolver.Size = new System.Drawing.Size(89, 22);
-            this.buttonVolver.TabIndex = 59;
-            this.buttonVolver.Text = "VOLVER";
-            this.buttonVolver.UseVisualStyleBackColor = true;
             // 
             // buttonAgregar
             // 
@@ -543,7 +540,6 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxCiudad);
@@ -558,6 +554,40 @@
             this.Name = "AltaCliente";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.AltaCliente_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.textBoxNombre, 0);
+            this.Controls.SetChildIndex(this.textBoxMail, 0);
+            this.Controls.SetChildIndex(this.textBoxTelefono, 0);
+            this.Controls.SetChildIndex(this.textBoxCiudad, 0);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.buttonAgregar, 0);
+            this.Controls.SetChildIndex(this.label12, 0);
+            this.Controls.SetChildIndex(this.label13, 0);
+            this.Controls.SetChildIndex(this.label14, 0);
+            this.Controls.SetChildIndex(this.label15, 0);
+            this.Controls.SetChildIndex(this.label19, 0);
+            this.Controls.SetChildIndex(this.textBoxCuit, 0);
+            this.Controls.SetChildIndex(this.label20, 0);
+            this.Controls.SetChildIndex(this.textBoxApellido, 0);
+            this.Controls.SetChildIndex(this.label21, 0);
+            this.Controls.SetChildIndex(this.label22, 0);
+            this.Controls.SetChildIndex(this.textBoxTIPODOC, 0);
+            this.Controls.SetChildIndex(this.label23, 0);
+            this.Controls.SetChildIndex(this.label24, 0);
+            this.Controls.SetChildIndex(this.textBoxDOCNUMERO, 0);
+            this.Controls.SetChildIndex(this.label25, 0);
+            this.Controls.SetChildIndex(this.label27, 0);
+            this.Controls.SetChildIndex(this.textBoxTarjeta, 0);
+            this.Controls.SetChildIndex(this.label26, 0);
+            this.Controls.SetChildIndex(this.textBoxFechaNacimiento, 0);
+            this.Controls.SetChildIndex(this.label28, 0);
+            this.Controls.SetChildIndex(this.label29, 0);
+            this.Controls.SetChildIndex(this.label30, 0);
+            this.Controls.SetChildIndex(this.volver_boton, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -582,7 +612,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button buttonVolver;
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label18;

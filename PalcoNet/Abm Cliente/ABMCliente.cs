@@ -11,7 +11,7 @@ using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
-    public partial class ABMCliente : Form
+    public partial class ABMCliente : volver
     {
         public ABMCliente()
         {
@@ -32,7 +32,8 @@ namespace PalcoNet.Abm_Cliente
 
         private void buttonMODIFICAR_Click(object sender, EventArgs e)
         {
-
+            ModificarCliente Ml = new ModificarCliente();
+            Ml.Show();
         }
 
 

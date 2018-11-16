@@ -47,7 +47,7 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** VALIDACION TABLAS **/
 ----------------------------------------------------------------------------------------------
-/*
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.FuncionalidadXRol'))
     DROP TABLE SQLEADOS.FuncionalidadXRol
 
@@ -90,7 +90,21 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Rubr
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Funcionalidad'))
     DROP TABLE SQLEADOS.Funcionalidad
 
-*/
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Factura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Factura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.ItemFactura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.puntaje'))
+    DROP TABLE SQLEADOS.Funcionalidad
+	
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canjeproducto'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------

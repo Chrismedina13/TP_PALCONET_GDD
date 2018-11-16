@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnModificar = new System.Windows.Forms.Button();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -50,6 +49,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
+            // volver_boton
+            // 
+            this.volver_boton.Location = new System.Drawing.Point(12, 434);
+            this.volver_boton.Size = new System.Drawing.Size(91, 36);
+            // 
             // btnModificar
             // 
             this.btnModificar.Location = new System.Drawing.Point(535, 434);
@@ -59,16 +63,6 @@
             this.btnModificar.Text = "DAR DE BAJA";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(12, 434);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(91, 35);
-            this.btnVolver.TabIndex = 43;
-            this.btnVolver.Text = "VOLVER";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // label3
             // 
@@ -219,11 +213,23 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnModificar);
-            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label3);
             this.Name = "EliminarCliente";
             this.Text = "Eliminar Cliente";
             this.Load += new System.EventHandler(this.EliminarCliente_Load);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.btnModificar, 0);
+            this.Controls.SetChildIndex(this.label8, 0);
+            this.Controls.SetChildIndex(this.label7, 0);
+            this.Controls.SetChildIndex(this.textBoxNombre, 0);
+            this.Controls.SetChildIndex(this.textBoxApellido, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.textBoxDNI, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.textBoxEmail, 0);
+            this.Controls.SetChildIndex(this.btt_buscar, 0);
+            this.Controls.SetChildIndex(this.dataGridView1, 0);
+            this.Controls.SetChildIndex(this.volver_boton, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -232,9 +238,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxDNI;
@@ -244,12 +247,14 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btt_buscar;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_user;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_Apellido;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_tipo_documento;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_numero;
         private System.Windows.Forms.DataGridViewTextBoxColumn tcol_email;
+        public System.Windows.Forms.Button btnModificar;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }

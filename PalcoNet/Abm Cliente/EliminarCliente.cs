@@ -11,7 +11,7 @@ using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
-    public partial class EliminarCliente : Form
+    public partial class EliminarCliente : volver
     {
         public EliminarCliente()
         {

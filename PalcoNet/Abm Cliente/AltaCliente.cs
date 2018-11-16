@@ -11,7 +11,7 @@ using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
-    public partial class AltaCliente : Form
+    public partial class AltaCliente : volver
     {
         int usuario;
 
@@ -181,6 +181,11 @@ namespace PalcoNet.Abm_Cliente
         private void label30_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void volver_boton_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
 
