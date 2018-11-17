@@ -167,6 +167,8 @@ namespace PalcoNet.Support
             connection.Open();
 
             SqlCommand contracmd = new SqlCommand("SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))");
+            contracmd.Connection = connection;
+            
             if (contra == "")
             {
                 SqlDataReader sqlreader = contracmd.ExecuteReader();
