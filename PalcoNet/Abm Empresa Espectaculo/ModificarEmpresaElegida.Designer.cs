@@ -63,7 +63,6 @@
             // 
             this.volver_boton.Location = new System.Drawing.Point(28, 462);
             this.volver_boton.Size = new System.Drawing.Size(89, 23);
-            this.volver_boton.Text = "VOLVER";
             // 
             // buttonAgregar
             // 
@@ -73,6 +72,7 @@
             this.buttonAgregar.TabIndex = 24;
             this.buttonAgregar.Text = "MODIFICAR";
             this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
             // 
             // groupBox1
             // 

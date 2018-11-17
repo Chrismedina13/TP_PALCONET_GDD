@@ -82,7 +82,7 @@ namespace PalcoNet.Support
             {
                 String query = "UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET usuario_estado = 0 WHERE usuario_username LIKE " + usuario;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("No se pudo dar de baja al usuario: "+ usuario);
             }
@@ -112,7 +112,7 @@ namespace PalcoNet.Support
                 return true;
                    
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("No se realizó la conexión con la base de datos");
                 casoEspecial = true;

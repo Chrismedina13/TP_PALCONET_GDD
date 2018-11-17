@@ -45,7 +45,7 @@ namespace PalcoNet.Abm_Cliente
                {
                    while (oReader.Read())
                    {
-                       txEmail.Text = oReader["cliente_email"].ToString();
+                       textBoxEmail.Text = oReader["cliente_email"].ToString();
                        textBoxTarjeta.Text = oReader["cliente_datos_tarjeta"].ToString();
                        txtHabilitado.Text = oReader["usuario_estado"].ToString();
                        textBoxApellido.Text = oReader["cliente_apellido"].ToString();
@@ -57,14 +57,12 @@ namespace PalcoNet.Abm_Cliente
                        textBoxLocalidad.Text = oReader["domicilio_localidad"].ToString();
                        textBoxTelefono.Text = oReader["cliente_telefono"].ToString();
                        textBoxPiso.Text = oReader["domicilio_piso"].ToString();
-                       
                    }
-
                    connections.Close();
                }  
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("No se pudo obtener los datos");
             }
@@ -75,6 +73,31 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void ModificarClienteSeleccionado_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        // BOTON MODIFICAR LOS DATOS DEL CLIENTE
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            connection.Open();
+            try
+            {
+                String query = "UPDATE [GD2C2018].[SQLEADOS].[Cliente], [GD2C2018].[SQLEADOS].[Usuario] SET cliente_nombre = " + textBoxNombre +", cliente_apellido = " + textBoxApellido +", cliente_datos_tarjeta = " + textBoxTarjeta +", cliente_email = "+ textBoxEmail + ", cliente_telefono = "+ textBoxTelefono +", domicilio_calle =" +textBoxCalle +",domicilio_numero =" +textBoxNroCalle+", domicilio_piso = "+textBoxPiso+", domicilio_dto = "+textBoxDto+", domicilio_localidad = "+ textBoxLocalidad+", domicilio_codigo_postal = "+textBoxCodigoPostal+", usuario_estado = "+txtHabilitado+" WHERE usuario_username LIKE " + usuarioSeleccionado;
+                MessageBox.Show("Se han modificado los datos para: " + usuarioSeleccionado);
+                this.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo modificar al usuario: " + usuarioSeleccionado);
+            }
+            connection.Close();
+            return;
+        }
+        
+
+        private void label16_Click(object sender, EventArgs e)
         {
 
         }

@@ -22,5 +22,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
         }
+
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
