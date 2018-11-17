@@ -560,12 +560,11 @@ select GETDATE()
 go 
 insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
 select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra),
-
-	Convert(varchar(150),CONVERT(varchar(30), (com.compra_fecha+1))
+	Convert(varchar(30),CONVERT(varchar(4), YEAR(com.compra_fecha+1))
 			 + '-'+ 
-			 CONVERT(varchar(30), MONTH(com.compra_fecha))
+			 CONVERT(varchar(2), MONTH(com.compra_fecha))
 			  +'-'+ 
-			   CONVERT(varchar(30),  DAY(com.compra_fecha)) + ' 00:00:00'
+			   CONVERT(varchar(2),  DAY(com.compra_fecha)) + ' 00:00:00'
 			  ,102),
 		CASE
 			WHEN YEAR(com.compra_fecha)+1 < YEAR(GETDATE())
@@ -579,7 +578,6 @@ select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubi
 	join SQLEADOS.ubicacionXpublicacion ubxp ON ubxp.ubiXpubli_ID = com.compra_ubiXpubli
 	join SQLEADOS.Publicacion p on p.publicacion_codigo = ubxp.ubiXpubli_Publicacion
 	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento, com.compra_fecha
-	
 
 --CANJE DE PREMIOS
 go
@@ -628,14 +626,44 @@ HASHBYTES('SHA2_256', 'pass123'),
 1,
 'Administrativo')
 
+select * from SQLeados.Usuario where usuario_username LIKE '%admin%'
 
+
+GO
+CREATE TRIGGER TRIG_nuevo_user_nombre_unico on [SQLEADOS].[Usuario]
+AFTER insert
+	as BEGIN TRANSACTION
+		DECLARE @UsuarioNombre varchar(255)
+		DECLARE @nombreOriginal varchar(255)
+		DECLARE mi_cursor cursor for
+			SELECT usuario_username FROM
+				INSERTED GROUP BY usuario_username
+
+		OPEN mi_cursor
+			FETCH NEXT mi_cursor into @UsuarioNombre
+			WHILE @@FETCH_STATUS =0
+				BEGIN 
+					WHILE ((select count(*) from Usuario u1 
+							WHERE u1.usuario_username LIKE @UsuarioNombre)							
+								) > 1 
+								(
+									Select @UsuarioNombre = @nombreOriginal
+								)
+						update SQLEADOS.Usuario
+						set usuario_username = @UsuarioNombre
+						where 
+							usuario_username=@nombreOriginal;
+					FETCH NEXT mi_cursor into @UsuarioNombre
+				END
+		CLOSE mi_cursor
+	DEALLOCATE mi_cursor
+COMMIT TRANSACTION
 
 GO
 CREATE TRIGGER 
 	TRIG_nuevo_user on [SQLEADOS].[Usuario]
-for insert as
+for insert, update as
 	begin 
-		declare @contador int;
 		declare @UsuarioNombre varchar(255)
 		declare @nombreOriginal varchar(255)
 		declare @numero int = 0;
@@ -645,14 +673,13 @@ for insert as
 				@UsuarioNombre = usuario_username,
 				@nombreOriginal = @UsuarioNombre
 				from SQLEADOS.Usuario
-			select
-				@contador = COUNT(*)
-				from SQLEADOS.Usuario
-					where @UsuarioNombre LIKE usuario_username	
 							
-				WHILE(@contador > 1 ) (
+				WHILE((select count(*) from Usuario u1 
+							WHERE u1.usuario_username LIKE @UsuarioNombre)							
+								) > 1 
+					 (
 					select
-						@contador = COUNT(*),
+				
 						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
 						@numero = @numero +1
 						from SQLEADOS.Usuario
@@ -665,4 +692,3 @@ for insert as
 							usuario_username=@nombreOriginal;
 		END
 
-select * from SQLeados.Empresa
