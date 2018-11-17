@@ -1,27 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Data.SqlTypes;
+using System.Data;
+using System.Configuration;
+using System.Windows.Forms;
+using System.Media;
 using System.Data;
 
 namespace PalcoNet.Support
 {
-    class ConsultaGeneral {
-        internal static bool esVacio(String n)
-        {
-            return n == "";
-        }
-    }
+    class ConsultaGeneral
+    {
+        #region Atributos
 
-    class ConsultasSQL {
+        //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
+        private static SqlConnection conexion = new SqlConnection(@"Data source=LAPTOP-B6PL6D9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        public static SqlConnection conexionObtener()
+        {
+            return conexion;
+        }
+
+        public static void conexionAbrir()
+        {
+            conexion.Open();
+        }
+
+        public static void conexionCerrar()
+        {
+            conexion.Close();
+        }
+        #endregion
+
+        #region ConexionSQL
+        /*
         public static SqlConnection conectar()
         {
-            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            String ruta = "";
+            return new SqlConnection(@"Data source=LAPTOP-B6PL6D9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
         }
 
         public void cerrarConeccion(SqlConnection sql)
@@ -29,11 +49,143 @@ namespace PalcoNet.Support
             sql.Close();
             return;
         }
+        */
+        internal static bool esVacio(String n)
+        {
+            return n == "";
+        }
+
+        public static SqlCommand consultaCrear(string consulta)
+        {
+            return new SqlCommand(consulta, conexionObtener());
+        }
+
+        public static int consultaEjecutar(SqlCommand consulta)
+        {
+            int resultado = 0;
+            conexionAbrir();
+            try
+            {
+                resultado = consulta.ExecuteNonQuery();
+            }
+            catch (Exception excepcion)
+            {
+                ventanaInformarErrorDatabase(excepcion);
+            }
+            conexionCerrar();
+            return resultado;
+        }
+
+        public static DataSet consultaObtenerDatos(SqlCommand consulta)
+        {
+            DataSet dataSet = new DataSet();
+            try
+            {
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta);
+                dataAdapter.Fill(dataSet);
+            }
+            catch (Exception excepcion)
+            {
+                ventanaInformarErrorDatabase(excepcion);
+            }
+            return dataSet;
+        }
+
+        public static DataTable consultaObtenerTabla(SqlCommand consulta)
+        {
+            DataSet dataSet = consultaObtenerDatos(consulta);
+            DataTable tabla = dataSet.Tables[0];
+            return tabla;
+        }
+
+        public static List<string> consultaObtenerLista(SqlCommand consulta)
+        {
+            DataTable tabla = consultaObtenerTabla(consulta);
+            List<string> columna = new List<string>();
+            if (tabla.Rows.Count > 0)
+                foreach (DataRow fila in tabla.Rows)
+                    columna.Add(fila[0].ToString());
+            return columna;
+        }
+
+        public static string consultaObtenerValor(SqlCommand consulta)
+        {
+            List<string> columna = consultaObtenerLista(consulta);
+            if (columna.Count > 0)
+                return columna[0];
+            else
+                return "";
+        }
+
+        public static DataRow consultaObtenerFila(SqlCommand consulta)
+        {
+            DataTable tabla = consultaObtenerTabla(consulta);
+            if (tabla.Rows.Count > 0)
+                return tabla.Rows[0];
+            else
+                return null;
+        }
+
+        public static bool consultaValorEsIgualA(string valor, int numero)
+        {
+            int resultado = Convert.ToInt32(valor);
+            return resultado == numero;
+        }
+
+        public static bool consultaValorEsMayorA(string valor, int numero)
+        {
+            int resultado = Convert.ToInt32(valor);
+            return resultado > numero;
+        }
+
+        public static bool consultaValorEsMenorA(string valor, int numero)
+        {
+            int resultado = Convert.ToInt32(valor);
+            return resultado < numero;
+        }
+
+        public static bool consultaValorNoExiste(string valor)
+        {
+            return valor == "";
+        }
+
+        public static bool consultaValorExiste(string valor)
+        {
+            return valor != "";
+        }
+
+        #endregion
+
+        #region Ventana
+
+        public static void ventanaInformarErrorDatabase(Exception excepcion)
+        {
+            SystemSounds.Hand.Play();
+            MessageBox.Show("ERROR EN LA BASE DE DATOS:\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public static void ventanaInformarError(string mensaje)
+        {
+            SystemSounds.Hand.Play();
+            MessageBox.Show("ERROR: " + mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+        }
+
+        public static void ventanaInformarExito(string mensaje)
+        {
+            SystemSounds.Exclamation.Play();
+            MessageBox.Show("AVISO: " + mensaje, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+        #endregion
+    
+    #region Clase-consultas-general
+    class ConsultasSQL {
+
 
         internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, string codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
         {
 
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
             addDomicilioCommand.Parameters.AddWithValue("calle", calle);
             addDomicilioCommand.Parameters.AddWithValue("numeroCalle", numeroCalle);
@@ -59,7 +211,7 @@ namespace PalcoNet.Support
         internal static bool existeCuit(string cuit, string tipo)
         {
             String RS = null;
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             SqlCommand tipoHabilitada = new SqlCommand("SELECT cliente_cuit FROM [GD2C2018].[SQLEADOS].["+tipo+"] WHERE "+tipo+"_cuit = @cuit and "+tipo+"_estado = 1");
             tipoHabilitada.Parameters.AddWithValue("cuit", cuit);
             tipoHabilitada.Connection = connection;
@@ -76,7 +228,7 @@ namespace PalcoNet.Support
 
         internal static void darDeBaja(DataGridView dgv, string usuario)
         {
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             connection.Open();
             try
             {
@@ -91,7 +243,7 @@ namespace PalcoNet.Support
         }
 
         internal static bool nombreUsuarioDisponible(String nombre, bool casoEspecial) {
-            SqlConnection sql = conectar();
+            SqlConnection sql = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             String RS = null;
             try
             {
@@ -155,8 +307,8 @@ namespace PalcoNet.Support
         }
 
         internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
-                     
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo) values (@nombre,@contra,@rol,@tipo)");
             addUserCommand.Parameters.AddWithValue("nombre", nombre);
             addUserCommand.Parameters.AddWithValue("rol", rol);
@@ -164,22 +316,21 @@ namespace PalcoNet.Support
 
             
 
-            connection.Open();
+           
 
             SqlCommand contracmd = new SqlCommand("SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))");
-            contracmd.Connection = connection;
+      //      contracmd.Connection = connection;
             
             if (contra == "")
             {
                 SqlDataReader sqlreader = contracmd.ExecuteReader();
-                contra = sqlreader.GetString(0);
-                sqlreader.Close();
+
+                DataTable tabla = ConsultaGeneral.consultaObtenerTabla(contracmd);
+      //          DataRow datarowBuscado = tabla.Rows[0];
+                contra = tabla.Rows[0].ToString();
+      //          sqlreader.Close();
             }
             addUserCommand.Parameters.AddWithValue("contra", contra);
-
-            connection.Close();
-
-            
 
             connection.Open();
             addUserCommand.Connection = connection;
@@ -193,7 +344,7 @@ namespace PalcoNet.Support
                 connection.Close();
 
                 MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SqlConnection connection1 = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+                SqlConnection connection1 = PalcoNet.Support.ConsultaGeneral.conexionObtener();
                 SqlCommand buscarID = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre);
 
                 buscarID.Connection = connection1;
@@ -217,7 +368,9 @@ namespace PalcoNet.Support
 
 
     }
+    #endregion
 
+    #region ConsultaEmpresa
     class ConsultasSQLEmpresa : ConsultasSQL
     {
       /*  
@@ -241,7 +394,7 @@ namespace PalcoNet.Support
         internal static void AgregarEmpresa(string razonSocial, string cuit, string ciudad, string mail, string telefono, int usuario, DateTime fecha)
         {
 
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             SqlCommand addEmpresaCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) values (@razonSocial,@cuit,@ciudad,@mail,@telefono,@usuario,@fecha)");
             addEmpresaCommand.Parameters.AddWithValue("razonSocial", razonSocial);
             addEmpresaCommand.Parameters.AddWithValue("cuit", cuit);
@@ -263,7 +416,7 @@ namespace PalcoNet.Support
 
         internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
         {
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             connection.Open();
             try
             {
@@ -283,31 +436,14 @@ namespace PalcoNet.Support
 
 
     }
+    #endregion
 
+    #region consultaCliente
     class consultasSQLCliente : ConsultasSQL
     {
-        public void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
-        {
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
-            connection.Open();
-            try
-            {
-                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario] FROM [GD2C2018].[SQLEADOS].[Empresa] where [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
-                SqlDataAdapter da = new SqlDataAdapter(query, connection);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                dgv.DataSource = dt;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
-            }
-            connection.Close();
-        }
-
         internal static void llenarDGVCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
         {
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             connection.Open();
             try
             {
@@ -327,7 +463,7 @@ namespace PalcoNet.Support
 
         public static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
         {
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             connection.Open();
             try
             {
@@ -385,7 +521,7 @@ namespace PalcoNet.Support
             DateTime fecha_creacion)
         {
 
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
             SqlCommand addClienteCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Cliente] (cliente_nombre,cliente_apellido,cliente_usuario,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_datos_tarjeta,cliente_puntaje,cliente_email,cliente_telefono,cliente_estado,cliente_cuit) values (@nombre,@apellido,@user,@tipo_documento,@nro_documento,@fecha_nacimiento,@fecha_creacion, @datos_tarjeta, @puntaje, @mail, @telefono, @estado, @cuit)");            
             addClienteCommand.Parameters.AddWithValue("nombre", nombre);
             addClienteCommand.Parameters.AddWithValue("apellido", apellido);
@@ -411,4 +547,5 @@ namespace PalcoNet.Support
 
         }
     }
+    #endregion
 }

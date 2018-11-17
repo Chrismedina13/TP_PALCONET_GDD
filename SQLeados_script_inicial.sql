@@ -128,7 +128,7 @@ funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad
 
 create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
-usuario_username varchar(255) unique not null,
+usuario_username varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
 usuario_password varbinary(100) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
@@ -560,11 +560,12 @@ select GETDATE()
 go 
 insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
 select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra),
-	Convert(varchar(30),CONVERT(varchar(4), (com.compra_fecha+1))
+
+	Convert(varchar(150),CONVERT(varchar(30), (com.compra_fecha+1))
 			 + '-'+ 
-			 CONVERT(varchar(2), MONTH(com.compra_fecha))
+			 CONVERT(varchar(30), MONTH(com.compra_fecha))
 			  +'-'+ 
-			   CONVERT(varchar(2),  DAY(com.compra_fecha)) + ' 00:00:00'
+			   CONVERT(varchar(30),  DAY(com.compra_fecha)) + ' 00:00:00'
 			  ,102),
 		CASE
 			WHEN YEAR(com.compra_fecha)+1 < YEAR(GETDATE())
@@ -577,7 +578,7 @@ select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubi
 								AND c.cliente_tipo_documento = com.compra_cliente_tipo_documento
 	join SQLEADOS.ubicacionXpublicacion ubxp ON ubxp.ubiXpubli_ID = com.compra_ubiXpubli
 	join SQLEADOS.Publicacion p on p.publicacion_codigo = ubxp.ubiXpubli_Publicacion
-	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento
+	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento, com.compra_fecha
 	
 
 --CANJE DE PREMIOS
@@ -620,41 +621,48 @@ for insert as
 				--		AND 
 						publicacion_codigo=@indice;
 		END
-/*
+
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
+('admin',
+HASHBYTES('SHA2_256', 'pass123'),
+1,
+'Administrativo')
+
+
+
 GO
 CREATE TRIGGER 
 	TRIG_nuevo_user on [SQLEADOS].[Usuario]
 for insert as
 	begin 
+		declare @contador int;
 		declare @UsuarioNombre varchar(255)
-		declare @UsuarioExistente varchar(255)
+		declare @nombreOriginal varchar(255)
 		declare @numero int = 0;
 		
-			select 
-				@UsuarioNombre = usuario_username 
+
+			Select 
+				@UsuarioNombre = usuario_username,
+				@nombreOriginal = @UsuarioNombre
 				from SQLEADOS.Usuario
 			select
-				@UsuarioExistente = @UsuarioNombre
+				@contador = COUNT(*)
 				from SQLEADOS.Usuario
-				
-				WHILE(@UsuarioExistente LIKE @UsuarioNombre) {
-					@UsuarioExistente = @UsuarioExistente + '@numero'
-				}
-
-				IF( 
-					NOT(YEAR(@fecha1) < YEAR(@fecha2)
-					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
-					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2)))
-				) 
-					update SQLEADOS.Publicacion
-					set publicacion_estado_validacion = 1
-					where 
-				--		(NOT(YEAR(@fecha1) < YEAR(@fecha2)
-				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
-				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2))))
-				--		AND 
-						publicacion_codigo=@indice;
+					where @UsuarioNombre LIKE usuario_username	
+							
+				WHILE(@contador > 1 ) (
+					select
+						@contador = COUNT(*),
+						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
+						@numero = @numero +1
+						from SQLEADOS.Usuario
+							where @UsuarioNombre LIKE usuario_username		
+				)
+				if(@numero>0) 
+					update SQLEADOS.Usuario
+						set usuario_username = @UsuarioNombre
+						where 
+							usuario_username=@nombreOriginal;
 		END
 
 select * from SQLeados.Empresa
-*/
