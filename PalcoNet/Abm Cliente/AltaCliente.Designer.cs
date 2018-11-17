@@ -72,19 +72,13 @@
             this.label26 = new System.Windows.Forms.Label();
             this.textBoxTarjeta = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.textBoxFechaNacimiento = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dateFecha = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // volver_boton
-            // 
-            this.volver_boton.Location = new System.Drawing.Point(21, 423);
-            this.volver_boton.Size = new System.Drawing.Size(89, 23);
-            this.volver_boton.Text = "VOLVER";
-            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // label25
             // 
@@ -98,9 +92,10 @@
             // textBoxDOCNUMERO
             // 
             this.textBoxDOCNUMERO.Location = new System.Drawing.Point(256, 112);
+            this.textBoxDOCNUMERO.MaxLength = 7;
             this.textBoxDOCNUMERO.Name = "textBoxDOCNUMERO";
             this.textBoxDOCNUMERO.Size = new System.Drawing.Size(103, 20);
-            this.textBoxDOCNUMERO.TabIndex = 73;
+            this.textBoxDOCNUMERO.TabIndex = 6;
             // 
             // label24
             // 
@@ -123,9 +118,11 @@
             // textBoxTIPODOC
             // 
             this.textBoxTIPODOC.Location = new System.Drawing.Point(148, 112);
+            this.textBoxTIPODOC.MaxLength = 3;
             this.textBoxTIPODOC.Name = "textBoxTIPODOC";
             this.textBoxTIPODOC.Size = new System.Drawing.Size(34, 20);
-            this.textBoxTIPODOC.TabIndex = 70;
+            this.textBoxTIPODOC.TabIndex = 5;
+            this.textBoxTIPODOC.TextChanged += new System.EventHandler(this.textBoxTIPODOC_TextChanged);
             // 
             // label22
             // 
@@ -150,7 +147,7 @@
             this.textBoxApellido.Location = new System.Drawing.Point(148, 42);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(211, 20);
-            this.textBoxApellido.TabIndex = 67;
+            this.textBoxApellido.TabIndex = 2;
             // 
             // label20
             // 
@@ -167,7 +164,7 @@
             this.textBoxCuit.MaxLength = 11;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(211, 20);
-            this.textBoxCuit.TabIndex = 65;
+            this.textBoxCuit.TabIndex = 10;
             // 
             // label19
             // 
@@ -219,7 +216,7 @@
             this.buttonAgregar.Location = new System.Drawing.Point(330, 424);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(89, 22);
-            this.buttonAgregar.TabIndex = 58;
+            this.buttonAgregar.TabIndex = 17;
             this.buttonAgregar.Text = "AGREGAR";
             this.buttonAgregar.UseVisualStyleBackColor = true;
             this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
@@ -245,7 +242,7 @@
             this.groupBox1.Location = new System.Drawing.Point(60, 236);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(359, 137);
-            this.groupBox1.TabIndex = 57;
+            this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
             // 
@@ -281,7 +278,7 @@
             this.textBoxLocalidad.Location = new System.Drawing.Point(84, 105);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(260, 20);
-            this.textBoxLocalidad.TabIndex = 11;
+            this.textBoxLocalidad.TabIndex = 6;
             // 
             // label11
             // 
@@ -298,7 +295,7 @@
             this.textBoxCodigoPostal.Location = new System.Drawing.Point(196, 79);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(66, 20);
-            this.textBoxCodigoPostal.TabIndex = 9;
+            this.textBoxCodigoPostal.TabIndex = 5;
             // 
             // label10
             // 
@@ -314,7 +311,7 @@
             this.textBoxDto.Location = new System.Drawing.Point(177, 49);
             this.textBoxDto.Name = "textBoxDto";
             this.textBoxDto.Size = new System.Drawing.Size(66, 20);
-            this.textBoxDto.TabIndex = 7;
+            this.textBoxDto.TabIndex = 3;
             // 
             // label9
             // 
@@ -331,7 +328,7 @@
             this.textBoxPiso.MaxLength = 5;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(66, 20);
-            this.textBoxPiso.TabIndex = 5;
+            this.textBoxPiso.TabIndex = 4;
             // 
             // label8
             // 
@@ -339,7 +336,7 @@
             this.label8.Location = new System.Drawing.Point(17, 86);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
-            this.label8.TabIndex = 4;
+            this.label8.TabIndex = 4000000;
             this.label8.Text = "Piso:";
             // 
             // textBoxNroCalle
@@ -348,7 +345,7 @@
             this.textBoxNroCalle.MaxLength = 10;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(66, 20);
-            this.textBoxNroCalle.TabIndex = 3;
+            this.textBoxNroCalle.TabIndex = 2;
             // 
             // label7
             // 
@@ -356,7 +353,7 @@
             this.label7.Location = new System.Drawing.Point(17, 56);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 2;
+            this.label7.TabIndex = 20000000;
             this.label7.Text = "Nro:";
             // 
             // label6
@@ -365,7 +362,7 @@
             this.label6.Location = new System.Drawing.Point(17, 28);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 1;
+            this.label6.TabIndex = 10000;
             this.label6.Text = "Calle:";
             // 
             // textBoxCalle
@@ -373,14 +370,14 @@
             this.textBoxCalle.Location = new System.Drawing.Point(56, 21);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(269, 20);
-            this.textBoxCalle.TabIndex = 0;
+            this.textBoxCalle.TabIndex = 1;
             // 
             // textBoxCiudad
             // 
             this.textBoxCiudad.Location = new System.Drawing.Point(148, 190);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(211, 20);
-            this.textBoxCiudad.TabIndex = 56;
+            this.textBoxCiudad.TabIndex = 9;
             // 
             // textBoxTelefono
             // 
@@ -388,14 +385,14 @@
             this.textBoxTelefono.MaxLength = 15;
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(211, 20);
-            this.textBoxTelefono.TabIndex = 55;
+            this.textBoxTelefono.TabIndex = 8;
             // 
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(148, 68);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(211, 20);
-            this.textBoxMail.TabIndex = 54;
+            this.textBoxMail.TabIndex = 3;
             // 
             // textBoxNombre
             // 
@@ -403,7 +400,7 @@
             this.textBoxNombre.Location = new System.Drawing.Point(148, 16);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(211, 20);
-            this.textBoxNombre.TabIndex = 53;
+            this.textBoxNombre.TabIndex = 1;
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label5
@@ -465,7 +462,7 @@
             this.textBoxTarjeta.Location = new System.Drawing.Point(148, 141);
             this.textBoxTarjeta.Name = "textBoxTarjeta";
             this.textBoxTarjeta.Size = new System.Drawing.Size(211, 20);
-            this.textBoxTarjeta.TabIndex = 76;
+            this.textBoxTarjeta.TabIndex = 7;
             // 
             // label27
             // 
@@ -476,14 +473,6 @@
             this.label27.TabIndex = 75;
             this.label27.Text = "Tarjeta:";
             this.label27.Click += new System.EventHandler(this.label27_Click);
-            // 
-            // textBoxFechaNacimiento
-            // 
-            this.textBoxFechaNacimiento.Location = new System.Drawing.Point(148, 89);
-            this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
-            this.textBoxFechaNacimiento.Size = new System.Drawing.Size(211, 20);
-            this.textBoxFechaNacimiento.TabIndex = 78;
-            this.textBoxFechaNacimiento.TextChanged += new System.EventHandler(this.textBoxFechaNacimiento_TextChanged);
             // 
             // label28
             // 
@@ -513,15 +502,33 @@
             this.label30.Text = "Sin \"-\"";
             this.label30.Click += new System.EventHandler(this.label30_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(44, 423);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 23);
+            this.button1.TabIndex = 82;
+            this.button1.Text = "Volver";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dateFecha
+            // 
+            this.dateFecha.Location = new System.Drawing.Point(148, 89);
+            this.dateFecha.Name = "dateFecha";
+            this.dateFecha.Size = new System.Drawing.Size(211, 20);
+            this.dateFecha.TabIndex = 4;
+            // 
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 462);
+            this.Controls.Add(this.dateFecha);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label28);
-            this.Controls.Add(this.textBoxFechaNacimiento);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.textBoxTarjeta);
             this.Controls.Add(this.label27);
@@ -554,40 +561,6 @@
             this.Name = "AltaCliente";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.AltaCliente_Load);
-            this.Controls.SetChildIndex(this.label1, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
-            this.Controls.SetChildIndex(this.label3, 0);
-            this.Controls.SetChildIndex(this.label4, 0);
-            this.Controls.SetChildIndex(this.label5, 0);
-            this.Controls.SetChildIndex(this.textBoxNombre, 0);
-            this.Controls.SetChildIndex(this.textBoxMail, 0);
-            this.Controls.SetChildIndex(this.textBoxTelefono, 0);
-            this.Controls.SetChildIndex(this.textBoxCiudad, 0);
-            this.Controls.SetChildIndex(this.groupBox1, 0);
-            this.Controls.SetChildIndex(this.buttonAgregar, 0);
-            this.Controls.SetChildIndex(this.label12, 0);
-            this.Controls.SetChildIndex(this.label13, 0);
-            this.Controls.SetChildIndex(this.label14, 0);
-            this.Controls.SetChildIndex(this.label15, 0);
-            this.Controls.SetChildIndex(this.label19, 0);
-            this.Controls.SetChildIndex(this.textBoxCuit, 0);
-            this.Controls.SetChildIndex(this.label20, 0);
-            this.Controls.SetChildIndex(this.textBoxApellido, 0);
-            this.Controls.SetChildIndex(this.label21, 0);
-            this.Controls.SetChildIndex(this.label22, 0);
-            this.Controls.SetChildIndex(this.textBoxTIPODOC, 0);
-            this.Controls.SetChildIndex(this.label23, 0);
-            this.Controls.SetChildIndex(this.label24, 0);
-            this.Controls.SetChildIndex(this.textBoxDOCNUMERO, 0);
-            this.Controls.SetChildIndex(this.label25, 0);
-            this.Controls.SetChildIndex(this.label27, 0);
-            this.Controls.SetChildIndex(this.textBoxTarjeta, 0);
-            this.Controls.SetChildIndex(this.label26, 0);
-            this.Controls.SetChildIndex(this.textBoxFechaNacimiento, 0);
-            this.Controls.SetChildIndex(this.label28, 0);
-            this.Controls.SetChildIndex(this.label29, 0);
-            this.Controls.SetChildIndex(this.label30, 0);
-            this.Controls.SetChildIndex(this.volver_boton, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -641,10 +614,11 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox textBoxTarjeta;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox textBoxFechaNacimiento;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dateFecha;
 
     }
 }

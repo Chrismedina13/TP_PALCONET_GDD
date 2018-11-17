@@ -414,8 +414,6 @@
 
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txNroTarjeta;
-        private System.Windows.Forms.Label Email;
-        private System.Windows.Forms.TextBox txEmail;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtHabilitado;
         private System.Windows.Forms.Label label14;

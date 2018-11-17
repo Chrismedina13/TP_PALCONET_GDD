@@ -620,6 +620,41 @@ for insert as
 				--		AND 
 						publicacion_codigo=@indice;
 		END
+/*
+GO
+CREATE TRIGGER 
+	TRIG_nuevo_user on [SQLEADOS].[Usuario]
+for insert as
+	begin 
+		declare @UsuarioNombre varchar(255)
+		declare @UsuarioExistente varchar(255)
+		declare @numero int = 0;
+		
+			select 
+				@UsuarioNombre = usuario_username 
+				from SQLEADOS.Usuario
+			select
+				@UsuarioExistente = @UsuarioNombre
+				from SQLEADOS.Usuario
+				
+				WHILE(@UsuarioExistente LIKE @UsuarioNombre) {
+					@UsuarioExistente = @UsuarioExistente + '@numero'
+				}
 
+				IF( 
+					NOT(YEAR(@fecha1) < YEAR(@fecha2)
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
+					OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2)))
+				) 
+					update SQLEADOS.Publicacion
+					set publicacion_estado_validacion = 1
+					where 
+				--		(NOT(YEAR(@fecha1) < YEAR(@fecha2)
+				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) < MONTH(@fecha2))
+				--		OR (YEAR(@fecha1) = YEAR(@fecha2) AND MONTH(@fecha1) = MONTH(@fecha2) AND DAY(@fecha1) < DAY(@fecha2))))
+				--		AND 
+						publicacion_codigo=@indice;
+		END
 
 select * from SQLeados.Empresa
+*/

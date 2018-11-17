@@ -30,7 +30,7 @@ namespace PalcoNet.Support
             return;
         }
 
-        internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, int codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
+        internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, string codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
         {
 
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
@@ -155,22 +155,39 @@ namespace PalcoNet.Support
         }
 
         internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
-            if (contra == "")
-            {
-                contra = "(SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number)))";
-            }            
+                     
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
             SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo) values (@nombre,@contra,@rol,@tipo)");
             addUserCommand.Parameters.AddWithValue("nombre", nombre);
-            addUserCommand.Parameters.AddWithValue("contra", contra);
             addUserCommand.Parameters.AddWithValue("rol", rol);
             addUserCommand.Parameters.AddWithValue("tipo", tipo);
 
-            addUserCommand.Connection = connection;
-            connection.Open();
-            int registrosModificados = addUserCommand.ExecuteNonQuery();
             
-            if (registrosModificados > 0) {
+
+            connection.Open();
+
+            SqlCommand contracmd = new SqlCommand("SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))");
+            if (contra == "")
+            {
+                SqlDataReader sqlreader = contracmd.ExecuteReader();
+                contra = sqlreader.GetString(0);
+                sqlreader.Close();
+            }
+            addUserCommand.Parameters.AddWithValue("contra", contra);
+
+            connection.Close();
+
+            
+
+            connection.Open();
+            addUserCommand.Connection = connection;
+            SqlDataReader sqlLector = addUserCommand.ExecuteReader();
+
+        // ME CANSE DE HACER ESTO, PASO A HACER EL TRIGGER CORRESPONDIENTE
+
+        //    int registrosModificados = addUserCommand.ExecuteNonQuery();
+            
+            if (sqlLector.Read()) {
                 connection.Close();
 
                 MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -362,7 +379,7 @@ namespace PalcoNet.Support
         }
         */
         internal static void AgregarCliente(string nombre, string apellido, string tipo_documento, string nro_documento,
-            int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, DateTime fecha_nacimiento,
+            int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, String fecha_nacimiento,
             DateTime fecha_creacion)
         {
 
