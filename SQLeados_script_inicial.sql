@@ -94,17 +94,20 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Fact
     DROP TABLE SQLEADOS.Funcionalidad
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Factura'))
-    DROP TABLE SQLEADOS.Funcionalidad
+    DROP TABLE SQLEADOS.Factura
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.ItemFactura'))
-    DROP TABLE SQLEADOS.Funcionalidad
+    DROP TABLE SQLEADOS.ItemFactura
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.puntaje'))
-    DROP TABLE SQLEADOS.Funcionalidad
+    DROP TABLE SQLEADOS.puntaje
 	
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canjeproducto'))
-    DROP TABLE SQLEADOS.Funcionalidad
+    DROP TABLE SQLEADOS.canjeproducto
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.UserXRol'))
+    DROP TABLE SQLEADOS.UserXRol
+	
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
@@ -135,6 +138,11 @@ usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
 usuario_fecha_creacion datetime
+)
+
+create table [SQLEADOS].UserXRol(
+userXRol_rol int not null references [SQLEADOS].Rol,
+userXRol_usuario int not null references [SQLEADOS].Usuario
 )
 
 create table [SQLEADOS].Cliente(
@@ -394,6 +402,7 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 	NOMBRE: admin
 	CONTRA: pass123
 ***********************************************************/
+go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
@@ -430,11 +439,28 @@ select distinct
 
 
 
+-- USERXROL
+-- ADMIN
 
+go insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct u.usuario_Id, 1 from SQLEADOS.Usuario u
+	WHERE u.usuario_username LIKE 'admin'
 
+ --EMPRESAS
+go
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct u.usuario_Id, 2 from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_username
+
+--CLIENTE
+go
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct u.usuario_Id, 3 from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
 
 --RUBRO 
 
+go
 insert into SQLEADOS.Rubro(rubro_descripcion)
 select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
 
@@ -444,6 +470,7 @@ insert into SQLeados.Rubro(rubro_descripcion) values
 ('Comedia');
 
 --Grado Publicacion
+go
 insert into SQLeados.GradoPrioridad(grado_nombre,grado_comision) values
 ('Alta',15),
 ('Media',10),
@@ -585,6 +612,20 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
+
+UPDATE SQLEADOS.Cliente
+SET cliente_usuario = usuario_Id 
+FROM SQLEADOS.Cliente
+INNER JOIN SQLEADOS.Usuario
+       ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_username
+
+UPDATE SQLEADOS.Empresa
+SET empresa_usuario = usuario_Id 
+FROM SQLEADOS.Empresa
+INNER JOIN SQLEADOS.Usuario
+       ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_username
+
+
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
