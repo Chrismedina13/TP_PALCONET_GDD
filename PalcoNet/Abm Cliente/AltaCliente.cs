@@ -124,7 +124,7 @@ namespace PalcoNet.Abm_Cliente
 
             bool creacionAbortada = false;
 
-            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "");
+            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "", "Cliente","3");
             if (creacionAbortada == false)
             {
                 consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);

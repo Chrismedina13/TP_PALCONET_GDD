@@ -134,6 +134,7 @@ usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+usuario_fecha_creacion datetime
 )
 
 create table [SQLEADOS].Cliente(
@@ -393,34 +394,37 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 	NOMBRE: admin
 	CONTRA: pass123
 ***********************************************************/
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
 1,
-'Administrativo')
+'Administrativo',
+GETDATE())
 
 --Usuarios clientes
 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
 	--  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 1000000
 	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
-	'Cliente' -- as tipo_user --TIPO USER
+	'Cliente', -- as tipo_user --TIPO USER
+	GETDATE()
 	from gd_esquema.Maestra A 
 	where A.cli_mail is not null order by 1
 	
 --Usuarios Empresas
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
 	2, -- 2 REFERIDO A ROL DE EMPRESA
-	'Empresa'
+	'Empresa',
+	GETDATE()
 	from gd_esquema.Maestra
 	order by 1
 
@@ -546,16 +550,6 @@ join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubi
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
-
-select 
-	Convert(varchar(30),CONVERT(varchar(4), (YEAR(GETDATE())+1))
-			 + '-'+ 
-			 CONVERT(varchar(2), MONTH(GETDATE()))
-			  +'-'+ 
-			   CONVERT(varchar(2),  DAY(GETDATE())) + ' 00:00:00'
-			  ,102)
-select GETDATE()
-
 --PUNTAJE
 go 
 insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
@@ -592,6 +586,20 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
 GO
+CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
+RETURNS bit 
+AS 
+BEGIN
+	IF (@fechaUser = @fechaBuscada) 
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
+END
+
+
+
+GO
 CREATE TRIGGER 
 	TRIG_fecha_publicada_es_menor_a_vencimiento on [SQLEADOS].[Publicacion]
 for insert as
@@ -620,75 +628,37 @@ for insert as
 						publicacion_codigo=@indice;
 		END
 
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
-('admin',
-HASHBYTES('SHA2_256', 'pass123'),
-1,
-'Administrativo')
-
-select * from SQLeados.Usuario where usuario_username LIKE '%admin%'
-
-
-GO
-CREATE TRIGGER TRIG_nuevo_user_nombre_unico on [SQLEADOS].[Usuario]
-AFTER insert
-	as BEGIN TRANSACTION
-		DECLARE @UsuarioNombre varchar(255)
-		DECLARE @nombreOriginal varchar(255)
-		DECLARE mi_cursor cursor for
-			SELECT usuario_username FROM
-				INSERTED GROUP BY usuario_username
-
-		OPEN mi_cursor
-			FETCH NEXT mi_cursor into @UsuarioNombre
-			WHILE @@FETCH_STATUS =0
-				BEGIN 
-					WHILE ((select count(*) from Usuario u1 
-							WHERE u1.usuario_username LIKE @UsuarioNombre)							
-								) > 1 
-								(
-									Select @UsuarioNombre = @nombreOriginal
-								)
-						update SQLEADOS.Usuario
-						set usuario_username = @UsuarioNombre
-						where 
-							usuario_username=@nombreOriginal;
-					FETCH NEXT mi_cursor into @UsuarioNombre
-				END
-		CLOSE mi_cursor
-	DEALLOCATE mi_cursor
-COMMIT TRANSACTION
-
 GO
 CREATE TRIGGER 
-	TRIG_nuevo_user on [SQLEADOS].[Usuario]
-for insert, update as
+	TRIG_poner_nombre_bien_al_user on [SQLEADOS].[Usuario]
+for insert as
 	begin 
 		declare @UsuarioNombre varchar(255)
 		declare @nombreOriginal varchar(255)
 		declare @numero int = 0;
+		declare @userID int;
 		
 
 			Select 
 				@UsuarioNombre = usuario_username,
-				@nombreOriginal = @UsuarioNombre
-				from SQLEADOS.Usuario
+				@nombreOriginal = @UsuarioNombre,
+				@userID = usuario_Id
+				from [SQLEADOS].Usuario
 							
-				WHILE((select count(*) from Usuario u1 
-							WHERE u1.usuario_username LIKE @UsuarioNombre)							
-								) > 1 
-					 (
-					select
-				
+				WHILE((select count(*) from [SQLEADOS].Usuario u1 
+							WHERE @UsuarioNombre LIKE u1.usuario_username)							
+								) > 0 
+					 
+					select 
 						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
 						@numero = @numero +1
-						from SQLEADOS.Usuario
-							where @UsuarioNombre LIKE usuario_username		
-				)
+						from [SQLEADOS].Usuario
+							where @UsuarioNombre LIKE usuario_username
+							order by usuario_Id DESC
 				if(@numero>0) 
-					update SQLEADOS.Usuario
+					update [SQLEADOS].Usuario
 						set usuario_username = @UsuarioNombre
 						where 
-							usuario_username=@nombreOriginal;
+							usuario_username=@nombreOriginal AND usuario_Id = @userID;
 		END
 

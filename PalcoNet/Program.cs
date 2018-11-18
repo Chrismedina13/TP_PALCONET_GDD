@@ -21,7 +21,7 @@ namespace PalcoNet
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(new ABMCliente(usuario));
-         //   Application.Run(new ABMEmpresa(usuario));
+        //    Application.Run(new ABMEmpresa(usuario));
         }
     }
 }

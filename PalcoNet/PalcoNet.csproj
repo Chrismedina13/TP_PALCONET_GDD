@@ -170,6 +170,18 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login y seguridad\LOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login y seguridad\LOGIN.Designer.cs">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login y seguridad\SeleccionarROL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login y seguridad\SeleccionarROL.Designer.cs">
+      <DependentUpon>SeleccionarROL.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registro de Usuario\Form1.cs">
@@ -178,6 +190,7 @@
     <Compile Include="Registro de Usuario\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\DBConsulta.cs" />
     <Compile Include="Support\ConsultasSQL.cs" />
     <Compile Include="Support\Form1.cs">
       <SubType>Form</SubType>
@@ -223,6 +236,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login y seguridad\LOGIN.resx">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login y seguridad\SeleccionarROL.resx">
+      <DependentUpon>SeleccionarROL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

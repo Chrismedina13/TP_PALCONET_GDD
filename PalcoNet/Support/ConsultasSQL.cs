@@ -14,12 +14,33 @@ using System.Data;
 
 namespace PalcoNet.Support
 {
-    class ConsultaGeneral
+    class ConsultaGeneral {
+        internal static bool esVacio(String n)
+        {
+            return n == "";
+        }
+
+        internal static String fechaToString(DateTime fecha) {
+            int anio = fecha.Year;
+            int mes = fecha.Month;
+            int dia = fecha.Day;
+            int hora = fecha.Hour;
+            int min = fecha.Minute;
+            int seg = fecha.Second;
+
+            return anio.ToString() +"/"+ mes.ToString()+"/" + dia.ToString() +" "+ hora.ToString()+":" + min.ToString() +":"+ seg.ToString();
+
+        }
+    }
+
+
+    class Conexion
     {
         #region Atributos
-
-        //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
-        private static SqlConnection conexion = new SqlConnection(@"Data source=LAPTOP-B6PL6D9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        //LAPTOP-B6PL6D9G
+        //\SQLSERVER2012
+ //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
+        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
         public static SqlConnection conexionObtener()
         {
             return conexion;
@@ -50,10 +71,7 @@ namespace PalcoNet.Support
             return;
         }
         */
-        internal static bool esVacio(String n)
-        {
-            return n == "";
-        }
+        
 
         public static SqlCommand consultaCrear(string consulta)
         {
@@ -90,7 +108,7 @@ namespace PalcoNet.Support
             }
             return dataSet;
         }
-
+            
         public static DataTable consultaObtenerTabla(SqlCommand consulta)
         {
             DataSet dataSet = consultaObtenerDatos(consulta);
@@ -185,7 +203,7 @@ namespace PalcoNet.Support
         internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, string codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
         {
 
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
             addDomicilioCommand.Parameters.AddWithValue("calle", calle);
             addDomicilioCommand.Parameters.AddWithValue("numeroCalle", numeroCalle);
@@ -211,8 +229,8 @@ namespace PalcoNet.Support
         internal static bool existeCuit(string cuit, string tipo)
         {
             String RS = null;
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
-            SqlCommand tipoHabilitada = new SqlCommand("SELECT cliente_cuit FROM [GD2C2018].[SQLEADOS].["+tipo+"] WHERE "+tipo+"_cuit = @cuit and "+tipo+"_estado = 1");
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand tipoHabilitada = new SqlCommand("SELECT " + tipo + "_cuit FROM [GD2C2018].[SQLEADOS].[" + tipo + "] WHERE " + tipo + "_cuit = @cuit and " + tipo + "_estado = 1");
             tipoHabilitada.Parameters.AddWithValue("cuit", cuit);
             tipoHabilitada.Connection = connection;
             connection.Open();
@@ -228,7 +246,7 @@ namespace PalcoNet.Support
 
         internal static void darDeBaja(DataGridView dgv, string usuario)
         {
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             connection.Open();
             try
             {
@@ -243,7 +261,7 @@ namespace PalcoNet.Support
         }
 
         internal static bool nombreUsuarioDisponible(String nombre, bool casoEspecial) {
-            SqlConnection sql = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection sql = PalcoNet.Support.Conexion.conexionObtener();
             String RS = null;
             try
             {
@@ -274,7 +292,7 @@ namespace PalcoNet.Support
         }
 
         /*Crea un usuario y devuelve su ID si todo va bien*/
-        internal static int crearUser(String nombre, String apellido, bool caso, String contra)
+        internal static int crearUser(String nombre, String apellido, bool caso, String contra, String tipo, String codigoRol)
         {
             string nombreUserCreado ="";
             bool creado = false;
@@ -295,78 +313,109 @@ namespace PalcoNet.Support
                     i++;
                 }
                 /*El caso especial es por si ocurre un error en la conexión. Si hay se aborta todo*/
-                if (nombreUsuarioDisponible(nombreUserCreado, caso))
-                {
-                    creado = true;
-                }
+                creado = true;
             }
             if (caso == false) {
-                return crearUnNuevoUserConNombre(nombreUserCreado, contra, "3", "Cliente");
+                if (tipo == "Cliente") {
+                    return crearUnNuevoUserConNombre(nombreUserCreado, contra, "3", tipo, DateTime.Today);
+                }
+                // porque es empresa
+                if (tipo == "Empresa") {
+                    return crearUnNuevoUserConNombre(nombreUserCreado, contra, "2", tipo, DateTime.Today);
+                }
+                return crearUnNuevoUserConNombre(nombreUserCreado, contra, codigoRol, tipo, DateTime.Today);
             }
             return 0;
         }
 
-        internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
+        internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo, DateTime fecha) {
 
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
-            SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo) values (@nombre,@contra,@rol,@tipo)");
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values (@nombre,@contra,@rol,@tipo,@fecha)");
             addUserCommand.Parameters.AddWithValue("nombre", nombre);
             addUserCommand.Parameters.AddWithValue("rol", rol);
             addUserCommand.Parameters.AddWithValue("tipo", tipo);
+            addUserCommand.Parameters.AddWithValue("fecha", ConsultaGeneral.fechaToString(fecha));
 
-            
+            Random random = new Random();
+            int contraAPoner = random.Next(0, 10000000);
 
-           
-
+            /*
             SqlCommand contracmd = new SqlCommand("SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))");
-      //      contracmd.Connection = connection;
+           contracmd.Connection = connection;
             
             if (contra == "")
             {
+     //           int resultado = Conexion.consultaEjecutar(contracmd);
                 SqlDataReader sqlreader = contracmd.ExecuteReader();
-
-                DataTable tabla = ConsultaGeneral.consultaObtenerTabla(contracmd);
+                contra = Conexion.consultaObtenerValor(contracmd);
+     //           DataTable tabla = Conexion.consultaObtenerTabla(contracmd);
       //          DataRow datarowBuscado = tabla.Rows[0];
-                contra = tabla.Rows[0].ToString();
+     //           contra = tabla.Rows[0].ToString();
       //          sqlreader.Close();
-            }
-            addUserCommand.Parameters.AddWithValue("contra", contra);
+            }*/
+            addUserCommand.Parameters.AddWithValue("contra", LoginSQL.loginEncriptarContraseña(contraAPoner.ToString()));
 
             connection.Open();
             addUserCommand.Connection = connection;
-            SqlDataReader sqlLector = addUserCommand.ExecuteReader();
+            int registrosModificados = addUserCommand.ExecuteNonQuery();
+            connection.Close();
+            if (registrosModificados > 0)
+            {
+                
+       //         try
+     //           {
+                    String RS = null;
+                    SqlCommand query = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + ConsultaGeneral.fechaToString(fecha) + ")");
+                    query.Connection = connection;
 
-        // ME CANSE DE HACER ESTO, PASO A HACER EL TRIGGER CORRESPONDIENTE
+                    connection.Open();
+                    RS = Conexion.consultaObtenerValor(query);
+             /*   
+                    SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    
+                    
+                    RS = dt.Rows[0][0].ToString();
+            */
+             
 
-        //    int registrosModificados = addUserCommand.ExecuteNonQuery();
-            
-            if (sqlLector.Read()) {
-                connection.Close();
 
-                MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SqlConnection connection1 = PalcoNet.Support.ConsultaGeneral.conexionObtener();
-                SqlCommand buscarID = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre);
 
-                buscarID.Connection = connection1;
-                connection1.Open();
-                SqlDataReader reader = buscarID.ExecuteReader();
-                String RS = null;
+                    connection.Close();
+                    MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return Convert.ToInt32(RS);
+      //          }
+    /*            catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar registro Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    connection.Close();
+                    return -1;
+                }
+           */     
+                //         MessageBox.Show("Cliente fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    //            SqlConnection connection1 = PalcoNet.Support.Conexion.conexionObtener();
+    //            SqlCommand buscarID = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + ConsultaGeneral.fechaToString(fecha) + ")");
+      //          String buscarCMD = "SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + fecha.ToString() + ")";
+      //          buscarID.Connection = connection1;
+     //           connection1.Open();
+        //        String RSS = Conexion.consultaObtenerValor(buscarID);
+     //          SqlDataReader reader = buscarID.ExecuteReader();
+    /*          String RS = null;
                 while (reader.Read())
                 {
                     RS = reader[0].ToString();
                 }
-                connection1.Close();
-                return Convert.ToInt32(RS);
-            }           
-            else 
-            {
+      */  
+       //         connection1.Close();
+        
+                
+            }
+            else
                 MessageBox.Show("Error al cargar registro Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
-            }
-                
-        }
-
-
+            }           
     }
     #endregion
 
@@ -394,7 +443,7 @@ namespace PalcoNet.Support
         internal static void AgregarEmpresa(string razonSocial, string cuit, string ciudad, string mail, string telefono, int usuario, DateTime fecha)
         {
 
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             SqlCommand addEmpresaCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) values (@razonSocial,@cuit,@ciudad,@mail,@telefono,@usuario,@fecha)");
             addEmpresaCommand.Parameters.AddWithValue("razonSocial", razonSocial);
             addEmpresaCommand.Parameters.AddWithValue("cuit", cuit);
@@ -416,7 +465,7 @@ namespace PalcoNet.Support
 
         internal static void cargarGriddEmpresa(DataGridView dgv, string razonSocial, string cuit, string mail)
         {
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             connection.Open();
             try
             {
@@ -443,7 +492,7 @@ namespace PalcoNet.Support
     {
         internal static void llenarDGVCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
         {
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             connection.Open();
             try
             {
@@ -463,7 +512,7 @@ namespace PalcoNet.Support
 
         public static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string numeroDNI, string mail)
         {
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             connection.Open();
             try
             {
@@ -479,6 +528,7 @@ namespace PalcoNet.Support
             }
             connection.Close();
         }
+        #region ocultar
         /*
         internal bool existeCUILCliente(string cuit) { 
             String clienteRS = null;
@@ -516,12 +566,14 @@ namespace PalcoNet.Support
             connection.Close();
         }
         */
+        #endregion
+
         internal static void AgregarCliente(string nombre, string apellido, string tipo_documento, string nro_documento,
             int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, String fecha_nacimiento,
             DateTime fecha_creacion)
         {
 
-            SqlConnection connection = PalcoNet.Support.ConsultaGeneral.conexionObtener();
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             SqlCommand addClienteCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Cliente] (cliente_nombre,cliente_apellido,cliente_usuario,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_datos_tarjeta,cliente_puntaje,cliente_email,cliente_telefono,cliente_estado,cliente_cuit) values (@nombre,@apellido,@user,@tipo_documento,@nro_documento,@fecha_nacimiento,@fecha_creacion, @datos_tarjeta, @puntaje, @mail, @telefono, @estado, @cuit)");            
             addClienteCommand.Parameters.AddWithValue("nombre", nombre);
             addClienteCommand.Parameters.AddWithValue("apellido", apellido);
@@ -535,17 +587,64 @@ namespace PalcoNet.Support
             addClienteCommand.Parameters.AddWithValue("cuit", cuit);
             addClienteCommand.Parameters.AddWithValue("telefono", telefono);
             addClienteCommand.Parameters.AddWithValue("fecha_nacimiento", fecha_nacimiento);
-            addClienteCommand.Parameters.AddWithValue("fecha_creacion", fecha_creacion);
+            addClienteCommand.Parameters.AddWithValue("fecha_creacion", ConsultaGeneral.fechaToString(fecha_creacion));
 
 
             addClienteCommand.Connection = connection;
             connection.Open();
             int registrosModificados = addClienteCommand.ExecuteNonQuery();
             connection.Close();
-            if (registrosModificados > 0) MessageBox.Show("Empresa ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (registrosModificados > 0) MessageBox.Show("Cliente ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
+    }
+    #endregion
+
+    #region LOGIN
+    class LoginSQL : ConsultasSQL
+    {
+        public static byte[] loginEncriptarContraseña(string contrasenia)
+        {
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding encoder = Encoding.UTF8;
+                return hash.ComputeHash(encoder.GetBytes(contrasenia));
+            }
+        }
+
+        public static int corroborarDatos(String user, String contra) {
+            String query = String.Format( "SELECT [usuario_nombre],[usuario_password] FROM [GD2C2018].[SQLEADOS].[Usuario] where [usuario_nombre] like '{0}'", user);
+            DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
+            int contador = 1;
+            if(DBConsulta.dataSetVacio(usersEncontrados)) {
+              MessageBox.Show("Usuario o contraseña incorrecto");
+              return -1; // NO ENCONTRO NADA, NO HACE NADA
+            }
+
+            String nombreUser = usersEncontrados.Tables[0].Rows[0][0].ToString();
+            String pass = usersEncontrados.Tables[0].Rows[0][1].ToString();
+            if (pass != contra) {
+                MessageBox.Show("Usuario o contraseña incorrecto");
+                String subirIntentosFallidos = String.Format("UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET [usuario_logins_fallidos] = [usuario_logins_fallidos] + {0} where [usuario_nombre] like '{1}'", contador, user);
+                DBConsulta.ModificarDB(subirIntentosFallidos);
+                return 0; // DEBE SALTAR UNA VENTANA QUE MLA LA CONTRA Y EN CORRESPONDENCIA SUBE EL CONTADOR
+                            // DE LOGIN
+            }
+            MessageBox.Show("Bienvenido " + nombreUser);
+            if (usersEncontrados.Tables.Count > 1) { 
+                // SIGNIFICA QUE EL USUARIO TIENE MAS DE 1 ROL
+                return 2;
+            }
+            return 1; 
+        }
+
+        /*
+        public static DataSet obtenerRoles(String user) {
+            String query = String.Format("SELECT [usuario_nombre],[usuario_password] FROM [GD2C2018].[SQLEADOS].[Usuario] where [usuario_nombre] like '{0}'", user);
+            return DBConsulta.ConectarConsulta(query);
+        }
+         * */
     }
     #endregion
 }
