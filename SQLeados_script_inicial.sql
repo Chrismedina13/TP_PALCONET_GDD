@@ -5,6 +5,9 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** ELIMINACIÓN DE CONSTRAINS DE TABLAS ANTERIORES **/
 ----------------------------------------------------------------------------------------------
+GO
+DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
+
 IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
 BEGIN
 	DECLARE @Sql NVARCHAR(MAX) = '';
@@ -35,6 +38,7 @@ BEGIN
 END
 GO
 
+
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
@@ -47,6 +51,7 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** VALIDACION TABLAS **/
 ----------------------------------------------------------------------------------------------
+
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.FuncionalidadXRol'))
     DROP TABLE SQLEADOS.FuncionalidadXRol
@@ -133,7 +138,6 @@ create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
 usuario_username varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
 usuario_password varbinary(100) not null,
-usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
@@ -297,6 +301,7 @@ canj_producto varchar(50),
 ----------------------------------------------------------------------------------------------
 
 --ROL
+
 go
 insert into SQLEADOS.Rol (rol_nombre) values
 ('Administrativo'), 
@@ -382,18 +387,20 @@ select distinct Espec_Empresa_Dom_Calle,Espec_Empresa_Nro_Calle,Espec_Empresa_Pi
 
 --CLIENTE
 go
+ PRINT('POR A CLIENTE') 
 insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_documento,cliente_numero_documento,
 							cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
 select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') 
 	from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
-
+ PRINT('PASA A CLIENTE') 
 --DOMICILIO_CLIENTE
+PRINT('POR A DOMICILIO') 
 go
 insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,
 								domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
 select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
 
-
+PRINT('PASA A DOMICILIO') 
 --USUARIO
 
 --Usuarios ADMIN
@@ -402,64 +409,70 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 	NOMBRE: admin
 	CONTRA: pass123
 ***********************************************************/
+PRINT('POR A USER') 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
-1,
 'Administrativo',
-GETDATE())
+GETDATE()
+)
 
 --Usuarios clientes
-
+PRINT('POR A CLIENTE') 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,
+	usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
 	--  contraseñas_autogeneradas,
-	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 1000000
-	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
+	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 100000
 	'Cliente', -- as tipo_user --TIPO USER
 	GETDATE()
 	from gd_esquema.Maestra A 
 	where A.cli_mail is not null order by 1
 	
 --Usuarios Empresas
+PRINT('POR A EMPRESA') 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
+insert into SQLEADOS.Usuario (usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
-	2, -- 2 REFERIDO A ROL DE EMPRESA
 	'Empresa',
 	GETDATE()
 	from gd_esquema.Maestra
-	order by 1
 
 
 
 -- USERXROL
+PRINT('POR A USERXROL ADMIN') 
 -- ADMIN
 
-go insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct u.usuario_Id, 1 from SQLEADOS.Usuario u
+go 
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct 1, u.usuario_Id from SQLEADOS.Usuario u
 	WHERE u.usuario_username LIKE 'admin'
 
  --EMPRESAS
+ PRINT('USERXROL EMPRESA') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct u.usuario_Id, 2 from SQLEADOS.Usuario u
+select distinct 2,u.usuario_Id from SQLEADOS.Usuario u
 	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_username
 
 --CLIENTE
+ PRINT('USERXROL CLIENTE') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct u.usuario_Id, 3 from SQLEADOS.Usuario u
+select distinct 3, u.usuario_Id from SQLEADOS.Usuario u
 	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
 
 --RUBRO 
 
+
+ PRINT('RUBRO') 
 go
 insert into SQLEADOS.Rubro(rubro_descripcion)
 select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
@@ -612,6 +625,7 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
+PRINT('Comienza UPDATE CLIENTE') 
 
 UPDATE SQLEADOS.Cliente
 SET cliente_usuario = usuario_Id 
@@ -619,11 +633,14 @@ FROM SQLEADOS.Cliente
 INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_username
 
+PRINT('Comienza UPDATE EMPRESA') 
+
 UPDATE SQLEADOS.Empresa
 SET empresa_usuario = usuario_Id 
 FROM SQLEADOS.Empresa
 INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_username
+
 
 
 GO
@@ -703,3 +720,6 @@ for insert as
 							usuario_username=@nombreOriginal AND usuario_Id = @userID;
 		END
 
+
+
+		

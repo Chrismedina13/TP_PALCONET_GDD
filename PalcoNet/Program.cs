@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Abm_Empresa_Espectaculo;
 using PalcoNet.Abm_Cliente;
+using PalcoNet.Login_y_seguridad;
 
 namespace PalcoNet
 {
@@ -20,7 +21,8 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new ABMCliente(usuario));
+            Application.Run(new LOGIN());
+        //    Application.Run(new ABMCliente(usuario));
         //    Application.Run(new ABMEmpresa(usuario));
         }
     }
