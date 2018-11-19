@@ -260,35 +260,16 @@ namespace PalcoNet.Support
             return;
         }
 
-        internal static bool nombreUsuarioDisponible(String nombre, bool casoEspecial) {
-            SqlConnection sql = PalcoNet.Support.Conexion.conexionObtener();
-            String RS = null;
-            try
+        internal static bool nombreUserDisponible(String nombre)
+        {
+            String query = String.Format("SELECT usuario_nombre FROM GD2C2018.SQLEADOS.Usuario where usuario_nombre like '" + nombre + "'");
+            DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
+            if (DBConsulta.dataSetVacio(usersEncontrados))
             {
-                SqlCommand buscarUserConEseNombre = new SqlCommand("SELECT count(*) from [GD2C2018].[SQLEADOS].[Usuario] where WHERE usuario_username LIKE " + nombre);
-                buscarUserConEseNombre.Connection = sql;
-                sql.Open();
-
-                SqlDataReader reader = buscarUserConEseNombre.ExecuteReader();
-                while (reader.Read())
-                {
-                    RS = reader[0].ToString();
-                }
-                sql.Close();
-                if (Convert.ToInt32(RS) > 0)
-                {
-                    return false;
-                }
-                return true;
-                   
+                MessageBox.Show("Usuario Disponible");
+                return true; // NO ENCONTRO NADA, NO HACE NADA
             }
-            catch (Exception)
-            {
-                MessageBox.Show("No se realizó la conexión con la base de datos");
-                casoEspecial = true;
-                
-                return true;
-            }
+            return false;
         }
 
         /*Crea un usuario y devuelve su ID si todo va bien*/
@@ -604,7 +585,55 @@ namespace PalcoNet.Support
     #region LOGIN
     class LoginSQL : ConsultasSQL
     {
-        public static byte[] loginEncriptarContraseña(string contrasenia)
+        public static int corroborarDatos(String user, String contra) {
+            String query = String.Format("SELECT usuario_nombre, usuario_password, usuario_logins_fallidos, usuario_estado FROM GD2C2018.SQLEADOS.Usuario where usuario_nombre like '" + user + "'");
+            DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
+            if(DBConsulta.dataSetVacio(usersEncontrados)) {
+              MessageBox.Show("No existe el usuario");
+              return -1; // NO ENCONTRO NADA, NO HACE NADA
+            }
+            String nombreUser = usersEncontrados.Tables[0].Rows[0][0].ToString();
+            byte[] pass = (byte[])usersEncontrados.Tables[0].Rows[0][1];
+            String intentos_fallidos = usersEncontrados.Tables[0].Rows[0][2].ToString();
+            String estadoUser = usersEncontrados.Tables[0].Rows[0][3].ToString();
+
+            int nrointentos = Convert.ToInt32(intentos_fallidos);
+            if (estadoUser == "0")
+            {
+                MessageBox.Show("Su usuario está bloqueado \nComuniquese con un administrador");
+                //USER BLOQUEADO, NO SE HACE NADA PERO SE IMPOSIBILITA SU ENTRADA
+                return -2;
+            }
+            else {
+                if (!coincidenContrasenias(pass, contra))
+                {
+                    MessageBox.Show("Usuario o contraseña incorrecto\n\nLimite de tolerancia de intentos fallidos hasta ser bloqueado: 3 \nLogins fallidos cometidos por usted: " + (nrointentos++).ToString());
+                    if (nrointentos < 3)
+                    {
+                        String subirIntentosFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_logins_fallidos = usuario_logins_fallidos + 1 where usuario_nombre like  '" + user + "'");
+                        DBConsulta.ModificarDB(subirIntentosFallidos);
+                    }
+                    else {
+                        String subirIntentosFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_estado = 0 where usuario_nombre like  '" + user + "'");
+                        DBConsulta.ModificarDB(subirIntentosFallidos);
+                    }
+                    return 0; // DEBE SALTAR UNA VENTANA QUE MLA LA CONTRA Y EN CORRESPONDENCIA SUBE EL CONTADOR
+                    // DE LOGIN
+                }
+                MessageBox.Show("Bienvenido: " + nombreUser);
+                //Borrar todos los contadores de Logins fallidos para el usuario que ingresó
+                String resetearCampoLoginsFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_logins_fallidos = 0 where usuario_nombre like  '" + user + "'");
+                DBConsulta.ModificarDB(resetearCampoLoginsFallidos);
+                if (userTieneMasDe1Rol(ObtenerRoles(user)))
+                {
+                    // SIGNIFICA QUE EL USUARIO TIENE MAS DE 1 ROL, ABRE VENTANA DE SELECCION DE USER
+                    return 2;
+                }
+                return 1; 
+            }
+        }
+
+        public static byte[] loginEncriptarContraseña(String contrasenia)
         {
             using (SHA256 hash = SHA256Managed.Create())
             {
@@ -613,47 +642,46 @@ namespace PalcoNet.Support
             }
         }
 
-        public static int corroborarDatos(String user, String contra) {
-            String query = String.Format("SELECT usuario_username, usuario_password FROM GD2C2018.SQLEADOS.Usuario where usuario_username like '" + user + "'");
-            DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
-            if(DBConsulta.dataSetVacio(usersEncontrados)) {
-              MessageBox.Show("Usuario o contraseña incorrecto");
-              return -1; // NO ENCONTRO NADA, NO HACE NADA
-            }
+        private static byte[] obtenerContraRealEncriptada(String contraReal) {
+            return Encoding.ASCII.GetBytes(contraReal);
+        }
 
-            String nombreUser = usersEncontrados.Tables[0].Rows[0][0].ToString();
-            String pass = usersEncontrados.Tables[0].Rows[0][1].ToString();
-            MessageBox.Show("USERS ENCONTRADOS");
-            if (pass != contra) {
-                MessageBox.Show("Usuario o contraseña incorrecto");
-                String subirIntentosFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = usuario_intentos + 1 where usuario_username like  '" + user + "'");
-                DBConsulta.ModificarDB(subirIntentosFallidos);
-                return 0; // DEBE SALTAR UNA VENTANA QUE MLA LA CONTRA Y EN CORRESPONDENCIA SUBE EL CONTADOR
-                            // DE LOGIN
-            }
-            MessageBox.Show("Bienvenido " + nombreUser);
-            //Borrar todos los contadores de Logins fallidos para el usuario que ingresó
-            String resetearCampoLoginsFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = 0 where usuario_username like  '" + user + "'");
-            DBConsulta.ModificarDB(resetearCampoLoginsFallidos);
-            
-
-            if (userTieneMasDe1Rol(ObtenerRoles(user))) { 
-                // SIGNIFICA QUE EL USUARIO TIENE MAS DE 1 ROL
-                // ABRE VENTANA DE SELECCION DE USER
-                return 2;
-            }
-            return 1; 
+        public static bool coincidenContrasenias(byte[] contraseniaReal, String contrasenia)
+        {
+            byte[] contraseniaEncriptada = loginEncriptarContraseña(contrasenia);
+            return contraseniaEncriptada.SequenceEqual(contraseniaReal);
         }
 
         public static bool userTieneMasDe1Rol(DataSet DS) {
             return DS.Tables[0].Rows.Count > 1;
         }
-        
+
+        public static DataSet ObtenerRolesSinAdmin()
+        {
+            String query = String.Format("Select distinct r.rol_nombre from SQLEADOS.Rol r where rol_Id > 0");
+            return DBConsulta.ConectarConsulta(query);
+        }
+
         public static DataSet ObtenerRoles(String user) {
-            String query = String.Format("Select r.rol_nombre from SQLEADOS.Rol r JOIN SQLEADOS.UserXRol ux on ux.userXRol_rol = r.rol_Id JOIN SQLEADOS.Usuario u ON u.usuario_rol = ux.userXRol_usuario where u.usuario_username LIKE like '{0}'", user);
+            String query;
+            if (user == "")
+            {
+                query = String.Format("Select distinct r.rol_nombre from SQLEADOS.Rol r");
+            }
+            else {
+                query = String.Format("Select r.rol_nombre from SQLEADOS.Rol r JOIN SQLEADOS.UserXRol ux on ux.userXRol_rol = r.rol_Id JOIN SQLEADOS.Usuario u ON u.usuario_Id = ux.userXRol_usuario where u.usuario_nombre LIKE '" + user + "'");
+
+            }
             return DBConsulta.ConectarConsulta(query);
         }
         
     }
+    #endregion
+
+    #region Registro
+    class RegistroSQL : ConsultasSQL {
+        
+    }
+
     #endregion
 }

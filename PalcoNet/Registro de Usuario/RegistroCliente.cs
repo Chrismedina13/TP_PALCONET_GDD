@@ -8,28 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Support;
+using PalcoNet.Abm_Cliente;
 
-namespace PalcoNet.Abm_Cliente
+namespace PalcoNet.Registro_de_Usuario
 {
-    public partial class AltaCliente : Form
+    public partial class RegistroCliente : AltaCliente
     {
-    //    int usuario;
-        
-        public AltaCliente()
+        public RegistroCliente()
         {
-            
             InitializeComponent();
-     //       usuario = usuarioRecibido;   
         }
 
-        private void debeSerTodoNumero(String cadena, String tipo) {
-            int parsedValue;
-            if (!int.TryParse(cadena, out parsedValue))
-            {
-                MessageBox.Show("Sólo se permiten numeros en el campo: "+ tipo, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            return;
+        private void RegistroCliente_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
@@ -139,92 +131,5 @@ namespace PalcoNet.Abm_Cliente
             return;
 
         }
-
-        private bool contieneNumeroTIPODocumento(String caracteres) {
-            return caracteres.Contains("1") || caracteres.Contains("2") || caracteres.Contains("3") ||
-                caracteres.Contains("4") || caracteres.Contains("5") || caracteres.Contains("6") ||
-                caracteres.Contains("7") || caracteres.Contains("8") || caracteres.Contains("9");
-        }
-
-        private static bool cuitYNroDocumentoSonCorrectos(String cuit, String nroDocumento) {
-            return cuit.Contains(nroDocumento);
-        }
-
-        private void limpiarCuadrosDeTexto()
-        {
-            textBoxNombre.Text = "";
-            textBoxApellido.Text = "";
-            textBoxTIPODOC.Text = "";
-            textBoxDOCNUMERO.Text = "";
-            textBoxMail.Text = "";
-            textBoxTelefono.Text = "";
-            textBoxNroCalle.Text = "";
-            textBoxCalle.Text = "";
-            textBoxCodigoPostal.Text = "";
-            textBoxDto.Text = "";
-            textBoxPiso.Text = "";
-            textBoxLocalidad.Text = "";
-            textBoxCuit.Text = "";
-        }
-
-        public String armarCuit(String cuitSinArmar)
-        {
-            int n = cuitSinArmar.Length;
-            String primeraParte = cuitSinArmar.Substring(0, 2);
-            String SegundaParte = cuitSinArmar.Substring(2, 7);
-            String TerceraParte = cuitSinArmar.Substring(7, 2);
-
-            String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
-
-            return cuitArmado;
-
-        }
-
-        private void textBoxNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label27_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxFechaNacimiento_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AltaCliente_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label30_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void volver_boton_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void textBoxTIPODOC_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }

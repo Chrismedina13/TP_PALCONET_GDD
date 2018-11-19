@@ -100,6 +100,7 @@
             this.botonRegistrar.TabIndex = 6;
             this.botonRegistrar.Text = "Registrarse";
             this.botonRegistrar.UseVisualStyleBackColor = true;
+            this.botonRegistrar.Click += new System.EventHandler(this.botonRegistrar_Click);
             // 
             // LOGIN
             // 

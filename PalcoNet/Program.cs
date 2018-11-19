@@ -17,7 +17,7 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
-            int usuario = 1;
+      //      int usuario = 1;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

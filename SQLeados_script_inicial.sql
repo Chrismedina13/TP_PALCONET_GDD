@@ -145,11 +145,11 @@ funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad
 
 create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
-usuario_username varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
+usuario_nombre varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
 usuario_password varbinary(100) not null,
 usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
-usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+usuario_logins_fallidos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
 usuario_fecha_creacion datetime
 )
 
@@ -421,7 +421,7 @@ PRINT('PASA A DOMICILIO')
 
 PRINT('POR A USER') 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values
+insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_tipo, usuario_fecha_creacion) values
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
 'Administrativo',
@@ -431,7 +431,7 @@ GETDATE()
 --Usuarios clientes
 PRINT('POR A CLIENTE') 
 go
-insert into SQLEADOS.Usuario(usuario_username, usuario_password,
+insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,
 	usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
@@ -446,7 +446,7 @@ select distinct
 --Usuarios Empresas
 PRINT('POR A EMPRESA') 
 go
-insert into SQLEADOS.Usuario (usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion)
+insert into SQLEADOS.Usuario (usuario_nombre, usuario_password,usuario_tipo, usuario_fecha_creacion)
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
@@ -462,22 +462,22 @@ PRINT('POR A USERXROL ADMIN')
 
 go 
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 1, u.usuario_Id from SQLEADOS.Usuario u
-	WHERE u.usuario_username LIKE 'admin'
+select distinct 0, u.usuario_Id from SQLEADOS.Usuario u
+	WHERE u.usuario_nombre LIKE 'admin'
 
  --EMPRESAS
  PRINT('USERXROL EMPRESA') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 2,u.usuario_Id from SQLEADOS.Usuario u
-	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_username
+select distinct 1,u.usuario_Id from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_nombre
 
 --CLIENTE
  PRINT('USERXROL CLIENTE') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 3, u.usuario_Id from SQLEADOS.Usuario u
-	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
+select distinct 2, u.usuario_Id from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_nombre
 
 --RUBRO 
 
@@ -538,7 +538,7 @@ select			2,  --Le asigno un rubro y grado por defecto
 				END
 				from gd_esquema.Maestra A
 				JOIN SQLEADOS.Empresa E on E.empresa_cuit = A.Espec_Empresa_Cuit 
-				JOIN SQLEADOS.Usuario U on U.usuario_username = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
+				JOIN SQLEADOS.Usuario U on U.usuario_nombre = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
 				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id 
 				order by Espectaculo_Cod,usuario_Id
 				
@@ -641,7 +641,7 @@ UPDATE SQLEADOS.Cliente
 SET cliente_usuario = usuario_Id 
 FROM SQLEADOS.Cliente
 INNER JOIN SQLEADOS.Usuario
-       ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_username
+       ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_nombre
 
 PRINT('Comienza UPDATE EMPRESA') 
 
@@ -649,7 +649,7 @@ UPDATE SQLEADOS.Empresa
 SET empresa_usuario = usuario_Id 
 FROM SQLEADOS.Empresa
 INNER JOIN SQLEADOS.Usuario
-       ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_username
+       ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_nombre
 
 
 
@@ -706,29 +706,53 @@ for insert as
 	begin 
 		declare @UsuarioNombre varchar(255)
 		declare @nombreOriginal varchar(255)
-		declare @numero int = 0;
-		declare @userID int;
+		declare @contaseniaOriginal varchar(255)
+		declare @numero int = 0
+		declare @userID int
 		
-
 			Select 
-				@UsuarioNombre = usuario_username,
+				@UsuarioNombre = usuario_nombre,
 				@nombreOriginal = @UsuarioNombre,
+				@contaseniaOriginal = usuario_password,
 				@userID = usuario_Id
-				from [SQLEADOS].Usuario
+				from [SQLEADOS].Usuario u
 							
 				WHILE((select count(*) from [SQLEADOS].Usuario u1 
-							WHERE @UsuarioNombre LIKE u1.usuario_username)							
+							WHERE @UsuarioNombre LIKE u1.usuario_nombre)							
 								) > 0 
 					 
 					select 
 						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
 						@numero = @numero +1
 						from [SQLEADOS].Usuario
-							where @UsuarioNombre LIKE usuario_username
+							where @UsuarioNombre LIKE usuario_nombre
 							order by usuario_Id DESC
+				update [SQLEADOS].Usuario
+					set usuario_password = HASHBYTES('SHA2_256', @contaseniaOriginal)
+					Where usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
 				if(@numero>0) 
 					update [SQLEADOS].Usuario
-						set usuario_username = @UsuarioNombre
+						set usuario_nombre = @UsuarioNombre
 						where 
-							usuario_username=@nombreOriginal AND usuario_Id = @userID;
+							usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
 		END
+
+
+ 
+/*
+	DE PRUEBA
+*/
+insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_tipo, usuario_fecha_creacion) values
+('prueba',
+HASHBYTES('SHA2_256', '123'),
+'Administrativo',
+GETDATE()
+)
+
+insert into SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario)
+select 
+	rol_Id,
+	usuario_Id
+	from SQLEADOS.Rol, SQLEADOS.Usuario
+		where usuario_nombre LIKE 'prueba'
+

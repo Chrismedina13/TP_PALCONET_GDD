@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Support;
+using PalcoNet.Registro_de_Usuario;
 
 namespace PalcoNet.Login_y_seguridad
 {
@@ -42,12 +43,19 @@ namespace PalcoNet.Login_y_seguridad
             }
             if (resultado == 2) { 
                 //AVANZA A LA SELECCION DE ROL
-                this.Hide();
-                SeleccionarROL sl = new SeleccionarROL(txUser.Text.Trim());
+                SeleccionarRolDeUser1 sl = new SeleccionarRolDeUser1(this, txUser.Text.Trim());
                 sl.Show();
+                this.Hide();
             }
             // SE QUEDA EN LA MISMA VENTANA
             return;
+        }
+
+        //boton REGISTRAR
+        private void botonRegistrar_Click(object sender, EventArgs e)
+        {
+            RegistroUser reg = new RegistroUser();
+            reg.Show();
         }
     }
 }

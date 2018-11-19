@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet.Registro_de_Usuario
 {
-    partial class Form1
+    partial class RegistroCliente
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
+            // RegistroCliente
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(431, 451);
+            this.Name = "RegistroCliente";
+            this.Text = "RegistroBase";
+            this.Load += new System.EventHandler(this.RegistroCliente_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+
     }
 }
