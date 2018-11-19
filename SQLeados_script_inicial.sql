@@ -153,11 +153,11 @@ usuario_intentos int default 0, --Como es un contador de intentos fallidos que c
 usuario_fecha_creacion datetime
 )
 
+
 create table [SQLEADOS].UserXRol(
 userXRol_rol int not null references [SQLEADOS].Rol,
 userXRol_usuario int not null references [SQLEADOS].Usuario
 )
-
 
 
 create table [SQLEADOS].Cliente(
@@ -417,6 +417,8 @@ PRINT('PASA A DOMICILIO')
 	NOMBRE: admin
 	CONTRA: pass123
 ***********************************************************/
+
+
 PRINT('POR A USER') 
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values
