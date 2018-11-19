@@ -16,7 +16,7 @@ namespace PalcoNet.Support
 {
     class DBConsulta
     {
-        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        private static SqlConnection conexion = new SqlConnection(@"Data source=LAPTOP-B6PLD9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
 
         private static void conexionAbrir()
         {
@@ -54,7 +54,7 @@ namespace PalcoNet.Support
         }
 
         public static bool dataSetVacio(DataSet DS) {
-            return DS.Tables[0].Rows.Count == 0;
+            return false;
         }
 
         public static void ModificarDB(String cmd) {

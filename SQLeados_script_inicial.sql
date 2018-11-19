@@ -5,8 +5,7 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** ELIMINACIÓN DE CONSTRAINS DE TABLAS ANTERIORES **/
 ----------------------------------------------------------------------------------------------
-GO
-DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
+
 
 IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
 BEGIN
@@ -25,6 +24,11 @@ BEGIN
 	ORDER BY t.name;
 	PRINT @Sql
 	EXEC  (@Sql)
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.func_coincide_fecha_creacion'))
+    DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
+
 -------------------------------------
 --		ELIMINACION DE TABLAS
 -------------------------------------
@@ -39,12 +43,13 @@ END
 GO
 
 
+
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SQLEADOS')
 BEGIN
-    EXEC ('CREATE SCHEMA SQLeados AUTHORIZATION gdEspectaculos2018')
+    EXEC ('CREATE SCHEMA SQLEADOS AUTHORIZATION gdEspectaculos2018')
 END
 GO
 
@@ -113,13 +118,17 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canj
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.UserXRol'))
     DROP TABLE SQLEADOS.UserXRol
 	
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.func_coincide_fecha_creacion'))
+    DROP TABLE SQLEADOS.func_coincide_fecha_creacion
+	
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
 
+
 create table [SQLEADOS].Funcionalidad(
 funcionalidad_Id int primary key identity,
-funcionalidad_descripcion nvarchar(255) not null,)
+funcionalidad_descripcion nvarchar(255) not null)
 
 create table [SQLEADOS].Rol(
 rol_Id int primary key identity,
@@ -148,6 +157,8 @@ create table [SQLEADOS].UserXRol(
 userXRol_rol int not null references [SQLEADOS].Rol,
 userXRol_usuario int not null references [SQLEADOS].Usuario
 )
+
+
 
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
@@ -198,7 +209,6 @@ FOREIGN KEY (domicilio_cliente_tipo_documento, domicilio_cliente_numero_document
 FOREIGN KEY (domicilio_empresa_cuit,domicilio_empresa_razon_social)	REFERENCES [SQLEADOS].Empresa(empresa_cuit,empresa_razon_social)
 )
 
-
 create table [SQLEADOS].Rubro(
 rubro_id int primary key identity,
 rubro_descripcion varchar(255) not null,
@@ -234,14 +244,12 @@ publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
 publicacion_estado_validacion int default 0		--NUEVO CAMPO
 )
 
-
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_ID int primary key identity,
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
 ubiXpubli_precio int 
 )
-
 
 --TABLA NUEVA
 create table [SQLEADOS].Factura(
@@ -643,6 +651,9 @@ INNER JOIN SQLEADOS.Usuario
 
 
 
+
+
+
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
@@ -719,7 +730,3 @@ for insert as
 						where 
 							usuario_username=@nombreOriginal AND usuario_Id = @userID;
 		END
-
-
-
-		
