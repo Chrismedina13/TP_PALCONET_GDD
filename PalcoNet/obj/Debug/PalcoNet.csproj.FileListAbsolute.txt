@@ -32,7 +32,6 @@ C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
 <<<<<<< HEAD
-<<<<<<< HEAD
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe.config
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
@@ -98,5 +97,3 @@ C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.
 C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.pdb
 C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.pdb
 >>>>>>> 01d0479b5978ecac948ccf1ff86c8da844e2f1e8
-=======
->>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!

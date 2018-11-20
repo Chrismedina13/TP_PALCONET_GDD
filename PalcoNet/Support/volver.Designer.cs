@@ -33,19 +33,11 @@
             // 
             // volver_boton
             // 
-<<<<<<< HEAD
             this.volver_boton.Location = new System.Drawing.Point(134, 201);
             this.volver_boton.Name = "volver_boton";
             this.volver_boton.Size = new System.Drawing.Size(75, 23);
             this.volver_boton.TabIndex = 0;
             this.volver_boton.Text = "VOLVER";
-=======
-            this.volver_boton.Location = new System.Drawing.Point(95, 201);
-            this.volver_boton.Name = "volver_boton";
-            this.volver_boton.Size = new System.Drawing.Size(75, 23);
-            this.volver_boton.TabIndex = 0;
-            this.volver_boton.Text = "Volver";
->>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
             this.volver_boton.UseVisualStyleBackColor = true;
             this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click);
             // 
@@ -63,11 +55,7 @@
 
         #endregion
 
-<<<<<<< HEAD
         public System.Windows.Forms.Button volver_boton;
 
-=======
-        private System.Windows.Forms.Button volver_boton;
->>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
     }
 }
