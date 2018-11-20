@@ -521,8 +521,9 @@ namespace PalcoNet.Support
         }
 
         public static int corroborarDatos(String user, String contra) {
-            String query = String.Format("SELECT usuario_username, usuario_password FROM GD2C2018.SQLEADOS.Usuario where usuario_username like '" + user + "'");
+            String query = String.Format( "SELECT [usuario_nombre],[usuario_password] FROM [GD2C2018].[SQLEADOS].[Usuario] where [usuario_nombre] like '{0}'", user);
             DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
+            int contador = 1;
             if(DBConsulta.dataSetVacio(usersEncontrados)) {
               MessageBox.Show("Usuario o contraseña incorrecto");
               return -1; // NO ENCONTRO NADA, NO HACE NADA
@@ -530,10 +531,9 @@ namespace PalcoNet.Support
 
             String nombreUser = usersEncontrados.Tables[0].Rows[0][0].ToString();
             String pass = usersEncontrados.Tables[0].Rows[0][1].ToString();
-            MessageBox.Show("USERS ENCONTRADOS");
             if (pass != contra) {
                 MessageBox.Show("Usuario o contraseña incorrecto");
-                String subirIntentosFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = usuario_intentos + 1 where usuario_username like  '" + user + "'");
+                String subirIntentosFallidos = String.Format("UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET [usuario_logins_fallidos] = [usuario_logins_fallidos] + {0} where [usuario_nombre] like '{1}'", contador, user);
                 DBConsulta.ModificarDB(subirIntentosFallidos);
                 return 0; // DEBE SALTAR UNA VENTANA QUE MLA LA CONTRA Y EN CORRESPONDENCIA SUBE EL CONTADOR
                             // DE LOGIN
@@ -541,7 +541,7 @@ namespace PalcoNet.Support
             MessageBox.Show("Bienvenido " + nombreUser);
 <<<<<<< HEAD
             //Borrar todos los contadores de Logins fallidos para el usuario que ingresó
-            String resetearCampoLoginsFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = 0 where usuario_username like  '" + user + "'");
+            String resetearCampoLoginsFallidos = String.Format("UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET [usuario_logins_fallidos] = {0} where [usuario_nombre] like '{1}'", 0, user);
             DBConsulta.ModificarDB(resetearCampoLoginsFallidos);
             
 
