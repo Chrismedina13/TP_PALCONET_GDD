@@ -19,11 +19,7 @@ namespace PalcoNet.Support
 
         public void volver_boton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             this.Close();
-=======
-
->>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
         }
     }
 }
