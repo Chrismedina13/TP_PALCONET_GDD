@@ -70,6 +70,7 @@ C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSeleccionado.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarCliente.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.LOGIN.resources
+<<<<<<< HEAD
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarRolDeUser1.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
@@ -106,3 +107,6 @@ C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
 =======
 >>>>>>> parent of e9638d7... subo cambios
+=======
+C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarROL.resources
+>>>>>>> parent of d713694... Importante avance

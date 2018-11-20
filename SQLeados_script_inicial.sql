@@ -114,12 +114,20 @@ funcionalidadXRol_funcionalidad int not null references [SQLEADOS].Funcionalidad
 
 create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
+<<<<<<< HEAD
 usuario_username varchar(255) unique not null,
+=======
+usuario_username varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
+>>>>>>> parent of d713694... Importante avance
 usuario_password varbinary(100) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
 usuario_tipo varchar(20) not null,
 usuario_estado int default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+<<<<<<< HEAD
+=======
+usuario_fecha_creacion datetime
+>>>>>>> parent of d713694... Importante avance
 )
 
 <<<<<<< HEAD
@@ -409,7 +417,15 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 	NOMBRE: admin
 	CONTRA: pass123
 ***********************************************************/
+<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
+=======
+
+
+PRINT('POR A USER') 
+go
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values
+>>>>>>> parent of d713694... Importante avance
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
 1,
@@ -436,10 +452,15 @@ where usuario_nombre like 'admin' and rol_nombre in ('Administrativo','Empresa',
 where usuario_username like 'admin' and rol_nombre in ('Administrativo','Empresa','Cliente')
 >>>>>>> parent of e9638d7... subo cambios
 go
+<<<<<<< HEAD
 --Usuarios clientes
 
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
+=======
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,
+	usuario_tipo, usuario_fecha_creacion)
+>>>>>>> parent of d713694... Importante avance
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
@@ -452,7 +473,11 @@ select distinct
 	
 --Usuarios Empresas
 go
+<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
+=======
+insert into SQLEADOS.Usuario (usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion)
+>>>>>>> parent of d713694... Importante avance
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
@@ -463,8 +488,33 @@ select distinct
 
 
 
+<<<<<<< HEAD
 
 
+=======
+-- USERXROL
+PRINT('POR A USERXROL ADMIN') 
+-- ADMIN
+
+go 
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct 1, u.usuario_Id from SQLEADOS.Usuario u
+	WHERE u.usuario_username LIKE 'admin'
+
+ --EMPRESAS
+ PRINT('USERXROL EMPRESA') 
+go
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct 2,u.usuario_Id from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_username
+
+--CLIENTE
+ PRINT('USERXROL CLIENTE') 
+go
+insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct 3, u.usuario_Id from SQLEADOS.Usuario u
+	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
+>>>>>>> parent of d713694... Importante avance
 
 --RUBRO 
 
@@ -629,6 +679,44 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+PRINT('Comienza UPDATE CLIENTE') 
+
+UPDATE SQLEADOS.Cliente
+SET cliente_usuario = usuario_Id 
+FROM SQLEADOS.Cliente
+INNER JOIN SQLEADOS.Usuario
+       ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_username
+
+PRINT('Comienza UPDATE EMPRESA') 
+
+UPDATE SQLEADOS.Empresa
+SET empresa_usuario = usuario_Id 
+FROM SQLEADOS.Empresa
+INNER JOIN SQLEADOS.Usuario
+       ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_username
+
+
+
+
+
+
+GO
+CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
+RETURNS bit 
+AS 
+BEGIN
+	IF (@fechaUser = @fechaBuscada) 
+	BEGIN
+		RETURN 1
+	END
+	RETURN 0
+END
+
+
+
+>>>>>>> parent of d713694... Importante avance
 GO
 CREATE TRIGGER 
 	TRIG_fecha_publicada_es_menor_a_vencimiento on [SQLEADOS].[Publicacion]
@@ -870,34 +958,31 @@ for insert as
 	begin 
 		declare @UsuarioNombre varchar(255)
 		declare @nombreOriginal varchar(255)
-		declare @contaseniaOriginal varchar(255)
-		declare @numero int = 0
-		declare @userID int
+		declare @numero int = 0;
+		declare @userID int;
 		
+
 			Select 
-				@UsuarioNombre = usuario_nombre,
+				@UsuarioNombre = usuario_username,
 				@nombreOriginal = @UsuarioNombre,
-				@contaseniaOriginal = usuario_password,
 				@userID = usuario_Id
-				from [SQLEADOS].Usuario u
+				from [SQLEADOS].Usuario
 							
 				WHILE((select count(*) from [SQLEADOS].Usuario u1 
-							WHERE @UsuarioNombre LIKE u1.usuario_nombre)							
+							WHERE @UsuarioNombre LIKE u1.usuario_username)							
 								) > 0 
 					 
 					select 
 						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
 						@numero = @numero +1
 						from [SQLEADOS].Usuario
-							where @UsuarioNombre LIKE usuario_nombre
+							where @UsuarioNombre LIKE usuario_username
 							order by usuario_Id DESC
-				update [SQLEADOS].Usuario
-					set usuario_password = HASHBYTES('SHA2_256', @contaseniaOriginal)
-					Where usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
 				if(@numero>0) 
 					update [SQLEADOS].Usuario
-						set usuario_nombre = @UsuarioNombre
+						set usuario_username = @UsuarioNombre
 						where 
+<<<<<<< HEAD
 							usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
 		END
 
@@ -946,3 +1031,7 @@ select * from SQLeados.Empresa
 =======
 GO
 >>>>>>> parent of e9638d7... subo cambios
+=======
+							usuario_username=@nombreOriginal AND usuario_Id = @userID;
+		END
+>>>>>>> parent of d713694... Importante avance
