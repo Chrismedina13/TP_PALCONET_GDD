@@ -81,11 +81,8 @@
 <<<<<<< HEAD
             this.button1 = new System.Windows.Forms.Button();
             this.dateFecha = new System.Windows.Forms.DateTimePicker();
-<<<<<<< HEAD
 =======
 >>>>>>> parent of e9638d7... subo cambios
-=======
->>>>>>> parent of d713694... Importante avance
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,13 +99,9 @@
             // 
             this.textBoxDOCNUMERO.Location = new System.Drawing.Point(256, 112);
 <<<<<<< HEAD
-<<<<<<< HEAD
             this.textBoxDOCNUMERO.MaxLength = 8888;
 =======
 >>>>>>> parent of e9638d7... subo cambios
-=======
-            this.textBoxDOCNUMERO.MaxLength = 7;
->>>>>>> parent of d713694... Importante avance
             this.textBoxDOCNUMERO.Name = "textBoxDOCNUMERO";
             this.textBoxDOCNUMERO.Size = new System.Drawing.Size(103, 20);
             this.textBoxDOCNUMERO.TabIndex = 73;
@@ -135,13 +128,9 @@
             // 
             this.textBoxTIPODOC.Location = new System.Drawing.Point(148, 112);
 <<<<<<< HEAD
-<<<<<<< HEAD
             this.textBoxTIPODOC.MaxLength = 3;
 =======
 >>>>>>> parent of e9638d7... subo cambios
-=======
-            this.textBoxTIPODOC.MaxLength = 3;
->>>>>>> parent of d713694... Importante avance
             this.textBoxTIPODOC.Name = "textBoxTIPODOC";
             this.textBoxTIPODOC.Size = new System.Drawing.Size(34, 20);
             this.textBoxTIPODOC.TabIndex = 70;
@@ -169,11 +158,7 @@
             this.textBoxApellido.Location = new System.Drawing.Point(148, 42);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxApellido.TabIndex = 67;
-=======
-            this.textBoxApellido.TabIndex = 2;
->>>>>>> parent of d713694... Importante avance
             // 
             // label20
             // 
@@ -190,11 +175,7 @@
             this.textBoxCuit.MaxLength = 11;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxCuit.TabIndex = 65;
-=======
-            this.textBoxCuit.TabIndex = 10;
->>>>>>> parent of d713694... Importante avance
             // 
             // label19
             // 
@@ -327,11 +308,7 @@
             this.textBoxLocalidad.Location = new System.Drawing.Point(84, 105);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(260, 20);
-<<<<<<< HEAD
             this.textBoxLocalidad.TabIndex = 11;
-=======
-            this.textBoxLocalidad.TabIndex = 6;
->>>>>>> parent of d713694... Importante avance
             // 
             // label11
             // 
@@ -348,11 +325,7 @@
             this.textBoxCodigoPostal.Location = new System.Drawing.Point(196, 79);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(66, 20);
-<<<<<<< HEAD
             this.textBoxCodigoPostal.TabIndex = 9;
-=======
-            this.textBoxCodigoPostal.TabIndex = 5;
->>>>>>> parent of d713694... Importante avance
             // 
             // label10
             // 
@@ -368,11 +341,7 @@
             this.textBoxDto.Location = new System.Drawing.Point(177, 49);
             this.textBoxDto.Name = "textBoxDto";
             this.textBoxDto.Size = new System.Drawing.Size(66, 20);
-<<<<<<< HEAD
             this.textBoxDto.TabIndex = 7;
-=======
-            this.textBoxDto.TabIndex = 3;
->>>>>>> parent of d713694... Importante avance
             // 
             // label9
             // 
@@ -389,11 +358,7 @@
             this.textBoxPiso.MaxLength = 5;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(66, 20);
-<<<<<<< HEAD
             this.textBoxPiso.TabIndex = 5;
-=======
-            this.textBoxPiso.TabIndex = 4;
->>>>>>> parent of d713694... Importante avance
             // 
             // label8
             // 
@@ -410,11 +375,7 @@
             this.textBoxNroCalle.MaxLength = 10;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(66, 20);
-<<<<<<< HEAD
             this.textBoxNroCalle.TabIndex = 3;
-=======
-            this.textBoxNroCalle.TabIndex = 2;
->>>>>>> parent of d713694... Importante avance
             // 
             // label7
             // 
@@ -439,22 +400,14 @@
             this.textBoxCalle.Location = new System.Drawing.Point(56, 21);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(269, 20);
-<<<<<<< HEAD
             this.textBoxCalle.TabIndex = 0;
-=======
-            this.textBoxCalle.TabIndex = 1;
->>>>>>> parent of d713694... Importante avance
             // 
             // textBoxCiudad
             // 
             this.textBoxCiudad.Location = new System.Drawing.Point(148, 190);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxCiudad.TabIndex = 56;
-=======
-            this.textBoxCiudad.TabIndex = 9;
->>>>>>> parent of d713694... Importante avance
             // 
             // textBoxTelefono
             // 
@@ -462,22 +415,14 @@
             this.textBoxTelefono.MaxLength = 15;
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxTelefono.TabIndex = 55;
-=======
-            this.textBoxTelefono.TabIndex = 8;
->>>>>>> parent of d713694... Importante avance
             // 
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(148, 68);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxMail.TabIndex = 54;
-=======
-            this.textBoxMail.TabIndex = 3;
->>>>>>> parent of d713694... Importante avance
             // 
             // textBoxNombre
             // 
@@ -485,11 +430,7 @@
             this.textBoxNombre.Location = new System.Drawing.Point(148, 16);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxNombre.TabIndex = 53;
-=======
-            this.textBoxNombre.TabIndex = 1;
->>>>>>> parent of d713694... Importante avance
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label5
@@ -551,11 +492,7 @@
             this.textBoxTarjeta.Location = new System.Drawing.Point(148, 141);
             this.textBoxTarjeta.Name = "textBoxTarjeta";
             this.textBoxTarjeta.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.textBoxTarjeta.TabIndex = 76;
-=======
-            this.textBoxTarjeta.TabIndex = 7;
->>>>>>> parent of d713694... Importante avance
             // 
             // label27
             // 
@@ -619,15 +556,10 @@
             this.dateFecha.Location = new System.Drawing.Point(148, 89);
             this.dateFecha.Name = "dateFecha";
             this.dateFecha.Size = new System.Drawing.Size(211, 20);
-<<<<<<< HEAD
             this.dateFecha.TabIndex = 3;
             // 
 =======
 >>>>>>> parent of e9638d7... subo cambios
-=======
-            this.dateFecha.TabIndex = 4;
-            // 
->>>>>>> parent of d713694... Importante avance
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -694,10 +626,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-<<<<<<< HEAD
         private System.Windows.Forms.Button buttonVolver;
-=======
->>>>>>> parent of d713694... Importante avance
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label18;
@@ -731,11 +660,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
-<<<<<<< HEAD
-=======
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dateFecha;
->>>>>>> parent of d713694... Importante avance
 
     }
 }

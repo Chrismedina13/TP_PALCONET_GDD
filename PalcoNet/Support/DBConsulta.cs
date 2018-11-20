@@ -24,7 +24,7 @@ namespace PalcoNet.Support
             {
                 conexion = new SqlConnection(@"Data source=.\SQLSERVER2012;Initial Catalog=GD2C2018;User id=gdEspectaculos2018;Password= gd2018");
                 conexion.Open();
-      //          MessageBox.Show("CONEXION HECHA A LA DB");
+                //          MessageBox.Show("CONEXION HECHA A LA DB");
             }
             catch (Exception)
             {
@@ -37,7 +37,8 @@ namespace PalcoNet.Support
             conexion.Close();
         }
 
-        public static DataSet ConectarConsulta(String cmd) {
+        public static DataSet ConectarConsulta(String cmd)
+        {
             conexionAbrir();
             try
             {
@@ -54,30 +55,31 @@ namespace PalcoNet.Support
             }
         }
 
-<<<<<<< HEAD
         public static bool dataSetVacio(DataSet DS)
         {
             return tamanioDataSet(DS) == 0;
-=======
-        public static bool dataSetVacio(DataSet DS) {
-            return false;
->>>>>>> parent of d713694... Importante avance
         }
 
-        public static void ModificarDB(String cmd) {
+        public static int tamanioDataSet(DataSet DS) {
+            return DS.Tables[0].Rows.Count;
+        }
+
+        public static void ModificarDB(String cmd)
+        {
             conexionAbrir();
-            try {
+            try
+            {
                 SqlCommand ejecutador = new SqlCommand(cmd);
                 ejecutador.Connection = conexion;
                 ejecutador.ExecuteNonQuery();
                 MessageBox.Show("Se han realizado los cambios");
                 conexionCerrar();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo realizar la operacion");
+                MessageBox.Show("No se pudo realizar la operacion\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
-            
         }
     }
 }
