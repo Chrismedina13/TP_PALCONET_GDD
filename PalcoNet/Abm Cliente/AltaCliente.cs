@@ -45,8 +45,10 @@ namespace PalcoNet.Abm_Cliente
             }
 
 
-            debeSerTodoNumero(textBoxDOCNUMERO.Text, "Nro de documento");
             debeSerTodoNumero(textBoxNroCalle.Text, "Nro de calle");
+            debeSerTodoNumero(textBoxDOCNUMERO.Text, "Nro de documento");
+
+
 
             if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
             {
@@ -68,9 +70,21 @@ namespace PalcoNet.Abm_Cliente
             
             debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
 
+            if (textBoxDOCNUMERO.TextLength != 7)
+            {
+                MessageBox.Show("El documento debe tener 7 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (textBoxCuit.TextLength != 11)
+            {
+                MessageBox.Show("El cuit tiene que tener 11 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             String tipo = "cliente";
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
+
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -155,11 +169,10 @@ namespace PalcoNet.Abm_Cliente
 
         public String armarCuit(String cuitSinArmar)
         {
-            int n = textBoxDOCNUMERO.TextLength;
+            int n = cuitSinArmar.Length;
             String primeraParte = cuitSinArmar.Substring(0, 2);
-            String SegundaParte = cuitSinArmar.Substring(2, n);
-            String TerceraParte = cuitSinArmar.Substring(2+n, 2);
-            
+            String SegundaParte = cuitSinArmar.Substring(2, 7);
+            String TerceraParte = cuitSinArmar.Substring(7, 2);
 
             String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
 

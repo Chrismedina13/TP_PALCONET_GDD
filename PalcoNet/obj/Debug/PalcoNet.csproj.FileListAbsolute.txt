@@ -68,32 +68,4 @@ C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarRolDeUser1.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
-<<<<<<< HEAD
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
-=======
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.exe.config
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.exe
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ABMCliente.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.AltaCliente.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.EliminarCliente.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarCliente.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSeleccionado.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.AltaEmpresa.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.EliminarEmpresa.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificacionEmpresa.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificarEmpresaElegida.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Form1.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.LOGIN.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarRolDeUser1.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Support.Form1.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.exe
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.pdb
-C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.pdb
->>>>>>> 01d0479b5978ecac948ccf1ff86c8da844e2f1e8

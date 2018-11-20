@@ -238,12 +238,7 @@
     <Compile Include="Inicio\Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Listado Estadistico\Form1.cs">
-=======
-    <Compile Include="Support\AyudaExtra.cs" />
-    <Compile Include="Support\volver.cs">
->>>>>>> 01d0479b5978ecac948ccf1ff86c8da844e2f1e8
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
