@@ -539,28 +539,32 @@ namespace PalcoNet.Support
                             // DE LOGIN
             }
             MessageBox.Show("Bienvenido " + nombreUser);
+<<<<<<< HEAD
             //Borrar todos los contadores de Logins fallidos para el usuario que ingresó
             String resetearCampoLoginsFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = 0 where usuario_username like  '" + user + "'");
             DBConsulta.ModificarDB(resetearCampoLoginsFallidos);
             
 
             if (userTieneMasDe1Rol(ObtenerRoles(user))) { 
+=======
+            if (usersEncontrados.Tables.Count > 1) { 
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
                 // SIGNIFICA QUE EL USUARIO TIENE MAS DE 1 ROL
-                // ABRE VENTANA DE SELECCION DE USER
                 return 2;
             }
             return 1; 
         }
 
-        public static bool userTieneMasDe1Rol(DataSet DS) {
-            return DS.Tables[0].Rows.Count > 1;
-        }
-        
-        public static DataSet ObtenerRoles(String user) {
-            String query = String.Format("Select r.rol_nombre from SQLEADOS.Rol r JOIN SQLEADOS.UserXRol ux on ux.userXRol_rol = r.rol_Id JOIN SQLEADOS.Usuario u ON u.usuario_rol = ux.userXRol_usuario where u.usuario_username LIKE like '{0}'", user);
+        /*
+        public static DataSet obtenerRoles(String user) {
+            String query = String.Format("SELECT [usuario_nombre],[usuario_password] FROM [GD2C2018].[SQLEADOS].[Usuario] where [usuario_nombre] like '{0}'", user);
             return DBConsulta.ConectarConsulta(query);
 >>>>>>> parent of d713694... Importante avance
         }
+<<<<<<< HEAD
+=======
+         * */
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
     }
 <<<<<<< HEAD
 }

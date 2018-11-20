@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Abm_Empresa_Espectaculo;
+<<<<<<< HEAD
+=======
+using PalcoNet.Abm_Cliente;
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 
 namespace PalcoNet
 {
@@ -24,7 +28,10 @@ namespace PalcoNet
             Application.Run(new Form1());
 =======
 
+<<<<<<< HEAD
        //     Application.Run(new LOGIN());
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
             Application.Run(new ABMCliente(usuario));
         //    Application.Run(new ABMEmpresa(usuario));
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745

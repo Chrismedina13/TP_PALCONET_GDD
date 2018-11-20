@@ -6,11 +6,14 @@ GO
 								/** ELIMINACIÓN DE CONSTRAINS DE TABLAS ANTERIORES **/
 ----------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 GO
 DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
 
 >>>>>>> parent of ad364cb... PEQUEÃ‘O arreglo
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
 BEGIN
 	DECLARE @Sql NVARCHAR(MAX) = '';
@@ -42,9 +45,12 @@ END
 GO
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> parent of ad364cb... PEQUEÃ‘O arreglo
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
@@ -57,7 +63,11 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** VALIDACION TABLAS **/
 ----------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.FuncionalidadXRol'))
     DROP TABLE SQLEADOS.FuncionalidadXRol
 
@@ -459,6 +469,7 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 ***********************************************************/
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
 =======
 
@@ -505,28 +516,56 @@ insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usua
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,
 	usuario_tipo, usuario_fecha_creacion)
 >>>>>>> parent of d713694... Importante avance
+=======
+go
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values
+('admin',
+HASHBYTES('SHA2_256', 'pass123'),
+1,
+'Administrativo',
+GETDATE())
+
+--Usuarios clientes
+
+go
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 select distinct 
 	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
 	--  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 1000000
 	3,  --as referencia_rol, --Como este usuario es Cliente, sabemos que el número referido a ellos es el 3
+<<<<<<< HEAD
 	'Cliente' -- as tipo_user --TIPO USER
+=======
+	'Cliente', -- as tipo_user --TIPO USER
+	GETDATE()
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 	from gd_esquema.Maestra A 
 	where A.cli_mail is not null order by 1
 	
 --Usuarios Empresas
 go
 <<<<<<< HEAD
+<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo)
 =======
 insert into SQLEADOS.Usuario (usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion)
 >>>>>>> parent of d713694... Importante avance
+=======
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion)
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 select distinct 
 	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
 	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
 	2, -- 2 REFERIDO A ROL DE EMPRESA
+<<<<<<< HEAD
 	'Empresa'
+=======
+	'Empresa',
+	GETDATE()
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 	from gd_esquema.Maestra
 	order by 1
 
@@ -538,35 +577,35 @@ select distinct
 
 =======
 -- USERXROL
-PRINT('POR A USERXROL ADMIN') 
 -- ADMIN
 
-go 
-insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 1, u.usuario_Id from SQLEADOS.Usuario u
+go insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
+select distinct u.usuario_Id, 1 from SQLEADOS.Usuario u
 	WHERE u.usuario_username LIKE 'admin'
 
  --EMPRESAS
- PRINT('USERXROL EMPRESA') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 2,u.usuario_Id from SQLEADOS.Usuario u
+select distinct u.usuario_Id, 2 from SQLEADOS.Usuario u
 	INNER JOIN SQLEADOS.Empresa e ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = u.usuario_username
 
 --CLIENTE
- PRINT('USERXROL CLIENTE') 
 go
 insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
-select distinct 3, u.usuario_Id from SQLEADOS.Usuario u
+select distinct u.usuario_Id, 3 from SQLEADOS.Usuario u
 	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
 >>>>>>> parent of d713694... Importante avance
 =======
 
 
+<<<<<<< HEAD
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 
 --RUBRO 
 
+=======
+go
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 insert into SQLEADOS.Rubro(rubro_descripcion)
 select distinct Espectaculo_Rubro_Descripcion from gd_esquema.Maestra
 
@@ -730,16 +769,17 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 ----------------------------------------------------------------------------------------------
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 PRINT('Comienza UPDATE CLIENTE') 
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 
 UPDATE SQLEADOS.Cliente
 SET cliente_usuario = usuario_Id 
 FROM SQLEADOS.Cliente
 INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_username
-
-PRINT('Comienza UPDATE EMPRESA') 
 
 UPDATE SQLEADOS.Empresa
 SET empresa_usuario = usuario_Id 
@@ -748,6 +788,7 @@ INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_username
 
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 
@@ -757,6 +798,8 @@ INNER JOIN SQLEADOS.Usuario
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 =======
 >>>>>>> parent of ad364cb... PEQUEÃ‘O arreglo
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
@@ -1093,7 +1136,10 @@ GO
 >>>>>>> parent of d713694... Importante avance
 =======
 
+<<<<<<< HEAD
 
 
 		
 >>>>>>> parent of ad364cb... PEQUEÃ‘O arreglo
+=======
+>>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
