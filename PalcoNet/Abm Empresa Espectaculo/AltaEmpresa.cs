@@ -75,7 +75,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             String telefono = textBoxTelefono.Text;
             int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
             String calle = textBoxCalle.Text;
-            String codPostal = textBoxCodigoPostal.Text;
+            int codPostal = Convert.ToInt32(textBoxCodigoPostal.Text);
             String dto = textBoxDto.Text;
             int piso = Convert.ToInt32(textBoxPiso.Text);
             String localidad = textBoxLocalidad.Text;
