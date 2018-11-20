@@ -117,10 +117,20 @@ usuario_Id int primary key identity,
 usuario_username varchar(255) unique not null,
 usuario_password varbinary(100) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
-usuario_tipo varchar(20) not null,
-usuario_estado int default 1, --Indicador para saber si está habilitado o no
+usuario_administrador bit default 0,
+usuario_estado bit default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
 )
+
+
+create table [SQLEADOS].UsuarioXRol(
+usuarioXRol_usuario int NOT NULL,
+usuarioXRol_rol int NOT NULL,
+PRIMARY KEY(usuarioXRol_usuario, usuarioXRol_rol),
+CONSTRAINT fk_rpu_username FOREIGN KEY (usuarioXRol_usuario) REFERENCES [SQLEADOS].Usuario (Usuario_Id),
+CONSTRAINT fk_rpu_codigo_rol FOREIGN KEY (usuarioXRol_rol) REFERENCES [SQLEADOS].Rol (rol_id)
+)
+GO
 
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
@@ -383,7 +393,13 @@ insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usua
 HASHBYTES('SHA2_256', 'pass123'),
 1,
 'Administrativo')
+go
 
+insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
+select rol_Id, usuario_Id 
+from SQLeados.Usuario, SQLeados.Rol
+where usuario_username like 'admin' and rol_nombre in ('Administrativo','Empresa','Cliente')
+go
 --Usuarios clientes
 
 go
@@ -605,6 +621,349 @@ for insert as
 				--		AND 
 						publicacion_codigo=@indice;
 		END
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[listarFuncionalidades]
+as begin
+select funcionalidad_descripcion from [SQLeados].Funcionalidad
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[existeRol] (@nombre nvarchar(30))
+as
+begin
+declare @existe int
+set @existe = (select count(rol_Id) from [SQLeados].Rol where Rol_nombre = @nombre) 
+return @existe
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[crearRolNuevo] (@nombre nvarchar(30))
+as
+begin
+insert into [SQLeados].Rol(Rol_nombre, rol_estado)
+values(@nombre,1)
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[codigoRol] (@nombre nvarchar(30))
+as
+begin
+declare @cod int
+set @cod = (select rol_Id from [SQLeados].rol where Rol_nombre = @nombre)
+return @cod
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[crearFuncionalidad] (@codigoRol int, @codigoFunc int)
+as
+begin
+insert into [SQLeados].FuncionalidadXRol(funcionalidadXRol_rol, funcionalidadXRol_funcionalidad)
+values(@codigoRol, @codigoFunc)
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[codigoFuncionalidad] (@nombre nvarchar(30))
+as
+begin
+declare @cod int
+set @cod = (select funcionalidad_Id from [SQLeados].Funcionalidad where funcionalidad_descripcion = @nombre)
+return @cod
+end
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[cargarRoles] 
+as
+begin
+select Rol_nombre from [SQLeados].Rol
+end
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [SQLeados].[rolHabilitado] (@nombre nvarchar(30))
+as
+begin
+declare @resultado bit
+set @resultado = (select rol_estado from [SQLeados].Rol where Rol_nombre = @nombre)
+return @resultado
+end
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[FuncionalidadesPorRol] (@Rol nvarchar(30))
+as
+begin
+select funcionalidad_descripcion from [SQLeados].FuncionalidadXRol join [SQLeados].Rol ON funcionalidadXRol_rol = rol_Id join [SQLeados].Funcionalidad on
+funcionalidad_Id = funcionalidadXRol_funcionalidad
+where Rol_nombre = @Rol
+end
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[modificarRol] (@nombre nvarchar(30), @anterior nvarchar(30))
+as
+begin
+update [SQLeados].Rol set Rol_nombre = @nombre
+where Rol_nombre = @anterior
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[eliminarFuncionalidades] (@rol int)
+as
+begin
+delete from [SQLeados].FuncionalidadXRol
+where funcionalidadXRol_rol = @rol
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[cargarRolesHabilitados] 
+as
+begin
+select Rol_nombre from [SQLeados].Rol where rol_estado = 1
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[inhabilitarRol] (@codigo int)
+as
+begin
+update [SQLeados].Rol
+set rol_estado = 0
+where rol_Id = @codigo
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[inhabilitarRolPorUsuario] (@codigo int)
+as
+begin
+delete from [SQLeados].UsuarioXRol
+where usuarioXRol_rol = @codigo
+end
+go
 
 
-select * from SQLeados.Empresa
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[ValidarUsuario] (@Username nvarchar(30))
+as
+begin
+declare @Resultado int
+
+set @Resultado =CAST(
+   CASE WHEN EXISTS(SELECT Usuario_username FROM [SQLeados].Usuario where Usuario_username like @Username)
+    THEN 1 
+   ELSE 0 
+   END 
+AS int)
+return @Resultado
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[estaBloqueado] (@Username nvarchar(30))
+as 
+begin
+declare @bloqueado bit
+set @bloqueado = (select usuario_estado from [SQLeados].Usuario where Usuario_username = @Username)
+return @bloqueado
+end
+go
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [SQLeados].[intentosFallidos] (@Username nvarchar(30))
+as 
+begin
+declare @intentos int
+set @intentos = (select Usuario_intentos from [SQLeados].Usuario where Usuario_username = @Username)
+return @intentos
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[ValidarContra] (@Username nvarchar(30), @Password nvarchar(30))
+as
+begin
+declare @Resultado int
+declare @pre varbinary(100)
+set @pre = HASHBYTES('SHA',cast(@Password as varchar))
+set @Resultado =CAST(
+   CASE WHEN EXISTS(SELECT Usuario_username FROM [SQLeados].Usuario where Usuario_username like @Username and Usuario_password like @pre)
+    THEN 1 
+   ELSE 0 
+   END 
+AS int)
+return @Resultado
+end
+go
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[resetearIntentoFallidos] (@Username nvarchar(30))
+as 
+begin
+update [SQLeados].Usuario
+set Usuario_intentos = 0
+where Usuario_username = @Username
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[agregarIntentoFallidos] (@Username nvarchar(30))
+as 
+begin
+update [SQLeados].Usuario
+set Usuario_intentos = (select Usuario_intentos from [SQLeados].Usuario where Usuario_username = @Username) + 1
+where Usuario_username = @Username
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[bloquearUsuario] (@Username nvarchar(30))
+as 
+begin
+update [SQLeados].Usuario
+set usuario_estado = 0
+where Usuario_username = @Username
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[esAdministrador] (@Username nvarchar(30))
+as
+begin
+declare @resultado bit
+set @resultado = (select usuario_administrador from [SQLeados].Usuario where Usuario_username = @Username)
+return @resultado
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[Nombreroles] (@Username nvarchar(30))
+as
+begin
+select Rol_nombre
+from [SQLeados].UsuarioXRol join [SQLeados].Rol on usuarioXRol_rol = rol_Id
+join [SQLeados].Usuario on usuarioXRol_usuario = usuario_Id
+where Usuario.usuario_username = @Username and rol_estado = 1
+end
+go
+
+/****** Object:  StoredProcedure [PERSISTIENDO].[actualizarContra]    Script Date: 26/06/2016 19:30:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[actualizarContra] (@user nvarchar(30), @pass nvarchar(30))
+as
+begin
+update [SQLeados].Usuario 
+set Usuario_password = (HASHBYTES('SHA',cast (@pass as varchar)))
+where Usuario_username = @user
+end
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[habilitarRol] (@nombre nvarchar(30))
+as
+begin
+update [SQLeados].Rol
+set rol_estado = 1
+where Rol_nombre = @nombre
+end
+go
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[cargarClientesEliminar]
+as
+begin
+select cliente_numero_documento, Cliente_apellido, Cliente_nombre, cliente_email
+from [SQLeados].Cliente join [SQLeados].Usuario on usuario_Id = cliente_usuario
+where Usuario.usuario_estado = 1
+end
+GO

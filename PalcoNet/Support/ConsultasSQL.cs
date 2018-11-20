@@ -14,7 +14,7 @@ namespace PalcoNet.Support
     class ConsultasSQL {
         public static SqlConnection conectar()
         {
-            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
         }
 
         public void cerrarConeccion(SqlConnection sql)

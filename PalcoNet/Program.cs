@@ -18,7 +18,7 @@ namespace PalcoNet
             int usuario = 1;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ABMEmpresa(usuario));
+            Application.Run(new Form1());
         }
     }
 }
