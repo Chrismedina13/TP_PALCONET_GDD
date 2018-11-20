@@ -13,23 +13,14 @@ namespace PalcoNet.Abm_Cliente
 {
     public partial class AltaCliente : Form
     {
-    //    int usuario;
-        
+        int usuario;
+
         public AltaCliente()
         {
-            
+            /*
             InitializeComponent();
-     //       usuario = usuarioRecibido;   
-        }
-
-        private void debeSerTodoNumero(String cadena, String tipo) {
-            int parsedValue;
-            if (!int.TryParse(cadena, out parsedValue))
-            {
-                MessageBox.Show("Sólo se permiten numeros en el campo: "+ tipo, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            return;
+            usuario = usuarioRecibido;
+             * */
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
@@ -44,41 +35,66 @@ namespace PalcoNet.Abm_Cliente
 
             }
 
+<<<<<<< HEAD
 
             debeSerTodoNumero(textBoxDOCNUMERO.Text, "Nro de documento");
             debeSerTodoNumero(textBoxNroCalle.Text, "Nro de calle");
+=======
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxCuit.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxNroCalle.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
+>>>>>>> parent of e9638d7... subo cambios
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxDOCNUMERO.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Nro de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxTIPODOC.Text, @"[0-9]"))
             {
                 MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
             if (textBoxTIPODOC.TextLength != 3)
             {
                 MessageBox.Show("El cuit tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Porque no es campo obligatorio
-            if(textBoxPiso.Text != "") {
-                debeSerTodoNumero(textBoxPiso.Text, "Piso");
-            }
-            
-            debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
 
+<<<<<<< HEAD
+=======
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxPiso.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxTelefono.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (textBoxCuit.TextLength != 11)
+            {
+                MessageBox.Show("El cuit tiene que tener 11 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+>>>>>>> parent of e9638d7... subo cambios
             String tipo = "cliente";
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+
             }
-            if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
-                MessageBox.Show("El CUIT y el numero de documento no coindiden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            
 
             String nombre = textBoxNombre.Text;
             String apellido = textBoxApellido.Text;
@@ -86,33 +102,26 @@ namespace PalcoNet.Abm_Cliente
             String numero_documento = textBoxDOCNUMERO.Text;
             String cuit = armarCuit(textBoxCuit.Text);
             String nro_tarjeta = textBoxTarjeta.Text;
+            String ciudad = textBoxCiudad.Text;
             String mail = textBoxMail.Text;
             String telefono = textBoxTelefono.Text;
             int puntaje = 0;
             int estado = 1;
-            String fecha_nacimiento = dateFecha.ToString();
+            DateTime fecha_nacimiento = Convert.ToDateTime(textBoxFechaNacimiento);
             int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
             String calle = textBoxCalle.Text;
-            String codPostal = textBoxCodigoPostal.Text;
+            int codPostal = Convert.ToInt32(textBoxCodigoPostal.Text);
             String dto = textBoxDto.Text;
-            int piso;
-            if (textBoxPiso.Text != "")
-            {
-                piso = Convert.ToInt32(textBoxPiso.Text);
-            }
-            else {
-                piso = 0;
-            }
-           
+            int piso = Convert.ToInt32(textBoxPiso.Text);
             String localidad = textBoxLocalidad.Text;
             DateTime fecha_creacion = DateTime.Today;
 
             bool creacionAbortada = false;
 
-            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "", "Cliente","3");
+            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "");
             if (creacionAbortada == false)
             {
-                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
+                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuario, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
                 consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, null, null, tipo_documento, numero_documento);
             }
             else {
@@ -122,18 +131,7 @@ namespace PalcoNet.Abm_Cliente
 
 
             this.limpiarCuadrosDeTexto();
-            return;
 
-        }
-
-        private bool contieneNumeroTIPODocumento(String caracteres) {
-            return caracteres.Contains("1") || caracteres.Contains("2") || caracteres.Contains("3") ||
-                caracteres.Contains("4") || caracteres.Contains("5") || caracteres.Contains("6") ||
-                caracteres.Contains("7") || caracteres.Contains("8") || caracteres.Contains("9");
-        }
-
-        private static bool cuitYNroDocumentoSonCorrectos(String cuit, String nroDocumento) {
-            return cuit.Contains(nroDocumento);
         }
 
         private void limpiarCuadrosDeTexto()
@@ -142,6 +140,7 @@ namespace PalcoNet.Abm_Cliente
             textBoxApellido.Text = "";
             textBoxTIPODOC.Text = "";
             textBoxDOCNUMERO.Text = "";
+            textBoxCiudad.Text = "";
             textBoxMail.Text = "";
             textBoxTelefono.Text = "";
             textBoxNroCalle.Text = "";
@@ -151,15 +150,21 @@ namespace PalcoNet.Abm_Cliente
             textBoxPiso.Text = "";
             textBoxLocalidad.Text = "";
             textBoxCuit.Text = "";
+
         }
 
         public String armarCuit(String cuitSinArmar)
         {
             int n = textBoxDOCNUMERO.TextLength;
             String primeraParte = cuitSinArmar.Substring(0, 2);
+<<<<<<< HEAD
             String SegundaParte = cuitSinArmar.Substring(2, n);
             String TerceraParte = cuitSinArmar.Substring(2+n, 2);
             
+=======
+            String SegundaParte = cuitSinArmar.Substring(2, n-2);
+            String TerceraParte = cuitSinArmar.Substring(9, n);
+>>>>>>> parent of e9638d7... subo cambios
 
             String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
 
@@ -188,26 +193,6 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void label30_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void volver_boton_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void textBoxTIPODOC_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
         {
 
         }

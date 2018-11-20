@@ -11,7 +11,7 @@ using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
-    public partial class EliminarCliente : volver
+    public partial class EliminarCliente : Form
     {
         public EliminarCliente()
         {
@@ -121,51 +121,6 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void dataGridEliminarEmpresa_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void textBoxEmail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxDNI_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxApellido_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
         {
 
         }
