@@ -17,12 +17,12 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
-      //      int usuario = 1;
+            int usuario = 1;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new LOGIN());
-        //    Application.Run(new ABMCliente(usuario));
+       //     Application.Run(new LOGIN());
+            Application.Run(new ABMCliente(usuario));
         //    Application.Run(new ABMEmpresa(usuario));
         }
     }

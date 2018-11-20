@@ -204,6 +204,7 @@
     <Compile Include="Support\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\AyudaExtra.cs" />
     <Compile Include="Support\volver.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -204,8 +204,11 @@ namespace PalcoNet.Support
         {
 
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
-            addDomicilioCommand.Parameters.AddWithValue("calle", calle);
+  //          SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
+
+            String addDomicilioCommands = "insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values ('"+calle+"',"+numeroCalle+","+piso+",'"+dto+"','"+localidad+"','"+codigoPostal+"','"+razonSocial+"','"+cuit+"','"+tipo_documento+"',"+numeroDocumento+")";
+            DBConsulta.ModificarDB(addDomicilioCommands);
+      /*      addDomicilioCommand.Parameters.AddWithValue("calle", calle);
             addDomicilioCommand.Parameters.AddWithValue("numeroCalle", numeroCalle);
             addDomicilioCommand.Parameters.AddWithValue("piso", piso);
             addDomicilioCommand.Parameters.AddWithValue("dto", dto);
@@ -215,22 +218,14 @@ namespace PalcoNet.Support
             addDomicilioCommand.Parameters.AddWithValue("cuit", cuit);
             addDomicilioCommand.Parameters.AddWithValue("tipo_documento", tipo_documento);
             addDomicilioCommand.Parameters.AddWithValue("numeroDocumento", Convert.ToInt32(numeroDocumento));
-            
-            
-
-            addDomicilioCommand.Connection = connection;
-            connection.Open();
-            int registrosModificados = addDomicilioCommand.ExecuteNonQuery();
-            connection.Close();
-            if (registrosModificados > 0) MessageBox.Show("Domicilio ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else MessageBox.Show("Error al cargar registro Domicilio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       */     
         }
 
         internal static bool existeCuit(string cuit, string tipo)
         {
             String RS = null;
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand tipoHabilitada = new SqlCommand("SELECT " + tipo + "_cuit FROM [GD2C2018].[SQLEADOS].[" + tipo + "] WHERE " + tipo + "_cuit = @cuit and " + tipo + "_estado = 1");
+            SqlCommand tipoHabilitada = new SqlCommand("SELECT " + tipo + "_cuit FROM [GD2C2018].[SQLEADOS].[" + tipo + "] WHERE " + tipo + "_cuit = @cuit");
             tipoHabilitada.Parameters.AddWithValue("cuit", cuit);
             tipoHabilitada.Connection = connection;
             connection.Open();
@@ -250,11 +245,12 @@ namespace PalcoNet.Support
             connection.Open();
             try
             {
-                String query = "UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET usuario_estado = 0 WHERE usuario_username LIKE " + usuario;
+                String query = "UPDATE [GD2C2018].[SQLEADOS].[Usuario] SET usuario_estado = 0 WHERE usuario_nombre LIKE " + usuario;
+                DBConsulta.ModificarDB(query);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo dar de baja al usuario: "+ usuario);
+                MessageBox.Show("No se pudo dar de baja al usuario: "+ usuario +"\n\nMOTIVO: "+ex.ToString());
             }
             connection.Close();
             return;
@@ -275,27 +271,10 @@ namespace PalcoNet.Support
         /*Crea un usuario y devuelve su ID si todo va bien*/
         internal static int crearUser(String nombre, String apellido, bool caso, String contra, String tipo, String codigoRol)
         {
-            string nombreUserCreado ="";
-            bool creado = false;
-            int i = 0, iniciado = 0;
-            
+            string nombreUserCreado;
 
-            while (!creado)
-            {
-                /* CREA USUARIOS NUEVOS EN FORMATO <nombre>_<apellido>, SI EXISTEN, EMPIEZA A PONERLES UN NUMERO EL CUAL SE VA INCREMENTANDO
-                 SI CONTINUAN LAS CONCIDENCIAS*/
-                if (iniciado == 0)
-                {
-                    nombreUserCreado = nombre.ToLower().Replace(" ", "_") + "_" + apellido.ToLower().Replace(" ", "_");
-                    iniciado++;
-                }
-                else {
-                    nombreUserCreado = nombre.ToLower().Replace(" ", "_") + "_" + apellido.ToLower().Replace(" ", "_") + i.ToString();
-                    i++;
-                }
-                /*El caso especial es por si ocurre un error en la conexión. Si hay se aborta todo*/
-                creado = true;
-            }
+            nombreUserCreado = nombre.Replace(" ", "_") + apellido.Replace(" ", "_");
+
             if (caso == false) {
                 if (tipo == "Cliente") {
                     return crearUnNuevoUserConNombre(nombreUserCreado, contra, "3", tipo, DateTime.Today);
@@ -312,91 +291,29 @@ namespace PalcoNet.Support
         internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo, DateTime fecha) {
 
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand addUserCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_username,usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values (@nombre,@contra,@rol,@tipo,@fecha)");
-            addUserCommand.Parameters.AddWithValue("nombre", nombre);
-            addUserCommand.Parameters.AddWithValue("rol", rol);
-            addUserCommand.Parameters.AddWithValue("tipo", tipo);
-            addUserCommand.Parameters.AddWithValue("fecha", ConsultaGeneral.fechaToString(fecha));
+            String addUserCommand = "insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_nombre,usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values ('"+nombre+"','"+contra+"',"+rol+",'"+tipo+"',"+ConsultaGeneral.fechaToString(fecha)+")";
 
-            Random random = new Random();
-            int contraAPoner = random.Next(0, 10000000);
-
-            /*
-            SqlCommand contracmd = new SqlCommand("SELECT TOP 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))");
-           contracmd.Connection = connection;
-            
-            if (contra == "")
-            {
-     //           int resultado = Conexion.consultaEjecutar(contracmd);
-                SqlDataReader sqlreader = contracmd.ExecuteReader();
-                contra = Conexion.consultaObtenerValor(contracmd);
-     //           DataTable tabla = Conexion.consultaObtenerTabla(contracmd);
-      //          DataRow datarowBuscado = tabla.Rows[0];
-     //           contra = tabla.Rows[0].ToString();
-      //          sqlreader.Close();
-            }*/
-            addUserCommand.Parameters.AddWithValue("contra", LoginSQL.loginEncriptarContraseña(contraAPoner.ToString()));
-
-            connection.Open();
-            addUserCommand.Connection = connection;
-            int registrosModificados = addUserCommand.ExecuteNonQuery();
-            connection.Close();
-            if (registrosModificados > 0)
-            {
-                
-       //         try
-     //           {
-                    String RS = null;
-                    SqlCommand query = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + ConsultaGeneral.fechaToString(fecha) + ")");
-                    query.Connection = connection;
-
-                    connection.Open();
-                    RS = Conexion.consultaObtenerValor(query);
-             /*   
-                    SqlDataAdapter da = new SqlDataAdapter(query, connection);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    
-                    
-                    RS = dt.Rows[0][0].ToString();
-            */
-             
-
-
-
-                    connection.Close();
-                    MessageBox.Show("El usuario fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return Convert.ToInt32(RS);
-      //          }
-    /*            catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar registro Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    connection.Close();
-                    return -1;
-                }
-           */     
-                //         MessageBox.Show("Cliente fue ingresado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    //            SqlConnection connection1 = PalcoNet.Support.Conexion.conexionObtener();
-    //            SqlCommand buscarID = new SqlCommand("SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + ConsultaGeneral.fechaToString(fecha) + ")");
-      //          String buscarCMD = "SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_username LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + fecha.ToString() + ")";
-      //          buscarID.Connection = connection1;
-     //           connection1.Open();
-        //        String RSS = Conexion.consultaObtenerValor(buscarID);
-     //          SqlDataReader reader = buscarID.ExecuteReader();
-    /*          String RS = null;
-                while (reader.Read())
-                {
-                    RS = reader[0].ToString();
-                }
-      */  
-       //         connection1.Close();
-        
+            try {
+                DBConsulta.ModificarDB(addUserCommand);
                 
             }
-            else
-                MessageBox.Show("Error al cargar registro Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo ingresar el usuario:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
-            }           
+            }
+            try
+            {
+                String algo = "SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] where usuario_nombre LIKE " + nombre + " AND SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, " + ConsultaGeneral.fechaToString(fecha) + "= 1)";
+                DataSet ds = DBConsulta.ConectarConsulta(algo);
+                return Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo obtener el ID del user ingresado:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+         }           
     }
     #endregion
 
@@ -555,29 +472,16 @@ namespace PalcoNet.Support
         {
 
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand addClienteCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Cliente] (cliente_nombre,cliente_apellido,cliente_usuario,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_datos_tarjeta,cliente_puntaje,cliente_email,cliente_telefono,cliente_estado,cliente_cuit) values (@nombre,@apellido,@user,@tipo_documento,@nro_documento,@fecha_nacimiento,@fecha_creacion, @datos_tarjeta, @puntaje, @mail, @telefono, @estado, @cuit)");            
-            addClienteCommand.Parameters.AddWithValue("nombre", nombre);
-            addClienteCommand.Parameters.AddWithValue("apellido", apellido);
-            addClienteCommand.Parameters.AddWithValue("user", usuario);
-            addClienteCommand.Parameters.AddWithValue("tipo_documento", tipo_documento);
-            addClienteCommand.Parameters.AddWithValue("nro_documento", Convert.ToInt32(nro_documento));
-            addClienteCommand.Parameters.AddWithValue("mail", mail);
-            addClienteCommand.Parameters.AddWithValue("datos_tarjeta", datos_tarjeta);
-            addClienteCommand.Parameters.AddWithValue("puntaje", puntaje);
-            addClienteCommand.Parameters.AddWithValue("estado", estado);
-            addClienteCommand.Parameters.AddWithValue("cuit", cuit);
-            addClienteCommand.Parameters.AddWithValue("telefono", telefono);
-            addClienteCommand.Parameters.AddWithValue("fecha_nacimiento", fecha_nacimiento);
-            addClienteCommand.Parameters.AddWithValue("fecha_creacion", ConsultaGeneral.fechaToString(fecha_creacion));
+            String addClienteCommand = "insert into [GD2C2018].[SQLEADOS].[Cliente] (cliente_nombre,cliente_apellido,cliente_usuario,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_datos_tarjeta,cliente_puntaje,cliente_email,cliente_telefono,cliente_estado,cliente_cuit) values ('" + nombre + "','" + apellido + "'," + usuario + ",'" + tipo_documento + "'," + nro_documento + "," + fecha_nacimiento + "," + ConsultaGeneral.fechaToString(fecha_creacion) + ", " + datos_tarjeta + "," + puntaje + ",'" + mail + "', " + telefono + ", " + estado + ", '" + cuit + "')";
 
-
-            addClienteCommand.Connection = connection;
-            connection.Open();
-            int registrosModificados = addClienteCommand.ExecuteNonQuery();
-            connection.Close();
-            if (registrosModificados > 0) MessageBox.Show("Cliente ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            try {
+                DBConsulta.ModificarDB(addClienteCommand);
+                MessageBox.Show("Cliente ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar registro \n\n" +ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
     #endregion
