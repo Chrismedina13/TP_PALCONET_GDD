@@ -749,6 +749,7 @@ HASHBYTES('SHA2_256', '123'),
 GETDATE()
 )
 
+/*
 insert into SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario)
 select 
 	rol_Id,
@@ -756,3 +757,7 @@ select
 	from SQLEADOS.Rol, SQLEADOS.Usuario
 		where usuario_nombre LIKE 'prueba'
 
+SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario] 
+	where usuario_nombre LIKE 'prueba' AND 
+		SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, GETDATE()) = 1
+		*/
