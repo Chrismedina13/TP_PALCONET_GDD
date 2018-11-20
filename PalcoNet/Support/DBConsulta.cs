@@ -18,7 +18,6 @@ namespace PalcoNet.Support
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
         private static SqlConnection conexion;
 =======
         private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
@@ -26,9 +25,6 @@ namespace PalcoNet.Support
 =======
         private static SqlConnection conexion = new SqlConnection(@"Data source=LAPTOP-B6PLD9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
 >>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
-=======
-        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
->>>>>>> parent of ad364cb... PEQUEÑO arreglo
 
         private static void conexionAbrir()
         {
@@ -72,12 +68,8 @@ namespace PalcoNet.Support
 =======
         public static bool dataSetVacio(DataSet DS) {
 <<<<<<< HEAD
-<<<<<<< HEAD
             return false;
 >>>>>>> parent of d713694... Importante avance
-=======
-            return DS.Tables[0].Rows.Count == 0;
->>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
             return DS.Tables[0].Rows.Count == 0;
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
