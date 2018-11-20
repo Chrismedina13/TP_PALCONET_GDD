@@ -184,19 +184,25 @@
     <Compile Include="Login y seguridad\LOGIN.Designer.cs">
       <DependentUpon>LOGIN.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login y seguridad\SeleccionarROL.cs">
+    <Compile Include="Login y seguridad\SeleccionarRolDeUser1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login y seguridad\SeleccionarROL.Designer.cs">
-      <DependentUpon>SeleccionarROL.cs</DependentUpon>
+    <Compile Include="Login y seguridad\SeleccionarRolDeUser1.Designer.cs">
+      <DependentUpon>SeleccionarRolDeUser1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registro de Usuario\Form1.cs">
+    <Compile Include="Registro de Usuario\RegistroCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro de Usuario\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro de Usuario\RegistroCliente.Designer.cs">
+      <DependentUpon>RegistroCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\RegistroUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\RegistroUser.Designer.cs">
+      <DependentUpon>RegistroUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Support\DBConsulta.cs" />
     <Compile Include="Support\ConsultasSQL.cs" />
@@ -263,13 +269,8 @@
     <EmbeddedResource Include="Inicio\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Inicio\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Login y seguridad\SeleccionarROL.resx">
-      <DependentUpon>SeleccionarROL.cs</DependentUpon>
->>>>>>> parent of d713694... Importante avance
     </EmbeddedResource>
 =======
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
@@ -285,7 +286,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
     <EmbeddedResource Include="Registro de Usuario\RegistroCliente.resx">
       <DependentUpon>RegistroCliente.cs</DependentUpon>
@@ -295,8 +295,6 @@
     </EmbeddedResource>
 =======
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
-=======
->>>>>>> parent of d713694... Importante avance
     <EmbeddedResource Include="Support\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

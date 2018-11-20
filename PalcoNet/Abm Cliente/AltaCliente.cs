@@ -197,24 +197,6 @@ namespace PalcoNet.Abm_Cliente
 
         }
 
-<<<<<<< HEAD
-=======
-        private void volver_boton_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void textBoxTIPODOC_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
->>>>>>> parent of d713694... Importante avance
 
     }
 }
