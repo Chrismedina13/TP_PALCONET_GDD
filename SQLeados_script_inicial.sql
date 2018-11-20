@@ -1209,3 +1209,13 @@ for insert as
 --	from SQLEADOS.Rol, SQLEADOS.Usuario
 --		where usuario_nombre LIKE 'prueba'
 
+<<<<<<< HEAD
+=======
+insert into SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario)
+select 
+	rol_Id,
+	usuario_Id
+	from SQLEADOS.Rol, SQLEADOS.Usuario
+		where usuario_nombre LIKE 'prueba'
+
+>>>>>>> parent of 01d0479... COMENTARIO RANDOM
