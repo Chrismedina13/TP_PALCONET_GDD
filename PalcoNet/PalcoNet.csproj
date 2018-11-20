@@ -238,7 +238,11 @@
     <Compile Include="Inicio\Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Listado Estadistico\Form1.cs">
+=======
+    <Compile Include="Support\volver.cs">
+>>>>>>> parent of 7cf25d5... Modificaciones en ABM_cliente, algo de REGISTRO y CONSUTALSQL
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Listado Estadistico\Form1.Designer.cs">

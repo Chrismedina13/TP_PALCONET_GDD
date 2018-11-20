@@ -68,4 +68,7 @@ C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarRolDeUser1.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
+<<<<<<< HEAD
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
+=======
+>>>>>>> parent of 7cf25d5... Modificaciones en ABM_cliente, algo de REGISTRO y CONSUTALSQL
