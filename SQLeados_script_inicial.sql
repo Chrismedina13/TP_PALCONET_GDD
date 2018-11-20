@@ -90,7 +90,25 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Rubr
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Funcionalidad'))
     DROP TABLE SQLEADOS.Funcionalidad
 
+<<<<<<< HEAD
 */
+=======
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Factura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.Factura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.ItemFactura'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.puntaje'))
+    DROP TABLE SQLEADOS.Funcionalidad
+	
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canjeproducto'))
+    DROP TABLE SQLEADOS.Funcionalidad
+
+>>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
@@ -131,6 +149,7 @@ usuario_fecha_creacion datetime
 )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 create table [SQLEADOS].UsuarioXRol(
 usuarioXRol_usuario int NOT NULL,
@@ -161,6 +180,8 @@ GO
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
 =======
 >>>>>>> parent of e9638d7... subo cambios
+=======
+>>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
@@ -418,6 +439,7 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 	CONTRA: pass123
 ***********************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
 =======
 
@@ -426,6 +448,9 @@ PRINT('POR A USER')
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values
 >>>>>>> parent of d713694... Importante avance
+=======
+insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values
+>>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
 1,
@@ -489,6 +514,7 @@ select distinct
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
@@ -515,6 +541,10 @@ insert into SQLEADOS.UserXRol(userXRol_rol,userXRol_usuario)
 select distinct 3, u.usuario_Id from SQLEADOS.Usuario u
 	INNER JOIN SQLEADOS.Cliente c ON (LOWER(replace(c.cliente_nombre, space(1), '_'))+'_'+c.cliente_apellido) = u.usuario_username
 >>>>>>> parent of d713694... Importante avance
+=======
+
+
+>>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 
 --RUBRO 
 
@@ -680,6 +710,7 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 PRINT('Comienza UPDATE CLIENTE') 
 
@@ -702,6 +733,8 @@ INNER JOIN SQLEADOS.Usuario
 
 
 
+=======
+>>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
