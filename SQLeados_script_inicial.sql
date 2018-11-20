@@ -5,6 +5,12 @@ GO
 ----------------------------------------------------------------------------------------------
 								/** ELIMINACIﾓN DE CONSTRAINS DE TABLAS ANTERIORES **/
 ----------------------------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+GO
+DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
+
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
 IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
 BEGIN
 	DECLARE @Sql NVARCHAR(MAX) = '';
@@ -35,6 +41,10 @@ BEGIN
 END
 GO
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
@@ -108,7 +118,13 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.punt
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canjeproducto'))
     DROP TABLE SQLEADOS.Funcionalidad
 
+<<<<<<< HEAD
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
+=======
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.UserXRol'))
+    DROP TABLE SQLEADOS.UserXRol
+	
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
@@ -162,6 +178,7 @@ GO
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 --create table [SQLEADOS].UserXRol(
 --userXRol_rol int not null references [SQLEADOS].Rol,
 --userXRol_usuario int not null references [SQLEADOS].Usuario
@@ -182,6 +199,8 @@ GO
 >>>>>>> parent of e9638d7... subo cambios
 =======
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
+=======
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
@@ -730,11 +749,14 @@ INNER JOIN SQLEADOS.Usuario
 
 
 
+<<<<<<< HEAD
 
 
 
 =======
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
+=======
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
@@ -1067,4 +1089,11 @@ GO
 =======
 							usuario_username=@nombreOriginal AND usuario_Id = @userID;
 		END
+<<<<<<< HEAD
 >>>>>>> parent of d713694... Importante avance
+=======
+
+
+
+		
+>>>>>>> parent of ad364cb... PEQUEﾃ前 arreglo
