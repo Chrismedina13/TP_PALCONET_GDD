@@ -21,6 +21,7 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             Application.Run(new Form1());
 =======
 
@@ -28,6 +29,9 @@ namespace PalcoNet
             Application.Run(new ABMCliente(usuario));
         //    Application.Run(new ABMEmpresa(usuario));
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
+=======
+            Application.Run(new ABMEmpresa(usuario));
+>>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
         }
     }
 }

@@ -62,11 +62,15 @@ namespace PalcoNet.Support
         public static SqlConnection conectar()
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
 =======
             String ruta = "";
             return new SqlConnection(@"Data source=LAPTOP-B6PL6D9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
+=======
+            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+>>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
         }
 
         public void cerrarConeccion(SqlConnection sql)

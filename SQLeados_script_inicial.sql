@@ -231,11 +231,12 @@ usuario_Id int primary key identity,
 usuario_nombre varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
 usuario_password varbinary(100) not null,
 usuario_rol int not null references [SQLEADOS].Rol,
-usuario_administrador bit default 0,
-usuario_estado bit default 1, --Indicador para saber si está habilitado o no
+usuario_tipo varchar(20) not null,
+usuario_estado int default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
 )
 
+<<<<<<< HEAD
 
 create table [SQLEADOS].UsuarioXRol(
 usuarioXRol_usuario int NOT NULL,
@@ -261,6 +262,8 @@ GO
 
 
 
+=======
+>>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
@@ -526,6 +529,7 @@ insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_estado, us
 ('admin',
 HASHBYTES('SHA2_256', 'pass123'),
 1,
+<<<<<<< HEAD
 1)
 go
 
@@ -533,6 +537,12 @@ insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
 select rol_Id, usuario_Id 
 from SQLeados.Usuario, SQLeados.Rol
 where usuario_nombre like 'admin' and rol_nombre in ('Administrativo','Empresa','Cliente')
+=======
+'Administrativo')
+
+--Usuarios clientes
+
+>>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
 go
 ----Usuarios clientes
 --PRINT('POR A CLIENTE') 
@@ -804,154 +814,8 @@ for insert as
 				--		AND 
 						publicacion_codigo=@indice;
 		END
-go
 
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[listarFuncionalidades]
-as begin
-select funcionalidad_descripcion from [SQLeados].Funcionalidad
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[existeRol] (@nombre nvarchar(30))
-as
-begin
-declare @existe int
-set @existe = (select count(rol_Id) from [SQLeados].Rol where Rol_nombre = @nombre) 
-return @existe
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[crearRolNuevo] (@nombre nvarchar(30))
-as
-begin
-insert into [SQLeados].Rol(Rol_nombre, rol_estado)
-values(@nombre,1)
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[codigoRol] (@nombre nvarchar(30))
-as
-begin
-declare @cod int
-set @cod = (select rol_Id from [SQLeados].rol where Rol_nombre = @nombre)
-return @cod
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[crearFuncionalidad] (@codigoRol int, @codigoFunc int)
-as
-begin
-insert into [SQLeados].FuncionalidadXRol(funcionalidadXRol_rol, funcionalidadXRol_funcionalidad)
-values(@codigoRol, @codigoFunc)
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[codigoFuncionalidad] (@nombre nvarchar(30))
-as
-begin
-declare @cod int
-set @cod = (select funcionalidad_Id from [SQLeados].Funcionalidad where funcionalidad_descripcion = @nombre)
-return @cod
-end
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[cargarRoles] 
-as
-begin
-select Rol_nombre from [SQLeados].Rol
-end
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-create procedure [SQLeados].[rolHabilitado] (@nombre nvarchar(30))
-as
-begin
-declare @resultado bit
-set @resultado = (select rol_estado from [SQLeados].Rol where Rol_nombre = @nombre)
-return @resultado
-end
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[FuncionalidadesPorRol] (@Rol nvarchar(30))
-as
-begin
-select funcionalidad_descripcion from [SQLeados].FuncionalidadXRol join [SQLeados].Rol ON funcionalidadXRol_rol = rol_Id join [SQLeados].Funcionalidad on
-funcionalidad_Id = funcionalidadXRol_funcionalidad
-where Rol_nombre = @Rol
-end
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[modificarRol] (@nombre nvarchar(30), @anterior nvarchar(30))
-as
-begin
-update [SQLeados].Rol set Rol_nombre = @nombre
-where Rol_nombre = @anterior
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[eliminarFuncionalidades] (@rol int)
-as
-begin
-delete from [SQLeados].FuncionalidadXRol
-where funcionalidadXRol_rol = @rol
-end
-go
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[cargarRolesHabilitados] 
-as
-begin
-select Rol_nombre from [SQLeados].Rol where rol_estado = 1
-end
-go
-
+<<<<<<< HEAD
 
 SET ANSI_NULLS ON
 GO
@@ -1228,3 +1092,7 @@ SELECT usuario_Id FROM [GD2C2018].[SQLEADOS].[Usuario]
 	where usuario_nombre LIKE 'prueba' AND 
 		SQLEADOS.func_coincide_fecha_creacion(usuario_fecha_creacion, GETDATE()) = 1
 		*/
+=======
+
+select * from SQLeados.Empresa
+>>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!

@@ -10,20 +10,11 @@ using System.Windows.Forms;
 
 namespace PalcoNet.Support
 {
-    public partial class volver : Form
+    public partial class Form1 : Form
     {
-        public volver()
+        public Form1()
         {
             InitializeComponent();
-        }
-
-        public void volver_boton_Click(object sender, EventArgs e)
-        {
-<<<<<<< HEAD
-            this.Close();
-=======
-
->>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
         }
     }
 }
