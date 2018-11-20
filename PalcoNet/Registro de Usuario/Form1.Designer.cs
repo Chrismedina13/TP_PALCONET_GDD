@@ -1,4 +1,4 @@
-﻿namespace PalcoNet.Abm_Rol
+﻿namespace PalcoNet.Registro_de_Usuario
 {
     partial class Form1
     {
