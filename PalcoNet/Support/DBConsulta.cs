@@ -16,7 +16,11 @@ namespace PalcoNet.Support
 {
     class DBConsulta
     {
+<<<<<<< HEAD
         private static SqlConnection conexion;
+=======
+        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
 
         private static void conexionAbrir()
         {
@@ -60,8 +64,12 @@ namespace PalcoNet.Support
             return tamanioDataSet(DS) == 0;
 =======
         public static bool dataSetVacio(DataSet DS) {
+<<<<<<< HEAD
             return false;
 >>>>>>> parent of d713694... Importante avance
+=======
+            return DS.Tables[0].Rows.Count == 0;
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
         }
 
         public static void ModificarDB(String cmd) {
