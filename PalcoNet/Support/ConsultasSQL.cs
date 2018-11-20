@@ -151,7 +151,11 @@ namespace PalcoNet.Support
         }
 
         internal static bool nombreUsuarioDisponible(String nombre, bool casoEspecial) {
+<<<<<<< HEAD
             SqlConnection sql = conectar();
+=======
+            SqlConnection sql = PalcoNet.Support.Conexion.conexionObtener();
+>>>>>>> parent of d713694... Importante avance
             String RS = null;
             try
             {
@@ -172,7 +176,11 @@ namespace PalcoNet.Support
                 return true;
                    
             }
+<<<<<<< HEAD
             catch (Exception ex)
+=======
+            catch (Exception)
+>>>>>>> parent of d713694... Importante avance
             {
                 MessageBox.Show("No se realizó la conexión con la base de datos");
                 casoEspecial = true;
@@ -486,6 +494,7 @@ namespace PalcoNet.Support
             else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 >>>>>>> parent of e9638d7... subo cambios
 
+<<<<<<< HEAD
             try {
                 DBConsulta.ModificarDB(addClienteCommand);
                 MessageBox.Show("Cliente ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -494,6 +503,68 @@ namespace PalcoNet.Support
             {
                 MessageBox.Show("Error al cargar registro \n\n" +ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+=======
         }
     }
+    #endregion
+
+    #region LOGIN
+    class LoginSQL : ConsultasSQL
+    {
+        public static byte[] loginEncriptarContraseña(string contrasenia)
+        {
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding encoder = Encoding.UTF8;
+                return hash.ComputeHash(encoder.GetBytes(contrasenia));
+            }
+        }
+
+        public static int corroborarDatos(String user, String contra) {
+            String query = String.Format("SELECT usuario_username, usuario_password FROM GD2C2018.SQLEADOS.Usuario where usuario_username like '" + user + "'");
+            DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
+            if(DBConsulta.dataSetVacio(usersEncontrados)) {
+              MessageBox.Show("Usuario o contraseña incorrecto");
+              return -1; // NO ENCONTRO NADA, NO HACE NADA
+            }
+
+            String nombreUser = usersEncontrados.Tables[0].Rows[0][0].ToString();
+            String pass = usersEncontrados.Tables[0].Rows[0][1].ToString();
+            MessageBox.Show("USERS ENCONTRADOS");
+            if (pass != contra) {
+                MessageBox.Show("Usuario o contraseña incorrecto");
+                String subirIntentosFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = usuario_intentos + 1 where usuario_username like  '" + user + "'");
+                DBConsulta.ModificarDB(subirIntentosFallidos);
+                return 0; // DEBE SALTAR UNA VENTANA QUE MLA LA CONTRA Y EN CORRESPONDENCIA SUBE EL CONTADOR
+                            // DE LOGIN
+            }
+            MessageBox.Show("Bienvenido " + nombreUser);
+            //Borrar todos los contadores de Logins fallidos para el usuario que ingresó
+            String resetearCampoLoginsFallidos = String.Format("UPDATE GD2C2018.SQLEADOS.Usuario SET usuario_intentos = 0 where usuario_username like  '" + user + "'");
+            DBConsulta.ModificarDB(resetearCampoLoginsFallidos);
+            
+
+            if (userTieneMasDe1Rol(ObtenerRoles(user))) { 
+                // SIGNIFICA QUE EL USUARIO TIENE MAS DE 1 ROL
+                // ABRE VENTANA DE SELECCION DE USER
+                return 2;
+            }
+            return 1; 
+        }
+
+        public static bool userTieneMasDe1Rol(DataSet DS) {
+            return DS.Tables[0].Rows.Count > 1;
+        }
+        
+        public static DataSet ObtenerRoles(String user) {
+            String query = String.Format("Select r.rol_nombre from SQLEADOS.Rol r JOIN SQLEADOS.UserXRol ux on ux.userXRol_rol = r.rol_Id JOIN SQLEADOS.Usuario u ON u.usuario_rol = ux.userXRol_usuario where u.usuario_username LIKE like '{0}'", user);
+            return DBConsulta.ConectarConsulta(query);
+>>>>>>> parent of d713694... Importante avance
+        }
+    }
+<<<<<<< HEAD
 }
+=======
+    #endregion
+}
+>>>>>>> parent of d713694... Importante avance
