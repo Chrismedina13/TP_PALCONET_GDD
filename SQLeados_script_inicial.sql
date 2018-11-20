@@ -7,6 +7,7 @@ GO
 ----------------------------------------------------------------------------------------------
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 GO
 DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
@@ -14,6 +15,11 @@ DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
 >>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
+=======
+GO
+DROP FUNCTION SQLEADOS.func_coincide_fecha_creacion
+
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
 IF EXISTS (SELECT * FROM SYS.SCHEMAS WHERE name = 'SQLEADOS')
 BEGIN
 	DECLARE @Sql NVARCHAR(MAX) = '';
@@ -48,9 +54,12 @@ GO
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
 >>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
+=======
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
 ----------------------------------------------------------------------------------------------
 								/** CREACION DE SCHEMA **/
 ----------------------------------------------------------------------------------------------
@@ -134,6 +143,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.canj
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.UserXRol'))
     DROP TABLE SQLEADOS.UserXRol
 	
+<<<<<<< HEAD
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
+=======
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
@@ -200,6 +212,7 @@ GO
 --userXRol_usuario int not null references [SQLEADOS].Usuario
 --)
 
+<<<<<<< HEAD
 --usuario_tipo varchar(20) not null,
 --usuario_estado int default 1, --Indicador para saber si est� habilitado o no
 --usuario_logins_fallidos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciar� en 0
@@ -220,6 +233,8 @@ GO
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
 >>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
+=======
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
@@ -803,6 +818,7 @@ INNER JOIN SQLEADOS.Usuario
 <<<<<<< HEAD
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -812,6 +828,8 @@ INNER JOIN SQLEADOS.Usuario
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
 >>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
+=======
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
 GO
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
 RETURNS bit 
@@ -1145,6 +1163,7 @@ GO
 							usuario_username=@nombreOriginal AND usuario_Id = @userID;
 		END
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of d713694... Importante avance
 =======
 
@@ -1155,3 +1174,9 @@ GO
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
 =======
 >>>>>>> parent of 26d87cd... Arreglos en el SCRIPT
+=======
+
+
+
+		
+>>>>>>> parent of ad364cb... PEQUEÑO arreglo
