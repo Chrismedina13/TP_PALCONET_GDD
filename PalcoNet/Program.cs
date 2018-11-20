@@ -17,15 +17,15 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
-      //      int usuario = 1;
+            int usuario = 1;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 <<<<<<< HEAD
             Application.Run(new Form1());
 =======
 
-            Application.Run(new LOGIN());
-        //    Application.Run(new ABMCliente(usuario));
+       //     Application.Run(new LOGIN());
+            Application.Run(new ABMCliente(usuario));
         //    Application.Run(new ABMEmpresa(usuario));
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
         }

@@ -69,7 +69,6 @@ C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP GDD 20158\TPVERSION1.1\TP_PALCONET_GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
 <<<<<<< HEAD
-<<<<<<< HEAD
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
 =======
 C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.exe.config
@@ -98,5 +97,3 @@ C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.
 C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\bin\Debug\PalcoNet.pdb
 C:\Damian\TP GDD 20158\APP_PALCO.NET\APP_Palcon.net\PalcoNet\obj\Debug\PalcoNet.pdb
 >>>>>>> 01d0479b5978ecac948ccf1ff86c8da844e2f1e8
-=======
->>>>>>> parent of 7cf25d5... Modificaciones en ABM_cliente, algo de REGISTRO y CONSUTALSQL

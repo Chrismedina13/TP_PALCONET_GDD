@@ -57,7 +57,7 @@ namespace PalcoNet.Support
 
         public static bool dataSetVacio(DataSet DS)
         {
-            return DS.Tables[0].Rows.Count == 0;
+            return tamanioDataSet(DS) == 0;
         }
 
         public static int tamanioDataSet(DataSet DS) {
