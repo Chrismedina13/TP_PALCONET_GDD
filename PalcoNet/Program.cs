@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Abm_Empresa_Espectaculo;
+using PalcoNet.Abm_Cliente;
+using PalcoNet.Login_y_seguridad;
 
 namespace PalcoNet
 {
@@ -20,7 +22,6 @@ namespace PalcoNet
             Application.SetCompatibleTextRenderingDefault(false);
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
             Application.Run(new Form1());
 =======
 
@@ -31,9 +32,6 @@ namespace PalcoNet
 =======
             Application.Run(new ABMEmpresa(usuario));
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
-=======
-            Application.Run(new Form1());
->>>>>>> parent of e9638d7... subo cambios
         }
     }
 }

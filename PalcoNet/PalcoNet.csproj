@@ -62,6 +62,18 @@
     <Compile Include="Abm Cliente\EliminarCliente.Designer.cs">
       <DependentUpon>EliminarCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Cliente\ModificarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarCliente.Designer.cs">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSeleccionado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSeleccionado.Designer.cs">
+      <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABMEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,9 +172,6 @@
     </Compile>
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of e9638d7... subo cambios
     <Compile Include="Inicio\Form2.cs">
 =======
     <Compile Include="Program.cs" />
@@ -176,7 +185,6 @@
     </Compile>
 <<<<<<< HEAD
     <Compile Include="Inicio\Form3.cs">
-<<<<<<< HEAD
 =======
     <Compile Include="Login y seguridad\LOGIN.cs">
       <SubType>Form</SubType>
@@ -212,8 +220,6 @@
     <Compile Include="Support\ConsultasSQL.cs" />
     <Compile Include="Support\Form1.cs">
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
-=======
->>>>>>> parent of e9638d7... subo cambios
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Support\Form1.Designer.cs">
@@ -243,6 +249,12 @@
     <EmbeddedResource Include="Abm Cliente\EliminarCliente.resx">
       <DependentUpon>EliminarCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificarCliente.resx">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificarClienteSeleccionado.resx">
+      <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABMEmpresa.resx">
       <DependentUpon>ABMEmpresa.cs</DependentUpon>
     </EmbeddedResource>
@@ -263,14 +275,18 @@
     </EmbeddedResource>
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of e9638d7... subo cambios
     <EmbeddedResource Include="Inicio\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Login y seguridad\LOGIN.resx">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login y seguridad\SeleccionarRolDeUser1.resx">
+      <DependentUpon>SeleccionarRolDeUser1.cs</DependentUpon>
+>>>>>>> d713694c05f9315480f2e64ae129a88bed515745
     </EmbeddedResource>
 =======
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
@@ -283,7 +299,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -305,8 +320,6 @@
 >>>>>>> d713694c05f9315480f2e64ae129a88bed515745
 =======
 >>>>>>> parent of e0d4a36... abm rol funcionando, login y seg funcionando, ver ABM usuarios!
-=======
->>>>>>> parent of e9638d7... subo cambios
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
