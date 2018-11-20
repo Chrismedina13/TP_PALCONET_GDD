@@ -176,7 +176,6 @@ usuario_fecha_creacion datetime
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 create table [SQLEADOS].UsuarioXRol(
 usuarioXRol_usuario int NOT NULL,
@@ -184,11 +183,6 @@ usuarioXRol_rol int NOT NULL,
 PRIMARY KEY(usuarioXRol_usuario, usuarioXRol_rol),
 CONSTRAINT fk_rpu_username FOREIGN KEY (usuarioXRol_usuario) REFERENCES [SQLEADOS].Usuario (Usuario_Id),
 CONSTRAINT fk_rpu_codigo_rol FOREIGN KEY (usuarioXRol_rol) REFERENCES [SQLEADOS].Rol (rol_id)
-=======
-create table [SQLEADOS].UserXRol(
-userXRol_rol int not null references [SQLEADOS].Rol,
-userXRol_usuario int not null references [SQLEADOS].Usuario
->>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
 )
 GO
 
@@ -207,7 +201,6 @@ GO
 --)
 
 
-<<<<<<< HEAD
 
 
 =======
@@ -218,8 +211,6 @@ GO
 >>>>>>> parent of 174f0a6... Cambios necesarios, agrego nueva tabla USERXROL
 =======
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
-=======
->>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
 create table [SQLEADOS].Cliente(
 --cliente_id int primary key identity,
 
@@ -479,13 +470,10 @@ select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'D
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_rol,usuario_tipo) values
 =======
 
 
-=======
->>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
 PRINT('POR A USER') 
 go
 insert into SQLEADOS.Usuario(usuario_username, usuario_password,usuario_tipo, usuario_fecha_creacion) values

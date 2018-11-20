@@ -17,26 +17,23 @@ namespace PalcoNet.Support
     class DBConsulta
     {
 <<<<<<< HEAD
-<<<<<<< HEAD
         private static SqlConnection conexion;
 =======
         private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
 >>>>>>> parent of ad364cb... PEQUEÑO arreglo
-=======
-        private static SqlConnection conexion = new SqlConnection(@"Data source=LAPTOP-B6PLD9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
->>>>>>> parent of 271fbb6... Arreglos en la conexion, avance en LOGIN
 
         private static void conexionAbrir()
         {
             try
             {
+                conexion = new SqlConnection(@"Data source=.\SQLSERVER2012;Initial Catalog=GD2C2018;User id=gdEspectaculos2018;Password= gd2018");
                 conexion.Open();
+      //          MessageBox.Show("CONEXION HECHA A LA DB");
             }
             catch (Exception)
             {
                 MessageBox.Show("Error al intentar conectar con la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private static void conexionCerrar()
@@ -54,9 +51,9 @@ namespace PalcoNet.Support
                 conexionCerrar();
                 return DS;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo generar la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo generar la consulta:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -79,14 +76,16 @@ namespace PalcoNet.Support
             conexionAbrir();
             try {
                 SqlCommand ejecutador = new SqlCommand(cmd);
+                ejecutador.Connection = conexion;
                 ejecutador.ExecuteNonQuery();
                 MessageBox.Show("Se han realizado los cambios");
+                conexionCerrar();
             }
             catch (Exception)
             {
                 MessageBox.Show("No se pudo realizar la operacion");
             }
-            conexionCerrar();
+            
         }
     }
 }
