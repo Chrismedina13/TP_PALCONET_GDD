@@ -85,6 +85,7 @@
             this.Controls.Add(this.buttonALTA);
             this.Name = "ABMEmpresa";
             this.Text = "ABMEmpresa";
+            this.Load += new System.EventHandler(this.ABMEmpresa_Load);
             this.ResumeLayout(false);
 
         }

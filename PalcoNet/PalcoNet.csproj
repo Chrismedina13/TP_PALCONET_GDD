@@ -62,6 +62,18 @@
     <Compile Include="Abm Cliente\EliminarCliente.Designer.cs">
       <DependentUpon>EliminarCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Cliente\ModificarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarCliente.Designer.cs">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSeleccionado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSeleccionado.Designer.cs">
+      <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABMEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +194,7 @@
     <Compile Include="Inicio\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Inicio\Form2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +202,37 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio\Form3.cs">
+=======
+    <Compile Include="Login y seguridad\LOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login y seguridad\LOGIN.Designer.cs">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login y seguridad\SeleccionarRolDeUser1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login y seguridad\SeleccionarRolDeUser1.Designer.cs">
+      <DependentUpon>SeleccionarRolDeUser1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro de Usuario\RegistroCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\RegistroCliente.Designer.cs">
+      <DependentUpon>RegistroCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\RegistroUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\RegistroUser.Designer.cs">
+      <DependentUpon>RegistroUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Support\DBConsulta.cs" />
+    <Compile Include="Support\ConsultasSQL.cs" />
+    <Compile Include="Support\Form1.cs">
+>>>>>>> d713694c05f9315480f2e64ae129a88bed515745
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Inicio\Form3.Designer.cs">
@@ -212,6 +256,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Cliente\EliminarCliente.resx">
       <DependentUpon>EliminarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificarCliente.resx">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificarClienteSeleccionado.resx">
+      <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABMEmpresa.resx">
       <DependentUpon>ABMEmpresa.cs</DependentUpon>
@@ -249,11 +299,19 @@
     <EmbeddedResource Include="Inicio\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Inicio\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Login y seguridad\LOGIN.resx">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login y seguridad\SeleccionarRolDeUser1.resx">
+      <DependentUpon>SeleccionarRolDeUser1.cs</DependentUpon>
+>>>>>>> d713694c05f9315480f2e64ae129a88bed515745
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -264,6 +322,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+<<<<<<< HEAD
+=======
+    <EmbeddedResource Include="Registro de Usuario\RegistroCliente.resx">
+      <DependentUpon>RegistroCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\RegistroUSer.resx">
+      <DependentUpon>RegistroUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Support\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Support\volver.resx">
+      <DependentUpon>volver.cs</DependentUpon>
+    </EmbeddedResource>
+>>>>>>> d713694c05f9315480f2e64ae129a88bed515745
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

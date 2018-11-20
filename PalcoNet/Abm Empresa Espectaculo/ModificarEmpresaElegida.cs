@@ -7,14 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
-    public partial class ModificarEmpresaElegida : Form
+    public partial class ModificarEmpresaElegida : volver
     {
         public ModificarEmpresaElegida()
         {
             InitializeComponent();
+        }
+
+        private void buttonVolver_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

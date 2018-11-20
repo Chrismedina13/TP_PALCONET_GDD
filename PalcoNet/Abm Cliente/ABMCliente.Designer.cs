@@ -33,6 +33,11 @@
             this.buttonALTACLIENTE = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
+            // volver_boton
+            // 
+            this.volver_boton.Location = new System.Drawing.Point(81, 254);
+            this.volver_boton.Size = new System.Drawing.Size(131, 28);
+            // 
             // buttonBAJACLIENTE
             // 
             this.buttonBAJACLIENTE.Location = new System.Drawing.Point(81, 182);
@@ -74,6 +79,10 @@
             this.Name = "ABMCliente";
             this.Text = "ABMCliente";
             this.Load += new System.EventHandler(this.ABMCliente_Load);
+            this.Controls.SetChildIndex(this.buttonALTACLIENTE, 0);
+            this.Controls.SetChildIndex(this.buttonMODIFICARCLIENTE, 0);
+            this.Controls.SetChildIndex(this.buttonBAJACLIENTE, 0);
+            this.Controls.SetChildIndex(this.volver_boton, 0);
             this.ResumeLayout(false);
 
         }
