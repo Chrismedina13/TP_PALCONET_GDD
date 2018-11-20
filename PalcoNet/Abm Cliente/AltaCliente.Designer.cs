@@ -45,7 +45,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -76,6 +75,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.dateFecha = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,7 +91,7 @@
             // textBoxDOCNUMERO
             // 
             this.textBoxDOCNUMERO.Location = new System.Drawing.Point(256, 112);
-            this.textBoxDOCNUMERO.MaxLength = 8888;
+            this.textBoxDOCNUMERO.MaxLength = 5;
             this.textBoxDOCNUMERO.Name = "textBoxDOCNUMERO";
             this.textBoxDOCNUMERO.Size = new System.Drawing.Size(103, 20);
             this.textBoxDOCNUMERO.TabIndex = 6;
@@ -117,7 +117,7 @@
             // textBoxTIPODOC
             // 
             this.textBoxTIPODOC.Location = new System.Drawing.Point(148, 112);
-            this.textBoxTIPODOC.MaxLength = 3;
+            this.textBoxTIPODOC.MaxLength = 4;
             this.textBoxTIPODOC.Name = "textBoxTIPODOC";
             this.textBoxTIPODOC.Size = new System.Drawing.Size(34, 20);
             this.textBoxTIPODOC.TabIndex = 5;
@@ -245,16 +245,6 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(345, 105);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 13);
-            this.label4.TabIndex = 20000001;
-            this.label4.Text = "*";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label18
             // 
@@ -513,6 +503,16 @@
             this.dateFecha.Name = "dateFecha";
             this.dateFecha.Size = new System.Drawing.Size(211, 20);
             this.dateFecha.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(345, 105);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(11, 13);
+            this.label4.TabIndex = 20000001;
+            this.label4.Text = "*";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // AltaCliente
             // 
