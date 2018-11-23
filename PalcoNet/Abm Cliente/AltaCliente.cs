@@ -44,19 +44,27 @@ namespace PalcoNet.Abm_Cliente
 
             }
 
+            if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text.Trim()))
+            {
+                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+           
+            if (! AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim()))
+            {
+                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            debeSerTodoNumero(textBoxNroCalle.Text, "Nro de calle");
-            debeSerTodoNumero(textBoxDOCNUMERO.Text, "Nro de documento");
-
-
-
+            AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim());
+            /*
             if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
             {
                 MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
+            */
+            
             if (textBoxTIPODOC.TextLength != 3)
             {
                 MessageBox.Show("El cuit tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -65,34 +73,22 @@ namespace PalcoNet.Abm_Cliente
 
             // Porque no es campo obligatorio
             if(textBoxPiso.Text != "") {
-                debeSerTodoNumero(textBoxPiso.Text, "Piso");
+    //            debeSerTodoNumero(textBoxPiso.Text, "Piso");
             }
             
-            debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
+    //        debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
 
-            if (textBoxDOCNUMERO.TextLength != 7)
-            {
-                MessageBox.Show("El documento debe tener 7 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (textBoxCuit.TextLength != 11)
-            {
-                MessageBox.Show("El cuit tiene que tener 11 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             String tipo = "cliente";
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
-
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
+       /*     if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
                 MessageBox.Show("El CUIT y el numero de documento no coindiden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+            */
 
             String nombre = textBoxNombre.Text;
             String apellido = textBoxApellido.Text;
@@ -135,7 +131,7 @@ namespace PalcoNet.Abm_Cliente
             }
 
 
-            this.limpiarCuadrosDeTexto();
+       //     this.limpiarCuadrosDeTexto();
             return;
 
         }
@@ -169,10 +165,11 @@ namespace PalcoNet.Abm_Cliente
 
         public String armarCuit(String cuitSinArmar)
         {
-            int n = cuitSinArmar.Length;
+            int n = textBoxDOCNUMERO.TextLength;
             String primeraParte = cuitSinArmar.Substring(0, 2);
-            String SegundaParte = cuitSinArmar.Substring(2, 7);
-            String TerceraParte = cuitSinArmar.Substring(7, 2);
+            String SegundaParte = cuitSinArmar.Substring(2, n);
+            String TerceraParte = cuitSinArmar.Substring(2+n, 2);
+            
 
             String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
 
