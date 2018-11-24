@@ -588,4 +588,50 @@ namespace PalcoNet.Support
     }
 
     #endregion
+
+    #region Estadistica
+
+            /*ESTADISTICAS */
+
+    class Estadisticas : ConsultasSQL
+    {
+        internal static void cargarGriddLocalidadesNoVendidas(DataGridView dataGridView1, Trimestre trimestre, decimal p)
+        {
+            SqlCommand command = new SqlCommand("");
+            obtenerEstadistica(dataGridView1, trimestre, p, command);
+
+        }
+
+        internal static void cargarGriddClientesMasPuntosVencidos(DataGridView dataGridView1, Trimestre trimestre, decimal p)
+        {
+            SqlCommand command = new SqlCommand("");
+            obtenerEstadistica(dataGridView1, trimestre, p, command);
+        }
+
+        internal static void cargarGriddClientesMeyorCompras(DataGridView dataGridView1, Trimestre trimestre, decimal año)
+        {
+            SqlCommand command = new SqlCommand("");
+            obtenerEstadistica(dataGridView1, trimestre, año, command);
+        }
+
+        private static void obtenerEstadistica(DataGridView dataGridView1, Trimestre trimestre, decimal año, SqlCommand command)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            connection.Open();
+            DateTime fechaIni = new DateTime(Convert.ToInt32(año), trimestre.mesInicio, trimestre.diaInicio);
+            DateTime fechaFin = new DateTime(Convert.ToInt32(año), trimestre.mesFin, trimestre.diaFin);
+            command.Parameters.AddWithValue("inicioFecha", fechaIni);
+            command.Parameters.AddWithValue("finFecha", fechaFin);
+            command.Connection = connection;
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            da.SelectCommand = command;
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+            connection.Close();
+        }
+
+    }
+    #endregion
+
 }
