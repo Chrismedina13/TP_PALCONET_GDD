@@ -320,11 +320,32 @@ namespace PalcoNet.Support
     #region ConsultaEmpresa
     class ConsultasSQLEmpresa : ConsultasSQL
     {
-      /*  
-       * internal bool existeCuit(string cuit)
+
+        internal static void darDeBajaEmpresa(String razonSocial, String cuit,String email)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand deleteEmpresaCommand = new SqlCommand("UPDATE [GD2C2018].[SQLEADOS].[Empresa] SET empresa_estado = 0 where empresa_razon_social = @razonSocial and empresa_cuit = @cuit and empresa_email = @email ");
+            deleteEmpresaCommand.Parameters.AddWithValue("razonSocial", razonSocial);
+            deleteEmpresaCommand.Parameters.AddWithValue("cuit", cuit);
+            deleteEmpresaCommand.Parameters.AddWithValue("email", email);
+
+            deleteEmpresaCommand.Connection = connection;
+            connection.Open();
+            int FilasAfectadas = deleteEmpresaCommand.ExecuteNonQuery();
+
+            if (FilasAfectadas > 0)
+            {
+                MessageBox.Show("La empresa ha sido dado de baja exitosamente", "La base de datos ha sido modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else MessageBox.Show("No se pudo dar de baja el registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            connection.Close();
+        }
+
+
+        internal static bool existeCuit(string cuit)
         {
             String empresaRS = null;
-            SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");            
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             SqlCommand empresaHabilitada = new SqlCommand("SELECT empresa_razon_social FROM [GD2C2018].[SQLEADOS].[Empresa] WHERE empresa_cuit = @cuit and empresa_estado = 1");
             empresaHabilitada.Parameters.AddWithValue("cuit", cuit);
             empresaHabilitada.Connection = connection;
@@ -337,7 +358,7 @@ namespace PalcoNet.Support
             connection.Close();
             return empresaRS != null;
         }
-        */
+        
         internal static void AgregarEmpresa(string razonSocial, string cuit, string ciudad, string mail, string telefono, int usuario, DateTime fecha)
         {
 
@@ -367,7 +388,7 @@ namespace PalcoNet.Support
             connection.Open();
             try
             {
-                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario] FROM [GD2C2018].[SQLEADOS].[Empresa] where [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
+                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario] FROM [GD2C2018].[SQLEADOS].[Empresa] where empresa_estado = 1 and [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
                 SqlDataAdapter da = new SqlDataAdapter(query, connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

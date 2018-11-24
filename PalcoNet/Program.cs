@@ -24,8 +24,8 @@ namespace PalcoNet
 
        //     Application.Run(new LOGIN());
          //     Application.Run(new ABMCliente(usuario));
-         //   Application.Run(new ABMEmpresa(usuario));
-            Application.Run(new ListadoEstadistico());
+            Application.Run(new ABMEmpresa(usuario));
+          //  Application.Run(new ListadoEstadistico());
 
         }
     }
