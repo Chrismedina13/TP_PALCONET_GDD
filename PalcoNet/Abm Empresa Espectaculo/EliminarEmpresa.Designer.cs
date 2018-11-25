@@ -89,6 +89,8 @@
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 29;
             this.textBoxCuit.TextChanged += new System.EventHandler(this.textBoxCuit_TextChanged);
+            this.textBoxCuit.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCuit_KeyUp);
+
             // 
             // label5
             // 
@@ -107,6 +109,8 @@
             this.textBoxMail.Size = new System.Drawing.Size(209, 20);
             this.textBoxMail.TabIndex = 27;
             this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
+            this.textBoxMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMail_KeyUp);
+
             // 
             // textBoxRazonSocial
             // 
@@ -115,6 +119,8 @@
             this.textBoxRazonSocial.Size = new System.Drawing.Size(209, 20);
             this.textBoxRazonSocial.TabIndex = 26;
             this.textBoxRazonSocial.TextChanged += new System.EventHandler(this.textBoxRazonSocial_TextChanged);
+            this.textBoxRazonSocial.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtRazonSocial_KeyUp);
+
             // 
             // label2
             // 

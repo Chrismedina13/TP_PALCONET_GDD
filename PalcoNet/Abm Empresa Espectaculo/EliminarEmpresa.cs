@@ -122,5 +122,26 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
         }
+
+        private void txtCuit_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGriddView1, textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text);
+        }
+
+        private void txtMail_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGriddView1, textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text);
+        }
+
+        private void txtRazonSocial_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            ConsultasSQLEmpresa.cargarGriddEmpresa(dataGriddView1, textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text);
+        }
+
+     
+
     }
 }

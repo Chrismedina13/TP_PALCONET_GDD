@@ -30,7 +30,7 @@
         {
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxLocalidad = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxCodigoPostal = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@
             this.textBoxCuit = new System.Windows.Forms.TextBox();
             this.textBoxCiudad = new System.Windows.Forms.TextBox();
             this.textBoxTelefono = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxRazonSocial = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -76,7 +76,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBoxLocalidad);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.textBoxCodigoPostal);
             this.groupBox1.Controls.Add(this.label10);
@@ -96,12 +96,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
             // 
-            // textBox1
+            // textBoxLocalidad
             // 
-            this.textBox1.Location = new System.Drawing.Point(84, 105);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(260, 20);
-            this.textBox1.TabIndex = 11;
+            this.textBoxLocalidad.Location = new System.Drawing.Point(84, 105);
+            this.textBoxLocalidad.Name = "textBoxLocalidad";
+            this.textBoxLocalidad.Size = new System.Drawing.Size(260, 20);
+            this.textBoxLocalidad.TabIndex = 11;
             // 
             // label11
             // 
@@ -214,12 +214,12 @@
             this.textBoxTelefono.Size = new System.Drawing.Size(209, 20);
             this.textBoxTelefono.TabIndex = 20;
             // 
-            // textBox2
+            // textBoxMail
             // 
-            this.textBox2.Location = new System.Drawing.Point(124, 81);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(209, 20);
-            this.textBox2.TabIndex = 19;
+            this.textBoxMail.Location = new System.Drawing.Point(124, 81);
+            this.textBoxMail.Name = "textBoxMail";
+            this.textBoxMail.Size = new System.Drawing.Size(209, 20);
+            this.textBoxMail.TabIndex = 19;
             // 
             // textBoxRazonSocial
             // 
@@ -322,7 +322,7 @@
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.textBoxCiudad);
             this.Controls.Add(this.textBoxTelefono);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxMail);
             this.Controls.Add(this.textBoxRazonSocial);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -337,7 +337,7 @@
             this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.textBoxRazonSocial, 0);
-            this.Controls.SetChildIndex(this.textBox2, 0);
+            this.Controls.SetChildIndex(this.textBoxMail, 0);
             this.Controls.SetChildIndex(this.textBoxTelefono, 0);
             this.Controls.SetChildIndex(this.textBoxCiudad, 0);
             this.Controls.SetChildIndex(this.textBoxCuit, 0);
@@ -359,7 +359,7 @@
 
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxLocalidad;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBoxCodigoPostal;
         private System.Windows.Forms.Label label10;
@@ -378,7 +378,7 @@
         public System.Windows.Forms.TextBox textBoxCuit;
         public System.Windows.Forms.TextBox textBoxCiudad;
         public System.Windows.Forms.TextBox textBoxTelefono;
-        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox textBoxMail;
         public System.Windows.Forms.TextBox textBoxRazonSocial;
         public System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label label4;

@@ -61,6 +61,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.textBoxCuit = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -362,11 +363,21 @@
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 20;
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(117, 253);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(126, 13);
+            this.label20.TabIndex = 21;
+            this.label20.Text = "Ingrese CUIT sin guiones";
+            // 
             // AltaEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(408, 494);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label15);
@@ -430,5 +441,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBoxCuit;
+        private System.Windows.Forms.Label label20;
     }
 }

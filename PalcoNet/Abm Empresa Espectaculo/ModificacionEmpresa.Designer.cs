@@ -56,6 +56,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(37, 195);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ShowRowErrors = false;
             this.dataGridView1.Size = new System.Drawing.Size(582, 124);
             this.dataGridView1.TabIndex = 21;
             // 
@@ -67,6 +68,7 @@
             this.btnModificar.TabIndex = 23;
             this.btnModificar.Text = "MODIFICAR EMPRESA";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnVolver
             // 
@@ -76,6 +78,7 @@
             this.btnVolver.TabIndex = 22;
             this.btnVolver.Text = "VOLVER";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // label3
             // 
@@ -93,6 +96,8 @@
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 36;
+            this.textBoxCuit.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCuit_KeyUp);
+
             // 
             // label5
             // 
@@ -109,6 +114,8 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(209, 20);
             this.textBoxMail.TabIndex = 34;
+            this.textBoxMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMail_KeyUp);
+
             // 
             // textBoxRazonSocial
             // 
@@ -116,6 +123,7 @@
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(209, 20);
             this.textBoxRazonSocial.TabIndex = 33;
+            this.textBoxRazonSocial.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtRazonSocial_KeyUp);
             // 
             // label2
             // 

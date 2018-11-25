@@ -401,6 +401,53 @@ namespace PalcoNet.Support
             connection.Close();
         }
 
+        internal static void cargarGriddEmpresaModificar(DataGridView dgv, string razonSocial, string cuit, string mail)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            connection.Open();
+            try
+            {
+                String query = "SELECT [empresa_razon_social],[empresa_cuit],[empresa_email],[empresa_ciudad],[empresa_telefono],[empresa_usuario],[empresa_estado] FROM [GD2C2018].[SQLEADOS].[Empresa] where [empresa_razon_social] like '" + razonSocial + "%' and [empresa_cuit] like '" + cuit + "%' and [empresa_email] like '" + mail + "%' ";
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
+
+
+        internal static string[] getDatosEmpresa(string razonSocial, string cuit, string email)
+        {
+            String[] datos = new string[9];
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand getDatosClienteCommand = new SqlCommand("SELECT [empresa_ciudad],[empresa_telefono],[empresa_estado],[domicilio_calle],[domicilio_numero],[domicilio_piso],[domicilio_dto],[domicilio_localidad],[domicilio_codigo_postal] FROM [GD2C2018].[SQLEADOS].[Empresa],[GD2C2018].[SQLEADOS].[Domicilio] WHERE empresa_cuit = @cuit AND empresa_razon_social = @razonSocial and empresa_razon_social = domicilio_empresa_razon_social and empresa_cuit = domicilio_empresa_cuit");
+            getDatosClienteCommand.Parameters.AddWithValue("razonSocial", razonSocial);
+            getDatosClienteCommand.Parameters.AddWithValue("cuit", cuit);
+            getDatosClienteCommand.Parameters.AddWithValue("email", email);
+            getDatosClienteCommand.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = getDatosClienteCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                datos[0] = reader["empresa_ciudad"].ToString();
+                datos[1] = reader["empresa_telefono"].ToString();
+                datos[2] = reader["empresa_estado"].ToString();
+                datos[3] = reader["domicilio_calle"].ToString();
+                datos[4] = reader["domicilio_numero"].ToString();
+                datos[5] = reader["domicilio_piso"].ToString();
+                datos[6] = reader["domicilio_dto"].ToString();
+                datos[7] = reader["domicilio_localidad"].ToString();
+                datos[8] = reader["domicilio_codigo_postal"].ToString();
+            }
+            connection.Close();
+            return datos;
+        }
+
 
 
     }
