@@ -40,7 +40,7 @@ namespace PalcoNet.Support
         //LAPTOP-B6PL6D9G
         //\SQLSERVER2012
  //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
-        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
+        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
         public static SqlConnection conexionObtener()
         {
             return conexion;
