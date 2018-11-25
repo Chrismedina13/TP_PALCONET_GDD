@@ -23,7 +23,7 @@ namespace PalcoNet.ABM_Rol
         {
             InitializeComponent();
 
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
             cargarRoles = new SqlCommand("SQLeados.cargarRolesHabilitados", coneccion);
 

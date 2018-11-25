@@ -30,7 +30,7 @@ namespace PalcoNet.ABM_Rol
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
             cargarRoles = new SqlCommand("[SQLeados].cargarRoles", coneccion);
 
@@ -219,7 +219,7 @@ namespace PalcoNet.ABM_Rol
                     coneccion.Open();
                     crearFunc = new SqlCommand("SQLeados.crearFuncionalidad", coneccion);
                     crearFunc.CommandType = CommandType.StoredProcedure;
-                    crearFunc.Parameters.Add("@codigoRol", SqlDbType.VarChar).Value = codigo;
+                    crearFunc.Parameters.Add("@codigoRol", SqlDbType.Int).Value = codigo;
                     crearFunc.Parameters.Add("@codigoFunc", SqlDbType.Int).Value = codigos.ElementAt(i);
                     crearFunc.ExecuteNonQuery();
                     coneccion.Close();

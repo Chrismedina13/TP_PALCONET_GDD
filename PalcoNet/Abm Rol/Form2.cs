@@ -24,7 +24,7 @@ namespace PalcoNet.ABM_Rol
         public Form2()
         {
             InitializeComponent();
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
         }
 

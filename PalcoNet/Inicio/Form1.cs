@@ -23,7 +23,7 @@ namespace PalcoNet
         public Form1()
         {
             InitializeComponent();
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = Support.Conexion.conectar();
             coneccion.Open();
         }
 
@@ -89,10 +89,8 @@ namespace PalcoNet
                             var resultadoC = validarContra.Parameters.Add("@Valor", SqlDbType.Int);
                             resultadoC.Direction = ParameterDirection.ReturnValue;
                             data = validarContra.ExecuteReader();
-                            data.Close();
                             var resultadoContra = resultadoC.Value;
-
-
+                            data.Close();
 
                             if ((int)resultadoContra == 1)
                             {
@@ -157,11 +155,11 @@ namespace PalcoNet
                 }
 
 
+
+
+
+
             }
-
-
-
-
 
         }
 
@@ -213,7 +211,6 @@ namespace PalcoNet
 
             comboBox1.DataSource = tablaRoles;
             comboBox1.DisplayMember = "Rol_nombre";
-
 
             if (((int)resultadoIntentos2) == 1)
             {

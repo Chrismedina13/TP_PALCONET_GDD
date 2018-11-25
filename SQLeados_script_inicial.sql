@@ -38,7 +38,7 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.func
 	WHERE TABLE_SCHEMA = 'SQLEADOS' AND TABLE_TYPE = 'BASE TABLE'
 	PRINT @SqlStatement
 	EXEC  (@SqlStatement)
-	DROP SCHEMA SQLEADOS
+	--DROP SCHEMA SQLEADOS
 END
 GO
 
@@ -186,6 +186,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[exi
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ValidarContra]'))
     DROP proc SQLEADOS.[ValidarContra]
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[actualizarContra]'))
+    DROP proc SQLEADOS.actualizarContra
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[listarFuncionalidades]'))
     DROP proc SQLEADOS.[listarFuncionalidades]
 
@@ -230,7 +233,7 @@ create table [SQLEADOS].Usuario(
 usuario_Id int primary key identity,
 usuario_nombre varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
 usuario_password varbinary(100) not null,
-usuario_rol int not null references [SQLEADOS].Rol,
+--usuario_rol int not null references [SQLEADOS].Rol,
 usuario_administrador bit default 0,
 usuario_estado bit default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
@@ -516,7 +519,7 @@ PRINT('PASA A DOMICILIO')
 /************************************************************
  USER ADMIN ->
 	NOMBRE: admin
-	CONTRA: pass123
+	CONTRA: 1234
 ***********************************************************/
 
 
@@ -524,7 +527,7 @@ PRINT('POR A USER')
 go
 insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_estado, usuario_administrador) values
 ('admin',
-HASHBYTES('SHA2_256', 'pass123'),
+HASHBYTES('SHA2_256', '1234'),
 1,
 1)
 go
@@ -870,7 +873,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [SQLeados].[codigoFuncionalidad] (@nombre nvarchar(30))
+CREATE procedure [SQLeados].[codigoFuncionalidad] (@nombre nvarchar(370))
 as
 begin
 declare @cod int
@@ -1034,7 +1037,7 @@ as
 begin
 declare @Resultado int
 declare @pre varbinary(100)
-set @pre = HASHBYTES('SHA',cast(@Password as varchar))
+set @pre = HASHBYTES('SHA2_256',cast(@Password as varchar(30)))
 set @Resultado =CAST(
    CASE WHEN EXISTS(SELECT usuario_nombre FROM [SQLeados].Usuario where usuario_nombre like @Username and Usuario_password like @pre)
     THEN 1 
@@ -1100,7 +1103,7 @@ go
 
 SET ANSI_NULLS ON
 GO
-SET QUOTED_IDENTIFIER ONRD
+SET QUOTED_IDENTIFIER ON
 GO
 create procedure [SQLeados].[Nombreroles] (@Username nvarchar(30))
 as
@@ -1121,7 +1124,7 @@ create procedure [SQLeados].[actualizarContra] (@user nvarchar(30), @pass nvarch
 as
 begin
 update [SQLeados].Usuario 
-set Usuario_password = (HASHBYTES('SHA',cast (@pass as varchar)))
+set Usuario_password = (HASHBYTES('SHA2_256',cast (@pass as varchar)))
 where usuario_nombre = @user
 end
 GO
@@ -1209,13 +1212,9 @@ for insert as
 --	from SQLEADOS.Rol, SQLEADOS.Usuario
 --		where usuario_nombre LIKE 'prueba'
 
-<<<<<<< HEAD
-=======
 insert into SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario)
 select 
 	rol_Id,
 	usuario_Id
 	from SQLEADOS.Rol, SQLEADOS.Usuario
 		where usuario_nombre LIKE 'prueba'
-
->>>>>>> parent of 01d0479... COMENTARIO RANDOM

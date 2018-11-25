@@ -23,7 +23,7 @@ namespace PalcoNet
         {
             rol = Usuario.Rol;
             InitializeComponent();
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
         }
 
@@ -106,10 +106,6 @@ namespace PalcoNet
                 this.Close();
 
             }
-
-
-
-
         }
 
         private void button2_Click_1(object sender, EventArgs e)

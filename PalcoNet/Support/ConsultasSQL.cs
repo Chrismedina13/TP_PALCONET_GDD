@@ -40,12 +40,11 @@ namespace PalcoNet.Support
         //LAPTOP-B6PL6D9G
         //\SQLSERVER2012
  //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
-        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
         public static SqlConnection conexionObtener()
         {
             return conexion;
         }
-
         public static void conexionAbrir()
         {
             conexion.Open();
@@ -58,11 +57,10 @@ namespace PalcoNet.Support
         #endregion
 
         #region ConexionSQL
-        /*
+        
         public static SqlConnection conectar()
         {
-            String ruta = "";
-            return new SqlConnection(@"Data source=LAPTOP-B6PL6D9G\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
         }
 
         public void cerrarConeccion(SqlConnection sql)
@@ -70,8 +68,7 @@ namespace PalcoNet.Support
             sql.Close();
             return;
         }
-        */
-        
+
 
         public static SqlCommand consultaCrear(string consulta)
         {

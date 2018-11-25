@@ -18,7 +18,7 @@ namespace PalcoNet
         public Form3()
         {
             InitializeComponent();
-            coneccion = Support.ConsultasSQL.conectar();
+            coneccion = PalcoNet.Support.Conexion.conectar();
         }
 
         private void button1_Click(object sender, EventArgs e)
