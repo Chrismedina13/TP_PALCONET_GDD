@@ -408,12 +408,15 @@ canj_costo_puntaje int,
 canj_producto varchar(50),
 )
 
+
+
+
 ----------------------------------------------------------------------------------------------
 								/** insertar en tablas **/
 ----------------------------------------------------------------------------------------------
 
 --ROL
-
+PRINT('POR A Rol') 
 go
 insert into SQLEADOS.Rol (rol_nombre) values
 ('Administrativo'), 
@@ -421,6 +424,7 @@ insert into SQLEADOS.Rol (rol_nombre) values
 ('Cliente');
 
 ---/** FUNCIONALIDAD **/
+PRINT('POR A Funcionalidad') 
 go
 insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 ('ABM de Rol'),
@@ -440,6 +444,7 @@ insert into SQLEADOS.Funcionalidad (funcionalidad_descripcion) values
 --FUNCIONALIDAD POR ROL
 
 --FUNCIONALIDADXROL ADMIN
+PRINT('POR A FuncionalidadXRol') 
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol) 
 select distinct A.funcionalidad_Id, 
@@ -449,6 +454,7 @@ select distinct A.funcionalidad_Id,
 	order by 1
 
 --FUNCIONALIDADXROL de CLIENTES
+PRINT('POR A FuncionalidadXRol') 
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
 select  
@@ -466,6 +472,7 @@ select
 
 
 --	FUNCIONALIDADXROL DE EMPRESAS
+PRINT('POR A FuncionalidadXRol') 
 go
 insert into SQLEADOS.FuncionalidadXRol (funcionalidadXRol_funcionalidad, funcionalidadXRol_rol)
 select distinct 
@@ -484,12 +491,14 @@ select distinct
 
 
 --EMPRESA
+PRINT('POR A Empresa') 
 go
 insert into SQLEADOS.Empresa(empresa_razon_social,empresa_cuit,empresa_fecha_creacion,empresa_email)
 select distinct Espec_Empresa_Razon_Social,Espec_Empresa_Cuit,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Mail from gd_esquema.Maestra 
 				order by Espec_Empresa_Razon_Social 
 
 --DOMICILIO_EMPRESA
+PRINT('POR A Domicilio') 
 go
 insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,
 								domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit)
@@ -498,13 +507,13 @@ select distinct Espec_Empresa_Dom_Calle,Espec_Empresa_Nro_Calle,Espec_Empresa_Pi
 				order by Espec_Empresa_Razon_Social
 
 --CLIENTE
+PRINT('POR A CLIENTE') 
 go
- PRINT('POR A CLIENTE') 
 insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_documento,cliente_numero_documento,
 							cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
 select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') 
 	from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
- PRINT('PASA A CLIENTE') 
+
 --DOMICILIO_CLIENTE
 PRINT('POR A DOMICILIO') 
 go
@@ -512,7 +521,6 @@ insert into SQLEADOS.Domicilio(domicilio_calle,domicilio_numero,domicilio_piso,d
 								domicilio_codigo_postal,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento)
 select distinct Cli_Dom_Calle,Cli_Nro_Calle,Cli_Piso,Cli_Depto,Cli_Cod_Postal,'DNI',Cli_Dni from gd_esquema.Maestra where Cli_Dni is not null
 
-PRINT('PASA A DOMICILIO') 
 --USUARIO
 
 --Usuarios ADMIN
@@ -532,38 +540,81 @@ HASHBYTES('SHA2_256', '1234'),
 1)
 go
 
+/*
+create table [SQLEADOS].Usuario(
+usuario_Id int primary key identity,
+usuario_nombre varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
+usuario_password varbinary(100) not null,
+--usuario_rol int not null references [SQLEADOS].Rol,
+usuario_administrador bit default 0,
+usuario_estado bit default 1, --Indicador para saber si está habilitado o no
+usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+)*/
+
+
+--Usuarios Empresas
+PRINT('POR A EMPRESA') 
+go
+insert into SQLEADOS.Usuario (usuario_nombre, usuario_password
+	,usuario_estado, usuario_administrador
+--	,usuario_tipo, usuario_fecha_creacion
+	)
+select distinct 
+	(LOWER(replace(e.empresa_razon_social, space(1), '_'))), --NOMBRE 
+	(select top 1 HASHBYTES('SHA2_256',  (STR(1000000*RAND(convert(varbinary, newid())))))),  --contraseñas_autogeneradas
+--	'Empresa',
+--	GETDATE()
+	1, --ESTADO
+	0  --USER ADMIN
+	from SQLEADOS.Empresa e
+	order by 1
+
+----Usuarios clientes
+PRINT('POR A CLIENTE') 
+go
+insert into SQLEADOS.Usuario(usuario_nombre, usuario_password 
+	,usuario_estado, usuario_administrador
+--,usuario_tipo, usuario_fecha_creacion
+	)
+select distinct 
+	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
+	(select top 1 HASHBYTES('SHA2_256',  (STR(1000000*RAND(convert(varbinary, newid())))))), 
+	--  contraseñas_autogeneradas,
+	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 100000
+--	'Cliente', -- as tipo_user --TIPO USER
+--	GETDATE()
+	1,	-- ESTADO
+	0	-- USER ADMIN
+	from gd_esquema.Maestra A 
+	where A.cli_mail is not null order by 1
+
+PRINT('EMPRESAS, CLIENTES, ADMIN Y USERS MIGRADOS')
+
+PRINT('POR A UsuarioXRol CLIENTE') 
+insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
+select rol_Id, usuario_Id 
+from SQLeados.Usuario, SQLeados.Rol
+where usuario_nombre NOT like 'admin' 
+		AND usuario_nombre not like 'razon_social%' and rol_nombre in ('Cliente')
+go
+
+
+PRINT('POR A UsuarioXRol ADMIN') 
 insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
 select rol_Id, usuario_Id 
 from SQLeados.Usuario, SQLeados.Rol
 where usuario_nombre like 'admin' and rol_nombre in ('Administrativo','Empresa','Cliente')
 go
-----Usuarios clientes
---PRINT('POR A CLIENTE') 
---go
---insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,
---	usuario_tipo, usuario_fecha_creacion)
---select distinct 
---	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
---	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), 
---	--  contraseñas_autogeneradas,
---	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 100000
---	'Cliente', -- as tipo_user --TIPO USER
---	GETDATE()
---	from gd_esquema.Maestra A 
---	where A.cli_mail is not null order by 1
-	
-----Usuarios Empresas
---PRINT('POR A EMPRESA') 
---go
---insert into SQLEADOS.Usuario (usuario_nombre, usuario_password,usuario_tipo, usuario_fecha_creacion)
---select distinct 
---	(LOWER(replace(Espec_Empresa_Razon_Social, space(1), '_'))), --NOMBRE 
---	(select top 1 HASHBYTES('SHA2_256', (select top 1 STR(10000000*RAND(convert(varbinary, newid()))) magic_number))), --contraseñas_autogeneradas
---	'Empresa',
---	GETDATE()
---	from gd_esquema.Maestra
 
+PRINT('POR A UsuarioXRol EMPRESA') 
+insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
+select rol_Id, usuario_Id 
+from SQLeados.Usuario, SQLeados.Rol
+where usuario_nombre not like 'admin' 
+	AND usuario_nombre like 'razon_social%' and rol_nombre in ('Empresa')
+go
 
+PRINT('UsuarioXRol  MIGRADO') 
 
 ---- USERXROL
 --PRINT('POR A USERXROL ADMIN') 
@@ -602,6 +653,7 @@ insert into SQLeados.Rubro(rubro_descripcion) values
 ('Comedia');
 
 --Grado Publicacion
+PRINT('POR A GradoPrioridad') 
 go
 insert into SQLeados.GradoPrioridad(grado_nombre,grado_comision) values
 ('Alta',15),
@@ -613,6 +665,24 @@ insert into SQLeados.GradoPrioridad(grado_nombre,grado_comision) values
 
 --PUBLICACION
 
+/*
+create table [SQLEADOS].Publicacion(
+publicacion_codigo int primary key identity(12353,1),
+publicacion_usuario_responsable int references [SQLEADOS].Usuario,
+publicacion_rubro int references [SQLEADOS].Rubro not null,
+publicacion_grado int references [SQLEADOS].GradoPrioridad not null,
+publicacion_descripcion varchar(255),
+publicacion_stock int not null,
+publicacion_estado varchar(20) not null,
+publicacion_puntaje_venta int not null default 100, -- DEFAULT 100 ES ARBITRARIO
+pubicacion_putaje_compra int not null default 30, -- DEFAULT 30 ES ARBITRARIO (Cantidad de puntos que necesitas para comprarlo)
+publicacion_fecha datetime not null,
+publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
+publicacion_estado_validacion int default 0		--NUEVO CAMPO
+)
+*/
+
+PRINT('POR A Publicacion') 
 go
 insert into SQLEADOS.Publicacion(
 			publicacion_rubro,
@@ -650,18 +720,47 @@ select			2,  --Le asigno un rubro y grado por defecto
 				JOIN SQLEADOS.Usuario U on U.usuario_nombre = (LOWER(replace(A.Espec_Empresa_Razon_Social, space(1), '_')))
 				group by Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Estado,Espectaculo_Fecha,Espectaculo_Fecha_Venc,usuario_Id 
 				order by Espectaculo_Cod,usuario_Id
-				
+
+--select a.Espectaculo_Cod from gd_esquema.Maestra a		 	
 
 --UBICACION
 
+PRINT('POR A Ubicacion') 
 insert into SQLEADOS.Ubicacion(ubicacion_asiento,ubicacion_fila,ubicacion_sin_numerar,
 								ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion)
 select distinct Ubicacion_Asiento, Ubicacion_Fila, 
 	Ubicacion_Sin_numerar, Ubicacion_Tipo_Codigo, 
 	Ubicacion_Tipo_Descripcion from gd_esquema.Maestra 
 
---UBICACIONXPUBLICACION
 
+
+	/*
+create table [SQLEADOS].ubicacionXpublicacion(
+ubiXpubli_ID int primary key identity,
+ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
+ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
+ubiXpubli_precio int 
+)
+
+create table [SQLEADOS].Publicacion(
+publicacion_codigo int primary key identity(12353,1),
+publicacion_usuario_responsable int references [SQLEADOS].Usuario,
+publicacion_rubro int references [SQLEADOS].Rubro not null,
+publicacion_grado int references [SQLEADOS].GradoPrioridad not null,
+publicacion_descripcion varchar(255),
+publicacion_stock int not null,
+publicacion_estado varchar(20) not null,
+publicacion_puntaje_venta int not null default 100, -- DEFAULT 100 ES ARBITRARIO
+pubicacion_putaje_compra int not null default 30, -- DEFAULT 30 ES ARBITRARIO (Cantidad de puntos que necesitas para comprarlo)
+publicacion_fecha datetime not null,
+publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
+publicacion_estado_validacion int default 0		--NUEVO CAMPO
+)
+*/
+
+
+--UBICACIONXPUBLICACION
+PRINT('POR A ubicacionXpublicacion') 
 insert into SQLEADOS.ubicacionXpublicacion(
 			ubiXpubli_Publicacion,
 			ubiXpubli_Ubicacion,
@@ -671,13 +770,17 @@ select distinct a.Espectaculo_Cod, u.ubicacion_id,a.Ubicacion_Precio from gd_esq
 								AND u.ubicacion_fila = a.Ubicacion_Fila
 								AND u.ubicacion_sin_numerar = a.Ubicacion_Sin_numerar
 								AND u.ubicacion_Tipo_codigo = a.Ubicacion_Tipo_Codigo
-							AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
+								AND u.ubicacion_Tipo_Descripcion = a.Ubicacion_Tipo_Descripcion
+--	JOIN SQLEADOS.Publicacion p on p.publicacion_codigo = a.Espectaculo_Cod
 	order by 1
+PRINT('HECHO') 
 
+--select ubiXpubli_ID, ubiXpubli_precio, ubiXpubli_Publicacion, ubiXpubli_Ubicacion from SQLEADOS.ubicacionXpublicacion
 /* ITEM FACTURA Y FACTURA */
 
 
 --Factura
+PRINT('POR A Factura') 
 GO
 insert into [SQLEADOS].Factura(factura_nro, factura_empresa_cuit, 
 								factura_empresa_razon_social, factura_fecha, 
@@ -689,11 +792,13 @@ insert into [SQLEADOS].Factura(factura_nro, factura_empresa_cuit,
 
 
 --ItemFactura--
+PRINT('POR A ItemFactura') 
 GO
 insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
 select Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra where Factura_Nro is not null order by Factura_Nro
 
 --COMPRA--
+PRINT('POR A Compra') 
 go
 insert into SQLEADOS.Compra(
 			compra_factura,
@@ -710,6 +815,7 @@ and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descr
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 
 --PUNTAJE
+PRINT('POR A puntaje') 
 go 
 insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
 select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra),
@@ -733,6 +839,7 @@ select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubi
 	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento, com.compra_fecha
 
 --CANJE DE PREMIOS
+PRINT('POR A canjeproducto') 
 go
 insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 (1000, 'Taza PALCONET'), 
@@ -744,7 +851,12 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
-PRINT('Comienza UPDATE CLIENTE') 
+----------------------------------------------------------------------------------------------
+/** Esta función debe estar aqui pues será utilizada por USUARIOS mas tarde en la creacion **/
+----------------------------------------------------------------------------------------------
+
+
+PRINT('Comienza UPDATE CLIENTE agregando la ID de USER') 
 
 UPDATE SQLEADOS.Cliente
 SET cliente_usuario = usuario_Id 
@@ -752,7 +864,7 @@ FROM SQLEADOS.Cliente
 INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(cliente_nombre, space(1), '_'))+'_'+cliente_apellido) = usuario_nombre
 
-PRINT('Comienza UPDATE EMPRESA') 
+PRINT('Comienza UPDATE EMPRESA agregando la ID de USER') 
 
 UPDATE SQLEADOS.Empresa
 SET empresa_usuario = usuario_Id 
@@ -760,25 +872,24 @@ FROM SQLEADOS.Empresa
 INNER JOIN SQLEADOS.Usuario
        ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_nombre
 
+/*
+PRINT('func_coincide_fecha_creacion HECHA') 
 
-
-
-
-
-GO
-CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime) 
-RETURNS bit 
+CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime)
+RETURNS int 
 AS 
 BEGIN
-	IF (@fechaUser = @fechaBuscada) 
+	IF @fechaUser = @fechaBuscada 
 	BEGIN
 		RETURN 1
 	END
 	RETURN 0
 END
+GO
+*/
 
 
-
+PRINT('Comienza TRIG_fecha_publicada_es_menor_a_vencimiento') 
 GO
 CREATE TRIGGER 
 	TRIG_fecha_publicada_es_menor_a_vencimiento on [SQLEADOS].[Publicacion]
@@ -1218,3 +1329,4 @@ select
 	usuario_Id
 	from SQLEADOS.Rol, SQLEADOS.Usuario
 		where usuario_nombre LIKE 'prueba'
+
