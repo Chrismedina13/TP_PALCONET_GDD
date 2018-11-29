@@ -1303,7 +1303,7 @@ GO
 /*
 ------------------------------------	TRIGGERS	------------------------------------------------
 */
-
+/*
 insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_estado, usuario_administrador) values
 ('ricardo',
 HASHBYTES('SHA2_256', '1234'),
@@ -1316,7 +1316,7 @@ select r.rol_Id, u.usuario_Id from SQLEADOS.Usuario u, SQLEADOS.Rol r where r.ro
 select * from SQLEADOS.Usuario order by usuario_Id desc
 
 select * from SQLEADOS.UsuarioXRol order by usuarioXRol_usuario desc
-
+*/
 GO
 CREATE TRIGGER 
 	TRIG_poner_nombre_bien_al_user on [SQLEADOS].[Usuario]
