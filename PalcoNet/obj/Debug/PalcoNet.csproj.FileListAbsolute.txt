@@ -93,3 +93,35 @@ C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volv
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Users\gigi\Downloads\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe.config
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ABMCliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.AltaCliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.EliminarCliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarCliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSeleccionado.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.AltaEmpresa.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.EliminarEmpresa.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificacionEmpresa.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ModificarEmpresaElegida.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Rol.Form2.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Rol.Form3.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Rol.Form4.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.Form2.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.Form8.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Form1.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Form2.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Form3.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Listado_Estadistico.ListadoEstadistico.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.LOGIN.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.SeleccionarRolDeUser1.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroCliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache

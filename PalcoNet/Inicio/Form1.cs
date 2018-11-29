@@ -23,7 +23,8 @@ namespace PalcoNet
         public Form1()
         {
             InitializeComponent();
-            coneccion = Support.Conexion.conectar();
+     //       coneccion = Support.Conexion.conectar();
+            coneccion = new SqlConnection(@"Data source=.\SQLSERVER2012;Initial Catalog=GD2C2018;User id=gdEspectaculos2018;Password=gd2018");
             coneccion.Open();
         }
 

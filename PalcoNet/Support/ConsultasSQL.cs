@@ -14,6 +14,9 @@ using System.Data;
 
 namespace PalcoNet.Support
 {
+
+    
+
     class ConsultaGeneral {
         internal static bool esVacio(String n)
         {
@@ -40,7 +43,7 @@ namespace PalcoNet.Support
         //LAPTOP-B6PL6D9G
         //\SQLSERVER2012
  //       private static String configuracionConexion = ConfigurationManager.AppSettings["conexionSQL"];
-        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
+        private static SqlConnection conexion = new SqlConnection(@"Data source=.\SQLSERVER2012;Initial Catalog=GD2C2018;User id=gdEspectaculos2018;Password=gd2018");
         public static SqlConnection conexionObtener()
         {
             return conexion;
@@ -205,7 +208,8 @@ namespace PalcoNet.Support
 
             String addDomicilioCommands = "insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values ('"+calle+"',"+numeroCalle+","+piso+",'"+dto+"','"+localidad+"','"+codigoPostal+"','"+razonSocial+"','"+cuit+"','"+tipo_documento+"',"+numeroDocumento+")";
             DBConsulta.ModificarDB(addDomicilioCommands);
-      /*      addDomicilioCommand.Parameters.AddWithValue("calle", calle);
+            #region Comentario de codigo muerto
+            /*      addDomicilioCommand.Parameters.AddWithValue("calle", calle);
             addDomicilioCommand.Parameters.AddWithValue("numeroCalle", numeroCalle);
             addDomicilioCommand.Parameters.AddWithValue("piso", piso);
             addDomicilioCommand.Parameters.AddWithValue("dto", dto);
@@ -215,7 +219,8 @@ namespace PalcoNet.Support
             addDomicilioCommand.Parameters.AddWithValue("cuit", cuit);
             addDomicilioCommand.Parameters.AddWithValue("tipo_documento", tipo_documento);
             addDomicilioCommand.Parameters.AddWithValue("numeroDocumento", Convert.ToInt32(numeroDocumento));
-       */     
+       */
+            #endregion
         }
 
         internal static bool existeCuit(string cuit, string tipo)
@@ -253,9 +258,10 @@ namespace PalcoNet.Support
             return;
         }
 
+
         internal static bool nombreUserDisponible(String nombre)
         {
-            String query = String.Format("SELECT usuario_nombre FROM GD2C2018.SQLEADOS.Usuario where usuario_nombre like '" + nombre + "'");
+            String query = String.Format("SELECT usuario_nombre FROM SQLEADOS.Usuario where usuario_nombre like '" + nombre + "'");
             DataSet usersEncontrados = DBConsulta.ConectarConsulta(query);
             if (DBConsulta.dataSetVacio(usersEncontrados))
             {
@@ -266,33 +272,25 @@ namespace PalcoNet.Support
         }
 
         /*Crea un usuario y devuelve su ID si todo va bien*/
-        internal static int crearUser(String nombre, String apellido, bool caso, String contra, String tipo, String codigoRol)
+        internal static int crearUser(String nombreUserCreado, bool caso, String contra, String rol)
         {
-            string nombreUserCreado;
-
-            nombreUserCreado = nombre.Replace(" ", "_") +"_" + apellido.Replace(" ", "_");
-
-            if (caso == false) {
-                if (tipo == "Cliente") {
-                    return crearUnNuevoUserConNombre(nombreUserCreado, contra, "3", tipo, DateTime.Today);
-                }
-                // porque es empresa
-                if (tipo == "Empresa") {
-                    return crearUnNuevoUserConNombre(nombreUserCreado, contra, "2", tipo, DateTime.Today);
-                }
-                return crearUnNuevoUserConNombre(nombreUserCreado, contra, codigoRol, tipo, DateTime.Today);
+            if (caso == false) 
+            {
+                // Es mejor que se encarge DBConsulta a traves de un Store Prodecure para la accion,
+                //Ahorro lineas de codigo de esta forma 
+                return DBConsulta.creacionNuevoUser(nombreUserCreado, contra, rol);
             }
             return 0;
         }
 
-        internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo, DateTime fecha) {
-
-            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+        #region Funcion crear nuevo user DESCARTADA
+        /*
+        internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
             String addUserCommand = "insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_nombre,usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values ('"+nombre+"','"+contra+"',"+rol+",'"+tipo+"',"+ConsultaGeneral.fechaToString(fecha)+")";
-
+            
             try {
-                DBConsulta.ModificarDB(addUserCommand);
                 
+                DBConsulta.ModificarDB(addUserCommand);
             }
             catch (Exception ex)
             {
@@ -310,7 +308,9 @@ namespace PalcoNet.Support
                 MessageBox.Show("No se pudo obtener el ID del user ingresado:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
-         }           
+        }
+         */
+        #endregion
     }
     #endregion
 

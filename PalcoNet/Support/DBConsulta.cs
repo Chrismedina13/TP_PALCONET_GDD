@@ -17,7 +17,6 @@ namespace PalcoNet.Support
     class DBConsulta
     {
         private static SqlConnection conexion;
-
         private static void conexionAbrir()
         {
             try
@@ -35,6 +34,27 @@ namespace PalcoNet.Support
         private static void conexionCerrar()
         {
             conexion.Close();
+        }
+
+        public static int creacionNuevoUser(String nombre, String contra, String rol) {
+            conexionAbrir();
+            try
+            {
+                SqlCommand crearNuevoUser = new SqlCommand("[SQLeados].crearNuevoUserPorRegistroOABM", conexion);
+
+                crearNuevoUser.CommandType = CommandType.StoredProcedure;
+                crearNuevoUser.Parameters.Add("@user", SqlDbType.VarChar).Value = nombre;
+                crearNuevoUser.Parameters.Add("@pass", SqlDbType.VarChar).Value = contra;
+                crearNuevoUser.Parameters.Add("@rol", SqlDbType.VarChar).Value = rol;
+                crearNuevoUser.BeginExecuteNonQuery();
+                MessageBox.Show("Se agregó el nuevo usuario y su rol");
+                return 1;
+            }
+            catch (Exception ex) {
+                MessageBox.Show("No se pudo agregar al usuario:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            
         }
 
         public static DataSet ConectarConsulta(String cmd)

@@ -207,6 +207,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[hab
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[intentosFallidos]'))
     DROP proc SQLEADOS.[intentosFallidos]
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cargarNuevoUser]'))
+    DROP proc SQLEADOS.[cargarNuevoUser]
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[crearNuevoUserPorRegistroOABM]'))
+    DROP proc SQLEADOS.[crearNuevoUserPorRegistroOABM]
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
 ----------------------------------------------------------------------------------------------
@@ -1257,7 +1263,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [SQLeados].[cargarClientesEliminar]
+create procedure [SQLeados].[cargarNuevoUser]
 as
 begin
 select cliente_numero_documento, Cliente_apellido, Cliente_nombre, cliente_email
@@ -1265,6 +1271,51 @@ from [SQLeados].Cliente join [SQLeados].Usuario on usuario_Id = cliente_usuario
 where Usuario.usuario_estado = 1
 end
 GO
+
+/*
+create table [SQLEADOS].Usuario(
+usuario_Id int primary key identity,
+usuario_nombre varchar(255)  not null, --SACO EL UNIQUE ASÍ PUEDE ANDAR EL TRIGGER
+usuario_password varbinary(100) not null,
+--usuario_rol int not null references [SQLEADOS].Rol,
+usuario_administrador bit default 0,
+usuario_estado bit default 1, --Indicador para saber si está habilitado o no
+usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+)
+*/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[crearNuevoUserPorRegistroOABM] (@user nvarchar(30), @pass nvarchar(30), @rol nvarchar(30))
+as
+begin
+insert into [SQLeados].Usuario (usuario_nombre, usuario_password) values
+(@user, HASHBYTES('SHA2_256',cast (@pass as varchar)))
+insert into [SQLeados].UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol)
+select TOP 1 u.usuario_Id, r.rol_Id from SQLEADOS.Usuario u, SQLEADOS.Rol r 
+	where r.rol_nombre in (@rol) AND u.usuario_nombre LIKE @user+'%'
+	order by u.usuario_Id DESC
+end
+GO
+
+/*
+------------------------------------	TRIGGERS	------------------------------------------------
+*/
+
+insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_estado, usuario_administrador) values
+('ricardo',
+HASHBYTES('SHA2_256', '1234'),
+1,
+1)
+
+insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
+select r.rol_Id, u.usuario_Id from SQLEADOS.Usuario u, SQLEADOS.Rol r where r.rol_nombre in ('Cliente') AND u.usuario_nombre LIKE ('ricardo%')
+
+select * from SQLEADOS.Usuario order by usuario_Id desc
+
+select * from SQLEADOS.UsuarioXRol order by usuarioXRol_usuario desc
 
 GO
 CREATE TRIGGER 
@@ -1286,17 +1337,16 @@ for insert as
 							
 				WHILE((select count(*) from [SQLEADOS].Usuario u1 
 							WHERE @UsuarioNombre LIKE u1.usuario_nombre)							
-								) > 0 
-					 
+								) > 1 
 					select 
 						@UsuarioNombre = @nombreOriginal + CONVERT(varchar(10),@numero),
 						@numero = @numero +1
 						from [SQLEADOS].Usuario
 							where @UsuarioNombre LIKE usuario_nombre
 							order by usuario_Id DESC
-				update [SQLEADOS].Usuario
-					set usuario_password = HASHBYTES('SHA2_256', @contaseniaOriginal)
-					Where usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
+				--update [SQLEADOS].Usuario
+				--	set usuario_password = HASHBYTES('SHA2_256', @contaseniaOriginal)
+				--	Where usuario_nombre=@nombreOriginal AND usuario_Id = @userID;
 				if(@numero>0) 
 					update [SQLEADOS].Usuario
 						set usuario_nombre = @UsuarioNombre
@@ -1322,7 +1372,7 @@ for insert as
 --	usuario_Id
 --	from SQLEADOS.Rol, SQLEADOS.Usuario
 --		where usuario_nombre LIKE 'prueba'
-
+/*
 insert into SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario)
 select 
 	rol_Id,
@@ -1330,3 +1380,8 @@ select
 	from SQLEADOS.Rol, SQLEADOS.Usuario
 		where usuario_nombre LIKE 'prueba'
 
+
+
+select * from SQLEADOS.Usuario order by usuario_Id desc
+
+*/

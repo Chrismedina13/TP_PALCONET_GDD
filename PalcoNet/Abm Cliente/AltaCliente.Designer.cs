@@ -163,7 +163,7 @@
             this.textBoxCuit.MaxLength = 11;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(211, 20);
-            this.textBoxCuit.TabIndex = 8;
+            this.textBoxCuit.TabIndex = 9;
             // 
             // label19
             // 
@@ -215,7 +215,7 @@
             this.buttonAgregar.Location = new System.Drawing.Point(330, 424);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(89, 22);
-            this.buttonAgregar.TabIndex = 17;
+            this.buttonAgregar.TabIndex = 16;
             this.buttonAgregar.Text = "AGREGAR";
             this.buttonAgregar.UseVisualStyleBackColor = true;
             this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
@@ -242,7 +242,7 @@
             this.groupBox1.Location = new System.Drawing.Point(60, 236);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(359, 137);
-            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabIndex = 111111;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
             // 
@@ -288,7 +288,7 @@
             this.textBoxLocalidad.Location = new System.Drawing.Point(84, 105);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(260, 20);
-            this.textBoxLocalidad.TabIndex = 14;
+            this.textBoxLocalidad.TabIndex = 15;
             // 
             // label11
             // 
@@ -305,7 +305,7 @@
             this.textBoxCodigoPostal.Location = new System.Drawing.Point(196, 79);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(66, 20);
-            this.textBoxCodigoPostal.TabIndex = 13;
+            this.textBoxCodigoPostal.TabIndex = 14;
             // 
             // label10
             // 
@@ -321,7 +321,7 @@
             this.textBoxDto.Location = new System.Drawing.Point(177, 49);
             this.textBoxDto.Name = "textBoxDto";
             this.textBoxDto.Size = new System.Drawing.Size(66, 20);
-            this.textBoxDto.TabIndex = 11;
+            this.textBoxDto.TabIndex = 12;
             // 
             // label9
             // 
@@ -338,7 +338,7 @@
             this.textBoxPiso.MaxLength = 5;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(66, 20);
-            this.textBoxPiso.TabIndex = 12;
+            this.textBoxPiso.TabIndex = 13;
             // 
             // label8
             // 
@@ -355,7 +355,7 @@
             this.textBoxNroCalle.MaxLength = 10;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(66, 20);
-            this.textBoxNroCalle.TabIndex = 10;
+            this.textBoxNroCalle.TabIndex = 11;
             // 
             // label7
             // 
@@ -380,7 +380,7 @@
             this.textBoxCalle.Location = new System.Drawing.Point(56, 21);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(269, 20);
-            this.textBoxCalle.TabIndex = 9;
+            this.textBoxCalle.TabIndex = 10;
             // 
             // textBoxTelefono
             // 
@@ -388,7 +388,7 @@
             this.textBoxTelefono.MaxLength = 15;
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(211, 20);
-            this.textBoxTelefono.TabIndex = 7;
+            this.textBoxTelefono.TabIndex = 8;
             // 
             // textBoxMail
             // 
@@ -396,6 +396,7 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(211, 20);
             this.textBoxMail.TabIndex = 2;
+            this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             // 
             // textBoxNombre
             // 
@@ -457,7 +458,7 @@
             this.textBoxTarjeta.Name = "textBoxTarjeta";
             this.textBoxTarjeta.PasswordChar = '*';
             this.textBoxTarjeta.Size = new System.Drawing.Size(211, 20);
-            this.textBoxTarjeta.TabIndex = 6;
+            this.textBoxTarjeta.TabIndex = 7;
             // 
             // label27
             // 
@@ -502,7 +503,7 @@
             this.button1.Location = new System.Drawing.Point(44, 423);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(89, 23);
-            this.button1.TabIndex = 82;
+            this.button1.TabIndex = 17;
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);

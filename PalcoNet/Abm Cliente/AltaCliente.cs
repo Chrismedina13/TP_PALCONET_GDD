@@ -49,6 +49,12 @@ namespace PalcoNet.Abm_Cliente
                 MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (!AyudaExtra.esUnMail(textBoxMail.Text.Trim()))
+            {
+                MessageBox.Show("El campo mail está mal ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
            
             if (! AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim()))
             {
@@ -56,7 +62,11 @@ namespace PalcoNet.Abm_Cliente
                 return;
             }
 
-            AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim());
+            if (AyudaExtra.esStringNumerico(textBoxTIPODOC.Text.Trim())) {
+                MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+      
             /*
             if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
             {
@@ -72,7 +82,17 @@ namespace PalcoNet.Abm_Cliente
             }
 
             // Porque no es campo obligatorio
-            if(textBoxPiso.Text != "") {
+            bool ingresoPisoYDPT = false;
+            if (textBoxPiso.Text.Trim() != "" && textBoxDto.Text.Trim() != "")
+            {
+                if (!AyudaExtra.esStringNumerico(textBoxPiso.Text.Trim()))
+                {
+                    MessageBox.Show("Debe ingresar el numero de piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else {
+                    ingresoPisoYDPT = true;
+                }
     //            debeSerTodoNumero(textBoxPiso.Text, "Piso");
             }
             
@@ -106,7 +126,7 @@ namespace PalcoNet.Abm_Cliente
             String codPostal = textBoxCodigoPostal.Text;
             String dto = textBoxDto.Text;
             int piso;
-            if (textBoxPiso.Text != "")
+            if (ingresoPisoYDPT)
             {
                 piso = Convert.ToInt32(textBoxPiso.Text);
             }
@@ -119,7 +139,7 @@ namespace PalcoNet.Abm_Cliente
 
             bool creacionAbortada = false;
 
-            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "", "Cliente","3");
+            int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
             if (creacionAbortada == false)
             {
                 consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
@@ -218,6 +238,11 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMail_TextChanged(object sender, EventArgs e)
         {
 
         }

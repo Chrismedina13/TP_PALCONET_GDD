@@ -118,7 +118,7 @@ namespace PalcoNet.Registro_de_Usuario
 
             bool creacionAbortada = false;
 
-            int usuarioNuevo = ConsultasSQL.crearUser(nombre, apellido, creacionAbortada, "", "Cliente","3");
+            int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
             if (creacionAbortada == false)
             {
                 consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
