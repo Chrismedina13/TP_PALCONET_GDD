@@ -9,11 +9,19 @@ namespace PalcoNet.Support
 {
     class AyudaExtra
     {
+        public static bool fechaMenorQueActual(DateTime fecha) {
+            return fecha < DateTime.Today;
+        }
+
         public static bool CUILYNroDocSeCorresponden(String nro, String cuil)
         {
             int n = nro.Length;
             String cuilnro = cuil.Substring(2, n);
             return cuilnro.Contains(nro);
+        }
+
+        public static bool CUILYContraseniaParecenRespetarTamanios(String nro, String cuil) {
+            return nro.Length +3 == cuil.Length;
         }
 
          public static bool esStringNumerico(String s) { 

@@ -24,8 +24,80 @@ namespace PalcoNet.Registro_de_Usuario
 
         }
 
+        private bool camposInvalidos()
+        {
+            if (textBoxNombre.Text.Trim() == " " | textBoxApellido.Text.Trim() == " " | textBoxCuit.Text.Trim() == " " | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == " "
+                | textBoxTIPODOC.Text.Trim() == " " | textBoxDOCNUMERO.Text.Trim() == " " | textBoxTarjeta.Text.Trim() == " "
+                | textBoxCodigoPostal.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " ")
+            {
+                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (!AyudaExtra.fechaMenorQueActual(dateFecha.Value.Date)) {
+                MessageBox.Show("La fecha ingresada es mayor que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.CUILYContraseniaParecenRespetarTamanios(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
+            {
+                MessageBox.Show("El tamaño del campo CUIL es menor que el numero de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.CUILYNroDocSeCorresponden(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
+            {
+                MessageBox.Show("El CUIL no corresponde al documento ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text.Trim()))
+            {
+                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.esUnMail(textBoxMail.Text.Trim()))
+            {
+                MessageBox.Show("El campo mail está mal ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim()))
+            {
+                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (AyudaExtra.esStringNumerico(textBoxTIPODOC.Text.Trim()))
+            {
+                MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            /*
+            if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
+            {
+                MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            */
+
+            if (textBoxTIPODOC.TextLength != 3)
+            {
+                MessageBox.Show("El TIPO DE DOCUMENTO tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            return false;
+        }
+
+
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
+            if (camposInvalidos())
+            {
+                return;
+            }
+            /*
             if (textBoxNombre.Text.Trim() == " " | textBoxApellido.Text.Trim() == " " | textBoxCuit.Text.Trim() == " " | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == " "
                 | textBoxTIPODOC.Text.Trim() == " " | textBoxDOCNUMERO.Text.Trim()==" " | textBoxTarjeta.Text.Trim()==" "
                 | textBoxCodigoPostal.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " ")
@@ -45,12 +117,12 @@ namespace PalcoNet.Registro_de_Usuario
 
 
 
-       /*     if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
-            {
-                MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-*/
+       //     if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
+       //     {
+      //          MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      //          return;
+       //     }
+
 
             if (textBoxTIPODOC.TextLength != 3)
             {
@@ -83,6 +155,8 @@ namespace PalcoNet.Registro_de_Usuario
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            
+            */
       /*      if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
                 MessageBox.Show("El CUIT y el numero de documento no coindiden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -114,7 +188,6 @@ namespace PalcoNet.Registro_de_Usuario
             }
            
             String localidad = textBoxLocalidad.Text;
-            DateTime fecha_creacion = DateTime.Today;
 
             bool creacionAbortada = false;
 
