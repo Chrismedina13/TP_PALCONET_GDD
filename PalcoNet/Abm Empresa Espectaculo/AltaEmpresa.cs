@@ -81,7 +81,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             String localidad = textBoxLocalidad.Text;
             DateTime hoy = DateTime.Today;
             ConsultasSQLEmpresa.AgregarEmpresa(razonSocial, cuit, ciudad, mail, telefono, usuario, hoy);
-            ConsultasSQLEmpresa.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, razonSocial, cuit, null, null);
+            ConsultasSQLEmpresa.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Empresa");
             this.limpiarCuadrosDeTexto();
 
         }

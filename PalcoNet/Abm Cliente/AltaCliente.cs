@@ -43,6 +43,10 @@ namespace PalcoNet.Abm_Cliente
                 return;
 
             }
+            if (!AyudaExtra.CUILYNroDocSeCorresponden(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim())) {
+                MessageBox.Show("El CUIL no corresponde al documento ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text.Trim()))
             {
@@ -77,7 +81,7 @@ namespace PalcoNet.Abm_Cliente
             
             if (textBoxTIPODOC.TextLength != 3)
             {
-                MessageBox.Show("El cuit tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El TIPO DE DOCUMENTO tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -98,7 +102,7 @@ namespace PalcoNet.Abm_Cliente
             
     //        debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
 
-            String tipo = "cliente";
+            String tipo = "Cliente";
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -110,21 +114,21 @@ namespace PalcoNet.Abm_Cliente
             }
             */
 
-            String nombre = textBoxNombre.Text;
-            String apellido = textBoxApellido.Text;
-            String tipo_documento = textBoxTIPODOC.Text;
-            String numero_documento = textBoxDOCNUMERO.Text;
+            String nombre = textBoxNombre.Text.Trim();
+            String apellido = textBoxApellido.Text.Trim();
+            String tipo_documento = textBoxTIPODOC.Text.Trim();
             String cuit = armarCuit(textBoxCuit.Text);
-            String nro_tarjeta = textBoxTarjeta.Text;
-            String mail = textBoxMail.Text;
-            String telefono = textBoxTelefono.Text;
-            int puntaje = 0;
-            int estado = 1;
-            String fecha_nacimiento = dateFecha.ToString();
-            int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
-            String calle = textBoxCalle.Text;
-            String codPostal = textBoxCodigoPostal.Text;
+
+            String mail = textBoxMail.Text.Trim();
+            String fecha_nacimiento = dateFecha.Value.ToString("yyyy-MM-dd");
+
+            String calle = textBoxCalle.Text.Trim();
+            String codPostal = textBoxCodigoPostal.Text.Trim();
             String dto = textBoxDto.Text;
+            long numero_documento = Convert.ToInt64(textBoxDOCNUMERO.Text);
+            String telefono = textBoxTelefono.Text.Trim();
+            int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
+            String nro_tarjeta = textBoxTarjeta.Text.Trim();
             int piso;
             if (ingresoPisoYDPT)
             {
@@ -133,17 +137,13 @@ namespace PalcoNet.Abm_Cliente
             else {
                 piso = 0;
             }
-           
             String localidad = textBoxLocalidad.Text;
-            DateTime fecha_creacion = DateTime.Today;
-
             bool creacionAbortada = false;
-
             int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
             if (creacionAbortada == false)
             {
-                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
-                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, null, null, tipo_documento, numero_documento);
+                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
+                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Cliente");
             }
             else {
                 MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -186,17 +186,16 @@ namespace PalcoNet.Abm_Cliente
         public String armarCuit(String cuitSinArmar)
         {
             int n = textBoxDOCNUMERO.TextLength;
+            int m = cuitSinArmar.Length;
             String primeraParte = cuitSinArmar.Substring(0, 2);
             String SegundaParte = cuitSinArmar.Substring(2, n);
-            String TerceraParte = cuitSinArmar.Substring(2+n, 2);
+            String TerceraParte = cuitSinArmar.Substring(2+n, m-primeraParte.Length-SegundaParte.Length);
             
-
             String cuitArmado = primeraParte + "-" + SegundaParte + "-" + TerceraParte;
-
             return cuitArmado;
-
         }
 
+        #region funciones que no sirven pero si se borran se pierde la vista
         private void textBoxNombre_TextChanged(object sender, EventArgs e)
         {
 
@@ -246,7 +245,7 @@ namespace PalcoNet.Abm_Cliente
         {
 
         }
-
-
+        #endregion
+    
     }
 }

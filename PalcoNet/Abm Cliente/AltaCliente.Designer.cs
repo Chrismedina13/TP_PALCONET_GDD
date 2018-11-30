@@ -91,7 +91,7 @@
             // textBoxDOCNUMERO
             // 
             this.textBoxDOCNUMERO.Location = new System.Drawing.Point(256, 112);
-            this.textBoxDOCNUMERO.MaxLength = 8888;
+            this.textBoxDOCNUMERO.MaxLength = 16;
             this.textBoxDOCNUMERO.Name = "textBoxDOCNUMERO";
             this.textBoxDOCNUMERO.Size = new System.Drawing.Size(103, 20);
             this.textBoxDOCNUMERO.TabIndex = 6;
@@ -160,7 +160,7 @@
             // textBoxCuit
             // 
             this.textBoxCuit.Location = new System.Drawing.Point(148, 216);
-            this.textBoxCuit.MaxLength = 11;
+            this.textBoxCuit.MaxLength = 20;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(211, 20);
             this.textBoxCuit.TabIndex = 9;

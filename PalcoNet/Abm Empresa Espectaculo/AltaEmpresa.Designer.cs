@@ -358,7 +358,7 @@
             // textBoxCuit
             // 
             this.textBoxCuit.Location = new System.Drawing.Point(120, 228);
-            this.textBoxCuit.MaxLength = 11;
+            this.textBoxCuit.MaxLength = 9999;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 20;

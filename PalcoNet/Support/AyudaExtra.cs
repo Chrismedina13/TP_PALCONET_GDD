@@ -9,6 +9,13 @@ namespace PalcoNet.Support
 {
     class AyudaExtra
     {
+        public static bool CUILYNroDocSeCorresponden(String nro, String cuil)
+        {
+            int n = nro.Length;
+            String cuilnro = cuil.Substring(2, n);
+            return cuilnro.Contains(nro);
+        }
+
          public static bool esStringNumerico(String s) { 
             int n;
             return int.TryParse(s, out n);
@@ -25,6 +32,10 @@ namespace PalcoNet.Support
         public static bool esUnMail(String mail)
         {
             return mail.Contains("@") && mail.Contains(".com");
+        }
+
+        public static String FechaEnSQLDate(DateTime myDateTime) {
+            return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
         }
     }
 

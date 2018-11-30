@@ -200,16 +200,16 @@ namespace PalcoNet.Support
     class ConsultasSQL {
 
 
-        internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, string codigoPostal, string razonSocial, string cuit, string tipo_documento, string numeroDocumento)
+        internal static void AgregarDomicilio(string calle, int numeroCalle, int piso, string dto, string localidad, string codigoPostal, string tipoPersona)
         {
-
+            DBConsulta.creacionNuevoDomicilio(calle, numeroCalle, piso, dto, localidad, codigoPostal, tipoPersona);
+            /*
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-  //          SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
+            SqlCommand addDomicilioCommand = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values (@calle,@numeroCalle,@piso,@dto,@localidad,@codigoPostal,@razonSocial,@cuit,@tipo_documento,@numeroDocumento)");
 
             String addDomicilioCommands = "insert into [GD2C2018].[SQLEADOS].[Domicilio] (domicilio_calle,domicilio_numero,domicilio_piso,domicilio_dto,domicilio_localidad,domicilio_codigo_postal,domicilio_empresa_razon_social,domicilio_empresa_cuit,domicilio_cliente_tipo_documento,domicilio_cliente_numero_documento) values ('"+calle+"',"+numeroCalle+","+piso+",'"+dto+"','"+localidad+"','"+codigoPostal+"','"+razonSocial+"','"+cuit+"','"+tipo_documento+"',"+numeroDocumento+")";
             DBConsulta.ModificarDB(addDomicilioCommands);
-            #region Comentario de codigo muerto
-            /*      addDomicilioCommand.Parameters.AddWithValue("calle", calle);
+                  addDomicilioCommand.Parameters.AddWithValue("calle", calle);
             addDomicilioCommand.Parameters.AddWithValue("numeroCalle", numeroCalle);
             addDomicilioCommand.Parameters.AddWithValue("piso", piso);
             addDomicilioCommand.Parameters.AddWithValue("dto", dto);
@@ -220,7 +220,6 @@ namespace PalcoNet.Support
             addDomicilioCommand.Parameters.AddWithValue("tipo_documento", tipo_documento);
             addDomicilioCommand.Parameters.AddWithValue("numeroDocumento", Convert.ToInt32(numeroDocumento));
        */
-            #endregion
         }
 
         internal static bool existeCuit(string cuit, string tipo)
@@ -283,7 +282,7 @@ namespace PalcoNet.Support
             return 0;
         }
 
-        #region Funcion crear nuevo user DESCARTADA
+        #region Funcion crear nuevo user DESCARTADA NO BORRAR
         /*
         internal static int crearUnNuevoUserConNombre(String nombre, String contra, String rol, String tipo) {
             String addUserCommand = "insert into [GD2C2018].[SQLEADOS].[Usuario] (usuario_nombre,usuario_password,usuario_rol,usuario_tipo, usuario_fecha_creacion) values ('"+nombre+"','"+contra+"',"+rol+",'"+tipo+"',"+ConsultaGeneral.fechaToString(fecha)+")";
@@ -492,11 +491,11 @@ namespace PalcoNet.Support
             connection.Close();
         }
         #region ocultar
-        /*
+        
         internal bool existeCUILCliente(string cuit) { 
             String clienteRS = null;
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
-            SqlCommand clienteHabilitada = new SqlCommand("SELECT cliente_cuit FROM [GD2C2018].[SQLEADOS].[Cliente] WHERE cliente_cuit = @cuit and cliente_estado = 1");
+            SqlCommand clienteHabilitada = new SqlCommand("SELECT cliente_cuit FROM [GD2C2018].[SQLEADOS].[Cliente] WHERE cliente_cuit = @cuit");
             clienteHabilitada.Parameters.AddWithValue("cuit", cuit);
             clienteHabilitada.Connection = connection;
             connection.Open();
@@ -508,8 +507,8 @@ namespace PalcoNet.Support
             connection.Close();
             return clienteRS != null;
         }
-         */
-        /* ESTO NO ES USADO
+         
+        /*
         internal static void cargarGriddCliente(DataGridView dgv, string nombre, string apellido, string nroDNI, string mail)
         {
             SqlConnection connection = new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
@@ -531,11 +530,11 @@ namespace PalcoNet.Support
         */
         #endregion
 
-        internal static void AgregarCliente(string nombre, string apellido, string tipo_documento, string nro_documento,
-            int usuario, string mail, string datos_tarjeta, int puntaje, int estado, string cuit, string telefono, String fecha_nacimiento,
-            DateTime fecha_creacion)
+        internal static void AgregarCliente(String nombre, String apellido, String tipo_documento, long nro_documento,
+            String mail, String datos_tarjeta, String cuit, String telefono, String fecha_nacimiento, DateTime fecha_creacion)
         {
-
+            DBConsulta.creacionNuevoCliente(nombre, apellido, tipo_documento, fecha_nacimiento, fecha_creacion.ToString("yyyy-MM-dd"), mail, cuit, nro_documento, telefono, datos_tarjeta);
+            /*
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
             String addClienteCommand = "insert into [GD2C2018].[SQLEADOS].[Cliente] (cliente_nombre,cliente_apellido,cliente_usuario,cliente_tipo_documento,cliente_numero_documento,cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_datos_tarjeta,cliente_puntaje,cliente_email,cliente_telefono,cliente_estado,cliente_cuit) values ('" + nombre + "','" + apellido + "'," + usuario + ",'" + tipo_documento + "'," + nro_documento + "," + fecha_nacimiento + "," + ConsultaGeneral.fechaToString(fecha_creacion) + ", " + datos_tarjeta + "," + puntaje + ",'" + mail + "', " + telefono + ", " + estado + ", '" + cuit + "')";
 
@@ -547,6 +546,7 @@ namespace PalcoNet.Support
             {
                 MessageBox.Show("Error al cargar registro \n\n" +ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+             * */
         }
     }
     #endregion

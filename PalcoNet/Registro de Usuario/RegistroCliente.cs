@@ -89,21 +89,21 @@ namespace PalcoNet.Registro_de_Usuario
             }
             */
 
-            String nombre = textBoxNombre.Text;
-            String apellido = textBoxApellido.Text;
-            String tipo_documento = textBoxTIPODOC.Text;
-            String numero_documento = textBoxDOCNUMERO.Text;
+            String nombre = textBoxNombre.Text.Trim();
+            String apellido = textBoxApellido.Text.Trim();
+            String tipo_documento = textBoxTIPODOC.Text.Trim();
             String cuit = armarCuit(textBoxCuit.Text);
-            String nro_tarjeta = textBoxTarjeta.Text;
-            String mail = textBoxMail.Text;
-            String telefono = textBoxTelefono.Text;
-            int puntaje = 0;
-            int estado = 1;
-            String fecha_nacimiento = dateFecha.ToString();
-            int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
-            String calle = textBoxCalle.Text;
-            String codPostal = textBoxCodigoPostal.Text;
+
+            String mail = textBoxMail.Text.Trim();
+            String fecha_nacimiento = dateFecha.Value.ToString("yyyy-MM-dd");
+
+            String calle = textBoxCalle.Text.Trim();
+            String codPostal = textBoxCodigoPostal.Text.Trim();
             String dto = textBoxDto.Text;
+            int numero_documento = Convert.ToInt32(textBoxDOCNUMERO.Text);
+            String telefono = textBoxTelefono.Text.Trim();
+            int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
+            String nro_tarjeta = textBoxTarjeta.Text.Trim();
             int piso;
             if (textBoxPiso.Text != "")
             {
@@ -121,8 +121,8 @@ namespace PalcoNet.Registro_de_Usuario
             int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
             if (creacionAbortada == false)
             {
-                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, usuarioNuevo, mail, nro_tarjeta, puntaje, estado, cuit, telefono, fecha_nacimiento, fecha_creacion);
-                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, null, null, tipo_documento, numero_documento);
+                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
+                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Cliente");
             }
             else {
                 MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
