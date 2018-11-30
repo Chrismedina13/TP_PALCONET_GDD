@@ -24,9 +24,24 @@ namespace PalcoNet.Abm_Cliente
          COMIENCE SIN NADA*/
         private void EliminarCliente_Load(object sender, EventArgs e)
         {
-            consultasSQLCliente.llenarDGVCliente(dataGridView1, "", "", "", "");
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.llenarGrillaABMCliente();
             
-            dataGridView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
+            dataGridView1.DataSource = dt;
+            DataGridViewColumn column = dataGridView1.Columns[0];
+            column.Width = 60;
+            DataGridViewColumn column1 = dataGridView1.Columns[1];
+            column1.Width = 100;
+            DataGridViewColumn column2 = dataGridView1.Columns[2];
+            column2.Width = 100;
+            DataGridViewColumn column3 = dataGridView1.Columns[3];
+            column3.Width = 100;
+            DataGridViewColumn column4 = dataGridView1.Columns[4];
+            column4.Width = 100;
+            //datagrid has calculated it's widths so we can store them
+            
+            //            consultasSQLCliente.llenarDGVCliente(dataGridView1, "", "", "", "");          
+            //            dataGridView1.SelectionChanged += new EventHandler(dataGridView1_SelectionChanged);
         }
 
       
@@ -168,6 +183,12 @@ namespace PalcoNet.Abm_Cliente
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void volver_boton_Click_1(object sender, EventArgs e)
+        {
+            DBConsulta.conexionCerrar();
+            this.Close();
         }
 
     }

@@ -230,7 +230,11 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cre
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPKdelUltimoClienteIngresado]'))
     DROP proc SQLEADOS.[obtenerPKdelUltimoClienteIngresado]
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[llenarGrillaABMCliente]'))
+    DROP proc SQLEADOS.[llenarGrillaABMCliente]
 
+
+	
 PRINT('Validacion hecha y OK') 
 ----------------------------------------------------------------------------------------------
 								/** CREACION de tablas **/
@@ -1527,8 +1531,6 @@ return
 end
 go
 
-
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1554,6 +1556,35 @@ insert into [SQLEADOS].Domicilio (domicilio_calle, domicilio_numero, domicilio_p
 (@calle, @numeroCalle, @piso, @dto, @localidad, @codPostal)
 end
 GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[llenarGrillaABMCliente]
+as
+begin
+	SELECT u.usuario_Id as 'ID', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento as 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Mail'
+		FROM SQLEADOS.Cliente c JOIN SQLEADOS.Usuario u ON usuario_Id = cliente_id where usuario_estado = 1 order by usuario_Id ASC
+return 
+end
+go
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[completarGriddClienteAPartirDe]'))
+    DROP proc SQLEADOS.[completarGriddClienteAPartirDe]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[completarGriddClienteAPartirDe]
+as
+begin
+	SELECT u.usuario_Id, c.cliente_nombre, c.cliente_apellido, cliente_tipo_documento, cliente_numero_documento, c.cliente_email
+		FROM SQLEADOS.Cliente c JOIN SQLEADOS.Usuario u ON usuario_Id = cliente_id order by usuario_Id DESC
+return 
+end
+go
 
 print('PROCEDURES HECHOS')
 

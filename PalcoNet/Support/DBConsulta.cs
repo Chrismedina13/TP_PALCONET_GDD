@@ -17,7 +17,7 @@ namespace PalcoNet.Support
     class DBConsulta
     {
         private static SqlConnection conexion;
-        private static void conexionAbrir()
+        public static void conexionAbrir()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace PalcoNet.Support
             }
         }
 
-        private static void conexionCerrar()
+        public static void conexionCerrar()
         {
             conexion.Close();
         }
@@ -205,6 +205,14 @@ namespace PalcoNet.Support
                 MessageBox.Show("No se pudo realizar la operacion\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+        }
+    
+        public static DataTable llenarGrillaABMCliente() {
+            DataTable dt = new DataTable();
+            SqlCommand crearNuevoCliente = new SqlCommand("[SQLeados].[llenarGrillaABMCliente]", conexion);
+            crearNuevoCliente.CommandType = CommandType.StoredProcedure;
+            dt.Load(crearNuevoCliente.ExecuteReader());
+            return dt;
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnModificar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
@@ -40,12 +41,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btt_buscar = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tcol_user = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcol_nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcol_Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcol_tipo_documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcol_numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcol_email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,10 +48,11 @@
             // 
             this.volver_boton.Location = new System.Drawing.Point(12, 434);
             this.volver_boton.Size = new System.Drawing.Size(91, 36);
+            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(535, 434);
+            this.btnModificar.Location = new System.Drawing.Point(794, 434);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 44;
@@ -77,7 +73,7 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(239, 151);
+            this.textBoxEmail.Location = new System.Drawing.Point(390, 151);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(209, 20);
             this.textBoxEmail.TabIndex = 52;
@@ -86,7 +82,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(151, 154);
+            this.label4.Location = new System.Drawing.Point(302, 151);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 51;
@@ -95,7 +91,7 @@
             // 
             // textBoxDNI
             // 
-            this.textBoxDNI.Location = new System.Drawing.Point(239, 115);
+            this.textBoxDNI.Location = new System.Drawing.Point(390, 65);
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(209, 20);
             this.textBoxDNI.TabIndex = 50;
@@ -104,7 +100,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(151, 118);
+            this.label6.Location = new System.Drawing.Point(302, 115);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 49;
@@ -113,7 +109,7 @@
             // 
             // textBoxApellido
             // 
-            this.textBoxApellido.Location = new System.Drawing.Point(239, 72);
+            this.textBoxApellido.Location = new System.Drawing.Point(390, 108);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(209, 20);
             this.textBoxApellido.TabIndex = 48;
@@ -121,7 +117,7 @@
             // 
             // textBoxNombre
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(239, 25);
+            this.textBoxNombre.Location = new System.Drawing.Point(390, 22);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(209, 20);
             this.textBoxNombre.TabIndex = 47;
@@ -130,7 +126,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(151, 75);
+            this.label7.Location = new System.Drawing.Point(302, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 46;
@@ -140,7 +136,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(151, 28);
+            this.label8.Location = new System.Drawing.Point(302, 25);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 45;
@@ -149,7 +145,7 @@
             // 
             // btt_buscar
             // 
-            this.btt_buscar.Location = new System.Drawing.Point(495, 151);
+            this.btt_buscar.Location = new System.Drawing.Point(646, 148);
             this.btt_buscar.Name = "btt_buscar";
             this.btt_buscar.Size = new System.Drawing.Size(75, 23);
             this.btt_buscar.TabIndex = 53;
@@ -159,58 +155,37 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.tcol_user,
-            this.tcol_nombre,
-            this.tcol_Apellido,
-            this.tcol_tipo_documento,
-            this.tcol_numero,
-            this.tcol_email});
-            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.Desktop;
             this.dataGridView1.Location = new System.Drawing.Point(12, 203);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(614, 225);
+            this.dataGridView1.Size = new System.Drawing.Size(873, 225);
             this.dataGridView1.TabIndex = 54;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridEliminarEmpresa_CellContentClick);
-            // 
-            // tcol_user
-            // 
-            this.tcol_user.HeaderText = "Usuario";
-            this.tcol_user.Name = "tcol_user";
-            // 
-            // tcol_nombre
-            // 
-            this.tcol_nombre.HeaderText = "Nombre";
-            this.tcol_nombre.Name = "tcol_nombre";
-            // 
-            // tcol_Apellido
-            // 
-            this.tcol_Apellido.HeaderText = "Apellido";
-            this.tcol_Apellido.Name = "tcol_Apellido";
-            // 
-            // tcol_tipo_documento
-            // 
-            this.tcol_tipo_documento.HeaderText = "Documento";
-            this.tcol_tipo_documento.Name = "tcol_tipo_documento";
-            // 
-            // tcol_numero
-            // 
-            this.tcol_numero.HeaderText = "Número";
-            this.tcol_numero.Name = "tcol_numero";
-            // 
-            // tcol_email
-            // 
-            this.tcol_email.HeaderText = "Email";
-            this.tcol_email.Name = "tcol_email";
             // 
             // EliminarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(638, 478);
+            this.ClientSize = new System.Drawing.Size(897, 482);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btt_buscar);
             this.Controls.Add(this.textBoxEmail);
@@ -256,12 +231,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btt_buscar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_user;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_Apellido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_tipo_documento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_numero;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tcol_email;
         public System.Windows.Forms.Button btnModificar;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.DataGridView dataGridView1;
