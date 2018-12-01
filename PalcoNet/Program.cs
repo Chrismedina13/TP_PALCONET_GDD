@@ -7,6 +7,7 @@ using PalcoNet.Abm_Empresa_Espectaculo;
 using PalcoNet.Abm_Cliente;
 using PalcoNet.Login_y_seguridad;
 using PalcoNet.Listado_Estadistico;
+using PalcoNet.Canje_Puntos;
 
 namespace PalcoNet
 {
@@ -18,13 +19,13 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
-            int usuario = 1;
+            int usuario = 291;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
        //     Application.Run(new LOGIN());
         //    Application.Run(new ABMCliente(usuario));
-           Application.Run(new ABMEmpresa(usuario));
+           Application.Run(new canjePuntos(usuario));
        //     Application.Run(new Form1());
           //  Application.Run(new ListadoEstadistico());
 
