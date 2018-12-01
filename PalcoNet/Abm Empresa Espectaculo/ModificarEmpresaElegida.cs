@@ -42,6 +42,76 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
 
+
+            if (textBoxRazonSocial.Text.Trim() == " " | textBoxCuit.Text.Trim() == " " | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == " "
+                | textBoxCodigoPostal.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | txtHabilitado.Text.Trim() == " ")
+            {
+
+                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxNroCalle.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxPiso.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxTelefono.Text, @"^\d+$"))
+            {
+                MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (txtHabilitado.Text != "1" && txtHabilitado.Text != "0")
+            {
+                MessageBox.Show("Sólo se permiten como estado 0 o 1", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            String razonSocial = textBoxRazonSocial.Text;
+            String cuit = textBoxCuit.Text;
+            String ciudad = textBoxCiudad.Text;
+            String mail = textBoxMail.Text;
+            String telefono = textBoxTelefono.Text;
+            int nroCalle = Convert.ToInt32(textBoxNroCalle.Text);
+            String calle = textBoxCalle.Text;
+            String codPostal = textBoxCodigoPostal.Text;
+            String dto = textBoxDto.Text;
+            int piso = Convert.ToInt32(textBoxPiso.Text);
+            String localidad = textBoxLocalidad.Text;
+            int estado = Convert.ToInt32(txtHabilitado.Text);
+            
+            ConsultasSQLEmpresa.modificarEmpresa(razonSocial, cuit, ciudad, mail, telefono,estado);
+            ConsultasSQLEmpresa.modificarEmpresaDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, cuit, razonSocial);
+            this.limpiarCuadrosDeTexto();
+            this.Close();
+
+        }
+
+        private void limpiarCuadrosDeTexto()
+        {
+            textBoxRazonSocial.Text = "";
+            textBoxCiudad.Text = "";
+            textBoxMail.Text = "";
+            textBoxTelefono.Text = "";
+            textBoxNroCalle.Text = "";
+            textBoxCalle.Text = "";
+            textBoxCodigoPostal.Text = "";
+            textBoxDto.Text = "";
+            textBoxPiso.Text = "";
+            textBoxLocalidad.Text = "";
+            textBoxCuit.Text = "";
+            txtHabilitado.Text = "";
+        }
+
+        private void ModificarEmpresaElegida_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

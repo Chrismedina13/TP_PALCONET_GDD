@@ -444,6 +444,53 @@ namespace PalcoNet.Support
             return datos;
         }
 
+        internal static void modificarEmpresa(string razonSocial,String cuit,String ciudad,String mail,String telefono,int estado)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand updateEmpresaCommand = new SqlCommand("UPDATE [GD2C2018].[SQLEADOS].[Empresa] set empresa_ciudad = @ciudad, empresa_email = @mail, empresa_telefono = @telefono, empresa_estado = @estado WHERE empresa_razon_social = @razonSocial and empresa_cuit = @cuit");
+
+            updateEmpresaCommand.Parameters.AddWithValue("razonSocial", razonSocial);
+            updateEmpresaCommand.Parameters.AddWithValue("ciudad", ciudad);
+            updateEmpresaCommand.Parameters.AddWithValue("cuit", cuit);
+            updateEmpresaCommand.Parameters.AddWithValue("mail", mail);
+            updateEmpresaCommand.Parameters.AddWithValue("telefono", telefono);
+            updateEmpresaCommand.Parameters.AddWithValue("estado", estado);
+
+            updateEmpresaCommand.Connection = connection;
+            connection.Open();
+            int FilasAfectadasClientes = updateEmpresaCommand.ExecuteNonQuery();
+
+            if (FilasAfectadasClientes > 0)
+            {
+                MessageBox.Show("La empresa se ha modificado exitosamente.", "La base de datos ha sido modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else MessageBox.Show("El registro que quiso modificar no existe", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            connection.Close();
+
+        }
+
+        internal static void modificarEmpresaDomicilio(string calle,int nroCalle,int piso,string dto,string localidad, string codPostal,string cuit,string razonSocial)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand updateEmpresadomicilo = new SqlCommand("UPDATE [GD2C2018].[SQLEADOS].[Domicilio] set domicilio_calle = @calle, domicilio_numero = @nroCalle, domicilio_piso = @piso, domicilio_dto = @dto, domicilio_localidad = @localidad , domicilio_codigo_postal = @codPostal WHERE domicilio_empresa_razon_social = @razonSocial and domicilio_empresa_cuit = @cuit");
+
+            updateEmpresadomicilo.Parameters.AddWithValue("calle", calle);
+            updateEmpresadomicilo.Parameters.AddWithValue("nroCalle", nroCalle);
+            updateEmpresadomicilo.Parameters.AddWithValue("piso", piso);
+            updateEmpresadomicilo.Parameters.AddWithValue("dto", dto);
+            updateEmpresadomicilo.Parameters.AddWithValue("localidad", localidad);
+            updateEmpresadomicilo.Parameters.AddWithValue("codPostal", codPostal);
+            updateEmpresadomicilo.Parameters.AddWithValue("cuit", cuit);
+            updateEmpresadomicilo.Parameters.AddWithValue("razonSocial", razonSocial);
+
+
+            updateEmpresadomicilo.Connection = connection;
+            connection.Open();
+            int FilasAfectadasClientes = updateEmpresadomicilo.ExecuteNonQuery();
+            connection.Close();
+
+        }
+
 
 
     }
