@@ -50,7 +50,7 @@ namespace PalcoNet.Abm_Cliente
 
             if (!AyudaExtra.fechaMenorQueActual(dateFecha.Value.Date))
             {
-                MessageBox.Show("La fecha ingresada es mayor que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("La fecha ingresada es mayor o igual que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (!AyudaExtra.CUILYNroDocSeCorresponden(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
@@ -64,6 +64,16 @@ namespace PalcoNet.Abm_Cliente
                 MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
+            if (!AyudaExtra.esStringNumerico(textBoxTarjeta.Text.Trim()))
+            {
+                MessageBox.Show("El numero de tarjeta debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (!AyudaExtra.esStringNumerico(textBoxTelefono.Text.Trim()))
+            {
+                MessageBox.Show("El numero de telefono debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
 
             if (!AyudaExtra.esUnMail(textBoxMail.Text.Trim()))
             {
@@ -73,15 +83,21 @@ namespace PalcoNet.Abm_Cliente
 
             if (!AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim()))
             {
-                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El numero de documento debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
 
-            if (AyudaExtra.esStringNumerico(textBoxTIPODOC.Text.Trim()))
+            if (!AyudaExtra.esStringLetra(textBoxTIPODOC.Text.Trim()))
             {
                 MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
+            if (!AyudaExtra.esStringLetra(textBoxApellido.Text.Trim()) || !AyudaExtra.esStringLetra(textBoxNombre.Text.Trim()))
+            {
+                MessageBox.Show("Sólo se permiten letras en el campo nombre y apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
 
             /*
             if (contieneNumeroTIPODocumento(textBoxTIPODOC.Text))
@@ -159,14 +175,33 @@ namespace PalcoNet.Abm_Cliente
             }
             String localidad = textBoxLocalidad.Text;
             bool creacionAbortada = false;
+            DBConsulta.conexionAbrir();
+            if(DBConsulta.repeticion_de_campo_tipoDOC_numero_o_CUIL(cuit, textBoxDOCNUMERO.Text.Trim().ToString(), tipo_documento)) {
+                MessageBox.Show("Hay repetición en CUIL, o en Tipo de documento y su número, correspondiente a la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DBConsulta.conexionCerrar();
+                return;
+            }
+            if (DBConsulta.repe_mail(mail)) {
+                MessageBox.Show("El Email ingresado ya existe en la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DBConsulta.conexionCerrar();
+                return;
+            }
+
             int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
+            DBConsulta.conexionCerrar();
             if (creacionAbortada == false)
             {
                 consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
+                DBConsulta.conexionAbrir();
                 consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Cliente");
+                
+                
+                MessageBox.Show("Usuario creado: " + DBConsulta.obtenerNombreUltimoUserIngresado());
+                DBConsulta.conexionCerrar();
             }
             else {
                 MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DBConsulta.conexionCerrar();
                 return;
             }
 

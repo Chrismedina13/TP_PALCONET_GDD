@@ -98,7 +98,6 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.pdb
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
-C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ABMCliente.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.AltaCliente.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.EliminarCliente.resources
@@ -125,3 +124,5 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usua
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSelected.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache

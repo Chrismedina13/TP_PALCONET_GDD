@@ -572,6 +572,7 @@ insert into SQLEADOS.Cliente(cliente_nombre,cliente_apellido,cliente_tipo_docume
 							cliente_fecha_nacimiento,cliente_fecha_creacion,cliente_puntaje,cliente_email,cliente_cuit)
 select distinct Cli_Nombre,Cli_Apeliido,'DNI',Cli_Dni,Cli_Fecha_Nac,GETDATE(),0,Cli_Mail,CONCAT('20-',Cli_Dni,'-4') 
 	from gd_esquema.Maestra where Cli_Dni is not null order by Cli_Nombre
+
 PRINT('CLIENTE migrados') 
 --DOMICILIO_CLIENTE
 PRINT('Migracion de domicilios de clientes') 
@@ -1505,8 +1506,7 @@ insert into [SQLeados].Cliente (cliente_nombre, cliente_apellido, cliente_cuit, 
 	)
  values
 (@nombre, @apellido, @cuit, @tarjeta, @mail, @fechaCreacion, @fechaNacimiento,CONVERT(numeric(18,0), @numeroDocumento), @telefono, @tipoDoc
-	, (Select top 1 usuario_Id from SQLEADOS.Usuario order by usuario_Id DESC)
-	)
+	, (Select top 1 usuario_Id from SQLEADOS.Usuario order by usuario_Id DESC))
 end
 GO
 
@@ -1564,7 +1564,7 @@ GO
 create procedure [SQLeados].[llenarGrillaABMCliente]
 as
 begin
-	SELECT u.usuario_Id as 'ID', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento as 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Mail'
+	SELECT u.usuario_Id as 'ID', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento as 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'EMail'
 		FROM SQLEADOS.Cliente c JOIN SQLEADOS.Usuario u ON usuario_Id = cliente_id where usuario_estado = 1 order by usuario_Id ASC
 return 
 end
@@ -1586,8 +1586,106 @@ return
 end
 go
 
-print('PROCEDURES HECHOS')
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[darDeBajaUserCliente]'))
+    DROP proc SQLEADOS.[darDeBajaUserCliente]
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[darDeBajaUserCliente] (@user int)
+as
+begin
+	UPDATE SQLEADOS.Usuario
+		SET usuario_estado = 0
+			where	usuario_Id = (SELECT cliente_usuario FROM SQLEADOS.Cliente where cliente_id = @user)
+end
+go
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeCUILEnCliente]'))
+    DROP proc SQLEADOS.[repeticionDeCUILEnCliente]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[repeticionDeCUILEnCliente] (@cuil nvarchar(50))
+as
+begin
+	SELECT 
+		CASE
+			WHEN (SELECT COUNT(*) FROM SQLEADOS.Cliente where cliente_cuit like @cuil) > 0 then 1
+			else 0 END
+		FROM SQLEADOS.Cliente
+	return
+end
+go
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeTIPODOCYNumeroEnCliente]'))
+    DROP proc SQLEADOS.[repeticionDeTIPODOCYNumeroEnCliente]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[repeticionDeTIPODOCYNumeroEnCliente] (@tipo nvarchar(50), @numero nvarchar(20))
+as
+begin
+	SELECT 
+		CASE
+			WHEN (SELECT COUNT(*) FROM SQLEADOS.Cliente where cliente_tipo_documento like @tipo AND cliente_numero_documento = CONVERT(numeric(18,0), @numero)) > 0   then 1
+			else 0 END
+		FROM SQLEADOS.Cliente
+	return
+end
+go
+
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeMail]'))
+    DROP proc SQLEADOS.[repeticionDeMail]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[repeticionDeMail] (@mail nvarchar(100))
+as
+begin
+	SELECT 
+		CASE
+			WHEN (SELECT COUNT(*) FROM SQLEADOS.Cliente where cliente_email like @mail) > 0   then 1
+			else 0 END
+		FROM SQLEADOS.Cliente
+	return
+end
+go
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerDatosRelevantesParaModificarCliente]'))
+    DROP proc SQLEADOS.[obtenerDatosRelevantesParaModificarCliente]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerDatosRelevantesParaModificarCliente] (@userID int)
+as
+begin
+	SELECT 
+		cliente_nombre as 'NOMBRE', cliente_apellido  as 'APELLIDO', cliente_datos_tarjeta  as 'DATOS_TARJETA', 
+		cliente_telefono as 'TELEFONO', domicilio_calle as 'DOM_CALLE', domicilio_numero as 'DOM_NUMERO', 
+		domicilio_piso as 'DOM_PISO', domicilio_dto as 'DOM_DEPARTAMENTO', domicilio_localidad as 'DOM_LOCALIDAD', 
+		domicilio_codigo_postal as 'COD_POSTAL', usuario_estado as 'USER_ESTADO'  
+		FROM [SQLEADOS].Cliente 
+		JOIN [SQLEADOS].Usuario ON usuario_Id = cliente_usuario AND usuario_Id = @userID
+		JOIN [SQLEADOS].Domicilio ON domicilio_cliente_tipo_documento = cliente_tipo_documento 
+			AND domicilio_cliente_numero_documento = cliente_numero_documento
+return
+end
+go
+
+
+print('PROCEDURES HECHOS')
 
 /*
 create procedure [SQLEADOS].[crearNuevoDomicilioDeEmpresa] (@calle nvarchar(255), @numeroCalle int, @piso int, @dto nvarchar(10), @localidad nvarchar(255), @codPostal nvarchar(255), @razonSocial nvarchar(255), @cuitEmpresa nvarchar(20))

@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +74,12 @@
     </Compile>
     <Compile Include="Abm Cliente\ModificarClienteSeleccionado.Designer.cs">
       <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSelected.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificarClienteSelected.Designer.cs">
+      <DependentUpon>ModificarClienteSelected.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABMEmpresa.cs">
       <SubType>Form</SubType>
@@ -239,6 +246,7 @@
     <Compile Include="Registro de Usuario\RegistroUser.Designer.cs">
       <DependentUpon>RegistroUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\CasoData.cs" />
     <Compile Include="Support\DBConsulta.cs" />
     <Compile Include="Support\ConsultasSQL.cs" />
     <Compile Include="Support\AyudaExtra.cs" />
@@ -263,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Cliente\ModificarClienteSeleccionado.resx">
       <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificarClienteSelected.resx">
+      <DependentUpon>ModificarClienteSelected.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABMEmpresa.resx">
       <DependentUpon>ABMEmpresa.cs</DependentUpon>

@@ -4,13 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalcoNet.Support;
+using System.Text.RegularExpressions;
 
 namespace PalcoNet.Support
 {
     class AyudaExtra
     {
+        public static bool esStringVacio(String a) {
+            return a == "";
+        }
+        
         public static bool fechaMenorQueActual(DateTime fecha) {
             return fecha < DateTime.Today;
+        }
+
+        public static bool esStringConLetraONumero(String a) {
+            return (Regex.Matches(a, @"[a-zA-Z]").Count > 1) || a.Any(c => char.IsDigit(c));
+        }
+
+        public static bool esStringConLetraONumeroYSinEspacio(String a) {
+            return esStringConLetraONumero(a) == true && esStringConEspacio(a) == true;
+        }
+
+        public static bool esStringConEspacio(String a) {
+            return a.Any(char.IsWhiteSpace) == true;
         }
 
         public static bool CUILYNroDocSeCorresponden(String nro, String cuil)
@@ -21,7 +38,7 @@ namespace PalcoNet.Support
         }
 
         public static bool CUILYContraseniaParecenRespetarTamanios(String nro, String cuil) {
-            return nro.Length +3 == cuil.Length;
+            return nro.Length +3 <= cuil.Length;
         }
 
          public static bool esStringNumerico(String s) { 
@@ -33,6 +50,10 @@ namespace PalcoNet.Support
             return input.All(Char.IsLetter);
         }
 
+        public static bool esStringConAlgunaLetra(String input)
+        {
+            return input.Any(Char.IsLetter);
+        }
         public static bool esStringLetraOEspacio(String input) {
             return input.All(c => Char.IsLetter(c) || c == '_');
         }
