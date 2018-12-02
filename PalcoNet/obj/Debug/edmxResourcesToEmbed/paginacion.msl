@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GD2C2018ModelStoreContainer" CdmEntityContainer="GD2C2018Entities">
+    <EntitySetMapping Name="Compra">
+      <EntityTypeMapping TypeName="GD2C2018Model.Compra">
+        <MappingFragment StoreEntitySet="Compra">
+          <ScalarProperty Name="compra_id" ColumnName="compra_id" />
+          <ScalarProperty Name="compra_factura" ColumnName="compra_factura" />
+          <ScalarProperty Name="compra_cliente_tipo_documento" ColumnName="compra_cliente_tipo_documento" />
+          <ScalarProperty Name="compra_cliente_numero_documento" ColumnName="compra_cliente_numero_documento" />
+          <ScalarProperty Name="compra_forma_de_pago" ColumnName="compra_forma_de_pago" />
+          <ScalarProperty Name="compra_fecha" ColumnName="compra_fecha" />
+          <ScalarProperty Name="compra_cantidad" ColumnName="compra_cantidad" />
+          <ScalarProperty Name="compra_precio" ColumnName="compra_precio" />
+          <ScalarProperty Name="compra_ubiXpubli" ColumnName="compra_ubiXpubli" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Publicacion">
+      <EntityTypeMapping TypeName="GD2C2018Model.Publicacion">
+        <MappingFragment StoreEntitySet="Publicacion">
+          <ScalarProperty Name="publicacion_codigo" ColumnName="publicacion_codigo" />
+          <ScalarProperty Name="publicacion_usuario_responsable" ColumnName="publicacion_usuario_responsable" />
+          <ScalarProperty Name="publicacion_rubro" ColumnName="publicacion_rubro" />
+          <ScalarProperty Name="publicacion_grado" ColumnName="publicacion_grado" />
+          <ScalarProperty Name="publicacion_descripcion" ColumnName="publicacion_descripcion" />
+          <ScalarProperty Name="publicacion_stock" ColumnName="publicacion_stock" />
+          <ScalarProperty Name="publicacion_estado" ColumnName="publicacion_estado" />
+          <ScalarProperty Name="publicacion_puntaje_venta" ColumnName="publicacion_puntaje_venta" />
+          <ScalarProperty Name="pubicacion_putaje_compra" ColumnName="pubicacion_putaje_compra" />
+          <ScalarProperty Name="publicacion_fecha" ColumnName="publicacion_fecha" />
+          <ScalarProperty Name="publicacion_fecha_venc" ColumnName="publicacion_fecha_venc" />
+          <ScalarProperty Name="publicacion_estado_validacion" ColumnName="publicacion_estado_validacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ubicacion">
+      <EntityTypeMapping TypeName="GD2C2018Model.Ubicacion">
+        <MappingFragment StoreEntitySet="Ubicacion">
+          <ScalarProperty Name="ubicacion_id" ColumnName="ubicacion_id" />
+          <ScalarProperty Name="ubicacion_fila" ColumnName="ubicacion_fila" />
+          <ScalarProperty Name="ubicacion_asiento" ColumnName="ubicacion_asiento" />
+          <ScalarProperty Name="ubicacion_sin_numerar" ColumnName="ubicacion_sin_numerar" />
+          <ScalarProperty Name="ubicacion_Tipo_codigo" ColumnName="ubicacion_Tipo_codigo" />
+          <ScalarProperty Name="ubicacion_Tipo_Descripcion" ColumnName="ubicacion_Tipo_Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ubicacionXpublicacion">
+      <EntityTypeMapping TypeName="GD2C2018Model.ubicacionXpublicacion">
+        <MappingFragment StoreEntitySet="ubicacionXpublicacion">
+          <ScalarProperty Name="ubiXpubli_ID" ColumnName="ubiXpubli_ID" />
+          <ScalarProperty Name="ubiXpubli_Ubicacion" ColumnName="ubiXpubli_Ubicacion" />
+          <ScalarProperty Name="ubiXpubli_Publicacion" ColumnName="ubiXpubli_Publicacion" />
+          <ScalarProperty Name="ubiXpubli_precio" ColumnName="ubiXpubli_precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

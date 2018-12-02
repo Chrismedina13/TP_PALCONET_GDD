@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GD2C2018Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GD2C2018Entities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Compra" EntityType="GD2C2018Model.Compra" />
+    <EntitySet Name="Publicacion" EntityType="GD2C2018Model.Publicacion" />
+    <EntitySet Name="Ubicacion" EntityType="GD2C2018Model.Ubicacion" />
+    <EntitySet Name="ubicacionXpublicacion" EntityType="GD2C2018Model.ubicacionXpublicacion" />
+    <AssociationSet Name="FK__Compra__compra_u__5BCFFA5E" Association="GD2C2018Model.FK__Compra__compra_u__5BCFFA5E">
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ubicacion__ubiXp__542ED896" Association="GD2C2018Model.FK__ubicacion__ubiXp__542ED896">
+      <End Role="Publicacion" EntitySet="Publicacion" />
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ubicacion__ubiXp__533AB45D" Association="GD2C2018Model.FK__ubicacion__ubiXp__533AB45D">
+      <End Role="Ubicacion" EntitySet="Ubicacion" />
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="compra_id" />
+    </Key>
+    <Property Name="compra_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="compra_factura" Type="Int32" />
+    <Property Name="compra_cliente_tipo_documento" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="compra_cliente_numero_documento" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="compra_forma_de_pago" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="compra_fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="compra_cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="compra_precio" Type="Int32" Nullable="false" />
+    <Property Name="compra_ubiXpubli" Type="Int32" />
+    <NavigationProperty Name="ubicacionXpublicacion" Relationship="GD2C2018Model.FK__Compra__compra_u__5BCFFA5E" FromRole="Compra" ToRole="ubicacionXpublicacion" />
+  </EntityType>
+  <EntityType Name="Publicacion">
+    <Key>
+      <PropertyRef Name="publicacion_codigo" />
+    </Key>
+    <Property Name="publicacion_codigo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="publicacion_usuario_responsable" Type="Int32" />
+    <Property Name="publicacion_rubro" Type="Int32" Nullable="false" />
+    <Property Name="publicacion_grado" Type="Int32" Nullable="false" />
+    <Property Name="publicacion_descripcion" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="publicacion_stock" Type="Int32" Nullable="false" />
+    <Property Name="publicacion_estado" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="publicacion_puntaje_venta" Type="Int32" Nullable="false" />
+    <Property Name="pubicacion_putaje_compra" Type="Int32" Nullable="false" />
+    <Property Name="publicacion_fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="publicacion_fecha_venc" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="publicacion_estado_validacion" Type="Int32" />
+    <NavigationProperty Name="ubicacionXpublicacion" Relationship="GD2C2018Model.FK__ubicacion__ubiXp__542ED896" FromRole="Publicacion" ToRole="ubicacionXpublicacion" />
+  </EntityType>
+  <EntityType Name="Ubicacion">
+    <Key>
+      <PropertyRef Name="ubicacion_id" />
+    </Key>
+    <Property Name="ubicacion_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ubicacion_fila" Type="String" Nullable="false" MaxLength="3" Unicode="true" FixedLength="false" />
+    <Property Name="ubicacion_asiento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="ubicacion_sin_numerar" Type="Boolean" />
+    <Property Name="ubicacion_Tipo_codigo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ubicacion_Tipo_Descripcion" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="ubicacionXpublicacion" Relationship="GD2C2018Model.FK__ubicacion__ubiXp__533AB45D" FromRole="Ubicacion" ToRole="ubicacionXpublicacion" />
+  </EntityType>
+  <EntityType Name="ubicacionXpublicacion">
+    <Key>
+      <PropertyRef Name="ubiXpubli_ID" />
+    </Key>
+    <Property Name="ubiXpubli_ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ubiXpubli_Ubicacion" Type="Int32" />
+    <Property Name="ubiXpubli_Publicacion" Type="Int32" />
+    <Property Name="ubiXpubli_precio" Type="Int32" />
+    <NavigationProperty Name="Compra" Relationship="GD2C2018Model.FK__Compra__compra_u__5BCFFA5E" FromRole="ubicacionXpublicacion" ToRole="Compra" />
+    <NavigationProperty Name="Publicacion" Relationship="GD2C2018Model.FK__ubicacion__ubiXp__542ED896" FromRole="ubicacionXpublicacion" ToRole="Publicacion" />
+    <NavigationProperty Name="Ubicacion" Relationship="GD2C2018Model.FK__ubicacion__ubiXp__533AB45D" FromRole="ubicacionXpublicacion" ToRole="Ubicacion" />
+  </EntityType>
+  <Association Name="FK__Compra__compra_u__5BCFFA5E">
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.ubicacionXpublicacion" Multiplicity="0..1" />
+    <End Role="Compra" Type="GD2C2018Model.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_ID" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="compra_ubiXpubli" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ubicacion__ubiXp__542ED896">
+    <End Role="Publicacion" Type="GD2C2018Model.Publicacion" Multiplicity="0..1" />
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.ubicacionXpublicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publicacion">
+        <PropertyRef Name="publicacion_codigo" />
+      </Principal>
+      <Dependent Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_Publicacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ubicacion__ubiXp__533AB45D">
+    <End Role="Ubicacion" Type="GD2C2018Model.Ubicacion" Multiplicity="0..1" />
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.ubicacionXpublicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ubicacion">
+        <PropertyRef Name="ubicacion_id" />
+      </Principal>
+      <Dependent Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_Ubicacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GD2C2018Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GD2C2018ModelStoreContainer">
+    <EntitySet Name="Compra" EntityType="GD2C2018Model.Store.Compra" store:Type="Tables" Schema="SQLEADOS" />
+    <EntitySet Name="Publicacion" EntityType="GD2C2018Model.Store.Publicacion" store:Type="Tables" Schema="SQLEADOS" />
+    <EntitySet Name="Ubicacion" EntityType="GD2C2018Model.Store.Ubicacion" store:Type="Tables" Schema="SQLEADOS" />
+    <EntitySet Name="ubicacionXpublicacion" EntityType="GD2C2018Model.Store.ubicacionXpublicacion" store:Type="Tables" Schema="SQLEADOS" />
+    <AssociationSet Name="FK__Compra__compra_u__5BCFFA5E" Association="GD2C2018Model.Store.FK__Compra__compra_u__5BCFFA5E">
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ubicacion__ubiXp__533AB45D" Association="GD2C2018Model.Store.FK__ubicacion__ubiXp__533AB45D">
+      <End Role="Ubicacion" EntitySet="Ubicacion" />
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ubicacion__ubiXp__542ED896" Association="GD2C2018Model.Store.FK__ubicacion__ubiXp__542ED896">
+      <End Role="Publicacion" EntitySet="Publicacion" />
+      <End Role="ubicacionXpublicacion" EntitySet="ubicacionXpublicacion" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="compra_id" />
+    </Key>
+    <Property Name="compra_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="compra_factura" Type="int" />
+    <Property Name="compra_cliente_tipo_documento" Type="varchar" MaxLength="5" />
+    <Property Name="compra_cliente_numero_documento" Type="numeric" />
+    <Property Name="compra_forma_de_pago" Type="varchar" MaxLength="50" />
+    <Property Name="compra_fecha" Type="datetime" Nullable="false" />
+    <Property Name="compra_cantidad" Type="numeric" Nullable="false" />
+    <Property Name="compra_precio" Type="int" Nullable="false" />
+    <Property Name="compra_ubiXpubli" Type="int" />
+  </EntityType>
+  <EntityType Name="Publicacion">
+    <Key>
+      <PropertyRef Name="publicacion_codigo" />
+    </Key>
+    <Property Name="publicacion_codigo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="publicacion_usuario_responsable" Type="int" />
+    <Property Name="publicacion_rubro" Type="int" Nullable="false" />
+    <Property Name="publicacion_grado" Type="int" Nullable="false" />
+    <Property Name="publicacion_descripcion" Type="varchar" MaxLength="255" />
+    <Property Name="publicacion_stock" Type="int" Nullable="false" />
+    <Property Name="publicacion_estado" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="publicacion_puntaje_venta" Type="int" Nullable="false" />
+    <Property Name="pubicacion_putaje_compra" Type="int" Nullable="false" />
+    <Property Name="publicacion_fecha" Type="datetime" Nullable="false" />
+    <Property Name="publicacion_fecha_venc" Type="datetime" Nullable="false" />
+    <Property Name="publicacion_estado_validacion" Type="int" />
+  </EntityType>
+  <EntityType Name="Ubicacion">
+    <Key>
+      <PropertyRef Name="ubicacion_id" />
+    </Key>
+    <Property Name="ubicacion_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ubicacion_fila" Type="nvarchar" Nullable="false" MaxLength="3" />
+    <Property Name="ubicacion_asiento" Type="numeric" Nullable="false" />
+    <Property Name="ubicacion_sin_numerar" Type="bit" />
+    <Property Name="ubicacion_Tipo_codigo" Type="numeric" />
+    <Property Name="ubicacion_Tipo_Descripcion" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="ubicacionXpublicacion">
+    <Key>
+      <PropertyRef Name="ubiXpubli_ID" />
+    </Key>
+    <Property Name="ubiXpubli_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ubiXpubli_Ubicacion" Type="int" />
+    <Property Name="ubiXpubli_Publicacion" Type="int" />
+    <Property Name="ubiXpubli_precio" Type="int" />
+  </EntityType>
+  <Association Name="FK__Compra__compra_u__5BCFFA5E">
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.Store.ubicacionXpublicacion" Multiplicity="0..1" />
+    <End Role="Compra" Type="GD2C2018Model.Store.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_ID" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="compra_ubiXpubli" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ubicacion__ubiXp__533AB45D">
+    <End Role="Ubicacion" Type="GD2C2018Model.Store.Ubicacion" Multiplicity="0..1" />
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.Store.ubicacionXpublicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ubicacion">
+        <PropertyRef Name="ubicacion_id" />
+      </Principal>
+      <Dependent Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_Ubicacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ubicacion__ubiXp__542ED896">
+    <End Role="Publicacion" Type="GD2C2018Model.Store.Publicacion" Multiplicity="0..1" />
+    <End Role="ubicacionXpublicacion" Type="GD2C2018Model.Store.ubicacionXpublicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publicacion">
+        <PropertyRef Name="publicacion_codigo" />
+      </Principal>
+      <Dependent Role="ubicacionXpublicacion">
+        <PropertyRef Name="ubiXpubli_Publicacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

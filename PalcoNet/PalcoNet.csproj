@@ -32,9 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -189,11 +199,11 @@
     <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.cs">
+    <Compile Include="Historial Cliente\Historial Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Historial Cliente\Historial Cliente.Designer.cs">
+      <DependentUpon>Historial Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio\Form1.cs">
       <SubType>Form</SubType>
@@ -257,6 +267,12 @@
     <Compile Include="Support\volver.Designer.cs">
       <DependentUpon>volver.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\tablaPaginada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Support\tablaPaginada.Designer.cs">
+      <DependentUpon>tablaPaginada.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Abm Cliente\ABMCliente.resx">
       <DependentUpon>ABMCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -305,6 +321,9 @@
     <EmbeddedResource Include="ABM Usuario\Form8.resx">
       <DependentUpon>Form8.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\Historial Cliente.resx">
+      <DependentUpon>Historial Cliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Inicio\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -341,6 +360,11 @@
     <EmbeddedResource Include="Support\volver.resx">
       <DependentUpon>volver.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Support\tablaPaginada.resx">
+      <DependentUpon>tablaPaginada.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\GD2C2018Entities.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -354,7 +378,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
