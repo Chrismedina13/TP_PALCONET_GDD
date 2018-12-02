@@ -257,12 +257,6 @@
     <Compile Include="Support\volver.Designer.cs">
       <DependentUpon>volver.cs</DependentUpon>
     </Compile>
-    <Compile Include="tablaPaginada.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="tablaPaginada.Designer.cs">
-      <DependentUpon>tablaPaginada.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Abm Cliente\ABMCliente.resx">
       <DependentUpon>ABMCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,9 +340,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Support\volver.resx">
       <DependentUpon>volver.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="tablaPaginada.resx">
-      <DependentUpon>tablaPaginada.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
