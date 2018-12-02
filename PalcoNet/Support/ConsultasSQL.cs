@@ -746,4 +746,39 @@ namespace PalcoNet.Support
     }
     #endregion
 
+ # region CanjePuntos
+
+    class CanjePuntos : ConsultasSQL
+    {
+   
+
+        internal static string[] obtenerPuntaje(int usuario)
+        {
+            String[] datos = new string[5];
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand getDatosClienteCommand = new SqlCommand("select sum(punt_puntaje) as puntaje,cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento from SQLEADOS.puntaje,SQLEADOS.Cliente where cliente_usuario = @usuario and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and GETDATE() < punt_fecha_vencimiento  group by cliente_apellido,cliente_nombre, cliente_tipo_documento, cliente_numero_documento");
+            getDatosClienteCommand.Parameters.AddWithValue("usuario", usuario);
+            getDatosClienteCommand.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = getDatosClienteCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                datos[0] = reader["cliente_tipo_documento"].ToString();
+                datos[1] = reader["cliente_numero_documento"].ToString();
+                datos[2] = reader["cliente_nombre"].ToString();
+                datos[3] = reader["cliente_apellido"].ToString();
+                datos[4] = reader["puntaje"].ToString();
+
+
+            }
+            connection.Close();
+            return datos;
+        }
+
+
+
+
+    }
+
+    #endregion
 }

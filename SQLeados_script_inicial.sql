@@ -418,7 +418,6 @@ compra_id int primary key identity,
 compra_factura int references SQLEADOS.Factura,
 compra_cliente_tipo_documento varchar(5),
 compra_cliente_numero_documento numeric(18,0),
-compra_forma_de_pago varchar(50),
 compra_fecha datetime not null,
 compra_cantidad numeric(18,0) not null,
 compra_precio int not null,
@@ -873,9 +872,8 @@ insert into SQLEADOS.Compra(
 			compra_fecha,
 			compra_cantidad,
 			compra_precio,
-			compra_ubiXpubli,
-			compra_forma_de_pago)
-select distinct m.Factura_Nro,'DNI',m.Cli_Dni,m.Compra_Fecha, m.Compra_Cantidad,x.ubiXpubli_precio,x.ubiXpubli_ID, 'Efectivo' from gd_esquema.Maestra m
+			compra_ubiXpubli)
+select distinct m.Factura_Nro,'DNI',m.Cli_Dni,m.Compra_Fecha, m.Compra_Cantidad,x.ubiXpubli_precio,x.ubiXpubli_ID from gd_esquema.Maestra m
 join SQLeados.ubicacionXpublicacion x on m.Espectaculo_Cod = x.ubiXpubli_Publicacion 
 join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubicacion_Fila = u.ubicacion_fila and m.Ubicacion_Sin_numerar = u.Ubicacion_Sin_numerar
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
@@ -1093,8 +1091,7 @@ print('HECHO')
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-print('Creacion de PROCEDURES')
-print('')
+print('Creacion de procedures')
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1104,8 +1101,6 @@ as begin
 select funcionalidad_descripcion from [SQLeados].Funcionalidad
 end
 go
-
-print('PROCEDURE [listarFuncionalidades]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1120,8 +1115,6 @@ return @existe
 end
 go
 
-print('PROCEDURE [existeRol]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1133,8 +1126,6 @@ insert into [SQLeados].Rol(Rol_nombre, rol_estado)
 values(@nombre,1)
 end
 go
-
-print('PROCEDURE [crearRolNuevo]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1149,8 +1140,6 @@ return @cod
 end
 go
 
-print('PROCEDURE [codigoRol]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1162,8 +1151,6 @@ insert into [SQLeados].FuncionalidadXRol(funcionalidadXRol_rol, funcionalidadXRo
 values(@codigoRol, @codigoFunc)
 end
 go
-
-print('PROCEDURE [crearFuncionalidad]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1178,8 +1165,6 @@ return @cod
 end
 GO
 
-print('PROCEDURE [codigoFuncionalidad]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1190,8 +1175,6 @@ begin
 select Rol_nombre from [SQLeados].Rol
 end
 GO
-
-print('PROCEDURE [cargarRoles]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1207,8 +1190,6 @@ return @resultado
 end
 GO
 
-print('PROCEDURE [rolHabilitado]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1222,8 +1203,6 @@ where Rol_nombre = @Rol
 end
 GO
 
-print('PROCEDURE [FuncionalidadesPorRol]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1235,8 +1214,6 @@ update [SQLeados].Rol set Rol_nombre = @nombre
 where Rol_nombre = @anterior
 end
 go
-
-print('PROCEDURE [modificarRol]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1250,8 +1227,6 @@ where funcionalidadXRol_rol = @rol
 end
 go
 
-print('PROCEDURE [eliminarFuncionalidades]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1263,7 +1238,6 @@ select Rol_nombre from [SQLeados].Rol where rol_estado = 1
 end
 go
 
-print('PROCEDURE [cargarRolesHabilitados]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1278,8 +1252,6 @@ where rol_Id = @codigo
 end
 go
 
-print('PROCEDURE [inhabilitarRol]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1292,7 +1264,6 @@ where usuarioXRol_rol = @codigo
 end
 go
 
-print('PROCEDURE [inhabilitarRolPorUsuario]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1313,8 +1284,6 @@ return @Resultado
 end
 go
 
-print('PROCEDURE [ValidarUsuario]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1328,7 +1297,6 @@ return @bloqueado
 end
 go
 
-print('PROCEDURE [estaBloqueado]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1342,8 +1310,6 @@ set @intentos = (select Usuario_intentos from [SQLeados].Usuario where usuario_n
 return @intentos
 end
 go
-
-print('PROCEDURE [intentosFallidos]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1365,7 +1331,6 @@ return @Resultado
 end
 go
 
-print('PROCEDURE [ValidarContra]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1380,8 +1345,6 @@ where usuario_nombre = @Username
 end
 go
 
-print('PROCEDURE [resetearIntentoFallidos]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1394,8 +1357,6 @@ set Usuario_intentos = (select Usuario_intentos from [SQLeados].Usuario where us
 where usuario_nombre = @Username
 end
 go
-
-print('PROCEDURE [agregarIntentoFallidos]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1410,8 +1371,6 @@ where usuario_nombre = @Username
 end
 go
 
-print('PROCEDURE [bloquearUsuario]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1424,8 +1383,6 @@ set @resultado = (select usuario_administrador from [SQLeados].Usuario where Usu
 return @resultado
 end
 go
-
-print('PROCEDURE [esAdministrador]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1441,8 +1398,6 @@ where Usuario.usuario_nombre = @Username and rol_estado = 1
 end
 go
 
-print('PROCEDURE [Nombreroles]: OK')
-
 /****** Object:  StoredProcedure [PERSISTIENDO].[actualizarContra]    Script Date: 26/06/2016 19:30:26 ******/
 SET ANSI_NULLS ON
 GO
@@ -1457,8 +1412,6 @@ where usuario_nombre = @user
 end
 GO
 
-print('PROCEDURE [actualizarContra]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1472,8 +1425,6 @@ where Rol_nombre = @nombre
 end
 go
 
-print('PROCEDURE [habilitarRol]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1486,8 +1437,6 @@ from [SQLeados].Cliente join [SQLeados].Usuario on usuario_Id = cliente_usuario
 where Usuario.usuario_estado = 1
 end
 GO
-
-print('PROCEDURE [cargarNuevoUser]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1504,8 +1453,6 @@ select TOP 1 u.usuario_Id, r.rol_Id from SQLEADOS.Usuario u, SQLEADOS.Rol r
 	order by u.usuario_Id DESC
 end
 GO
-
-print('PROCEDURE [crearNuevoUserPorRegistroOABM]: OK')
 
 /*
 create table [SQLEADOS].Cliente(
@@ -1563,8 +1510,6 @@ insert into [SQLeados].Cliente (cliente_nombre, cliente_apellido, cliente_cuit, 
 end
 GO
 
-print('PROCEDURE [crearNuevoCliente]: OK')
-
 /*
 select * from SQLEADOS.Cliente where cliente_nombre LIKE 'dam%'
 
@@ -1586,8 +1531,6 @@ return
 end
 go
 
-print('PROCEDURE [obtenerPKdelUltimoClienteIngresado]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1600,8 +1543,6 @@ insert into [SQLEADOS].Domicilio (domicilio_calle, domicilio_numero, domicilio_p
 (@calle, @numeroCalle, @piso, @dto, @localidad, @codPostal, @numeroDoc, @tipoDoc)
 end
 GO
-
-print('PROCEDURE [crearNuevoDomicilioDeCliente]: OK')
 
 SET ANSI_NULLS ON
 GO
@@ -1616,8 +1557,6 @@ insert into [SQLEADOS].Domicilio (domicilio_calle, domicilio_numero, domicilio_p
 end
 GO
 
-print('PROCEDURE [crearNuevoDomicilioDeEmpresa]: OK')
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1630,8 +1569,6 @@ begin
 return 
 end
 go
-
-print('PROCEDURE [llenarGrillaABMCliente]: OK')
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[completarGriddClienteAPartirDe]'))
     DROP proc SQLEADOS.[completarGriddClienteAPartirDe]
@@ -1649,8 +1586,6 @@ return
 end
 go
 
-print('PROCEDURE [completarGriddClienteAPartirDe]: OK')
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[darDeBajaUserCliente]'))
     DROP proc SQLEADOS.[darDeBajaUserCliente]
 
@@ -1666,8 +1601,6 @@ begin
 			where	usuario_Id = (SELECT cliente_usuario FROM SQLEADOS.Cliente where cliente_id = @user)
 end
 go
-
-print('PROCEDURE [darDeBajaUserCliente]: OK')
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeCUILEnCliente]'))
     DROP proc SQLEADOS.[repeticionDeCUILEnCliente]
@@ -1688,8 +1621,6 @@ begin
 end
 go
 
-print('PROCEDURE [repeticionDeCUILEnCliente]: OK')
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeTIPODOCYNumeroEnCliente]'))
     DROP proc SQLEADOS.[repeticionDeTIPODOCYNumeroEnCliente]
 
@@ -1709,7 +1640,7 @@ begin
 end
 go
 
-print('PROCEDURE [repeticionDeTIPODOCYNumeroEnCliente]: OK')
+
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeMail]'))
     DROP proc SQLEADOS.[repeticionDeMail]
@@ -1729,8 +1660,6 @@ begin
 	return
 end
 go
-
-print('PROCEDURE [repeticionDeMail]: OK')
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerDatosRelevantesParaModificarCliente]'))
     DROP proc SQLEADOS.[obtenerDatosRelevantesParaModificarCliente]
@@ -1754,103 +1683,6 @@ begin
 return
 end
 go
-
-print('PROCEDURE [obtenerDatosRelevantesParaModificarCliente]: OK')
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.cargarHistorialCliente1Pagina'))
-    DROP proc SQLEADOS.[cargarHistorialCliente1Pagina]
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[cargarHistorialCliente1Pagina] (@userID int, @tamanioPagina int)
-as
-begin
-	SELECT TOP (@tamanioPagina)
-		com.compra_id as 'ID', com.compra_fecha as 'FECHA',  
-		p.publicacion_descripcion as 'Evento', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', 
-		compra_forma_de_pago as 'Forma de pago', com.compra_cantidad as 'Cantidad',
-		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total'
-		
-		FROM [SQLEADOS].Cliente c
-		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
-		JOIN [SQLEADOS].Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento 
-							AND compra_cliente_tipo_documento = c.cliente_tipo_documento
-		JOIN [SQLEADOS].ubicacionXpublicacion uxp ON uxp.ubiXpubli_ID = com.compra_ubiXpubli
-		JOIN [SQLEADOS].Ubicacion u on u.ubicacion_id = uxp.ubiXpubli_Ubicacion
-		JOIN [SQLEADOS].Publicacion p on p.publicacion_codigo = uxp.ubiXpubli_Publicacion
-
-return
-end
-go
-
-print('PROCEDURE [cargarHistorialCliente1Pagina]: OK')
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cantidadTotalDeComprasDeCliente]'))
-    DROP proc SQLEADOS.cantidadTotalDeComprasDeCliente
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[cantidadTotalDeComprasDeCliente] (@userID int)
-as
-begin
-	SELECT
-		COUNT(com.compra_id) as 'ID'		
-		FROM [SQLEADOS].Cliente c
-		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
-		JOIN [SQLEADOS].Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento 
-							AND compra_cliente_tipo_documento = c.cliente_tipo_documento
-		JOIN [SQLEADOS].ubicacionXpublicacion uxp ON uxp.ubiXpubli_ID = com.compra_ubiXpubli
-		JOIN [SQLEADOS].Ubicacion u on u.ubicacion_id = uxp.ubiXpubli_Ubicacion
-		JOIN [SQLEADOS].Publicacion p on p.publicacion_codigo = uxp.ubiXpubli_Publicacion
-return
-end
-go
-
-print('PROCEDURE [cantidadTotalDeComprasDeCliente]: OK')
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cargarHistorialClientePaginada]'))
-    DROP proc SQLEADOS.[cargarHistorialClientePaginada]
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create procedure [SQLeados].[cargarHistorialClientePaginada] (@userID int, @tamanioPagina int, @paginasAnteriores int)
-as
-begin
-	SELECT TOP (@tamanioPagina)
-		com.compra_id as 'ID', com.compra_fecha as 'FECHA',  
-		p.publicacion_descripcion as 'Evento', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', 
-		compra_forma_de_pago as 'Forma de pago', com.compra_cantidad as 'Cantidad',
-		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total'
-		
-		FROM [SQLEADOS].Cliente c
-		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
-		JOIN [SQLEADOS].Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento 
-							AND compra_cliente_tipo_documento = c.cliente_tipo_documento
-		JOIN [SQLEADOS].ubicacionXpublicacion uxp ON uxp.ubiXpubli_ID = com.compra_ubiXpubli
-		JOIN [SQLEADOS].Ubicacion u on u.ubicacion_id = uxp.ubiXpubli_Ubicacion
-		JOIN [SQLEADOS].Publicacion p on p.publicacion_codigo = uxp.ubiXpubli_Publicacion
-			WHERE com.compra_id NOT IN (
-				SELECT TOP (@paginasAnteriores)
-					com.compra_id
-				FROM [SQLEADOS].Cliente c
-					JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
-					JOIN [SQLEADOS].Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento 
-							AND compra_cliente_tipo_documento = c.cliente_tipo_documento
-					JOIN [SQLEADOS].ubicacionXpublicacion uxp ON uxp.ubiXpubli_ID = com.compra_ubiXpubli
-					JOIN [SQLEADOS].Ubicacion u on u.ubicacion_id = uxp.ubiXpubli_Ubicacion
-					JOIN [SQLEADOS].Publicacion p on p.publicacion_codigo = uxp.ubiXpubli_Publicacion
-				)
-return
-end
-go
-
-print('PROCEDURE [cargarHistorialClientePaginada]: OK')
 
 
 print('PROCEDURES HECHOS')
