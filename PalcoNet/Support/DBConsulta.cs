@@ -316,5 +316,14 @@ namespace PalcoNet.Support
             dP.Fill(dt);
             return dt.Tables[0].Rows[0][0].ToString();
         }
+
+         public static DataTable obtenerHistorialCompras(int userID) {
+             DataTable DT = new DataTable();
+             SqlCommand cmd = new SqlCommand("[SQLeados].[cargarHistorialCliente]", conexion);
+             cmd.CommandType = CommandType.StoredProcedure;
+             cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+             DT.Load(cmd.ExecuteReader());
+             return DT;
+         }
     }
 }
