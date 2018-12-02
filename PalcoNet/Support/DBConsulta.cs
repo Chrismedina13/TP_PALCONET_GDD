@@ -316,42 +316,55 @@ namespace PalcoNet.Support
             return dt.Tables[0].Rows[0][0].ToString();
         }
 
-         public static DataTable obtenerHistorialCompras(int userID, int pagina, int tamanioPagina)
+         private static DataTable obtenerTOPNParaTablaPaginada(String comando, int userID, int pagina, int tamanioPagina)
          {
              DataTable DT = new DataTable();
              SqlCommand cm2;
 
-             if (pagina == 1)
-             {
-                 cm2 = new SqlCommand("[SQLeados].[cargarHistorialCliente1Pagina]", conexion);
+             cm2 = new SqlCommand(comando, conexion);
 
-                 cm2.CommandType = CommandType.StoredProcedure;
-                 cm2.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
-                 cm2.Parameters.Add("@tamanioPagina", SqlDbType.Int).Value = tamanioPagina;
-             }
-             else
-             {
-                 cm2 = new SqlCommand("[SQLeados].[cargarHistorialClientePaginada]", conexion);
-
-                 cm2.CommandType = CommandType.StoredProcedure;
-                 cm2.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
-                 cm2.Parameters.Add("@tamanioPagina", SqlDbType.Int).Value = tamanioPagina;
-                 cm2.Parameters.Add("@paginasAnteriores", SqlDbType.Int).Value = (pagina - 1) * tamanioPagina;
-             }
-
+             cm2.CommandType = CommandType.StoredProcedure;
+             cm2.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+             cm2.Parameters.Add("@tamanioPagina", SqlDbType.Int).Value = pagina;
+             cm2.Parameters.Add("@paginasAnteriores", SqlDbType.Int).Value = tamanioPagina;
+             
              DT.Load(cm2.ExecuteReader());
              return DT;
          }
 
-        public static DataTable obtenerTotalHistorialCompras(int userID) {
-             DataTable DT = new DataTable();
-             SqlCommand cmd = new SqlCommand("[SQLeados].[cantidadTotalDeComprasDeCliente]", conexion);
-             cmd.CommandType = CommandType.StoredProcedure;
-             cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
-             DT.Load(cmd.ExecuteReader());
-             return DT;
+         public static DataTable obtenerHistorialCompras(int userID, int pagina, int tamanioPagina)
+         {
+             if (pagina == 1)
+             {
+                 return obtenerTOPNParaTablaPaginada("[SQLeados].[cargarHistorialCliente1Pagina]", userID, tamanioPagina, tamanioPagina);
+             }
+             else
+             {
+                 return obtenerTOPNParaTablaPaginada("[SQLeados].[cargarHistorialClientePaginada]", userID, tamanioPagina, (pagina - 1) * tamanioPagina);
+             }
          }
 
+        public static DataTable obtenerTotalHistorialCompras(int userID) {
+             return obtenerTotalParaTablaPaginada("[SQLeados].[cantidadTotalDeComprasDeCliente]", userID);
+         }
+
+        private static DataTable obtenerTotalParaTablaPaginada(String comando, int userID)
+        {
+            DataTable DT = new DataTable();
+            SqlCommand cmd = new SqlCommand(comando, conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+            DT.Load(cmd.ExecuteReader());
+            return DT;
+        }
+
+        public static DataTable obtenerPublicacionesDeEmpresa(int userID) {
+            return obtenerTotalParaTablaPaginada("[SQLeados].[obtenerTotalPublicacionesDeEmpresa]", userID);
+        }
+
+        public static DataTable obtenerPublicacionesDeEmpresa(int userID, int pagina, int tamanioPagina) {
+            return obtenerTOPNParaTablaPaginada("[SQLeados].[obtenerTotalPublicacionesDeEmpresa]", userID, pagina, tamanioPagina);
+        }
         
     }
 }

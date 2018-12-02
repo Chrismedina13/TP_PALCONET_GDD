@@ -176,6 +176,12 @@
     <Compile Include="Generar Publicacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Publicacion\Generar publicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\Generar publicacion.Designer.cs">
+      <DependentUpon>Generar publicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Rendicion Comisiones\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
       <DependentUpon>Canje puntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\Generar publicacion.resx">
+      <DependentUpon>Generar publicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\Historial de cliente.resx">
       <DependentUpon>Historial de cliente.cs</DependentUpon>

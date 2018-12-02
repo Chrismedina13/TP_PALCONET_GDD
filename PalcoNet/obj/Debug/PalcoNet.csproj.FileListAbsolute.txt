@@ -124,7 +124,6 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usua
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.RegistroUser.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
-C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSelected.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe.config
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.exe
@@ -196,3 +195,8 @@ C:\Damian\TP DE GDD\POR SI LA CAGO\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.p
 C:\Damian\TP DE GDD\POR SI LA CAGO\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial_de_cliente.resources
 C:\Damian\TP DE GDD\POR SI LA CAGO\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.TablaPaginadas.resources
 C:\Damian\TP DE GDD\POR SI LA CAGO\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Canje_Puntos.canjePuntos.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial_de_cliente.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.TablaPaginadas.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Generar_Publicacion.Generar_publicacion.resources

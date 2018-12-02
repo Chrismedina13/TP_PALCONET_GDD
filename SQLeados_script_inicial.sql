@@ -1766,7 +1766,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [SQLeados].[cargarHistorialCliente1Pagina] (@userID int, @tamanioPagina int)
+create procedure [SQLeados].[cargarHistorialCliente1Pagina] (@userID int, @tamanioPagina int, @paginasAnteriores int)
 as
 begin
 	SELECT TOP (@tamanioPagina)
@@ -1854,6 +1854,63 @@ go
 
 print('PROCEDURE [cargarHistorialClientePaginada]: OK')
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerTotalPublicacionesDeEmpresa]'))
+    DROP proc SQLEADOS.[obtenerTotalPublicacionesDeEmpresa]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerTotalPublicacionesDeEmpresa] (@userID int)
+as
+begin
+	SELECT
+		COUNT(p.publicacion_codigo) as 'ID'		
+		FROM [SQLEADOS].Empresa e
+		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = e.empresa_usuario
+		JOIN [SQLEADOS].Publicacion p on p.publicacion_usuario_responsable = us.usuario_Id
+return
+end
+go
+
+print('PROCEDURE [obtenerTotalPublicacionesDeEmpresa]: OK')
+/*
+ESTE QUERY NO ANDA, NO SE QUE LE PASA PERO QUE LO HAGA OTRO QUE ME PONGO CON OTRA ABM
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesDeEmpresa]'))
+    DROP proc SQLEADOS.[obtenerPublicacionesDeEmpresa]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerPublicacionesDeEmpresa] (@userID int)
+as
+begin
+	SELECT
+	--	p.publicacion_codigo as 'ID', 
+		p.publicacion_descripcion as 'Descripcion', p.publicacion_fecha as 'Fecha de publicación',
+		p.publicacion_fecha_venc as 'Fecha y hora de espectáculo', r.rubro_descripcion as 'Rubro', 
+		g.grado_nombre as 'Grado' , p.publicacion_estado as 'ESTADO', COUNT(ux.ubiXpubli_ID) as 'Ubicaciones',
+		d.domicilio_calle as 'Calle', d.domicilio_numero as 'Número'
+		FROM [SQLEADOS].Empresa e
+		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = 12 AND us.usuario_Id = e.empresa_usuario
+		JOIN [SQLEADOS].Publicacion p on p.publicacion_usuario_responsable = us.usuario_Id
+		JOIN [SQLEADOS].Rubro r ON r.rubro_id = p.publicacion_rubro
+		JOIN [SQLEADOS].ubicacionXpublicacion ux ON ux.ubiXpubli_Publicacion = p.publicacion_codigo
+		JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado
+		JOIN [SQLEADOS].Domicilio d ON d.domicilio_empresa_cuit = e.empresa_cuit AND d.domicilio_empresa_razon_social LIKE e.empresa_razon_social
+
+	--	group by 1, 2, 3, 4, 5, 6, 7, 8, 9
+		order by YEAR(p.publicacion_fecha) ASC, MONTH(p.publicacion_fecha) ASC, DAY (p.publicacion_fecha) ASC, DATEPART(HOUR, p.publicacion_fecha) ASC,
+			 DATEPART(MINUTE, p.publicacion_fecha) ASC,  DATEPART(SECOND, p.publicacion_fecha) ASC
+		
+return
+end
+go
+
+print('PROCEDURE [obtenerPublicacionesDeEmpresa]: OK')
+*/
 
 print('PROCEDURES HECHOS')
 
