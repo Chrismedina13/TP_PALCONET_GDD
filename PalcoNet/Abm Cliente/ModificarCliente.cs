@@ -117,7 +117,7 @@ namespace PalcoNet.Abm_Cliente
                 String user = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
                 int userID = Convert.ToInt32(user);
                 MessageBox.Show("USER: " + userID);
-                ModificarClienteSeleccionado mod = new ModificarClienteSeleccionado(userID);
+                ModificarClienteSelected mod = new ModificarClienteSelected(userID);
                 mod.Show();
             }
         }
