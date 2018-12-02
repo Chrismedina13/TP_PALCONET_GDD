@@ -137,6 +137,7 @@ C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Clien
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.EliminarCliente.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarCliente.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSeleccionado.resources
+C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Cliente.ModificarClienteSelected.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.AltaEmpresa.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Empresa_Espectaculo.EliminarEmpresa.resources
@@ -159,4 +160,3 @@ C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
 C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.tablaPaginada.resources
-C:\Damian\TP DE GDD\PRUEBA\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Canje_Puntos.canjePuntos.resources
