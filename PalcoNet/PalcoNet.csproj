@@ -32,19 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="PagedList">
-      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,12 +73,6 @@
     </Compile>
     <Compile Include="Abm Cliente\ModificarClienteSeleccionado.Designer.cs">
       <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Cliente\ModificarClienteSelected.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Cliente\ModificarClienteSelected.Designer.cs">
-      <DependentUpon>ModificarClienteSelected.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABMEmpresa.cs">
       <SubType>Form</SubType>
@@ -169,11 +152,11 @@
     <Compile Include="ABM Usuario\Form8.Designer.cs">
       <DependentUpon>Form8.cs</DependentUpon>
     </Compile>
-    <Compile Include="Canje Puntos\Form1.cs">
+    <Compile Include="Canje Puntos\Canje puntos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Canje Puntos\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Canje Puntos\Canje puntos.Designer.cs">
+      <DependentUpon>Canje puntos.cs</DependentUpon>
     </Compile>
     <Compile Include="Comprar\Form1.cs">
       <SubType>Form</SubType>
@@ -199,11 +182,17 @@
     <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Historial Cliente\Historial Cliente.cs">
+    <Compile Include="Historial Cliente\Historial de cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Historial Cliente\Historial Cliente.Designer.cs">
-      <DependentUpon>Historial Cliente.cs</DependentUpon>
+    <Compile Include="Historial Cliente\Historial de cliente.Designer.cs">
+      <DependentUpon>Historial de cliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historial Cliente\Historial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Historial Cliente\Historial.Designer.cs">
+      <DependentUpon>Historial.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio\Form1.cs">
       <SubType>Form</SubType>
@@ -260,18 +249,18 @@
     <Compile Include="Support\DBConsulta.cs" />
     <Compile Include="Support\ConsultasSQL.cs" />
     <Compile Include="Support\AyudaExtra.cs" />
+    <Compile Include="Support\TablaPaginadas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Support\TablaPaginadas.Designer.cs">
+      <DependentUpon>TablaPaginadas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Support\Trimestre.cs" />
     <Compile Include="Support\volver.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Support\volver.Designer.cs">
       <DependentUpon>volver.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Support\tablaPaginada.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Support\tablaPaginada.Designer.cs">
-      <DependentUpon>tablaPaginada.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Abm Cliente\ABMCliente.resx">
       <DependentUpon>ABMCliente.cs</DependentUpon>
@@ -287,9 +276,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Cliente\ModificarClienteSeleccionado.resx">
       <DependentUpon>ModificarClienteSeleccionado.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Cliente\ModificarClienteSelected.resx">
-      <DependentUpon>ModificarClienteSelected.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABMEmpresa.resx">
       <DependentUpon>ABMEmpresa.cs</DependentUpon>
@@ -321,8 +307,14 @@
     <EmbeddedResource Include="ABM Usuario\Form8.resx">
       <DependentUpon>Form8.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Historial Cliente\Historial Cliente.resx">
-      <DependentUpon>Historial Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
+      <DependentUpon>Canje puntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\Historial de cliente.resx">
+      <DependentUpon>Historial de cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\Historial.resx">
+      <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -357,14 +349,12 @@
     <EmbeddedResource Include="Registro de Usuario\RegistroUSer.resx">
       <DependentUpon>RegistroUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Support\TablaPaginadas.resx">
+      <DependentUpon>TablaPaginadas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Support\volver.resx">
       <DependentUpon>volver.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Support\tablaPaginada.resx">
-      <DependentUpon>tablaPaginada.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\DataSources\GD2C2018Entities.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -378,6 +368,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

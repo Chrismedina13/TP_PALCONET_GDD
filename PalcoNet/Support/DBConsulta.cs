@@ -10,7 +10,6 @@ using System.Data;
 using System.Configuration;
 using System.Windows.Forms;
 using System.Media;
-using System.Data;
 
 namespace PalcoNet.Support
 {
@@ -184,7 +183,7 @@ namespace PalcoNet.Support
 
         public static void ModificarCliente(String cmd) {
             try {
-                MessageBox.Show(cmd);
+     //           MessageBox.Show(cmd);
                 SqlCommand ejecutador = new SqlCommand(cmd);
                 ejecutador.Connection = conexion;
                 ejecutador.ExecuteNonQuery();
@@ -317,26 +316,8 @@ namespace PalcoNet.Support
             return dt.Tables[0].Rows[0][0].ToString();
         }
 
-         private static String comandoDePaginacion(int tamanioPagina, int userID)
+         public static DataTable obtenerHistorialCompras(int userID, int pagina, int tamanioPagina)
          {
-             String a = "SELECT TOP " + tamanioPagina + " com.compra_id as 'ID', com.compra_fecha as 'FECHA', p.publicacion_descripcion as 'Evento', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', compra_forma_de_pago as 'Forma de pago', com.compra_cantidad as 'Cantidad', (uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total'	FROM [SQLEADOS].Cliente c JOIN [SQLEADOS].Usuario us ON us.usuario_Id = " + userID + " AND us.usuario_Id = c.cliente_usuario JOIN [SQLEADOS].Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento AND compra_cliente_tipo_documento = c.cliente_tipo_documento JOIN [SQLEADOS].ubicacionXpublicacion uxp ON uxp.ubiXpubli_ID = com.compra_ubiXpubli JOIN [SQLEADOS].Ubicacion u on u.ubicacion_id = uxp.ubiXpubli_Ubicacion JOIN [SQLEADOS].Publicacion p on p.publicacion_codigo = uxp.ubiXpubli_Publicacion";
-             return a;
-         }
-
-         public static DataTable obtenerCantidadTotalCompras(int userID) {
-             DataTable DT = new DataTable();
-             SqlCommand cm2;
-
-             cm2 = new SqlCommand("[SQLeados].[cantidadTotalDeComprasDeCliente]", conexion);
-
-             cm2.CommandType = CommandType.StoredProcedure;
-             cm2.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
-
-             DT.Load(cm2.ExecuteReader());
-             return DT;
-         }
-
-         public static DataTable obtenerHistorialCompras(int userID, int pagina, int tamanioPagina) {
              DataTable DT = new DataTable();
              SqlCommand cm2;
 
@@ -348,7 +329,7 @@ namespace PalcoNet.Support
                  cm2.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
                  cm2.Parameters.Add("@tamanioPagina", SqlDbType.Int).Value = tamanioPagina;
              }
-             else 
+             else
              {
                  cm2 = new SqlCommand("[SQLeados].[cargarHistorialClientePaginada]", conexion);
 
@@ -357,9 +338,20 @@ namespace PalcoNet.Support
                  cm2.Parameters.Add("@tamanioPagina", SqlDbType.Int).Value = tamanioPagina;
                  cm2.Parameters.Add("@paginasAnteriores", SqlDbType.Int).Value = (pagina - 1) * tamanioPagina;
              }
-             
+
              DT.Load(cm2.ExecuteReader());
              return DT;
          }
+
+        public static DataTable obtenerTotalHistorialCompras(int userID) {
+             DataTable DT = new DataTable();
+             SqlCommand cmd = new SqlCommand("[SQLeados].[cantidadTotalDeComprasDeCliente]", conexion);
+             cmd.CommandType = CommandType.StoredProcedure;
+             cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+             DT.Load(cmd.ExecuteReader());
+             return DT;
+         }
+
+        
     }
 }
