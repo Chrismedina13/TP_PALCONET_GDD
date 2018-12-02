@@ -1773,7 +1773,7 @@ begin
 		com.compra_id as 'ID', com.compra_fecha as 'FECHA',  
 		p.publicacion_descripcion as 'Evento', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', 
 		compra_forma_de_pago as 'Forma de pago', com.compra_cantidad as 'Cantidad',
-		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total'
+		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total en $'
 		
 		FROM [SQLEADOS].Cliente c
 		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
@@ -1828,7 +1828,7 @@ begin
 		com.compra_id as 'ID', com.compra_fecha as 'FECHA',  
 		p.publicacion_descripcion as 'Evento', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', 
 		compra_forma_de_pago as 'Forma de pago', com.compra_cantidad as 'Cantidad',
-		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total'
+		(uxp.ubiXpubli_precio)*com.compra_cantidad as 'Precio total en $'
 		
 		FROM [SQLEADOS].Cliente c
 		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = c.cliente_usuario
@@ -1874,6 +1874,82 @@ end
 go
 
 print('PROCEDURE [obtenerTotalPublicacionesDeEmpresa]: OK')
+
+select * from SQLEADOS.Publicacion
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesParaCompra]'))
+    DROP proc SQLEADOS.[obtenerPublicacionesParaCompra]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerPublicacionesParaCompra] (@userID int)
+as
+begin
+	SELECT
+		COUNT(p.publicacion_codigo) as 'ID'		
+		FROM [SQLEADOS].Empresa e
+		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = @userID AND us.usuario_Id = e.empresa_usuario
+		JOIN [SQLEADOS].Publicacion p on p.publicacion_usuario_responsable = us.usuario_Id
+return
+end
+go
+
+print('PROCEDURE [obtenerPublicacionesParaCompra]: OK')
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerTotalPublicacionesParaCompra]'))
+    DROP proc SQLEADOS.[obtenerTotalPublicacionesParaCompra]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerTotalPublicacionesParaCompra] (@userID int)
+ --EN REALIDAD ES ID DE PUBLICACION, PERO LO DEJO PARA QUE NO ROMPA CON EL CÓDIGO YA HECHO ASÍ AHORRO TIEMPO
+as
+begin
+	SELECT
+		COUNT(*) as 'ID'		
+		FROM [SQLEADOS].Publicacion p
+		JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo
+		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion
+			where p.publicacion_codigo = 15555 AND p.publicacion_estado LIKE 'Publicada'
+return
+end
+go
+
+print('PROCEDURE [obtenerTotalPublicacionesParaCompra]: OK')
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesParaCompra]'))
+    DROP proc SQLEADOS.[obtenerPublicacionesParaCompra]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[obtenerPublicacionesParaCompra] (@userID int)
+ --EN REALIDAD ES ID DE PUBLICACION, PERO LO DEJO PARA QUE NO ROMPA CON EL CÓDIGO YA HECHO ASÍ AHORRO TIEMPO
+as
+begin
+	SELECT
+		u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Piso', up.ubiXpubli_precio as 'Precio en $', g.grado_comision		
+		FROM [SQLEADOS].Publicacion p
+		JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo
+		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion
+		JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado
+			where p.publicacion_codigo = 15555 AND p.publicacion_estado LIKE 'Publicada'
+return
+end
+go
+
+select * from SQLEADOS.Ubicacion
+
+print('PROCEDURE [obtenerPublicacionesParaCompra]: OK')
+
+
+
 /*
 ESTE QUERY NO ANDA, NO SE QUE LE PASA PERO QUE LO HAGA OTRO QUE ME PONGO CON OTRA ABM
 

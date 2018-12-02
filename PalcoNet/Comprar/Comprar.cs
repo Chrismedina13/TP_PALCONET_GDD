@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Support;
 
-namespace PalcoNet.Historial_Cliente
+namespace PalcoNet.Comprar
 {
-    public partial class Historial : TablaPaginadas
+    public partial class Comprar : Form1
     {
-        private int userID;
+        private int publicacionID;
         private int paginaActual;
         private int ultimaHoja;
         private int totalVistoPorPagina = 10;
-
-        public Historial(int user)
+        public Comprar(int publicacion)
         {
-            userID = user;
+            publicacionID = publicacion;
             paginaActual = 1;
             InitializeComponent();
             DBConsulta.conexionAbrir();
+            InitializeComponent();
         }
 
-        private void Historial_Load(object sender, EventArgs e)
+        private void Comprar_Load(object sender, EventArgs e)
         {
-            String res = DBConsulta.obtenerTotalHistorialCompras(userID).Rows[0][0].ToString();
+            String res = DBConsulta.obtenerTotalUbicacionDePublicacion(publicacionID).Rows[0][0].ToString();
             int cantidad = Convert.ToInt32(res);
             ultimaHoja = (cantidad / totalVistoPorPagina) + 1;
-            configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, 1, totalVistoPorPagina));  
+            configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, 1, totalVistoPorPagina)); 
         }
 
         private void configuracionGrilla(DataTable dt)
@@ -55,12 +55,19 @@ namespace PalcoNet.Historial_Cliente
             return;
         }
 
+        private void buttonPrimeraHoja_Click(object sender, EventArgs e)
+        {
+            paginaActual = 1;
+            configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
+            labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+        }
+
         private void botonAnterior_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
             {
                 paginaActual -= 1;
-                configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
+                configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
             }
         }
@@ -70,24 +77,15 @@ namespace PalcoNet.Historial_Cliente
             if (paginaActual < ultimaHoja)
             {
                 paginaActual += 1;
-                configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
+                configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
             }
         }
 
-        //Vuelve a la primera hoja
-        private void buttonPrimeraHoja_Click(object sender, EventArgs e)
-        {
-            paginaActual = 1;
-            configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
-            labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
-        }
-
-        //Va a la última hoja
         private void buttonUltimaHoja_Click(object sender, EventArgs e)
         {
             paginaActual = ultimaHoja;
-            configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
+            configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
             labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
         }
     }

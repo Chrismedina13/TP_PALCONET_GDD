@@ -55,6 +55,14 @@
             this.label2.Size = new System.Drawing.Size(481, 55);
             this.label2.Text = "Historial de compras";
             // 
+            // buttonPrimeraHoja
+            // 
+            this.buttonPrimeraHoja.Click += new System.EventHandler(this.buttonPrimeraHoja_Click);
+            // 
+            // buttonUltimaHoja
+            // 
+            this.buttonUltimaHoja.Click += new System.EventHandler(this.buttonUltimaHoja_Click);
+            // 
             // Historial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

@@ -158,6 +158,12 @@
     <Compile Include="Canje Puntos\Canje puntos.Designer.cs">
       <DependentUpon>Canje puntos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comprar\Comprar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\Comprar.Designer.cs">
+      <DependentUpon>Comprar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Comprar\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -315,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
       <DependentUpon>Canje puntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\Comprar.resx">
+      <DependentUpon>Comprar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\Generar publicacion.resx">
       <DependentUpon>Generar publicacion.cs</DependentUpon>

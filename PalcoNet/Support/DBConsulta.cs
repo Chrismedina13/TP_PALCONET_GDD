@@ -358,6 +358,22 @@ namespace PalcoNet.Support
             return DT;
         }
 
+        public static DataTable obtenerTotalUbicacionDePublicacion(int publicacionID) {
+            return obtenerTotalParaTablaPaginada("SQLEADOS.[obtenerPublicacionesParaCompra]", publicacionID);
+        }
+
+        public static DataTable obtenerUbicacionDePublicacion(int publicacionID, int paginaActual, int totalVistoPerPage) {
+            DataTable ds = new DataTable();
+            return ds;
+        }
+
+
+
+
+
+
+
+        //ESTA PARTE QUEDA SUSPENDIDA HASTA NUEVO AVISO
         public static DataTable obtenerPublicacionesDeEmpresa(int userID) {
             return obtenerTotalParaTablaPaginada("[SQLeados].[obtenerTotalPublicacionesDeEmpresa]", userID);
         }
@@ -365,6 +381,5 @@ namespace PalcoNet.Support
         public static DataTable obtenerPublicacionesDeEmpresa(int userID, int pagina, int tamanioPagina) {
             return obtenerTOPNParaTablaPaginada("[SQLeados].[obtenerTotalPublicacionesDeEmpresa]", userID, pagina, tamanioPagina);
         }
-        
     }
 }

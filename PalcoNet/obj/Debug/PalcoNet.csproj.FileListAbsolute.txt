@@ -200,3 +200,4 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Client
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.TablaPaginadas.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Generar_Publicacion.Generar_publicacion.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Comprar.Comprar.resources
