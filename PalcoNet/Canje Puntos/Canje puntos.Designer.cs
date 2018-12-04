@@ -149,12 +149,13 @@
             // 
             // btCanje
             // 
-            this.btCanje.Location = new System.Drawing.Point(474, 231);
+            this.btCanje.Location = new System.Drawing.Point(489, 222);
             this.btCanje.Name = "btCanje";
-            this.btCanje.Size = new System.Drawing.Size(95, 26);
+            this.btCanje.Size = new System.Drawing.Size(91, 35);
             this.btCanje.TabIndex = 12;
-            this.btCanje.Text = "CANJE";
+            this.btCanje.Text = "SELECCIONAR PREMIO";
             this.btCanje.UseVisualStyleBackColor = true;
+            this.btCanje.Click += new System.EventHandler(this.btCanje_Click);
             // 
             // canjePuntos
             // 

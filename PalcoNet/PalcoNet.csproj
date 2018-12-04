@@ -158,6 +158,12 @@
     <Compile Include="Canje Puntos\Canje puntos.Designer.cs">
       <DependentUpon>Canje puntos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Canje Puntos\Canjear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canje Puntos\Canjear.Designer.cs">
+      <DependentUpon>Canjear.cs</DependentUpon>
+    </Compile>
     <Compile Include="Comprar\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -274,6 +280,12 @@
     <Compile Include="Support\volver.Designer.cs">
       <DependentUpon>volver.cs</DependentUpon>
     </Compile>
+    <Compile Include="tablaPaginada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tablaPaginada.Designer.cs">
+      <DependentUpon>tablaPaginada.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Abm Cliente\ABMCliente.resx">
       <DependentUpon>ABMCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
       <DependentUpon>Canje puntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canje Puntos\Canjear.resx">
+      <DependentUpon>Canjear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Comprar\Comprar.resx">
       <DependentUpon>Comprar.cs</DependentUpon>
@@ -373,6 +388,24 @@
     <EmbeddedResource Include="Support\volver.resx">
       <DependentUpon>volver.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tablaPaginada.resx">
+      <DependentUpon>tablaPaginada.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="packages\EntityFramework.5.0.0\Content\App.config.transform" />
+    <None Include="packages\EntityFramework.5.0.0\Content\Web.config.transform" />
+    <None Include="packages\EntityFramework.5.0.0\EntityFramework.5.0.0.nupkg" />
+    <None Include="packages\EntityFramework.5.0.0\EntityFramework.5.0.0.nuspec" />
+    <None Include="packages\EntityFramework.5.0.0\tools\EntityFramework.PS3.psd1" />
+    <None Include="packages\EntityFramework.5.0.0\tools\EntityFramework.psd1" />
+    <None Include="packages\EntityFramework.5.0.0\tools\EntityFramework.psm1" />
+    <None Include="packages\EntityFramework.5.0.0\tools\init.ps1" />
+    <None Include="packages\EntityFramework.5.0.0\tools\install.ps1" />
+    <None Include="packages\EntityFramework.5.0.0\tools\Redirect.config" />
+    <None Include="packages\EntityFramework.5.0.0\tools\Redirect.VS11.config" />
+    <None Include="packages\PagedList.1.17.0.0\PagedList.1.17.0.0.nupkg" />
+    <None Include="packages\PagedList.1.17.0.0\PagedList.1.17.0.0.nuspec" />
+    <None Include="packages\repositories.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -386,7 +419,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.5.0.0\lib\net40\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.5.0.0\lib\net45\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.5.0.0\tools\about_EntityFramework.help.txt" />
+    <Content Include="packages\EntityFramework.5.0.0\tools\EntityFramework.PowerShell.dll" />
+    <Content Include="packages\EntityFramework.5.0.0\tools\EntityFramework.PowerShell.Utility.dll" />
+    <Content Include="packages\EntityFramework.5.0.0\tools\migrate.exe" />
+    <Content Include="packages\PagedList.1.17.0.0\lib\net40\PagedList.dll" />
+    <Content Include="packages\PagedList.1.17.0.0\lib\net40\PagedList.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

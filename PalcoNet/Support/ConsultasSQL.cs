@@ -774,6 +774,24 @@ namespace PalcoNet.Support
             return datos;
         }
 
+        internal static void cargarGriddCanje(DataGridView dgv)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            connection.Open();
+            try
+            {
+                String query = "SELECT [canj_producto],[canj_costo_puntaje] FROM [GD2C2018].[SQLEADOS].[canjeproducto]";
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
 
 
 
