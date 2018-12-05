@@ -174,7 +174,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cre
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[NombreRoles]'))
     DROP proc SQLEADOS.[Nombreroles]
 
-
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ubicacionesXPublicidadComprada]'))
+    DROP proc SQLEADOS.[ubicacionesXPublicidadComprada]
+	
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[bloquearUsuario]'))
     DROP proc SQLEADOS.[bloquearUsuario]
 
@@ -917,7 +919,7 @@ FROM SQLEADOS.Compra c
 PRINT('MIGRANDO puntaje') 
 go 
 insert into SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_puntaje, punt_fecha_vencimiento, punt_vencido)
-select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubicacion_putaje_compra),
+select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.publicacion_puntaje_venta) as 'PUNTAJE',
 	Convert(varchar(30),CONVERT(varchar(4), YEAR(com.compra_fecha+1))
 			 + '-'+ 
 			 CONVERT(varchar(2), MONTH(com.compra_fecha))
@@ -933,7 +935,8 @@ select distinct c.cliente_numero_documento, c.cliente_tipo_documento, SUM(p.pubi
 	from SQLEADOS.Cliente c
 	join SQLEADOS.Compra com ON com.compra_cliente_numero_documento = c.cliente_numero_documento
 								AND c.cliente_tipo_documento = com.compra_cliente_tipo_documento
-	join SQLEADOS.ubicacionXpublicacion ubxp ON ubxp.ubiXpubli_ID = com.compra_ubiXpubli
+	JOIN SQLEADOS.ubicacionesXPublicidadComprada ubcom ON ubcom.ubxpcomp_compra = com.compra_id
+	join SQLEADOS.ubicacionXpublicacion ubxp ON ubxp.ubiXpubli_ID = ubxpcom_ubicacionXPublicidad
 	join SQLEADOS.Publicacion p on p.publicacion_codigo = ubxp.ubiXpubli_Publicacion
 	GROUP BY c.cliente_numero_documento, c.cliente_tipo_documento, com.compra_fecha
 PRINT('HECHO')
@@ -2185,3 +2188,28 @@ select
 		where usuario_nombre LIKE 'prueba'
 
 */
+
+select TOP 1 c.cliente_nombre, cliente_apellido, co.compra_id, co.compra_cantidad from SQLEADOS.Cliente c
+	JOIN SQLEADOS.Compra co ON co.compra_cliente_numero_documento = c.cliente_numero_documento
+						AND co.compra_cliente_tipo_documento LIKE c.cliente_tipo_documento
+						ORDER BY co.compra_id DESC
+
+Select punt_id ,punt_puntaje, punt_fecha_vencimiento ,cliente_datos_tarjeta, cliente_numero_documento, cliente_tipo_documento from SQLEADOS.puntaje JOIN SQLEADOS.Cliente c ON c.cliente_numero_documento = punt_cliente_numero_documento
+										AND c.cliente_tipo_documento LIKE punt_cliente_tipo_documento AND c.cliente_usuario =291
+							ORDER BY punt_id desc
+
+SELECT cliente_datos_tarjeta FROM SQLEADOS.Cliente WHERE cliente_usuario = 291
+		/*						JOIN SQLEADOS.Compra co ON co.compra_cliente_numero_documento = c.cliente_numero_documento
+						AND co.compra_cliente_tipo_documento LIKE c.cliente_tipo_documento
+						ORDER BY co.compra_id DESC*/
+
+SELECT SUM(p.publicacion_puntaje_venta) 
+	FROM SQLEADOS.Publicacion p 
+	JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_Publicacion = p.publicacion_codigo 
+	JOIN SQLEADOS.ubicacionesXPublicidadComprada uc ON u.ubiXpubli_ID = uc.ubxpcom_ubicacionXPublicidad
+	JOIN SQLEADOS.Compra c ON c.compra_ubiXpubli = u.ubiXpubli_ID 
+							AND c.compra_id = (SELECT TOP 1 compra_id FROM SQLEADOS.Compra order by compra_id)
+	JOIN SQLEADOS.Cliente cl ON cl.cliente_numero_documento = c.compra_cliente_numero_documento 
+								AND cl.cliente_tipo_documento LIKE c.compra_cliente_tipo_documento
+	WHERE cl.cliente_id = 291
+	

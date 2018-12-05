@@ -69,8 +69,19 @@ namespace PalcoNet.Comprar
                 ConfirmarCompra b = this;
                 AgregarTarjeta ag = new AgregarTarjeta(usuarioID, b);
                 ag.Show();
-                cargarDatosDeCompra();
             }
+        }
+
+        public void queryComprar() {
+            DataTable datosPKCliente = queryObtenerPKsDatosCliente();
+            String tipoDoc = datosPKCliente.Rows[0]["TIPO DOCUMENTO"].ToString();
+            String nroDoc = datosPKCliente.Rows[0]["NUMERO DOCUMENTO"].ToString();
+            int cantidadUbicacionesCompradas = IDs.Count;
+            String queryCompraInsert = "INSERT INTO SQLEADOS.Compra (compra_cliente_tipo_documento , compra_cliente_numero_documento,	compra_fecha,compra_cantidad,compra_precio,	compra_forma_de_pago) VALUES ";
+            queryCompraInsert += " ('" + tipoDoc + "', " + nroDoc + ", GETDATE(), " + cantidadUbicacionesCompradas + ", " + labelImporte.Text + ", 'Tarjeta');";
+
+            DBConsulta.realizarUpdateConQuery(queryCompraInsert);
+            MessageBox.Show("La compra fue realizada con éxito");
         }
 
         public DataTable queryObtenerPKsDatosCliente()
@@ -79,25 +90,24 @@ namespace PalcoNet.Comprar
             return DBConsulta.obtenerConsultaEspecifica(queryObtenerPKsDatosCliente);
         }
 
-        public void queryComprar() {
-            DataTable datosPKCliente = queryObtenerPKsDatosCliente();
-            String tipoDoc = datosPKCliente.Rows[0]["TIPO DOCUMENTO"].ToString();
-            String nroDoc = datosPKCliente.Rows[0]["NUMERO DOCUMENTO"].ToString();
-            int cantidadUbicacionesCompradas = IDs.Count;
-            String queryCompraInsert = "INSERT INTO SQLEADOS.Compra( compra_cliente_tipo_documento , compra_cliente_numero_documento,	compra_fecha,compra_cantidad,compra_precio,	compra_forma_de_pago) VALUES ";
-            queryCompraInsert += " ('" + tipoDoc + "', " + nroDoc + ", GETDATE(), " + cantidadUbicacionesCompradas + ", " + labelImporte.Text + ", 'Tarjeta')";
-
-            DBConsulta.realizarUpdateConQuery(queryCompraInsert);
-        }
-
         public void cargarDatosDeCompra() {
             queryComprar();
             insertarUbicacionXPublCompradoYActualizarCompra();
+            obtenerValorPuntajeCompra();
         }
 
-        private void obtenerValorPuntajeCompra(int indice) {
-            String queryObtenerPuntaje = "SELECT p.publicacion_puntaje_venta FROM SQLEADOS.Publicacion p JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_Publicacion = p.publicacion_codigo WHERE u.ubiXpubli_ID = " + dataGridView1.Rows[indice].Cells[0].Value.ToString();
-            int puntaje  = Convert.ToInt32(DBConsulta.obtenerConsultaEspecifica(queryObtenerPuntaje).ToString());
+        private void obtenerValorPuntajeCompra() {
+            String queryObtenerPuntaje = "SELECT SUM(p.publicacion_puntaje_venta) FROM SQLEADOS.Publicacion p JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_Publicacion = p.publicacion_codigo WHERE ";
+            int max = IDs.Count;
+            String cant = "";
+            for (int i = 0; i < max-1; i++) {
+                cant += " u.ubiXpubli_ID = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + " OR ";
+            }
+            cant += " u.ubiXpubli_ID = " + dataGridView1.Rows[max-1].Cells[0].Value.ToString();
+
+            queryObtenerPuntaje += cant;
+            String ahora = DBConsulta.obtenerConsultaEspecifica(queryObtenerPuntaje).Rows[0][0].ToString();
+            int puntaje = Convert.ToInt32(ahora);
             generarPuntosACliente(puntaje);
         }
 
@@ -110,7 +120,6 @@ namespace PalcoNet.Comprar
 
                 String queryActualizarCompra = "UPDATE c SET c.compra_ubiXpubli = u.ubxpcomp_id FROM SQLEADOS.Compra c INNER JOIN SQLEADOS.ubicacionesXPublicidadComprada u ON u.ubxpcomp_compra = c.compra_id WHERE c.compra_id = (Select TOP 1 compra_id FROM SQLEADOS.Compra order by compra_id DESC)";
                 DBConsulta.realizarUpdateConQuery(queryActualizarCompra);
-
             }
         }
 
@@ -121,16 +130,24 @@ namespace PalcoNet.Comprar
             String tipoDoc = datosPKCliente.Rows[0]["TIPO DOCUMENTO"].ToString();
             String nroDoc = datosPKCliente.Rows[0]["NUMERO DOCUMENTO"].ToString();
 
-            String queryUpdatePuntaje = "UPDATE SQLEADOS.puntaje SET punt_puntaje += " + puntaje + " WHERE punt_cliente_numero_documento = "+nroDoc+" AND punt_cliente_tipo_documento LIKE '" + tipoDoc + "' ";
+            DateTime a = DateTime.Now;
+            a.AddYears(1);
+            String HOY = a.ToString("yyyy/MM/dd");
+            HOY += " 0:00:00.000";
 
+            String queryUpdatePuntaje = "INSERT INTO SQLEADOS.puntaje(punt_cliente_numero_documento, punt_cliente_tipo_documento, punt_fecha_vencimiento, punt_vencido, punt_puntaje) VALUES("+nroDoc+", '"+tipoDoc+"', '"+HOY+"', 0, "+puntaje+");";
+          
             DBConsulta.realizarUpdateConQuery(queryUpdatePuntaje);
+            MessageBox.Show("El puntaje fue actualizado");
+            aVolver.Close();
+            this.Close();
         }
 
         private bool elUserTieneTarjeta(int user) {
-            String query = "SELECT cliente_datos_tarjeta AS 'DATOS', cliente_usuario FROM SQLEADOS.Cliente WHERE cliente_usuario = " + usuarioID;
+            String query = "SELECT cliente_datos_tarjeta AS 'DATOS', cliente_usuario FROM SQLEADOS.Cliente WHERE cliente_usuario = " + user;
             DataTable dt = DBConsulta.obtenerConsultaEspecifica(query);
-            var cellValue = dt.Rows[0][0];
-            return cellValue == null;
+            String cellValue = dt.Rows[0][0].ToString();
+            return !AyudaExtra.esStringVacio(cellValue);
         }
 
         //BOTON VOLVER, SOLO VUELVE A LA ANTERIOR VISTA

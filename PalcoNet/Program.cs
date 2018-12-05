@@ -43,7 +43,7 @@ namespace PalcoNet
       //     Application.Run(new ABMEmpresa(usuario));
 
         //    Application.Run(new ABMCliente(usuario));
-        Application.Run(new canjePuntos(usuario));
+  //      Application.Run(new canjePuntos(usuario));
 
        //     Application.Run(new Form1());
           //  Application.Run(new ListadoEstadistico());

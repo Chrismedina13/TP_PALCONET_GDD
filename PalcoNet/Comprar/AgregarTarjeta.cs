@@ -33,6 +33,7 @@ namespace PalcoNet.Comprar
                     String queryUpdate = "UPDATE SQLEADOS.Cliente SET cliente_datos_tarjeta = "+textBox1.Text+" WHERE cliente_usuario = "+userID;
                     DBConsulta.realizarUpdateConQuery(queryUpdate);
                     MessageBox.Show("El número de tarjeta fue ingresada y actualizada con éxito");
+                    c.cargarDatosDeCompra();
                     this.Close();
                 }
                 else {
