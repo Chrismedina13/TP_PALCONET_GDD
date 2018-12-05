@@ -393,6 +393,8 @@ publicacion_estado_validacion int default 0		--NUEVO CAMPO
 )
 PRINT('Tabla creada: Publicacion') 
 
+
+
 create table [SQLEADOS].ubicacionXpublicacion(
 ubiXpubli_ID int primary key identity,
 ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
@@ -422,10 +424,20 @@ compra_forma_de_pago varchar(50),
 compra_fecha datetime not null,
 compra_cantidad numeric(18,0) not null,
 compra_precio int not null,
-compra_ubiXpubli int references [SQLEADOS].ubicacionXpublicacion,
+--compra_ubiXpubli int references [SQLEADOS].ubicacionXpublicacion,
+compra_ubiXpubli int,
 FOREIGN KEY (compra_cliente_tipo_documento, compra_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
 )
 PRINT('Tabla creada: Compra') 
+
+create table [SQLEADOS].ubicacionesXPublicidadComprada (
+ubxpcomp_id int primary key identity,
+ubxpcomp_compra int,
+ubxpcom_ubicacionXPublicidad int,
+FOREIGN KEY (ubxpcomp_compra) REFERENCES [SQLEADOS].Compra(compra_id),
+FOREIGN KEY (ubxpcom_ubicacionXPublicidad) REFERENCES [SQLEADOS].ubicacionXpublicacion(ubiXpubli_ID),
+)
+PRINT('Tabla creada: ubicacionesXPublicidadComprada') 
 
 
 --TABLA NUEVA
@@ -436,6 +448,8 @@ item_factura_monto decimal(16,2),
 item_factura_cantidad numeric(18,0),
 item_factura_descripcion nvarchar(60),
 )
+
+
 PRINT('Tabla creada: ItemFactura') 
 
 -- TABLA NUEVA
@@ -864,6 +878,7 @@ insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_fa
 select Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra where Factura_Nro is not null order by Factura_Nro
 PRINT('HECHO')
 --COMPRA--
+
 PRINT('MIGRANDO Compra') 
 go
 insert into SQLEADOS.Compra(
@@ -881,6 +896,23 @@ join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubi
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
 where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 PRINT('HECHO')
+
+PRINT('MIGRANDO ubicacionesXPublicidadComprada') 
+GO
+INSERT INTO [SQLEADOS].ubicacionesXPublicidadComprada
+	(ubxpcomp_compra, ubxpcom_ubicacionXPublicidad)
+SELECT DISTINCT c.compra_id, c.compra_ubiXpubli FROM SQLEADOS.Compra c
+
+PRINT('HECHO')
+
+PRINT('Actualizando TABLA COMPRA') 	
+UPDATE c 
+SET c.compra_ubiXpubli = u.ubxpcomp_id
+FROM SQLEADOS.Compra c
+	INNER JOIN SQLEADOS.ubicacionesXPublicidadComprada u ON u.ubxpcomp_compra = c.compra_id
+	PRINT('ACTUALIZACIÓN HECHA') 	
+
+
 --PUNTAJE
 PRINT('MIGRANDO puntaje') 
 go 
@@ -916,6 +948,7 @@ insert into SQLEADOS.canjeproducto (canj_costo_puntaje, canj_producto) values
 (5000, 'Viaje a Orlando Resort');
 
 PRINT('HECHO')
+
 ----------------------------------------------------------------------------------------------
 								/** FUNCIONES, PROCEDURES Y TRIGGERS **/
 ----------------------------------------------------------------------------------------------
@@ -1262,6 +1295,8 @@ begin
 select Rol_nombre from [SQLeados].Rol where rol_estado = 1
 end
 go
+
+
 
 print('PROCEDURE [cargarRolesHabilitados]: OK')
 
@@ -1709,6 +1744,8 @@ begin
 end
 go
 
+
+
 print('PROCEDURE [repeticionDeTIPODOCYNumeroEnCliente]: OK')
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeMail]'))
@@ -1875,8 +1912,6 @@ go
 
 print('PROCEDURE [obtenerTotalPublicacionesDeEmpresa]: OK')
 
-select * from SQLEADOS.Publicacion
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesParaCompra]'))
     DROP proc SQLEADOS.[obtenerPublicacionesParaCompra]
 
@@ -1898,28 +1933,135 @@ go
 
 print('PROCEDURE [obtenerPublicacionesParaCompra]: OK')
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerTotalPublicacionesParaCompra]'))
-    DROP proc SQLEADOS.[obtenerTotalPublicacionesParaCompra]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerDatosDeUbicacionDeEspectaculoDeseada]'))
+    DROP proc SQLEADOS.[obtenerDatosDeUbicacionDeEspectaculoDeseada]
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [SQLeados].[obtenerTotalPublicacionesParaCompra] (@userID int)
- --EN REALIDAD ES ID DE PUBLICACION, PERO LO DEJO PARA QUE NO ROMPA CON EL CÓDIGO YA HECHO ASÍ AHORRO TIEMPO
+create procedure [SQLeados].[obtenerDatosDeUbicacionDeEspectaculoDeseada] (@espectaculo nvarchar(255), @asiento int, @fila nvarchar(10), @fecha nvarchar(255), @categoria nvarchar(255))
 as
 begin
 	SELECT
-		COUNT(*) as 'ID'		
+		p.publicacion_descripcion as 'Espectáculo', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila',
+		r.rubro_descripcion as 'Categoría', p.publicacion_fecha_venc as 'Fecha', ux.ubiXpubli_precio as 'Precio'	
 		FROM [SQLEADOS].Publicacion p
-		JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo
-		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion
-			where p.publicacion_codigo = 15555 AND p.publicacion_estado LIKE 'Publicada'
+		JOIN [SQLEADOS].ubicacionXpublicacion ux ON p.publicacion_codigo = ux.ubiXpubli_Publicacion
+		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = ux.ubiXpubli_Ubicacion 
+		
+			--					AND		u.ubicacion_fila LIKE @fila AND
+							--			u.ubicacion_asiento = @asiento
+		JOIN [SQLEADOS].Rubro r ON r.rubro_id = p.publicacion_rubro
+			where p.publicacion_fecha_venc = '2018-12-12 0:00:00.000' -- AND r.rubro_descripcion LIKE @categoria
 return
 end
 go
 
-print('PROCEDURE [obtenerTotalPublicacionesParaCompra]: OK')
+print('PROCEDURE [obtenerDatosDeUbicacionDeEspectaculoDeseada]: OK')
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[cargarDatosDeCompra]'))
+    DROP proc SQLEADOS.[cargarDatosDeCompra]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [SQLeados].[cargarDatosDeCompra] (@userID int, @espectaculo nvarchar(255), @asiento int, @fila nvarchar(10), @fecha nvarchar(255), @categoria nvarchar(255))
+as
+begin
+	SELECT
+		p.publicacion_descripcion as 'Espectáculo', u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila',
+		r.rubro_descripcion as 'Categoría', p.publicacion_fecha_venc as 'Fecha', ux.ubiXpubli_precio as 'Precio'	
+		FROM [SQLEADOS].Publicacion p
+		JOIN [SQLEADOS].ubicacionXpublicacion ux ON p.publicacion_codigo = ux.ubiXpubli_Publicacion
+		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = ux.ubiXpubli_Ubicacion 
+		
+			--					AND		u.ubicacion_fila LIKE @fila AND
+							--			u.ubicacion_asiento = @asiento
+		JOIN [SQLEADOS].Rubro r ON r.rubro_id = p.publicacion_rubro
+			where p.publicacion_fecha_venc = '2018-12-12 0:00:00.000' -- AND r.rubro_descripcion LIKE @categoria
+end
+go
+
+print('PROCEDURE [cargarDatosDeCompra]: OK')
+
+/*
+SELECT ux.ubiXpubli_ID as 'ID', p.publicacion_descripcion as 'Espectáculo',
+	u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', u.ubicacion_Tipo_Descripcion as 'Tipo ubicación',
+	r.rubro_descripcion as 'Categoría', p.publicacion_fecha_venc as 'Fecha de evento', ux.ubiXpubli_precio as 'Precio en $'
+
+	FROM SQLEADOS.ubicacionXpublicacion ux
+	JOIN SQLEADOS.Publicacion p ON p.publicacion_codigo = ux.ubiXpubli_Publicacion
+	JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ux.ubiXpubli_Ubicacion
+	JOIN SQLEADOS.Rubro r ON r.rubro_id = p.publicacion_rubro
+
+SELECT cliente_datos_tarjeta FROM SQLEADOS.Cliente JOIN SQLEADOS.Usuario ON usuario_Id = cliente_usuario
+
+*/
+
+--IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerTotalPublicacionesParaCompra]'))
+--    DROP proc SQLEADOS.[obtenerTotalPublicacionesParaCompra]
+
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--create procedure [SQLeados].[obtenerTotalPublicacionesParaCompra] (@descripcionPublicacion nvarchar(255), @categoria nvarchar(255), @fechaDesde datetime, @fechaHasta datetime)
+-- --EN REALIDAD ES ID DE PUBLICACION, PERO LO DEJO PARA QUE NO ROMPA CON EL CÓDIGO YA HECHO ASÍ AHORRO TIEMPO
+--as
+--begin
+--	SELECT TOP 1000
+----		COUNT(*),
+--		p.publicacion_descripcion as 'Espectáculo' ,ubicacion_asiento as 'Asiento', ubicacion_fila as 'Fila',
+--		u.ubicacion_Tipo_Descripcion as 'Tipo ubicación',
+--		up.ubiXpubli_precio as 'Precio', 
+--		CONVERT(nvarchar(15), DAY(publicacion_fecha))+'/'+CONVERT(nvarchar(15), MONTH(publicacion_fecha))+'/'+CONVERT(nvarchar(15), YEAR(publicacion_fecha)) as 'Fecha de evento',
+--		 g.grado_id as 'GRADO ID',
+--		r.rubro_descripcion as 'Categoría'
+--		FROM [SQLEADOS].Publicacion p
+--		JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo
+--		JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion
+--		JOIN [SQLEADOS].Rubro r on r.rubro_id = p.publicacion_rubro
+--		JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado
+--			where 
+--			--p.publicacion_descripcion LIKE @descripcionPublicacion+'%' AND 
+			
+--				p.publicacion_estado LIKE 'Publicada'
+--				AND (('2018-12-05' BETWEEN p.publicacion_fecha_venc AND p.publicacion_fecha)
+--						OR ('2018-12-25' BETWEEN p.publicacion_fecha_venc AND p.publicacion_fecha))
+--	--			AND r.rubro_descripcion LIKE @categoria
+--	--			AND u.ubicacion_Tipo_Descripcion LIKE 'VIP'
+--				AND up.ubiXpubli_ID NOT IN (SELECT ubicacion_id FROM SQLEADOS.ubicacionXpublicacion
+--											 JOIN SQLEADOS.Compra c ON c.compra_ubiXpubli = ubiXpubli_ID 
+--											 JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ubiXpubli_Ubicacion)
+		
+--	ORDER BY g.grado_id ASC, YEAR(publicacion_fecha) ASC, MONTH(publicacion_fecha) ASC, DAY(publicacion_fecha) ASC, p.publicacion_descripcion ASC
+------return
+------end
+----go
+--SELECT  TOP (10)  p.publicacion_descripcion as 'Espectáculo' ,ubicacion_asiento as 'Asiento', ubicacion_fila as 'Fila', 
+
+--u.ubicacion_Tipo_Descripcion as 'Tipo ubicación', '$ ' +CONVERT(varchar(15), ubiXpubli_precio)  as 'Precio', 
+--CONVERT(nvarchar(15), DAY(publicacion_fecha))+'/'+CONVERT(nvarchar(15), MONTH(publicacion_fecha))+'/'+CONVERT(nvarchar(15), YEAR(publicacion_fecha)) as 'Fecha de evento', 
+--r.rubro_descripcion as 'Categoría', g.grado_id as 'GRADO ID'  FROM [SQLEADOS].Publicacion p  
+
+--	JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo 
+--	JOIN [SQLEADOS].Rubro r on r.rubro_id = p.publicacion_rubro 
+--	JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion 
+--	JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado  
+--		WHERE p.publicacion_estado LIKE 'Publicada'  AND publicacion_fecha BETWEEN '2018-12-5' AND '2018-12-25'  
+--		AND up.ubiXpubli_ID NOT IN (SELECT  TOP (10) ) up.ubiXpubli_ID FROM [SQLEADOS].Publicacion p  JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo JOIN [SQLEADOS].Rubro r on r.rubro_id = p.publicacion_rubro JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado  WHERE p.publicacion_estado LIKE 'Publicada'  AND publicacion_fecha BETWEEN '2018-12-5' AND '2018-12-25' )
+
+
+--SELECT '$ ' +CONVERT(nvarchar(15), ubiXpubli_precio) FROM SQLEADOS.ubicacionXpublicacion
+
+----SELECT DISTINCT publicacion_fecha FROM SQLEADOS.Publicacion where '2018-12-05' BETWEEN publicacion_fecha_venc AND publicacion_fecha
+
+----select  * from SQLEADOS.Ubicacion JOIN SQLEADOS.ubicacionXpublicacion ON ubicacion_id = ubiXpubli_Ubicacion order by ubicacion_id 
+
+--print('PROCEDURE [obtenerTotalPublicacionesParaCompra]: OK')
 
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesParaCompra]'))
@@ -1944,12 +2086,16 @@ return
 end
 go
 
-select * from SQLEADOS.Ubicacion
-
 print('PROCEDURE [obtenerPublicacionesParaCompra]: OK')
+/*
+select * from SQLEADOS.Publicacion
 
+SELECT publicacion_fecha, publicacion_fecha_venc FROM SQLEADOS.Publicacion
+	WHERE GETDATE() BETWEEN publicacion_fecha_venc AND publicacion_fecha
+	ORDER BY YEAR(publicacion_fecha) DESC, MONTH(publicacion_fecha) DESC, DAY(publicacion_fecha) DESC, DATEPART(HOUR, publicacion_fecha) DESC,
+		DATEPART(MINUTE, publicacion_fecha) DESC, DATEPART(SECOND, publicacion_fecha) DESC
 
-
+*/
 /*
 ESTE QUERY NO ANDA, NO SE QUE LE PASA PERO QUE LO HAGA OTRO QUE ME PONGO CON OTRA ABM
 

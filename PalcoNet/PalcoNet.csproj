@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -158,11 +159,35 @@
     <Compile Include="Canje Puntos\Canje puntos.Designer.cs">
       <DependentUpon>Canje puntos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Comprar\Comprar.cs">
+    <Compile Include="Comprar\AgregarTarjeta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar\Comprar.Designer.cs">
-      <DependentUpon>Comprar.cs</DependentUpon>
+    <Compile Include="Comprar\AgregarTarjeta.Designer.cs">
+      <DependentUpon>AgregarTarjeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ConfirmarCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ConfirmarCompra.Designer.cs">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ComprarPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ComprarPrincipal.Designer.cs">
+      <DependentUpon>ComprarPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\Elegir categoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\Elegir categoria.Designer.cs">
+      <DependentUpon>Elegir categoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ElegirTipoAsiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ElegirTipoAsiento.Designer.cs">
+      <DependentUpon>ElegirTipoAsiento.cs</DependentUpon>
     </Compile>
     <Compile Include="Comprar\Form1.cs">
       <SubType>Form</SubType>
@@ -322,8 +347,20 @@
     <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
       <DependentUpon>Canje puntos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Comprar\Comprar.resx">
-      <DependentUpon>Comprar.cs</DependentUpon>
+    <EmbeddedResource Include="Comprar\AgregarTarjeta.resx">
+      <DependentUpon>AgregarTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ConfirmarCompra.resx">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ComprarPrincipal.resx">
+      <DependentUpon>ComprarPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\Elegir categoria.resx">
+      <DependentUpon>Elegir categoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ElegirTipoAsiento.resx">
+      <DependentUpon>ElegirTipoAsiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\Generar publicacion.resx">
       <DependentUpon>Generar publicacion.cs</DependentUpon>

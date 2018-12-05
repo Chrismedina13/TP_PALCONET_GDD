@@ -5,11 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using PalcoNet.Support;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace PalcoNet.Support
 {
     class AyudaExtra
     {
+        /*
+        public bool fecha1EsMayorQueFecha2(String fecha1, String fecha2)
+        {
+            return true;
+        
+        }
+        */
+
+        public bool esFechaHoy(DateTime dt) {
+            DateTime hoy = DateTime.Today;
+            if (hoy.Year == dt.Year && hoy.Month == dt.Month && hoy.Day == dt.Day) {
+                return true;
+            }
+            return false;
+        }
+
         public static bool esStringVacio(String a) {
             return a == "";
         }
@@ -66,6 +83,36 @@ namespace PalcoNet.Support
         public static String FechaEnSQLDate(DateTime myDateTime) {
             return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
         }
+        public static String stringAFormatoFechaSQLDate(String fecha) 
+        {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia="", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/")) 
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+                res += parte + "-";
+                dia = parte;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux+1, fechaAux.Length - aux-1);
+
+                res += parte + "-";
+                mes = parte;
+                anio = restoFecha;
+            }
+                res = anio+"-"+mes+"-"+dia + " 0:00:00.000";
+                MessageBox.Show(res);
+            return res;
+        }
+
     }
 
     class autogenerarContrasenia { 

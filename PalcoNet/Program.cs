@@ -9,6 +9,8 @@ using PalcoNet.Login_y_seguridad;
 using PalcoNet.Listado_Estadistico;
 using PalcoNet.Canje_Puntos;
 using PalcoNet.Historial_Cliente;
+using PalcoNet.Comprar;
+using PalcoNet.Support;
 
 namespace PalcoNet
 {
@@ -24,9 +26,16 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
+            
+            DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
+            Application.Run(dac);
+            DBConsulta.conexionCerrar();
+
        //     Application.Run(new LOGIN());
-            Historial hs = new Historial(usuario);
-            Application.Run(hs);
+    //        Historial hs = new Historial(usuario);
+    //        Application.Run(hs);
      //       Application.Run(new ABMCliente(usuario));
      //      Application.Run(new tablaPaginada());
       //     Application.Run(new ABMEmpresa(usuario));

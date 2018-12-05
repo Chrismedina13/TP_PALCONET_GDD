@@ -367,11 +367,42 @@ namespace PalcoNet.Support
             return ds;
         }
 
+        public static DataTable obtenerLosRubros()
+        {
+            DataTable DT = new DataTable();
+            SqlCommand cmd = new SqlCommand("select rubro_descripcion as 'CATEGORÍAS' from SQLEADOS.Rubro order by rubro_descripcion asc", conexion);
+            DT.Load(cmd.ExecuteReader());
+            return DT;
+        }
+
+        public static DataTable obtenerConsultaEspecifica(String cmd) {
+            DataTable DT = new DataTable();
+            SqlCommand DP = new SqlCommand(cmd, conexion);
+            DT.Load(DP.ExecuteReader());
+            return DT; 
+        }
 
 
+        public static DataTable obtenerUbicacionDeEspectaculoDeseada(String espec, String asiento,
+                String fila, String tipo_ubicacion, String fecha, String categoria) 
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("[SQLeados].[obtenerDatosDeUbicacionDeEspectaculoDeseada]", conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@espectaculo", SqlDbType.NVarChar).Value = espec;
+            cmd.Parameters.Add("@asiento", SqlDbType.Int).Value = Convert.ToInt32(asiento);
+            cmd.Parameters.Add("@fila", SqlDbType.NVarChar).Value = fila;
+            cmd.Parameters.Add("@fecha", SqlDbType.NVarChar).Value = fecha;
+            cmd.Parameters.Add("@categoria", SqlDbType.NVarChar).Value = categoria;
 
+            dt.Load(cmd.ExecuteReader());
+            return dt;
+        }
 
-
+        public static void realizarUpdateConQuery(String query) {
+            SqlCommand DP = new SqlCommand(query, conexion);
+            DP.ExecuteNonQuery();
+        }
 
         //ESTA PARTE QUEDA SUSPENDIDA HASTA NUEVO AVISO
         public static DataTable obtenerPublicacionesDeEmpresa(int userID) {
