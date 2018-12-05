@@ -36,13 +36,15 @@ namespace PalcoNet
        //     Application.Run(new LOGIN());
     //        Historial hs = new Historial(usuario);
     //        Application.Run(hs);
+        //    Historial hs = new Historial(usuario);
+        //    Application.Run(hs);
      //       Application.Run(new ABMCliente(usuario));
      //      Application.Run(new tablaPaginada());
       //     Application.Run(new ABMEmpresa(usuario));
-/*
+
         //    Application.Run(new ABMCliente(usuario));
-           Application.Run(new canjePuntos(usuario));
-*/
+        Application.Run(new canjePuntos(usuario));
+
        //     Application.Run(new Form1());
           //  Application.Run(new ListadoEstadistico());
 

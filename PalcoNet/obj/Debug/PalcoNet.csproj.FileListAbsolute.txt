@@ -205,3 +205,5 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Comprar.ElegirTi
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Comprar.ConfirmarCompra.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Comprar.AgregarTarjeta.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Canje_Puntos.Canjear.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.tablaPaginada.resources
