@@ -755,7 +755,7 @@ namespace PalcoNet.Support
         {
             String[] datos = new string[5];
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand getDatosClienteCommand = new SqlCommand("select sum(punt_puntaje) as puntaje,cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento from SQLEADOS.puntaje,SQLEADOS.Cliente where cliente_usuario = @usuario and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and GETDATE() < punt_fecha_vencimiento  group by cliente_apellido,cliente_nombre, cliente_tipo_documento, cliente_numero_documento");
+            SqlCommand getDatosClienteCommand = new SqlCommand("select sum(punt_puntaje) -(select sum(canje_puntos_gastados) from SQLEADOS.Canjes where canje_cliente_numero_documento = cliente_numero_documento and canje_cliente_tipo_documento = cliente_tipo_documento) as puntaje,cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento from SQLEADOS.puntaje,SQLEADOS.Cliente where cliente_usuario = @usuario and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and GETDATE() < punt_fecha_vencimiento  group by cliente_apellido,cliente_nombre, cliente_tipo_documento, cliente_numero_documento");
             getDatosClienteCommand.Parameters.AddWithValue("usuario", usuario);
             getDatosClienteCommand.Connection = connection;
             connection.Open();
@@ -793,6 +793,24 @@ namespace PalcoNet.Support
             connection.Close();
         }
 
+        internal static void canje(string ndocumento,string tdocumento,int gastado)
+        {
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand addCanje = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Canjes] (canje_cliente_tipo_documento,canje_cliente_numero_documento,canje_fecha,canje_puntos_gastados) values (@tdocumento,@ndocumento,GETDATE(),@gastado)");
+            addCanje.Parameters.AddWithValue("ndocumento", ndocumento);
+            addCanje.Parameters.AddWithValue("tdocumento", tdocumento);
+            addCanje.Parameters.AddWithValue("gastado", gastado);
+
+            addCanje.Connection = connection;
+            connection.Open();
+            int registrosModificados = addCanje.ExecuteNonQuery();
+            connection.Close();
+            if (registrosModificados > 0) MessageBox.Show("Canje realizado correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+        }
 
 
     }
