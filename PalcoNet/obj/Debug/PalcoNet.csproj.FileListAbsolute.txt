@@ -256,3 +256,6 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.exe
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Abm_Grado.GradoPublicacion.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Generar_Publicacion.tablaPublicacion.resources

@@ -12,6 +12,7 @@ using PalcoNet.Historial_Cliente;
 using PalcoNet.Comprar;
 using PalcoNet.Support;
 using PalcoNet.Editar_Publicacion;
+using PalcoNet.Abm_Grado;
 
 namespace PalcoNet
 {
@@ -35,6 +36,7 @@ namespace PalcoNet
             DBConsulta.conexionCerrar();
             */
 
+            Application.Run(new GradoPublicacion(11));
             
      //       DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
      //       ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
@@ -51,7 +53,7 @@ namespace PalcoNet
       //     Application.Run(new ABMEmpresa(usuario));
 
         //    Application.Run(new ABMCliente(usuario));
-        Application.Run(new canjePuntos(usuario));
+  //      Application.Run(new canjePuntos(usuario));
 
        //     Application.Run(new Form1());
           //  Application.Run(new ListadoEstadistico());
