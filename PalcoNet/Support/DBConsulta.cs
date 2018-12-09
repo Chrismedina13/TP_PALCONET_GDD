@@ -399,6 +399,24 @@ namespace PalcoNet.Support
             return dt;
         }
 
+        public static DataTable actualizarPublicidad(int id, String estado,
+                int rubro, int grado, String fecha, int puntaje)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("[SQLeados].[ActualizarPublicacion]", conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+            cmd.Parameters.Add("@estado ", SqlDbType.NVarChar).Value = estado;
+            cmd.Parameters.Add("@rubro", SqlDbType.Int).Value = rubro;
+            cmd.Parameters.Add("@fecha", SqlDbType.NVarChar).Value = fecha;
+            cmd.Parameters.Add("@grado", SqlDbType.Int).Value = grado;
+            cmd.Parameters.Add("@puntaje", SqlDbType.Int).Value = puntaje;
+            
+
+            dt.Load(cmd.ExecuteReader());
+            return dt;
+        }
+
         public static void realizarUpdateConQuery(String query) {
             SqlCommand DP = new SqlCommand(query, conexion);
             DP.ExecuteNonQuery();

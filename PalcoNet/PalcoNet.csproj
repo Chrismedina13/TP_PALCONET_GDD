@@ -201,11 +201,29 @@
     <Compile Include="Comprar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editar Publicacion\EditarCosasDePublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\EditarCosasDePublicacion.Designer.cs">
+      <DependentUpon>EditarCosasDePublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editar Publicacion\EditarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\EditarPublicacion.Designer.cs">
+      <DependentUpon>EditarPublicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editar Publicacion\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Editar Publicacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editar Publicacion\Seleccionar1Categoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\Seleccionar1Categoria.Designer.cs">
+      <DependentUpon>Seleccionar1Categoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Publicacion\Form1.cs">
       <SubType>Form</SubType>
@@ -376,6 +394,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Canjear.resx">
       <DependentUpon>Canjear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\EditarCosasDePublicacion.resx">
+      <DependentUpon>EditarCosasDePublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\EditarPublicacion.resx">
+      <DependentUpon>EditarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\Seleccionar1Categoria.resx">
+      <DependentUpon>Seleccionar1Categoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\Generar publicacion.resx">
       <DependentUpon>Generar publicacion.cs</DependentUpon>

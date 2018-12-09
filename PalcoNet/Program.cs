@@ -11,6 +11,7 @@ using PalcoNet.Canje_Puntos;
 using PalcoNet.Historial_Cliente;
 using PalcoNet.Comprar;
 using PalcoNet.Support;
+using PalcoNet.Editar_Publicacion;
 
 namespace PalcoNet
 {
@@ -26,13 +27,13 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-            
+            Application.Run(new EditarPublicacion(11));
+            /*
             DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
             Application.Run(dac);
             DBConsulta.conexionCerrar();
-
+            */
        //     Application.Run(new LOGIN());
     //        Historial hs = new Historial(usuario);
     //        Application.Run(hs);

@@ -235,7 +235,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obt
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[llenarGrillaABMCliente]'))
     DROP proc SQLEADOS.[llenarGrillaABMCliente]
 
-
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ubicacionesXPublicidadComprada]'))
+    DROP table SQLEADOS.[ubicacionesXPublicidadComprada]
+	
 	
 PRINT('Validacion hecha y OK') 
 ----------------------------------------------------------------------------------------------
@@ -778,7 +780,7 @@ insert into SQLEADOS.Publicacion(
 			publicacion_estado_validacion)
 
 select			2,  --Le asigno un rubro y grado por defecto
-				2,
+				2,	-- GRADO
 				A.Espectaculo_Descripcion,
 				A.Espectaculo_Estado,
 				A.Espectaculo_Fecha, 
@@ -1707,6 +1709,8 @@ go
 
 print('PROCEDURE [darDeBajaUserCliente]: OK')
 
+
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[repeticionDeCUILEnCliente]'))
     DROP proc SQLEADOS.[repeticionDeCUILEnCliente]
 
@@ -2090,52 +2094,37 @@ end
 go
 
 print('PROCEDURE [obtenerPublicacionesParaCompra]: OK')
-/*
-select * from SQLEADOS.Publicacion
 
-SELECT publicacion_fecha, publicacion_fecha_venc FROM SQLEADOS.Publicacion
-	WHERE GETDATE() BETWEEN publicacion_fecha_venc AND publicacion_fecha
-	ORDER BY YEAR(publicacion_fecha) DESC, MONTH(publicacion_fecha) DESC, DAY(publicacion_fecha) DESC, DATEPART(HOUR, publicacion_fecha) DESC,
-		DATEPART(MINUTE, publicacion_fecha) DESC, DATEPART(SECOND, publicacion_fecha) DESC
 
-*/
-/*
-ESTE QUERY NO ANDA, NO SE QUE LE PASA PERO QUE LO HAGA OTRO QUE ME PONGO CON OTRA ABM
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerPublicacionesDeEmpresa]'))
-    DROP proc SQLEADOS.[obtenerPublicacionesDeEmpresa]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ActualizarPublicacion]'))
+    DROP proc SQLEADOS.[ActualizarPublicacion]
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [SQLeados].[obtenerPublicacionesDeEmpresa] (@userID int)
+create procedure [SQLeados].[ActualizarPublicacion] (@id int, @estado nvarchar(255), @rubro int, @grado int, @fecha nvarchar(255), @puntaje int )
 as
 begin
-	SELECT
-	--	p.publicacion_codigo as 'ID', 
-		p.publicacion_descripcion as 'Descripcion', p.publicacion_fecha as 'Fecha de publicación',
-		p.publicacion_fecha_venc as 'Fecha y hora de espectáculo', r.rubro_descripcion as 'Rubro', 
-		g.grado_nombre as 'Grado' , p.publicacion_estado as 'ESTADO', COUNT(ux.ubiXpubli_ID) as 'Ubicaciones',
-		d.domicilio_calle as 'Calle', d.domicilio_numero as 'Número'
-		FROM [SQLEADOS].Empresa e
-		JOIN [SQLEADOS].Usuario us ON us.usuario_Id = 12 AND us.usuario_Id = e.empresa_usuario
-		JOIN [SQLEADOS].Publicacion p on p.publicacion_usuario_responsable = us.usuario_Id
-		JOIN [SQLEADOS].Rubro r ON r.rubro_id = p.publicacion_rubro
-		JOIN [SQLEADOS].ubicacionXpublicacion ux ON ux.ubiXpubli_Publicacion = p.publicacion_codigo
-		JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado
-		JOIN [SQLEADOS].Domicilio d ON d.domicilio_empresa_cuit = e.empresa_cuit AND d.domicilio_empresa_razon_social LIKE e.empresa_razon_social
-
-	--	group by 1, 2, 3, 4, 5, 6, 7, 8, 9
-		order by YEAR(p.publicacion_fecha) ASC, MONTH(p.publicacion_fecha) ASC, DAY (p.publicacion_fecha) ASC, DATEPART(HOUR, p.publicacion_fecha) ASC,
-			 DATEPART(MINUTE, p.publicacion_fecha) ASC,  DATEPART(SECOND, p.publicacion_fecha) ASC
-		
-return
+	UPDATE SQLEADOS.Publicacion
+		SET publicacion_estado = @estado
+			where	publicacion_codigo = @id
+	UPDATE SQLEADOS.Publicacion
+		SET publicacion_grado = @grado
+			where	publicacion_codigo = @id
+	UPDATE SQLEADOS.Publicacion
+		SET publicacion_rubro = @rubro
+			where	publicacion_codigo = @id
+	UPDATE SQLEADOS.Publicacion
+		SET publicacion_fecha_venc = @fecha
+			where	publicacion_codigo = @id
+	UPDATE SQLEADOS.Publicacion
+		SET publicacion_puntaje_venta = @puntaje
+			where	publicacion_codigo = @id
 end
 go
 
-print('PROCEDURE [obtenerPublicacionesDeEmpresa]: OK')
-*/
+print('PROCEDURE [ActualizarPublicacion]: OK')
 
 print('PROCEDURES HECHOS')
 
@@ -2188,7 +2177,7 @@ select
 		where usuario_nombre LIKE 'prueba'
 
 */
-
+/*
 select TOP 1 c.cliente_nombre, cliente_apellido, co.compra_id, co.compra_cantidad from SQLEADOS.Cliente c
 	JOIN SQLEADOS.Compra co ON co.compra_cliente_numero_documento = c.cliente_numero_documento
 						AND co.compra_cliente_tipo_documento LIKE c.cliente_tipo_documento
@@ -2212,4 +2201,30 @@ SELECT SUM(p.publicacion_puntaje_venta)
 	JOIN SQLEADOS.Cliente cl ON cl.cliente_numero_documento = c.compra_cliente_numero_documento 
 								AND cl.cliente_tipo_documento LIKE c.compra_cliente_tipo_documento
 	WHERE cl.cliente_id = 291
-	
+	*/
+	/*
+SELECT 
+	publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo',
+	publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable',
+	publicacion_estado as 'Estado', 
+	CASE 
+		WHEN publicacion_estado LIKE 'Borrador' then 'SI'
+		ELSE 'NO'
+		END AS 'Se puede modificar'
+	FROM SQLEADOS.Publicacion
+
+SELECT publicacion_estado as 'ESTADO', publicacion_fecha_venc as 'FECHA', g.grado_nombre as 'GRADO', 
+	r.rubro_descripcion as 'Rubro', publicacion_puntaje_venta as 'PUNTAJE'
+	FROM SQLEADOS.Publicacion 
+		JOIN SQLEADOS.Rubro r ON r.rubro_id = publicacion_rubro
+		JOIN SQLEADOS.GradoPrioridad G on G.grado_id = publicacion_grado
+	where publicacion_codigo = 7000
+
+SELECT rubro_id FROM SQLEADOS.Rubro where rubro_descripcion LIKE
+
+*/
+
+SELECT TOP 1 * FROM SQLEADOS.Publicacion where publicacion_codigo = 13414 order by publicacion_codigo asc
+
+SELECT publicacion_fecha_venc
+	FROM SQLEADOS.Publicacion

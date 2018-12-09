@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using PalcoNet.Support;
@@ -33,6 +34,10 @@ namespace PalcoNet.Support
         
         public static bool fechaMenorQueActual(DateTime fecha) {
             return fecha < DateTime.Today;
+        }
+
+        public static bool fechaIgualQueActual(DateTime fecha) {
+            return fecha == DateTime.Today;
         }
 
         public static bool esStringConLetraONumero(String a) {
@@ -113,6 +118,16 @@ namespace PalcoNet.Support
             return res;
         }
 
+        public static bool intPerteneceADataTable(int aBuscar, DataTable tabla) {
+            int cant = tabla.Rows.Count;
+            int n = 0;
+            for (n = 0; n < cant; n++) {
+                if (aBuscar == Convert.ToInt32(tabla.Rows[0][n].ToString())) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     class autogenerarContrasenia { 
