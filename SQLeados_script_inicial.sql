@@ -2222,9 +2222,10 @@ SELECT publicacion_estado as 'ESTADO', publicacion_fecha_venc as 'FECHA', g.grad
 
 SELECT rubro_id FROM SQLEADOS.Rubro where rubro_descripcion LIKE
 
-*/
+
 
 SELECT TOP 1 * FROM SQLEADOS.Publicacion where publicacion_codigo = 13414 order by publicacion_codigo asc
 
 SELECT publicacion_fecha_venc
 	FROM SQLEADOS.Publicacion
+	*/
