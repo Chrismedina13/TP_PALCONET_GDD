@@ -2229,7 +2229,11 @@ SELECT TOP 1 * FROM SQLEADOS.Publicacion where publicacion_codigo = 13414 order 
 SELECT publicacion_fecha_venc
 	FROM SQLEADOS.Publicacion
 	*/
-
+	/*
 UPDATE SQLEADOS.Publicacion
 SET publicacion_grado = 1
 FROM SQLEADOS.Publicacion
+	WHERE publicacion_usuario_responsable = user
+
+SELECT * from SQLEADOS.Publicacion where publicacion_usuario_responsable = 11
+*/
