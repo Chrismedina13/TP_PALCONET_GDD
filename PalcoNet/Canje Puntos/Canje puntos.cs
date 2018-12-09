@@ -25,11 +25,6 @@ namespace PalcoNet.Canje_Puntos
             textBoxNombreCliente.Text = datos[2];
             textBoxApellido.Text = datos[3];
             textBoxPuntaje.Text = datos[4];
-
-            if (Convert.ToInt32(textBoxPuntaje.Text) < 0) {
-
-                textBoxPuntaje.Text = "0";
-            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -47,10 +42,7 @@ namespace PalcoNet.Canje_Puntos
             int puntos = Convert.ToInt32(textBoxPuntaje.Text);
 
             Canjear canje = new Canjear(puntos, textBoxNumeroDocumento.Text, textBoxTipoDocumento.Text);
-            this.Hide();
-            canje.Closed += (s, args) => this.Close();
             canje.Show();
-
 
         }
     }
