@@ -1,0 +1,58 @@
+-- EL USER ADMIN ES:
+
+USERNAME: ADMIN
+PASSWORD: 1234
+
+AUTOGENERACION DE CONTRASEÑAS:
+
+Generará una contraseña aleatoria de 7 dígitos de forma numérica.
+Dicha contraseña será encriptada cuando la misma es pasada al SQL SERVER
+
+
+Durante la migración, los mails de los clientes tienen espacios entre sí, pero
+como es migración debemos migrarlo como tal, sin dar correción
+
+
+
+Durante la migración, las fechas de publicacion y la de vencimiento de
+publicacion están mal, siendo la primera mayor que la segunda, pero la dejamos
+como tal. Sin embargo, a la hora de realizar las operaciones en Compra,
+utilizaremos el campo Fecha Vencimiento ya que a pesar de estar mal,
+por lógica la misma es la que se usará para realizar las operaciones
+y también la que tendrá mas peso de ambas fechas.
+
+Para las hojas paginadas, pusimos que serían solo 10 items por hoja
+
+FORMATO DE FECHAS yyyy/MM/dd
+
+También añadimos el extra que a la hora de realizar la compra, la misma
+se debe realizarse 1 antes de la función.
+
+En el enunciado, en el apartado de ABM Compra, se nos indica que:
+
+"Bajo ninguna circunstancia se deberá permitir la generación de compras con
+importes negativos."
+
+Bajo esta aclaración, hemos considerado que a lo que se refiere dicha frase
+es que los Importes de saldo que se van acumulando 
+
+"Tener en cuenta al momento de validar las fechas, utilizar la fecha del archivo
+config"
+
+También debemos aclarar que no existe dicho archivo en los archivos 
+que nos ha dado la cátedra
+
+Cuando se migró a las compras, hemos decidido que el método de pago hecho con
+anterioridad al sistema actual fue todo en efectivo, debido a que 
+no tenemos los datos de las tarjetas
+
+Respecto a la ganancia de puntaje, para cualquier compra, independientemente de
+si se compró una ubicación VIP o en la platea, se generará 100 puntos para
+el comprador.
+
+Una estrategia que hemos decidido utilizar para ahorrar tiempo y evitar tanta 
+cantidad de merges es que existan 2 clases para realizar conexiones y que 
+de los miembros del equipo vayan decidiendo cual utilizar preferiblemente.
+Aunque esto provoque redundancia de clases y datos, nos permitiría ahorrar
+tiempo a la hora de evitar merges debido a la incompatibilidad entre los datos
+y evitar que el programa se rompa en caso de que se resuelvan mal los mismos.
