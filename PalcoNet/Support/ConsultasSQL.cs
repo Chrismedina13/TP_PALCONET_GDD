@@ -816,4 +816,90 @@ namespace PalcoNet.Support
     }
 
     #endregion
+
+
+
+#region AltaPublicacion
+
+    class GenerarPublicacion : ConsultasSQL {
+
+
+        internal static string obtenerCodigoPublicacion()
+        {
+            String codigo;
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand getCodigo = new SqlCommand("select (max(publicacion_codigo) + 1) as codigoMax from SQLEADOS.Publicacion");
+            getCodigo.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = getCodigo.ExecuteReader();
+            reader.Read();
+            
+            codigo = reader["codigoMax"].ToString();
+            
+            connection.Close();
+            return codigo;
+        }
+
+
+        internal static void llenarComboRubro(ComboBox comboRubro)
+        {
+            
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand llenarRubro = new SqlCommand("select rubro_descripcion from SQLEADOS.Rubro");
+            llenarRubro.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = llenarRubro.ExecuteReader();
+            while (reader.Read())
+            {
+
+                comboRubro.Items.Add(reader["rubro_descripcion"].ToString());
+            }
+            connection.Close();
+        }
+
+
+
+        internal static void llenarComboGrado(ComboBox comboGrado)
+        {
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand llenarGrado = new SqlCommand("select grado_nombre from SQLEADOS.GradoPrioridad");
+            llenarGrado.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = llenarGrado.ExecuteReader();
+            while (reader.Read())
+            {
+
+                comboGrado.Items.Add(reader["grado_nombre"].ToString());
+            }
+            connection.Close();
+        }
+
+        internal static void cargarGriddUbicaciones(DataGridView dgv)
+        {
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            connection.Open();
+            try
+            {
+                String query = "select ubicacion_fila,ubicacion_asiento,ubicacion_sin_numerar,ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion from SQLEADOs.Ubicacion order by ubicacion_Tipo_Descripcion";
+                SqlDataAdapter da = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgv.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView: " + ex.ToString());
+            }
+            connection.Close();
+        }
+   
+    }
+
+
+
+
+
+#endregion
 }
