@@ -882,7 +882,7 @@ namespace PalcoNet.Support
             connection.Open();
             try
             {
-                String query = "select ubicacion_fila,ubicacion_asiento,ubicacion_sin_numerar,ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion from SQLEADOs.Ubicacion order by ubicacion_Tipo_Descripcion";
+                String query = "select ubicacion_id as identidficador,ubicacion_fila,ubicacion_asiento,ubicacion_sin_numerar,ubicacion_Tipo_codigo,ubicacion_Tipo_Descripcion from SQLEADOs.Ubicacion order by ubicacion_Tipo_Descripcion";
                 SqlDataAdapter da = new SqlDataAdapter(query, connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -894,7 +894,8 @@ namespace PalcoNet.Support
             }
             connection.Close();
         }
-   
+
+ 
     }
 
 
