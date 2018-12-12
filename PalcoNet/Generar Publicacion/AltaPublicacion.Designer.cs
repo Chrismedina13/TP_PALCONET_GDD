@@ -50,6 +50,7 @@
             this.buttonGeneracionMAsiva = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -123,7 +124,7 @@
             // 
             this.comboBoxRubro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRubro.FormattingEnabled = true;
-            this.comboBoxRubro.Location = new System.Drawing.Point(143, 200);
+            this.comboBoxRubro.Location = new System.Drawing.Point(143, 228);
             this.comboBoxRubro.Name = "comboBoxRubro";
             this.comboBoxRubro.Size = new System.Drawing.Size(142, 21);
             this.comboBoxRubro.TabIndex = 8;
@@ -131,7 +132,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 208);
+            this.label4.Location = new System.Drawing.Point(25, 236);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 9;
@@ -141,7 +142,7 @@
             // 
             this.comboBoxGrado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGrado.FormattingEnabled = true;
-            this.comboBoxGrado.Location = new System.Drawing.Point(143, 245);
+            this.comboBoxGrado.Location = new System.Drawing.Point(143, 273);
             this.comboBoxGrado.Name = "comboBoxGrado";
             this.comboBoxGrado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxGrado.TabIndex = 10;
@@ -149,7 +150,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 253);
+            this.label5.Location = new System.Drawing.Point(25, 281);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 13);
             this.label5.TabIndex = 11;
@@ -180,7 +181,7 @@
             "Borrador",
             "Activa",
             "Finalizada"});
-            this.comboBoxEstado.Location = new System.Drawing.Point(143, 295);
+            this.comboBoxEstado.Location = new System.Drawing.Point(143, 323);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxEstado.TabIndex = 14;
@@ -189,7 +190,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 303);
+            this.label7.Location = new System.Drawing.Point(25, 331);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 15;
@@ -198,10 +199,11 @@
             // dataGridViewUbicaciones
             // 
             this.dataGridViewUbicaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewUbicaciones.Location = new System.Drawing.Point(460, 121);
+            this.dataGridViewUbicaciones.Location = new System.Drawing.Point(441, 121);
             this.dataGridViewUbicaciones.Name = "dataGridViewUbicaciones";
             this.dataGridViewUbicaciones.ReadOnly = true;
-            this.dataGridViewUbicaciones.Size = new System.Drawing.Size(485, 150);
+            this.dataGridViewUbicaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewUbicaciones.Size = new System.Drawing.Size(504, 150);
             this.dataGridViewUbicaciones.TabIndex = 16;
             // 
             // label8
@@ -224,7 +226,7 @@
             // 
             // buttonGeneracionMAsiva
             // 
-            this.buttonGeneracionMAsiva.Location = new System.Drawing.Point(264, 412);
+            this.buttonGeneracionMAsiva.Location = new System.Drawing.Point(244, 412);
             this.buttonGeneracionMAsiva.Name = "buttonGeneracionMAsiva";
             this.buttonGeneracionMAsiva.Size = new System.Drawing.Size(174, 74);
             this.buttonGeneracionMAsiva.TabIndex = 19;
@@ -234,26 +236,37 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(460, 312);
+            this.dataGridView1.Location = new System.Drawing.Point(441, 333);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(485, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(504, 150);
             this.dataGridView1.TabIndex = 20;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(457, 295);
+            this.label9.Location = new System.Drawing.Point(457, 316);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(142, 13);
             this.label9.TabIndex = 21;
             this.label9.Text = "Ubicaciones Seleccionadas:";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(651, 286);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(134, 37);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "Confirmar asientos";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 519);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonGeneracionMAsiva);
@@ -278,6 +291,7 @@
             this.Controls.Add(this.textBoxCodigo);
             this.Name = "AltaPublicacion";
             this.Text = "Generar Publicacion";
+            this.Load += new System.EventHandler(this.AltaPublicacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -309,5 +323,6 @@
         private System.Windows.Forms.Button buttonGeneracionMAsiva;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
     }
 }
