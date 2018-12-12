@@ -2237,3 +2237,6 @@ FROM SQLEADOS.Publicacion
 
 SELECT * from SQLEADOS.Publicacion where publicacion_usuario_responsable = 11
 */
+
+SELECT DISTINCT ubicacion_asiento as 'ASIENTO', ubicacion_fila AS 'FILA'
+	FROM SQLEADOS.Ubicacion order by 1 ASC, 2 ASC

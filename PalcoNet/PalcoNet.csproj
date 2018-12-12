@@ -219,6 +219,12 @@
     <Compile Include="Editar Publicacion\EditarPublicacion.Designer.cs">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editar Publicacion\EditarUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\EditarUbicaciones.Designer.cs">
+      <DependentUpon>EditarUbicaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editar Publicacion\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,11 +267,11 @@
     <Compile Include="Historial Cliente\Historial.Designer.cs">
       <DependentUpon>Historial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inicio\Form1.cs">
+    <Compile Include="Inicio\Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inicio\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Inicio\Inicio.Designer.cs">
+      <DependentUpon>Inicio.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio\Form2.cs">
       <SubType>Form</SubType>
@@ -273,11 +279,17 @@
     <Compile Include="Inicio\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inicio\Form3.cs">
+    <Compile Include="Inicio\CambiarContrasenia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inicio\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Inicio\CambiarContrasenia.Designer.cs">
+      <DependentUpon>CambiarContrasenia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inicio\RegistarNuevoUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inicio\RegistarNuevoUser.Designer.cs">
+      <DependentUpon>RegistarNuevoUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio\Usuario.cs" />
     <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
@@ -410,6 +422,9 @@
     <EmbeddedResource Include="Editar Publicacion\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\EditarUbicaciones.resx">
+      <DependentUpon>EditarUbicaciones.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\Seleccionar1Categoria.resx">
       <DependentUpon>Seleccionar1Categoria.cs</DependentUpon>
     </EmbeddedResource>
@@ -425,14 +440,17 @@
     <EmbeddedResource Include="Historial Cliente\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inicio\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Inicio\Inicio.resx">
+      <DependentUpon>Inicio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inicio\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Inicio\CambiarContrasenia.resx">
+      <DependentUpon>CambiarContrasenia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inicio\RegistarNuevoUser.resx">
+      <DependentUpon>RegistarNuevoUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
       <DependentUpon>ListadoEstadistico.cs</DependentUpon>

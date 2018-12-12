@@ -29,6 +29,7 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
         //    Application.Run(new EditarPublicacion(11));
             /*
             DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
@@ -43,8 +44,8 @@ namespace PalcoNet
      //       ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
      //       Application.Run(dac);
      //       DBConsulta.conexionCerrar();
-
-       //     Application.Run(new LOGIN());
+         //   Application.Run(new Inicio());
+            Application.Run(new LOGIN());
     //        Historial hs = new Historial(usuario);
     //        Application.Run(hs);
         //    Historial hs = new Historial(usuario);
@@ -54,12 +55,14 @@ namespace PalcoNet
       //     Application.Run(new ABMEmpresa(usuario));
 
         //    Application.Run(new ABMCliente(usuario));
-  //      Application.Run(new canjePuntos(usuario));
+  //         Application.Run(new canjePuntos(usuario));
 
-       //     Application.Run(new Form1());
+
+            // ESTE ES EL QUE DA INICIO
+            Application.Run(new Form1());
           //  Application.Run(new ListadoEstadistico());
 
-            Application.Run(new AltaPublicacion(usuario));
+  //          Application.Run(new AltaPublicacion(usuario));
 
             
 

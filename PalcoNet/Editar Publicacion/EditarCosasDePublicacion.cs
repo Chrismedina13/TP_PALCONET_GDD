@@ -219,6 +219,12 @@ namespace PalcoNet.Editar_Publicacion
             sel.Show();
         }
 
+        // EDITAR UBICACIONES
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
     }
 }
