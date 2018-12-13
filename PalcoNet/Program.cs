@@ -45,7 +45,7 @@ namespace PalcoNet
      //       Application.Run(dac);
      //       DBConsulta.conexionCerrar();
          //   Application.Run(new Inicio());
-            Application.Run(new LOGIN());
+            //Application.Run(new LOGIN());
     //        Historial hs = new Historial(usuario);
     //        Application.Run(hs);
         //    Historial hs = new Historial(usuario);
@@ -59,10 +59,14 @@ namespace PalcoNet
 
 
             // ESTE ES EL QUE DA INICIO
+
             Application.Run(new Inicio());
+
+            //Application.Run(new Form1());
+
           //  Application.Run(new ListadoEstadistico());
 
-  //          Application.Run(new AltaPublicacion(usuario));
+            Application.Run(new AltaPublicacion(usuario));
 
             
 

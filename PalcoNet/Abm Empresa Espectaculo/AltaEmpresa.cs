@@ -24,7 +24,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
 
-
             if (textBoxRazonSocial.Text.Trim() == "" | textBoxCuit.Text.Trim() == "" | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == ""
                 | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "")
             {

@@ -58,6 +58,19 @@ namespace PalcoNet.Generar_Publicacion
             colum6.Name = "ubicacion_Tipo_Descripcion";
             dataGridView1.Columns.Add(colum6);
 
+            textBoxCodigo.Enabled = false;
+            textBoxUsuario.Enabled = false;
+
+
+            dateTimePickerFechaEspectaculo.Format = DateTimePickerFormat.Custom;
+            dateTimePickerFechaEspectaculo.CustomFormat = "dd/MM/yyyy h: mm:ss tt";
+            dateTimePickerFechaEspectaculo.ShowUpDown = true;
+
+
+            dateTimePickerFechaPublicacion.Format = DateTimePickerFormat.Custom;
+            dateTimePickerFechaPublicacion.CustomFormat = "dd/MM/yyyy";
+
+
         }
 
         private void comboBoxEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,8 +100,42 @@ namespace PalcoNet.Generar_Publicacion
 
         }
 
+
+
+
         private void AltaPublicacion_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            if (textBoxDescripcion.Text.Trim() == "" | dateTimePickerFechaEspectaculo.Text.Trim() == "" | dateTimePickerFechaPublicacion.Text.Trim() == "" | comboBoxEstado.Text.Trim() == ""
+               | comboBoxRubro.Text.Trim() == "" | comboBoxGrado.Text.Trim() == "" )
+            {
+
+                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
+
+            if(dataGridView1.Rows.Count <= 1){
+
+                MessageBox.Show("Tiene que seleccionar ubicaciones de la publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            if (dateTimePickerFechaPublicacion.Value.Date >= dateTimePickerFechaEspectaculo.Value.Date)
+            {
+
+                MessageBox.Show("La fecha de espectaculo tiene que ser mayor a la fecha de Publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            
+            }
+
+
 
         }
     }

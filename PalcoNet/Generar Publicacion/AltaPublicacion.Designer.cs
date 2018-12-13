@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDescripcion = new System.Windows.Forms.TextBox();
             this.Descripcion = new System.Windows.Forms.Label();
-            this.dateTimePickerFechaPubli = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePickerFechaEspectaculo = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +50,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label9 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.dateTimePickerFechaPublicacion = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -88,13 +88,6 @@
             this.Descripcion.TabIndex = 3;
             this.Descripcion.Text = "Descripcion:";
             // 
-            // dateTimePickerFechaPubli
-            // 
-            this.dateTimePickerFechaPubli.Location = new System.Drawing.Point(143, 111);
-            this.dateTimePickerFechaPubli.Name = "dateTimePickerFechaPubli";
-            this.dateTimePickerFechaPubli.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickerFechaPubli.TabIndex = 4;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -106,9 +99,9 @@
             // 
             // dateTimePickerFechaEspectaculo
             // 
-            this.dateTimePickerFechaEspectaculo.Location = new System.Drawing.Point(143, 157);
+            this.dateTimePickerFechaEspectaculo.Location = new System.Drawing.Point(147, 157);
             this.dateTimePickerFechaEspectaculo.Name = "dateTimePickerFechaEspectaculo";
-            this.dateTimePickerFechaEspectaculo.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerFechaEspectaculo.Size = new System.Drawing.Size(234, 20);
             this.dateTimePickerFechaEspectaculo.TabIndex = 6;
             // 
             // label3
@@ -124,7 +117,7 @@
             // 
             this.comboBoxRubro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRubro.FormattingEnabled = true;
-            this.comboBoxRubro.Location = new System.Drawing.Point(143, 228);
+            this.comboBoxRubro.Location = new System.Drawing.Point(143, 214);
             this.comboBoxRubro.Name = "comboBoxRubro";
             this.comboBoxRubro.Size = new System.Drawing.Size(142, 21);
             this.comboBoxRubro.TabIndex = 8;
@@ -132,7 +125,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 236);
+            this.label4.Location = new System.Drawing.Point(25, 222);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 9;
@@ -142,7 +135,7 @@
             // 
             this.comboBoxGrado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGrado.FormattingEnabled = true;
-            this.comboBoxGrado.Location = new System.Drawing.Point(143, 273);
+            this.comboBoxGrado.Location = new System.Drawing.Point(143, 259);
             this.comboBoxGrado.Name = "comboBoxGrado";
             this.comboBoxGrado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxGrado.TabIndex = 10;
@@ -150,7 +143,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 281);
+            this.label5.Location = new System.Drawing.Point(25, 267);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 13);
             this.label5.TabIndex = 11;
@@ -181,7 +174,7 @@
             "Borrador",
             "Activa",
             "Finalizada"});
-            this.comboBoxEstado.Location = new System.Drawing.Point(143, 323);
+            this.comboBoxEstado.Location = new System.Drawing.Point(143, 309);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxEstado.TabIndex = 14;
@@ -190,7 +183,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 331);
+            this.label7.Location = new System.Drawing.Point(25, 317);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 15;
@@ -217,16 +210,17 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(28, 412);
+            this.button1.Location = new System.Drawing.Point(28, 386);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(174, 74);
             this.button1.TabIndex = 18;
             this.button1.Text = "Generar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonGeneracionMAsiva
             // 
-            this.buttonGeneracionMAsiva.Location = new System.Drawing.Point(244, 412);
+            this.buttonGeneracionMAsiva.Location = new System.Drawing.Point(244, 386);
             this.buttonGeneracionMAsiva.Name = "buttonGeneracionMAsiva";
             this.buttonGeneracionMAsiva.Size = new System.Drawing.Size(174, 74);
             this.buttonGeneracionMAsiva.TabIndex = 19;
@@ -261,11 +255,20 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // dateTimePickerFechaPublicacion
+            // 
+            this.dateTimePickerFechaPublicacion.Enabled = false;
+            this.dateTimePickerFechaPublicacion.Location = new System.Drawing.Point(147, 111);
+            this.dateTimePickerFechaPublicacion.Name = "dateTimePickerFechaPublicacion";
+            this.dateTimePickerFechaPublicacion.Size = new System.Drawing.Size(234, 20);
+            this.dateTimePickerFechaPublicacion.TabIndex = 23;
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 519);
+            this.Controls.Add(this.dateTimePickerFechaPublicacion);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.dataGridView1);
@@ -284,7 +287,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePickerFechaEspectaculo);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePickerFechaPubli);
             this.Controls.Add(this.Descripcion);
             this.Controls.Add(this.textBoxDescripcion);
             this.Controls.Add(this.label1);
@@ -305,7 +307,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxDescripcion;
         private System.Windows.Forms.Label Descripcion;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFechaPubli;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaEspectaculo;
         private System.Windows.Forms.Label label3;
@@ -324,5 +325,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFechaPublicacion;
     }
 }
