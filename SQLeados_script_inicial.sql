@@ -275,6 +275,7 @@ usuario_password varbinary(100) not null,
 usuario_administrador bit default 0,
 usuario_estado bit default 1, --Indicador para saber si está habilitado o no
 usuario_intentos int default 0, --Como es un contador de intentos fallidos que cuenta hasta 3, iniciará en 0
+usuario_primer_ingreso bit default 1
 )
 PRINT('Tabla creada: Usuario') 
 
@@ -287,6 +288,7 @@ CONSTRAINT fk_rpu_codigo_rol FOREIGN KEY (usuarioXRol_rol) REFERENCES [SQLEADOS]
 )
 GO
 PRINT('Tabla creada: UsuarioXRol') 
+
 
 
 --create table [SQLEADOS].UserXRol(
@@ -977,10 +979,11 @@ PRINT('Comienza UPDATE EMPRESA agregando la ID de USER')
 UPDATE SQLEADOS.Empresa
 SET empresa_usuario = usuario_Id 
 FROM SQLEADOS.Empresa
-INNER JOIN SQLEADOS.Usuario
-       ON (LOWER(replace(empresa_razon_social, space(1), '_'))) = usuario_nombre
+INNER JOIN SQLEADOS.Usuario ON usuario_nombre = (LOWER(replace(empresa_razon_social, space(1), '_'))) 
 
 PRINT('HECHO')
+
+
 /*
 PRINT('func_coincide_fecha_creacion HECHA') 
 
@@ -1029,6 +1032,8 @@ for insert as
 		END
 go
 print('HECHO')
+
+
 
 PRINT('Comienza TRIG_poner_nombre_bien_al_user') 
 GO
@@ -1497,6 +1502,8 @@ where usuario_nombre = @user
 end
 GO
 
+
+
 print('PROCEDURE [actualizarContra]: OK')
 
 SET ANSI_NULLS ON
@@ -1547,45 +1554,6 @@ GO
 
 print('PROCEDURE [crearNuevoUserPorRegistroOABM]: OK')
 
-/*
-create table [SQLEADOS].Cliente(
---cliente_id int primary key identity,
-
-cliente_nombre varchar(255) not null,
-cliente_apellido varchar(255) not null,
-cliente_usuario int references [SQLEADOS].Usuario,
-cliente_tipo_documento varchar(5) not null,
-cliente_numero_documento numeric(18,0) not null CHECK (cliente_numero_documento >= 0),
-cliente_fecha_nacimiento datetime not null CHECK (YEAR(cliente_fecha_nacimiento) >= 1900),
-cliente_fecha_creacion datetime not null,
-cliente_datos_tarjeta varchar(255),
-cliente_puntaje int default 0,
---cliente_compra int references [SQLEADOS].Compra,
-cliente_email varchar(255) not null,
-cliente_telefono varchar(255),
-cliente_estado int default 1,
-cliente_cuit varchar(20) unique, 
-PRIMARY KEY (cliente_tipo_documento,cliente_numero_documento)
-		--EJ: DNI 18563520
-)
-
-create table [SQLEADOS].Domicilio(
-domicilio_id int primary key identity,
-domicilio_calle varchar(255) not null,
-domicilio_numero int not null CHECK (domicilio_numero >= 0),
-domicilio_piso int CHECK (domicilio_piso >= 0),
-domicilio_dto varchar(2),
-domicilio_localidad varchar(255),
-domicilio_codigo_postal int not null,
-domicilio_cliente_tipo_documento varchar(5),
-domicilio_cliente_numero_documento numeric(18,0),
-domicilio_empresa_razon_social varchar(255),
-domicilio_empresa_cuit nvarchar(255),
-FOREIGN KEY (domicilio_cliente_tipo_documento, domicilio_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
-FOREIGN KEY (domicilio_empresa_cuit,domicilio_empresa_razon_social)	REFERENCES [SQLEADOS].Empresa(empresa_cuit,empresa_razon_social)
-)
-
-*/
 
 SET ANSI_NULLS ON
 GO
@@ -1600,6 +1568,7 @@ insert into [SQLeados].Cliente (cliente_nombre, cliente_apellido, cliente_cuit, 
  values
 (@nombre, @apellido, @cuit, @tarjeta, @mail, @fechaCreacion, @fechaNacimiento,CONVERT(numeric(18,0), @numeroDocumento), @telefono, @tipoDoc
 	, (Select top 1 usuario_Id from SQLEADOS.Usuario order by usuario_Id DESC))
+
 end
 GO
 
@@ -2237,6 +2206,25 @@ FROM SQLEADOS.Publicacion
 
 SELECT * from SQLEADOS.Publicacion where publicacion_usuario_responsable = 11
 */
+/*
+
+DELETE FROM SQLEADOS.UsuarioXRol where usuarioXRol_usuario = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
+DELETE FROM SQLEADOS.Usuario where usuario_Id = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
+
+
+SELECT top 2 *
+	FROM SQLEADOS.Usuario order by usuario_Id DESC
+
+SELECT * FROM SQLEADOS.Cliente order by cliente_id DESC
+
+SELECT * FROM SQLEADOS.UsuarioXRol where usuarioXRol_usuario = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
 
 SELECT DISTINCT ubicacion_asiento as 'ASIENTO', ubicacion_fila AS 'FILA'
 	FROM SQLEADOS.Ubicacion order by 1 ASC, 2 ASC
+
+insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) 
+values ('SANCOR','12-34567891-12','asdf','ASDFA@gmail.com',123,0,'12/12/2018 0:00:00')
+
+SELECT TOP 1 * FROM SQLEADOS.Empresa order by empresa_usuario ASC
+
+SELECT TOP 1*/

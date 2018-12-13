@@ -9,30 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Login_y_seguridad;
 using PalcoNet.Support;
+using PalcoNet.Abm_Cliente;
+using PalcoNet.Abm_Empresa_Espectaculo;
+
 
 namespace PalcoNet.Registro_de_Usuario
 {
     public partial class RegistroUser : Form
     {
-        public RegistroUser()
+        public bool huboerror = false;
+        private Inicio login;
+        public RegistroUser(Inicio ini)
        {
+           login = ini;
            InitializeComponent();
-           llenarComboBox();
-        }
-
-        private void llenarComboBox() {
-            DataSet myDataSet = LoginSQL.ObtenerRolesSinAdmin();
-            int indice = 0;
-            string nombreRol;
-
-            while (indice < DBConsulta.tamanioDataSet(myDataSet))
-            {
-                nombreRol = myDataSet.Tables[0].Rows[indice][0].ToString();
-                comboRoles.Items.Add(nombreRol);
-                indice++;
-            }
-            comboRoles.Items.Insert(0, "Seleccione un rol");
-            comboRoles.SelectedIndex = 0;
         }
 
         private void RegistroUser_Load(object sender, EventArgs e)
@@ -60,7 +50,7 @@ namespace PalcoNet.Registro_de_Usuario
         {
            
         }
-
+        /*
         private bool comprobarSiDatosEstanLlenos() {
             if (txtNombreUser.Text.Trim() == "")
             {
@@ -69,51 +59,42 @@ namespace PalcoNet.Registro_de_Usuario
             }
             if (txtContra.Text.Trim() == "" || txtRepContra.Text.Trim()=="")
             {
-                MessageBox.Show("Ingrese nombre de contraseña en ambos campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese la contraseña en ambos campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (txtContra.Text.Trim() != txtRepContra.Text.Trim()) {
                 MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (comboRoles.SelectedIndex ==  0)
-            {
-                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
             return true;
             
-        }
+        }*/
 
         private void label5_Click(object sender, EventArgs e)
         {
 
         }
+        public void cambiarEstadoError() {
+            huboerror = true;
+        }
 
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
-            if (comprobarSiDatosEstanLlenos())
-            {
-                DateTime myDateTime = DateTime.Now;
-                String sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                String comandoPrincipal = "INSERT INTO SQLEADOS.Usuario (usuario_nombre, usuario_password,usuario_tipo, usuario_fecha_creacion) values (" + txtNombreUser.Text.Trim() + ", " + txtContra.Text.Trim() + ", " + comboRoles.SelectedItem.ToString() + ", " + sqlFormattedDate + ")";
-                String rolID = consultarROLIDBuscaod(comboRoles.SelectedItem.ToString());
-                String comandoUserXRol = "INSERT INTO SQLEADOS.UserXRol(userXRol_rol, userXRol_usuario) Select " + rolID + ", usuario_Id from SQLEADOS.Rol, SQLEADOS.Usuario where usuario_nombre LIKE " + txtNombreUser.Text.Trim();
-             
-                bool nombreUserDisponible = true;
-                if (!RegistroSQL.nombreUserDisponible(txtNombreUser.Text.Trim()))
-                {
-                    nombreUserDisponible = false;
-                }
-
-            }
+            AltaCliente aclien = new AltaCliente(this, true);
+            aclien.Show();
+            this.Close();
             return;
         }
 
-        private static String consultarROLIDBuscaod(String rol) {
-            String query = "SELECT rol_Id from SQLEADOS.Rol where rol_nombre LIKE " + rol;
-            DataSet res = DBConsulta.ConectarConsulta(query);
-            return res.Tables[0].Rows[0][0].ToString();
+
+
+        //CREAR EMPRESA
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            AltaEmpresa aemp = new AltaEmpresa(0);
+            aemp.Show();
+            this.Close();
+            return;
         }
     }
 }

@@ -13,16 +13,18 @@ using System.Configuration;
 
 namespace PalcoNet.ABM_Rol
 {
-    public partial class Form2 : Form
+    public partial class FormCrearNuevoRol : Form
     {
         SqlConnection coneccion;
         SqlCommand cargarFunc, crearRol, codigoRol, crearFunc, existeRol, codigoFunc;
         List<String> funcion = new List<String>();
         SqlDataReader data;
         int rol = 0;
+        ABMROL r;
 
-        public Form2()
+        public FormCrearNuevoRol(ABMROL abm)
         {
+            r = abm;
             InitializeComponent();
             coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
@@ -47,11 +49,13 @@ namespace PalcoNet.ABM_Rol
             
         }
 
+        //VOLVER
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Close(); 
-            ABM_Rol.Form1 accionesRol = new ABM_Rol.Form1();
-            accionesRol.Show();
+            r.Show();
+            this.Hide(); 
+ //           ABM_Rol.ABMROL accionesRol = new ABM_Rol.ABMROL();
+      //      accionesRol.Show();
         }
 
         private void validarCampos()
@@ -90,7 +94,7 @@ namespace PalcoNet.ABM_Rol
                 
              }
             
-
+        //AÑADIR NUEVO ROL
         private void button2_Click(object sender, EventArgs e)
         {
             validarCampos();
@@ -163,12 +167,12 @@ namespace PalcoNet.ABM_Rol
             String mensaje = "El rol se ha creado exitosamente";
             String caption = "Rol creado";
             MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
-            ABM_Rol.Form1 form1= new ABM_Rol.Form1();
-            form1.Show();
-            this.Close();
+            //ABM_Rol.ABMROL form1= new ABM_Rol.ABMROL();
+            //form1.Show();
+            //this.Close();
 
             }
-
+        //AÑADIR
         private void button3_Click(object sender, EventArgs e)
         {
         string text = listBox1.GetItemText(listBox1.SelectedItem);
@@ -192,6 +196,7 @@ namespace PalcoNet.ABM_Rol
             }
         }
 
+        //QUITAR
         private void button4_Click(object sender, EventArgs e)
         {
         string text = listBox2.GetItemText(listBox2.SelectedItem);

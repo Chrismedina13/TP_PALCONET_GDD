@@ -16,6 +16,8 @@ namespace PalcoNet.Support
     class DBConsulta
     {
         private static SqlConnection conexion;
+
+
         public static void conexionAbrir()
         {
             try
@@ -28,6 +30,11 @@ namespace PalcoNet.Support
             {
                 MessageBox.Show("Error al intentar conectar con la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public SqlConnection obtenerConexion()
+        {
+            return conexion;
         }
 
         public static void conexionCerrar()
@@ -429,6 +436,12 @@ namespace PalcoNet.Support
 
         public static DataTable obtenerPublicacionesDeEmpresa(int userID, int pagina, int tamanioPagina) {
             return obtenerTOPNParaTablaPaginada("[SQLeados].[obtenerTotalPublicacionesDeEmpresa]", userID, pagina, tamanioPagina);
+        }
+
+        public static void modificarDatosDeDB(String cmd) {
+            SqlCommand ejecutador = new SqlCommand(cmd);
+            ejecutador.Connection = conexion;
+            ejecutador.ExecuteNonQuery();
         }
     }
 }

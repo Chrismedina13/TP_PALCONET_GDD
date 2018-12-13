@@ -9,38 +9,49 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Globalization;
+using PalcoNet.Support;
 
 
 namespace PalcoNet.ABM_Rol
 {
-    public partial class Form4 : Form
+    public partial class deshabilitarRol : Form
     {
         SqlConnection coneccion;
         SqlDataReader data;
         SqlCommand cargarRoles, eliminar, eliminar2, codigoRol;
-
-        public Form4()
+        ABMROL roles;
+        public deshabilitarRol(ABMROL rol)
         {
+            roles = rol;
             InitializeComponent();
 
-            coneccion = PalcoNet.Support.Conexion.conectar();
-            coneccion.Open();
-            cargarRoles = new SqlCommand("SQLeados.cargarRolesHabilitados", coneccion);
+            
+        }
 
-            cargarRoles.CommandType = CommandType.StoredProcedure;
+        public void cargar() {
+            String status = "SELECT ROL.rol_nombre FROM SQLEADOS.ROL WHERE rol_Id != 1";
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.obtenerConsultaEspecifica(status);
+            DBConsulta.conexionCerrar();
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cargarRoles);
-            DataTable tablaRoles = new DataTable();
+            //coneccion = PalcoNet.Support.Conexion.conectar();
+            //coneccion.Open();
+            //cargarRoles = new SqlCommand("SQLeados.cargarRolesHabilitados", coneccion);
 
-            coneccion.Close();
-            adapter.Fill(tablaRoles);
-            comboBox2.DataSource = tablaRoles;
-            comboBox2.DisplayMember = "Rol_nombre";
+            //cargarRoles.CommandType = CommandType.StoredProcedure;
+
+            //SqlDataAdapter adapter = new SqlDataAdapter(cargarRoles);
+            //DataTable tablaRoles = new DataTable();
+
+            //coneccion.Close();
+            //adapter.Fill(tablaRoles);
+            comboBoxRoles.DataSource = dt;
+            comboBoxRoles.DisplayMember = "Rol_nombre";
         }
 
         private void Form4_Load(object sender, EventArgs e)
         {
-
+            cargar();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,7 +60,7 @@ namespace PalcoNet.ABM_Rol
              if (dialogResult == DialogResult.Yes)
              {
 
-                 string nombre = comboBox2.Text.ToString();
+                 string nombre = comboBoxRoles.Text.ToString();
                  coneccion.Open();
                  codigoRol = new SqlCommand("SQLeados.codigoRol", coneccion);
                  codigoRol.CommandType = CommandType.StoredProcedure;
@@ -82,21 +93,39 @@ namespace PalcoNet.ABM_Rol
                 
 
 
-                 String mensaje = "El rol se ha eliminado exitosamente";
-                 String caption = "Rol eliminado";
+                 String mensaje = "El rol se ha inhabilitado exitosamente";
+                 String caption = "Rol inhabilitado";
                  MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
 
-                 ABM_Rol.Form1 form1 = new ABM_Rol.Form1();
-                 this.Close();
-                 form1.Show();
+        //         ABM_Rol.ABMROL form1 = new ABM_Rol.ABMROL();
+        //         this.Close();
+        //         form1.Show();
              }           
         }
-
+        //VOLVER
         private void button5_Click(object sender, EventArgs e)
         {
-            ABM_Rol.Form1 form1 = new ABM_Rol.Form1();
-            this.Close();
-            form1.Show();
+            roles.Show();
+            this.Hide();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //DESHABILITAR ROL
+        private void button2_Click(object sender, EventArgs e)
+        {
+       //     int currentMyComboBoxIndex = comboBoxRoles.SelectedIndex;
+            string current = this.comboBoxRoles.GetItemText(this.comboBoxRoles.SelectedItem);
+            String comando = "UPDATE SQLEADOS.Rol SET rol_estado = 0 WHERE rol_nombre LIKE '" + current +"'";
+            DBConsulta.conexionAbrir();
+            DBConsulta.modificarDatosDeDB(comando);
+            DBConsulta.conexionCerrar();
+            MessageBox.Show("El rol " + current + " fue inhabilitado");
+            cargar();
+            return;
         }
 
     }

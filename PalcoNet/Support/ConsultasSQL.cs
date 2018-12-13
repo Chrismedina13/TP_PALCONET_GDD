@@ -62,7 +62,9 @@ namespace PalcoNet.Support
         
         public static SqlConnection conectar()
         {
-            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gdEspectaculos2018");
+            String contraREAL = "gd2018";
+            String contraAnterior = "gdEspectaculos2018";
+            return new SqlConnection(@"Data source=.\SQLSERVER2012; Initial Catalog=GD2C2018; User id=gdEspectaculos2018; Password= gd2018");
         }
 
         public void cerrarConeccion(SqlConnection sql)
@@ -367,13 +369,23 @@ namespace PalcoNet.Support
             addEmpresaCommand.Parameters.AddWithValue("usuario", usuario);
             addEmpresaCommand.Parameters.AddWithValue("fecha", fecha);
 
+            String comando = "insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) values ('"+razonSocial+"','"+cuit+"','"+ciudad+"','"+mail+"',"+telefono+","+usuario+",'"+fecha+"')";
+
+            DBConsulta.modificarDatosDeDB(comando);
+            /*
             addEmpresaCommand.Connection = connection;
             connection.Open();
+
+            DBConsulta.conexionAbrir();
+     //       SqlConnection connection = DBConsulta.obtenerConexion();
+
+
+
             int registrosModificados = addEmpresaCommand.ExecuteNonQuery();
             connection.Close();
             if (registrosModificados > 0) MessageBox.Show("Empresa ingresada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            */
 
         }
 

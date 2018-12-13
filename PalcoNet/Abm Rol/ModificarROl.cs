@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Globalization;
+using PalcoNet.Support;
 
 namespace PalcoNet.ABM_Rol
 {
-    public partial class Form3 : Form
+    public partial class FormModificarRol : Form
     {
 
         SqlConnection coneccion;
@@ -22,39 +23,72 @@ namespace PalcoNet.ABM_Rol
         List<String> funcionesViejas = new List<String>();
         
         string rol;
-
-        public Form3()
+        ABMROL ro;
+        public FormModificarRol(ABMROL rol)
         {
+            ro = rol;
             InitializeComponent();
         }
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            coneccion = PalcoNet.Support.Conexion.conectar();
-            coneccion.Open();
-            cargarRoles = new SqlCommand("[SQLeados].cargarRoles", coneccion);
+            cargar();
+        }
 
-            cargarRoles.CommandType = CommandType.StoredProcedure;
+        private void cargar() {
+            //coneccion = PalcoNet.Support.Conexion.conectar();
+            //coneccion.Open();
+            //cargarRoles = new SqlCommand("[SQLeados].cargarRoles", coneccion);
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cargarRoles);
-            DataTable tablaRoles = new DataTable();
+            //cargarRoles.CommandType = CommandType.StoredProcedure;
+            String cmd = "SELECT rol_nombre FROM SQLEADOS.Rol";
+            DBConsulta.conexionAbrir();
+            DataTable tablaRoles = DBConsulta.obtenerConsultaEspecifica(cmd);
+            DBConsulta.conexionCerrar();
+            //SqlDataAdapter adapter = new SqlDataAdapter(cargarRoles);
 
-            coneccion.Close();
-            adapter.Fill(tablaRoles);
+            //coneccion.Close();
+            //adapter.Fill(tablaRoles);
             comboBox2.DataSource = tablaRoles;
             comboBox2.DisplayMember = "Rol_nombre";
+
+            
 
             cargarFuncionalidades();
         }
 
+        private void actualizarHabilitado() {
+            int habilitado = estaHabilitado(rol);
+            if (habilitado == 0)
+            {
+                labelEstado.Text = "Inhabilitado";
+            }
+            else {
+                labelEstado.Text = "Habilitado";
+            }
+        }
+
+        //EL BOTON CON EL SIGNO DE APROBADO
         private void button1_Click(object sender, EventArgs e)
         {
             rol = comboBox2.Text.ToString();
             int habilitado = estaHabilitado(rol);
             if (habilitado == 0)
-                button6.Visible= true;
+            {
+                button6.Visible = true;
+                label6.Visible = true;
+                label5.Visible = true;
+                labelEstado.Text = "Inhabilitado";
+                labelEstado.Visible = true;
+            }
             else
-                button6.Visible = false;
+            {
+                label6.Visible = true;
+                label6.Visible = true;
+                label5.Visible = true;
+                labelEstado.Text = "Habilitado";
+                labelEstado.Visible = true;
+            }
             label3.Visible = true;
             label6.Visible = true;
             textBox1.Visible = true;
@@ -72,18 +106,25 @@ namespace PalcoNet.ABM_Rol
 
         private int estaHabilitado(String rol)
         {
-            coneccion.Open();
-            habilitado = new SqlCommand("[SQLeados].rolHabilitado", coneccion);
-           habilitado.CommandType = CommandType.StoredProcedure;
-           habilitado.Parameters.Add("@nombre", SqlDbType.VarChar).Value = rol;
-           var resultado = habilitado.Parameters.Add("@Valor", SqlDbType.Bit);
-            resultado.Direction = ParameterDirection.ReturnValue;
-            data = habilitado.ExecuteReader();
-             var habi = resultado.Value;
-            int respuesta = (int)habi;
-            coneccion.Close();
-            data.Close();
-            return respuesta;
+            String comando = "SELECT rol_estado FROM SQLEADOS.ROL WHERE rol_nombre LIKE '"+ rol +"'";
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+            DBConsulta.conexionCerrar();
+           // coneccion.Open();
+           // habilitado = new SqlCommand("[SQLeados].rolHabilitado", coneccion);
+           //habilitado.CommandType = CommandType.StoredProcedure;
+           //habilitado.Parameters.Add("@nombre", SqlDbType.VarChar).Value = rol;
+           //var resultado = habilitado.Parameters.Add("@Valor", SqlDbType.Bit);
+           // resultado.Direction = ParameterDirection.ReturnValue;
+           // data = habilitado.ExecuteReader();
+           //  var habi = resultado.Value;
+           // int respuesta = (int)habi;
+           // coneccion.Close();
+           // data.Close();
+            if (dt.Rows[0][0].ToString() == "True") {
+                return 1;
+            }
+            return 0;
         }
 
        
@@ -95,32 +136,28 @@ namespace PalcoNet.ABM_Rol
             funcionesViejas.Clear();
             funcionalidades.Clear();
             funcion.Clear();
-            coneccion.Open();
-            fpr = new SqlCommand("[SQLeados].FuncionalidadesPorRol", coneccion);
+            String comando = "SELECT funcionalidad_descripcion FROM SQLEADOS.Rol JOIN SQLEADOS.FuncionalidadXRol ON funcionalidadXRol_rol = rol_Id JOIN SQLEADOS.Funcionalidad ON funcionalidad_Id = funcionalidadXRol_funcionalidad";
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+            DBConsulta.conexionCerrar();
+            //coneccion.Open();
+            //fpr = new SqlCommand("[SQLeados].FuncionalidadesPorRol", coneccion);
 
-            fpr.CommandType = CommandType.StoredProcedure;
-            fpr.Parameters.Add("@Rol", SqlDbType.VarChar).Value = rol;
+            //fpr.CommandType = CommandType.StoredProcedure;
+            //fpr.Parameters.Add("@Rol", SqlDbType.VarChar).Value = rol;
 
-            SqlDataAdapter adapter = new SqlDataAdapter(fpr);
-            SqlDataReader reader = fpr.ExecuteReader();
-            
-                while (reader.Read())
-                {
-                    funcionalidades.Add(reader.GetString(0)); //Specify column index 
-                }
+            //SqlDataAdapter adapter = new SqlDataAdapter(fpr);
+            //SqlDataReader reader = fpr.ExecuteReader();
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                funcionalidades.Add(dt.Rows[i][0].ToString());
+            }
 
-                
-           
                 listBox2.Items.AddRange(funcionalidades.ToArray());
-                reader.Close();
 
-                listBox2.DisplayMember = "funcionalidad_descripcion";
-            coneccion.Close();
-
-            for (int i = 0; i < listBox2.Items.Count; i++)
+            for (int j = 0; j < listBox2.Items.Count; j++)
             {
 
-                string text = listBox2.GetItemText(listBox2.Items[i]);
+                string text = listBox2.GetItemText(listBox2.Items[j]);
 
                 funcion.Add(text);
                 funcionesViejas.Add(text);
@@ -231,8 +268,8 @@ namespace PalcoNet.ABM_Rol
                 MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
 
                 this.Close();
-                ABM_Rol.Form1 accionesRol = new ABM_Rol.Form1();
-                accionesRol.Show();
+                //ABM_Rol.ABMROL accionesRol = new ABM_Rol.ABMROL();
+                //accionesRol.Show();
                 
 
 
@@ -252,26 +289,24 @@ namespace PalcoNet.ABM_Rol
         private void cargarFuncionalidades()
         {
 
-            coneccion.Open();
-            cargarFunc = new SqlCommand("SQLeados.listarFuncionalidades", coneccion);
+            //coneccion.Open();
+            //cargarFunc = new SqlCommand("SQLeados.listarFuncionalidades", coneccion);
 
-            cargarFunc.CommandType = CommandType.StoredProcedure;
+            //cargarFunc.CommandType = CommandType.StoredProcedure;
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cargarFunc);
-            DataTable tablaRoles = new DataTable();
+            //SqlDataAdapter adapter = new SqlDataAdapter(cargarFunc);
+            //DataTable tablaRoles = new DataTable();
 
-            adapter.Fill(tablaRoles);
-            SqlDataReader reader = cargarFunc.ExecuteReader();
+            //adapter.Fill(tablaRoles);
+            //SqlDataReader reader = cargarFunc.ExecuteReader();
 
+            String comando = "SELECT funcionalidad_descripcion FROM SQLEADOS.Funcionalidad";
+            DBConsulta.conexionAbrir();
+            DataTable tablaRoles = DBConsulta.obtenerConsultaEspecifica(comando);
+            DBConsulta.conexionCerrar();
             listBox1.DataSource = tablaRoles;
             listBox1.DisplayMember = "funcionalidad_descripcion";
-            coneccion.Close();
-
-            
-
-
-
-
+            //coneccion.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -308,28 +343,38 @@ namespace PalcoNet.ABM_Rol
 
         private void button5_Click(object sender, EventArgs e)
         {
-            this.Close();
-            ABM_Rol.Form1 accionesRol = new ABM_Rol.Form1();
-            accionesRol.Show();
+            ro.Show();
+            this.Hide();
+            //ABM_Rol.ABMROL accionesRol = new ABM_Rol.ABMROL();
+            //accionesRol.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             validarCampos();
+            cargar();
         }
 
+        //HABILITAR
         private void button6_Click(object sender, EventArgs e)
         {
-            coneccion.Open();
-            habilitar = new SqlCommand("SQLeados.habilitarRol", coneccion);
-            habilitar.CommandType = CommandType.StoredProcedure;
-            habilitar.Parameters.Add("@nombre", SqlDbType.VarChar).Value = comboBox2.Text.ToString();
-            habilitar.ExecuteNonQuery();
-            coneccion.Close();
+
+            String update = "UPDATE SQLEADOS.Rol SET rol_estado = 1 WHERE rol_nombre LIKE '" + comboBox2.Text.ToString() + "'";
+            DBConsulta.conexionAbrir();
+            DBConsulta.modificarDatosDeDB(update);
+            DBConsulta.conexionCerrar();
+            
+            //coneccion.Open();
+            //habilitar = new SqlCommand("SQLeados.habilitarRol", coneccion);
+            //habilitar.CommandType = CommandType.StoredProcedure;
+            //habilitar.Parameters.Add("@nombre", SqlDbType.VarChar).Value = comboBox2.Text.ToString();
+            //habilitar.ExecuteNonQuery();
+            //coneccion.Close();
 
             String mensaje = "El rol ha sido habilitado";
             String caption = "Rol modificado";
             MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
+            actualizarHabilitado();
         }
     }
 }

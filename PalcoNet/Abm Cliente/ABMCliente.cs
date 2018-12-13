@@ -23,7 +23,7 @@ namespace PalcoNet.Abm_Cliente
 
         private void buttonALTA_Click(object sender, EventArgs e)
         {
-            AltaCliente al = new AltaCliente();
+            AltaCliente al = new AltaCliente(null, false);
             al.Show();
         }
 

@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using PalcoNet.Registro_de_Usuario;
+using PalcoNet.Support;
+using PalcoNet.Login_y_seguridad;
 
 namespace PalcoNet
 {
-    public partial class Form1 : Form
+    public partial class Inicio : Form
     {
         SqlConnection coneccion;
         SqlCommand validarUsuario, validarContra, cantidadRoles, validarIntentos,
             actualizarIntentos, itemFactura, newCompra, resetearIntentos, modificarStockEstadoPublicacion, modificarMontoFactura, bloquearUsuario, validarBloqueo, esAdmin, roles, vencer, ultimaFactura, facturar, porVisibilidad;
         SqlDataReader data;
         String username;
-
-        public Form1()
+        String nombreUser;
+        public Inicio()
         {
             InitializeComponent();
      //       coneccion = Support.Conexion.conectar();
@@ -54,7 +57,6 @@ namespace PalcoNet
                 bloq.Direction = ParameterDirection.ReturnValue;
                 data = validarBloqueo.ExecuteReader();
                 data.Close();
-
 
                 var bloqueado = bloq.Value;
                 if ((int)resultado2 == 1)
@@ -95,6 +97,7 @@ namespace PalcoNet
 
                             if ((int)resultadoContra == 1)
                             {
+                                // LA CONTRA Y EL USER SON VALIDOS, PASA A BUSCAR ROLES, SI HAY SOLO 1 PASA DE UNA, SINO ELIJE
                                 resetearIntentos = new SqlCommand("[SQLeados].resetearIntentoFallidos", coneccion);
 
                                 resetearIntentos.CommandType = CommandType.StoredProcedure;
@@ -104,7 +107,7 @@ namespace PalcoNet
 
                                 encontrarRoles();
                                 Usuario.username = textBox1.Text;
-
+                                
                             }
                             else
                             {
@@ -127,8 +130,7 @@ namespace PalcoNet
                                     bloquearUsuario.ExecuteNonQuery();
                                 }
 
-
-                                String mensaje = "Password incorrecto, ha perdido un intento";
+                                String mensaje = "Nombre de usuario o contraseña incorrecto, ha perdido un intento de 3";
                                 String caption = "Error en iniciar sesion";
                                 textBox1.Clear();
                                 textBox2.Clear();
@@ -148,18 +150,12 @@ namespace PalcoNet
 
                 else
                 {
-                    String mensaje = "Username incorrecto, intetelo de nuevo";
+                    String mensaje = "Nombre de usuario o contraseña incorrecto, intetelo de nuevo";
                     String caption = "Error en iniciar sesion";
                     textBox1.Clear();
                     textBox2.Clear();
                     MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
                 }
-
-
-
-
-
-
             }
 
         }
@@ -184,6 +180,7 @@ namespace PalcoNet
 
         }
 
+        //BUSCA ROLES, SI HAY 1 SOLO ENTRA AL BUSCADOR SINO DEBE ELEJIR ENTRE ELLOS
         private void encontrarRoles()
         {
             esAdmin = new SqlCommand("[SQLeados].esAdministrador", coneccion);
@@ -218,14 +215,14 @@ namespace PalcoNet
                 DataRow dr = tablaRoles.NewRow();
                 dr["Rol_nombre"] = "Administrador";
 
-                roleslist.Add("Administrador");
+                roleslist.Add("Elija rol");
 
                 tablaRoles.Rows.InsertAt(dr, 0);
             }
 
             if (comboBox1.Items.Count == 1)
             {
-
+                //PASA DIRECTO AL EXPLORADOR
 
                 String rol;
                 if (roleslist.Count != 0)
@@ -236,28 +233,30 @@ namespace PalcoNet
                 {
                     rol = (tablaRoles.Rows[0]["Rol_nombre"]).ToString();
                 }
-
-
+                //BUSCO SI ES EL PRIMER LOGIN DEL USER ASI CAMBIA LA CONTRA AUTOGENERADA
+                
                 Usuario.Rol = rol;
-
-                Form2 form = new Form2();
-                form.Show();
-                this.Hide();
+                Usuario.username = textBox1.Text;
+                if (primerLogin())
+                {
+                    CambiarContra ca = new CambiarContra(Usuario.username);
+                    ca.Show();
+                    this.Hide();
+                }
+                else {
+                    Explorador form = new Explorador();
+                    form.Show();
+                    this.Hide();
+                }
             }
             else
             {
-                button1.Visible = false;
+                //MUESTRA LA SECCIÓN DE ELEJIR ROLES
+        //        button1.Visible = false;
                 label9.Visible = true;
                 comboBox1.Visible = true;
                 button2.Visible = true;
             }
-
-
-
-
-
-
-
 
         }
 
@@ -265,13 +264,42 @@ namespace PalcoNet
         private void button2_Click_1(object sender, EventArgs e)
         {
             Usuario.Rol = comboBox1.Text;
-            Form2 form = new Form2();
+            if (primerLogin())
+            {
+                CambiarContra ca = new CambiarContra(Usuario.username);
+            }
+            
+            Explorador form = new Explorador();
             form.Show();
             this.Hide();
         }
 
+        private bool primerLogin() {
+            String nombre = Usuario.username;
+            String comando = "SELECT usuario_primer_ingreso FROM SQLEADOS.Usuario where usuario_nombre LIKE '" + nombre + "'";
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+            DBConsulta.conexionCerrar();
+            //ES TIPO BIT, 1 SIGNIFICA QUE ES SU PRIMER INGRESO
+            string COSO = dt.Rows[0][0].ToString();
+            if (COSO == "True") {
+                DBConsulta.conexionAbrir();
+                comando = "UPDATE SQLEADOS.Usuario SET usuario_primer_ingreso = 0  where usuario_nombre LIKE '" + nombre + "'";
+                DBConsulta.modificarDatosDeDB(comando);
+                DBConsulta.conexionCerrar();
+                return true;
+            }
+            return false;
+        }
+
         //BOTON REGISTRAR
         private void button3_Click(object sender, EventArgs e)
+        {
+            RegistroUser a = new RegistroUser(this);
+            a.Show();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

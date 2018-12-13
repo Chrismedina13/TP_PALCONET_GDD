@@ -12,14 +12,13 @@ using System.Configuration;
 
 namespace PalcoNet
 {
-    public partial class Form2 : Form
+    public partial class Explorador : Form
     {
         string rol;
 
         SqlConnection coneccion;
         SqlCommand cargarfun, cargaradmin;
-
-        public Form2()
+        public Explorador()
         {
             rol = Usuario.Rol;
             InitializeComponent();
@@ -78,50 +77,50 @@ namespace PalcoNet
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ABM_Usuario.Form2 abmUser = new ABM_Usuario.Form2();
+            ABM_Usuario.ABMUSUARIO abmUser = new ABM_Usuario.ABMUSUARIO(this);
             abmUser.Show();
             this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ABM_Rol.Form1 abmRol = new ABM_Rol.Form1();
-            abmRol.Show();
-            this.Hide();
+    //        ABM_Rol.ABMROL abmRol = new ABM_Rol.ABMROL();
+    //        abmRol.Show();
+    //        this.Hide();
         }
 
         private void realizarAccion(String nombre)
         {
             if (nombre.Equals("ABM de Rol"))
             {
-                ABM_Rol.Form1 formRol = new ABM_Rol.Form1();
+                ABM_Rol.ABMROL formRol = new ABM_Rol.ABMROL(this);
                 formRol.Show();
-                this.Close();
+                this.Hide();
             }
 
             if (nombre.Equals("Registro de usuarios"))
             {
-                ABM_Usuario.Form2 formUser = new ABM_Usuario.Form2();
+                ABM_Usuario.ABMUSUARIO formUser = new ABM_Usuario.ABMUSUARIO(this);
                 formUser.Show();
-                this.Close();
-
+                this.Hide();
             }
         }
 
+        //VOLVER, SI ENTRO POR AQUI, SOLO CONTINUA AL EXPLORADOR
         private void button2_Click_1(object sender, EventArgs e)
         {
-            PalcoNet.Form3 frm3 = new PalcoNet.Form3();
+            PalcoNet.CambiarContra frm3 = new PalcoNet.CambiarContra(Usuario.username);
             frm3.Show();
             this.Close();
         }
 
+
+        //CERRAR SECION
         private void button1_Click_1(object sender, EventArgs e)
         {
             Usuario.username = "";
             Usuario.Rol = "";
-            PalcoNet.Form1 f1 = new PalcoNet.Form1();
             this.Close();
-            f1.Show();
         }
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

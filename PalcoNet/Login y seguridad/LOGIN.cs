@@ -54,8 +54,8 @@ namespace PalcoNet.Login_y_seguridad
         //boton REGISTRAR
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
-            RegistroUser reg = new RegistroUser();
-            reg.Show();
+    //        RegistroUser reg = new RegistroUser();
+    //        reg.Show();
         }
     }
 }

@@ -10,10 +10,12 @@ using System.Windows.Forms;
 
 namespace PalcoNet.ABM_Usuario
 {
-    public partial class Form2 : Form
+    public partial class ABMUSUARIO : Form
     {
-        public Form2()
+        Explorador ex;
+        public ABMUSUARIO(Explorador exp)
         {
+            ex = exp;
             InitializeComponent();
         }
 
@@ -24,12 +26,10 @@ namespace PalcoNet.ABM_Usuario
             //this.Close();
         }
 
+        //VOLVER
         private void button4_Click(object sender, EventArgs e)
         {
-            
-            PalcoNet.Form2 home = new PalcoNet.Form2();
-                
-            home.Show();
+            ex.Show();
             this.Close();
         }
 
@@ -42,9 +42,21 @@ namespace PalcoNet.ABM_Usuario
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ABM_Usuario.Form8 form8 = new ABM_Usuario.Form8();
+            ABM_Usuario.IngresarNuevoAdmin form8 = new ABM_Usuario.IngresarNuevoAdmin(this);
             form8.Show();
+            this.Hide();
+        }
+
+        private void ABMUSUARIO_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //VOLVER
+        private void button2_Click_1(object sender, EventArgs e)
+        {
             this.Close();
+            ex.Show();
         }
     }
 }

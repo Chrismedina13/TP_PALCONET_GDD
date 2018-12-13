@@ -59,7 +59,7 @@ namespace PalcoNet
 
 
             // ESTE ES EL QUE DA INICIO
-            Application.Run(new Form1());
+            Application.Run(new Inicio());
           //  Application.Run(new ListadoEstadistico());
 
   //          Application.Run(new AltaPublicacion(usuario));

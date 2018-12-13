@@ -62,6 +62,11 @@
             this.label19 = new System.Windows.Forms.Label();
             this.textBoxCuit = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.labelContrasenia = new System.Windows.Forms.Label();
+            this.textBoxContrasenia = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +91,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 139);
+            this.label3.Location = new System.Drawing.Point(27, 153);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 2;
@@ -95,7 +100,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 184);
+            this.label4.Location = new System.Drawing.Point(28, 192);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 13);
             this.label4.TabIndex = 3;
@@ -115,29 +120,29 @@
             this.textBoxRazonSocial.Location = new System.Drawing.Point(120, 49);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(209, 20);
-            this.textBoxRazonSocial.TabIndex = 5;
+            this.textBoxRazonSocial.TabIndex = 1;
             // 
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(120, 89);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(209, 20);
-            this.textBoxMail.TabIndex = 6;
+            this.textBoxMail.TabIndex = 2;
             // 
             // textBoxTelefono
             // 
-            this.textBoxTelefono.Location = new System.Drawing.Point(120, 132);
+            this.textBoxTelefono.Location = new System.Drawing.Point(119, 146);
             this.textBoxTelefono.MaxLength = 15;
             this.textBoxTelefono.Name = "textBoxTelefono";
-            this.textBoxTelefono.Size = new System.Drawing.Size(209, 20);
-            this.textBoxTelefono.TabIndex = 7;
+            this.textBoxTelefono.Size = new System.Drawing.Size(211, 20);
+            this.textBoxTelefono.TabIndex = 4;
             // 
             // textBoxCiudad
             // 
-            this.textBoxCiudad.Location = new System.Drawing.Point(120, 177);
+            this.textBoxCiudad.Location = new System.Drawing.Point(120, 185);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(209, 20);
-            this.textBoxCiudad.TabIndex = 8;
+            this.textBoxCiudad.TabIndex = 5;
             // 
             // groupBox1
             // 
@@ -196,7 +201,7 @@
             this.textBoxLocalidad.Location = new System.Drawing.Point(84, 105);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(260, 20);
-            this.textBoxLocalidad.TabIndex = 11;
+            this.textBoxLocalidad.TabIndex = 13;
             // 
             // label11
             // 
@@ -213,7 +218,7 @@
             this.textBoxCodigoPostal.Location = new System.Drawing.Point(196, 79);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(66, 20);
-            this.textBoxCodigoPostal.TabIndex = 9;
+            this.textBoxCodigoPostal.TabIndex = 12;
             // 
             // label10
             // 
@@ -229,7 +234,7 @@
             this.textBoxDto.Location = new System.Drawing.Point(177, 49);
             this.textBoxDto.Name = "textBoxDto";
             this.textBoxDto.Size = new System.Drawing.Size(66, 20);
-            this.textBoxDto.TabIndex = 7;
+            this.textBoxDto.TabIndex = 10;
             // 
             // label9
             // 
@@ -246,7 +251,7 @@
             this.textBoxPiso.MaxLength = 5;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(66, 20);
-            this.textBoxPiso.TabIndex = 5;
+            this.textBoxPiso.TabIndex = 11;
             // 
             // label8
             // 
@@ -263,7 +268,7 @@
             this.textBoxNroCalle.MaxLength = 10;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(66, 20);
-            this.textBoxNroCalle.TabIndex = 3;
+            this.textBoxNroCalle.TabIndex = 9;
             // 
             // label7
             // 
@@ -288,24 +293,24 @@
             this.textBoxCalle.Location = new System.Drawing.Point(56, 21);
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(269, 20);
-            this.textBoxCalle.TabIndex = 0;
+            this.textBoxCalle.TabIndex = 8;
             // 
             // buttonAgregar
             // 
-            this.buttonAgregar.Location = new System.Drawing.Point(300, 457);
+            this.buttonAgregar.Location = new System.Drawing.Point(300, 473);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(89, 22);
-            this.buttonAgregar.TabIndex = 11;
+            this.buttonAgregar.TabIndex = 15;
             this.buttonAgregar.Text = "AGREGAR";
             this.buttonAgregar.UseVisualStyleBackColor = true;
             this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
             // 
             // buttonVolver
             // 
-            this.buttonVolver.Location = new System.Drawing.Point(14, 457);
+            this.buttonVolver.Location = new System.Drawing.Point(7, 473);
             this.buttonVolver.Name = "buttonVolver";
             this.buttonVolver.Size = new System.Drawing.Size(89, 22);
-            this.buttonVolver.TabIndex = 12;
+            this.buttonVolver.TabIndex = 16;
             this.buttonVolver.Text = "VOLVER";
             this.buttonVolver.UseVisualStyleBackColor = true;
             this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
@@ -331,7 +336,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(331, 132);
+            this.label14.Location = new System.Drawing.Point(330, 146);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(11, 13);
             this.label14.TabIndex = 15;
@@ -349,7 +354,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(28, 418);
+            this.label19.Location = new System.Drawing.Point(4, 409);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(107, 13);
             this.label19.TabIndex = 17;
@@ -361,7 +366,7 @@
             this.textBoxCuit.MaxLength = 9999;
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
-            this.textBoxCuit.TabIndex = 20;
+            this.textBoxCuit.TabIndex = 6;
             // 
             // label20
             // 
@@ -372,11 +377,63 @@
             this.label20.TabIndex = 21;
             this.label20.Text = "Ingrese CUIT sin guiones";
             // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(332, 120);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(15, 13);
+            this.label31.TabIndex = 111117;
+            this.label31.Text = "**";
+            // 
+            // labelContrasenia
+            // 
+            this.labelContrasenia.AutoSize = true;
+            this.labelContrasenia.Location = new System.Drawing.Point(28, 123);
+            this.labelContrasenia.Name = "labelContrasenia";
+            this.labelContrasenia.Size = new System.Drawing.Size(64, 13);
+            this.labelContrasenia.TabIndex = 111116;
+            this.labelContrasenia.Text = "Contraseña:";
+            // 
+            // textBoxContrasenia
+            // 
+            this.textBoxContrasenia.Location = new System.Drawing.Point(119, 120);
+            this.textBoxContrasenia.MaxLength = 50;
+            this.textBoxContrasenia.Name = "textBoxContrasenia";
+            this.textBoxContrasenia.PasswordChar = '*';
+            this.textBoxContrasenia.Size = new System.Drawing.Size(211, 20);
+            this.textBoxContrasenia.TabIndex = 3;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(4, 431);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(385, 26);
+            this.label32.TabIndex = 111118;
+            this.label32.Text = "** Es obligatorio y debe ser numérico. Si se deja en blanco se autogenerará una \r" +
+    "\n** contraseña de forma aleatoria y numérica\r\n";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(1, 9);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(442, 31);
+            this.label33.TabIndex = 111119;
+            this.label33.Text = "Rellene el formulario de empresa";
+            // 
             // AltaEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 494);
+            this.ClientSize = new System.Drawing.Size(441, 507);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.labelContrasenia);
+            this.Controls.Add(this.textBoxContrasenia);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.label19);
@@ -442,5 +499,10 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBoxCuit;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label labelContrasenia;
+        public System.Windows.Forms.TextBox textBoxContrasenia;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
     }
 }

@@ -8,16 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Support;
+using PalcoNet.Login_y_seguridad;
+using PalcoNet.Registro_de_Usuario;
 
 namespace PalcoNet.Abm_Cliente
 {
     public partial class AltaCliente : Form
     {
     //    int usuario;
-        
-        public AltaCliente()
+        RegistroUser registro;
+        bool esRegistro;
+        public AltaCliente(RegistroUser reg, bool algo)
         {
-            
+            registro = reg;
+            esRegistro = algo;
             InitializeComponent();
      //       usuario = usuarioRecibido;   
         }
@@ -181,30 +185,56 @@ namespace PalcoNet.Abm_Cliente
                 DBConsulta.conexionCerrar();
                 return;
             }
-            if (DBConsulta.repe_mail(mail)) {
+            if (mailRepetido(mail))
+            {
                 MessageBox.Show("El Email ingresado ya existe en la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DBConsulta.conexionCerrar();
                 return;
             }
-
-            int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, autogenerarContrasenia.contraGeneradaAString(), "Cliente");
-            DBConsulta.conexionCerrar();
-            if (creacionAbortada == false)
+            bool error = false;
+            bool autocontra = false;
+            String contraAutogenerada = autogenerarContrasenia.contraGeneradaAString();
+            if (textBoxContrasenia.Text.Trim() == "")
             {
-                consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
-                DBConsulta.conexionAbrir();
-                consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Cliente");
-                
-                
-                MessageBox.Show("Usuario creado: " + DBConsulta.obtenerNombreUltimoUserIngresado());
-                DBConsulta.conexionCerrar();
+                autocontra = true;
+                int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, contraAutogenerada, "Cliente");
             }
             else {
-                MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DBConsulta.conexionCerrar();
-                return;
+                if (AyudaExtra.esStringNumerico(textBoxContrasenia.Text.Trim()))
+                {
+                    int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, textBoxContrasenia.Text.Trim(), "Cliente");
+                }
+                else {
+                    MessageBox.Show("La contraseña debe ser numérica");
+                    error = true;
+                }
             }
 
+            if (!error)
+            {
+                DBConsulta.conexionCerrar();
+                if (creacionAbortada == false)
+                {
+                    consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
+                    DBConsulta.conexionAbrir();
+                    consultasSQLCliente.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Cliente");
+                    string cmd = "Select TOP 1 usuario_nombre from SQLEADOS.Usuario order by usuario_Id DESC";
+                    DataTable dt = DBConsulta.obtenerConsultaEspecifica(cmd);
+                    String comentario = "Usuario creado: " + dt.Rows[0][0].ToString();
+                    if (autocontra) { 
+                        comentario += "\n\nContraseña autogenerada: "+contraAutogenerada;
+                    }
+                    MessageBox.Show(comentario);
+                    DBConsulta.conexionCerrar();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error al crear el nuevo usuario al consultar la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DBConsulta.conexionCerrar();
+                    return;
+                }
+            }
 
        //     this.limpiarCuadrosDeTexto();
             return;
@@ -219,6 +249,15 @@ namespace PalcoNet.Abm_Cliente
 
         private static bool cuitYNroDocumentoSonCorrectos(String cuit, String nroDocumento) {
             return cuit.Contains(nroDocumento);
+        }
+
+        private bool mailRepetido(String mail)
+        {
+            String comando = "SELECT empresa_email FROM SQLEADOS.Empresa WHERE empresa_email LIKE '" + mail + "' UNION SELECT cliente_email FROM SQLEADOS.Cliente  WHERE cliente_email LIKE '" + mail + "'";
+            DBConsulta.conexionAbrir();
+            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+            DBConsulta.conexionCerrar();
+            return dt.Rows.Count > 0;
         }
 
         private void limpiarCuadrosDeTexto()
@@ -281,6 +320,7 @@ namespace PalcoNet.Abm_Cliente
             this.Close();
         }
 
+        //BOTON VOLVER
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();

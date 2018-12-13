@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet
 {
-    partial class Form2
+    partial class Explorador
     {
         /// <summary>
         /// Required designer variable.
@@ -71,18 +71,18 @@
             this.listView1.View = System.Windows.Forms.View.List;
             this.listView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView1_ItemSelectionChanged);
             // 
-            // Form2
+            // Explorador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumAquamarine;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(884, 440);
+            this.ClientSize = new System.Drawing.Size(616, 315);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Margin = new System.Windows.Forms.Padding(1);
-            this.Name = "Form2";
+            this.Name = "Explorador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
