@@ -25,7 +25,9 @@ namespace PalcoNet.Comprar
 
         private void ElegirTipoAsiento_Load(object sender, EventArgs e)
         {
+            DBConsulta.conexionAbrir();
             configuracionGrilla(DBConsulta.obtenerConsultaEspecifica("SELECT DISTINCT ubicacion_Tipo_Descripcion FROM SQLEADOS.Ubicacion"));
+            DBConsulta.conexionCerrar();
         }
 
         private void configuracionGrilla(DataTable dt)
@@ -54,7 +56,9 @@ namespace PalcoNet.Comprar
             labelCategorias.Text = "";
             cadenaTipo = "";
             a.rellenarCategoríasSeleccionadas("");
+            DBConsulta.conexionAbrir();
             configuracionGrilla(DBConsulta.obtenerConsultaEspecifica("SELECT DISTINCT ubicacion_Tipo_Descripcion FROM SQLEADOS.Ubicacion"));
+            DBConsulta.conexionCerrar();
         }
 
         //VUELVE A LA VENTANA COMPRARPRINCIPAL CON LOS DATOS PUESTOS AQUI

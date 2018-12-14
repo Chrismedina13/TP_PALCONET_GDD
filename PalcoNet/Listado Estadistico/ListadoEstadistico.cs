@@ -14,9 +14,10 @@ namespace PalcoNet.Listado_Estadistico
     public partial class ListadoEstadistico : Form
     {
         List<Trimestre> trimestres;
-
-        public ListadoEstadistico()
+        Explorador exx;
+        public ListadoEstadistico(Explorador ex)
         {
+            exx = ex;
             InitializeComponent();
             trimestres = new List<Trimestre>();
             trimestres.Add(new Trimestre(1, 1, 31, 3, "1° Trimestre (Enero - Marzo)"));
@@ -55,8 +56,8 @@ namespace PalcoNet.Listado_Estadistico
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            exx.Show();
             this.Close();
-
         }
 
         private void ListadoEstadistico_Load(object sender, EventArgs e)

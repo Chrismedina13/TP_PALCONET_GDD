@@ -142,8 +142,34 @@ namespace PalcoNet
             }
             if (vista == "Historial de cliente")
             {
-                PalcoNet.Historial_Cliente.Historial history = new PalcoNet.Historial_Cliente.Historial(this);
+                PalcoNet.Historial_Cliente.Historial history = new PalcoNet.Historial_Cliente.Historial(Usuario.ID ,this);
                 history.Show();
+                this.Hide();
+            }
+            if (vista == "Canje y Administracion de puntos")
+            {
+                PalcoNet.Canje_Puntos.canjePuntos canjepu = new PalcoNet.Canje_Puntos.canjePuntos(Usuario.ID ,this);
+                canjepu.Show();
+                this.Hide();
+            }
+            if (vista == "Comprar")
+            {
+                PalcoNet.Comprar.ComprarPrincipal compra = new PalcoNet.Comprar.ComprarPrincipal(Usuario.ID, this);
+                compra.Show();
+                this.Hide();
+            }
+
+            if (vista == "Listado Estadistico")
+            {
+                PalcoNet.Listado_Estadistico.ListadoEstadistico lista = new PalcoNet.Listado_Estadistico.ListadoEstadistico(this);
+                lista.Show();
+                this.Hide();
+            }
+
+            if (vista == "Editar Publicacion")
+            {
+                PalcoNet.Editar_Publicacion.EditarPublicacion editPublicacion = new PalcoNet.Editar_Publicacion.EditarPublicacion(this);
+                editPublicacion.Show();
                 this.Hide();
             }
         }

@@ -62,7 +62,9 @@ namespace PalcoNet.Comprar
         {
             if (elUserTieneTarjeta(usuarioID))
             {
+                DBConsulta.conexionAbrir();
                 cargarDatosDeCompra();
+                DBConsulta.conexionCerrar();
             }
             else {
                 MessageBox.Show("No tiene un nro de tarjeta asignada.\nPor favor, ingrese una a continuación");
@@ -160,6 +162,7 @@ namespace PalcoNet.Comprar
         private void button2_Click(object sender, EventArgs e)
         {
             aVolver.vaciarIDCargada();
+            aVolver.Show();
             this.Close();
         }
     }

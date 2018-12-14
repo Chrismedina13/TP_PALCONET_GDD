@@ -17,21 +17,24 @@ namespace PalcoNet.Historial_Cliente
         private int paginaActual;
         private int ultimaHoja;
         private int totalVistoPorPagina = 10;
-
-        public Historial(int user)
+        Explorador exx;
+        public Historial(int user, Explorador ex)
         {
+            exx = ex;
             userID = user;
             paginaActual = 1;
             InitializeComponent();
-            DBConsulta.conexionAbrir();
+            
         }
 
         private void Historial_Load(object sender, EventArgs e)
         {
+            DBConsulta.conexionAbrir();
             String res = DBConsulta.obtenerTotalHistorialCompras(userID).Rows[0][0].ToString();
             int cantidad = Convert.ToInt32(res);
             ultimaHoja = (cantidad / totalVistoPorPagina) + 1;
-            configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, 1, totalVistoPorPagina));  
+            configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, 1, totalVistoPorPagina));
+            DBConsulta.conexionCerrar();
         }
 
         private void configuracionGrilla(DataTable dt)
@@ -60,8 +63,10 @@ namespace PalcoNet.Historial_Cliente
             if (paginaActual > 1)
             {
                 paginaActual -= 1;
+                DBConsulta.conexionAbrir();
                 configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+                DBConsulta.conexionCerrar();
             }
         }
 
@@ -70,8 +75,10 @@ namespace PalcoNet.Historial_Cliente
             if (paginaActual < ultimaHoja)
             {
                 paginaActual += 1;
+                DBConsulta.conexionAbrir();
                 configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+                DBConsulta.conexionCerrar();
             }
         }
 
@@ -79,16 +86,26 @@ namespace PalcoNet.Historial_Cliente
         private void buttonPrimeraHoja_Click(object sender, EventArgs e)
         {
             paginaActual = 1;
+            DBConsulta.conexionAbrir();
             configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
             labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+            DBConsulta.conexionCerrar();
         }
 
         //Va a la última hoja
         private void buttonUltimaHoja_Click(object sender, EventArgs e)
         {
             paginaActual = ultimaHoja;
+            DBConsulta.conexionAbrir();
             configuracionGrilla(DBConsulta.obtenerHistorialCompras(userID, paginaActual, totalVistoPorPagina));
             labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+            DBConsulta.conexionCerrar();
+        }
+        //BOTON VOLVER A EXPLORADOR
+        private void button3_Click(object sender, EventArgs e)
+        {
+            exx.Show();
+            this.Close();
         }
     }
 }

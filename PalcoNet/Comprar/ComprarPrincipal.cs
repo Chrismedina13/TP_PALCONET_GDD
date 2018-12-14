@@ -20,17 +20,17 @@ namespace PalcoNet.Comprar
         private int userID;
         private DateTime f1, f2;
         List<String> IDCargados;
-        public ComprarPrincipal(int usuario, String Publicacion, String categorias, DateTime fecha1, DateTime fecha2)
+        Explorador exx;
+        public ComprarPrincipal(int usuario, Explorador ex)
         {
+            exx = ex;
     //        publicacionID = publicacion;
             userID = usuario;
-            if (categorias != null) {
-                labelCategoria.Text = categorias;
-            }
-            if (Publicacion != null) {
-                textBoxPublicacion.Text = Publicacion;
-            }
+
             IDCargados = new List<String>();
+            DateTime fecha1 = DateTime.Today;
+            DateTime fecha2 = DateTime.Today;
+            fecha2.AddDays(1);
             f1 = fecha1;
             f2 = fecha2;
             paginaActual = 1;
@@ -39,7 +39,7 @@ namespace PalcoNet.Comprar
             fueCargadaCategoria = false;
             fueCargadaPublicacion = false;
             labelItemXHoja.Text = "Items por hoja \n" +totalVistoPorPagina.ToString();
-            DBConsulta.conexionAbrir();
+            
         }
 
         private void Comprar_Load(object sender, EventArgs e)
@@ -86,7 +86,9 @@ namespace PalcoNet.Comprar
         {
             if(dataGridView1.Rows.Count != 0) {
                 paginaActual = 1;
+                DBConsulta.conexionAbrir();
                 obtenerResultados(cargarPrimeros10Querys());
+                DBConsulta.conexionCerrar();
                 //       configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
             }
@@ -98,7 +100,9 @@ namespace PalcoNet.Comprar
                 if (paginaActual > 1)
                 {
                     paginaActual -= 1;
+                    DBConsulta.conexionAbrir();
                     obtenerResultados(cargar10QuerysParaNPagina());
+                    DBConsulta.conexionCerrar();
                     //           configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                     labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
                 }
@@ -112,8 +116,9 @@ namespace PalcoNet.Comprar
                 if (paginaActual < ultimaHoja)
                 {
                     paginaActual += 1;
-
+                    DBConsulta.conexionAbrir();
                     obtenerResultados(cargar10QuerysParaNPagina());
+                    DBConsulta.conexionCerrar();
                     //          configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                     labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
                 }
@@ -125,7 +130,9 @@ namespace PalcoNet.Comprar
             if (dataGridView1.Rows.Count != 0)
             {
                 paginaActual = ultimaHoja;
+                DBConsulta.conexionAbrir();
                 obtenerResultados(cargar10QuerysParaNPagina());
+                DBConsulta.conexionCerrar();
                 //      configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
             }
@@ -325,8 +332,10 @@ namespace PalcoNet.Comprar
             queryPrincipal += " "+ ordenamiento();
    //         MessageBox.Show(queryPrincipal);
          //   comandoContadorTotalIDs += queryExcluyenteSinTop();
+            DBConsulta.conexionAbrir();
             ponerBienLasHojas(comandoContadorTotalIDs);
             obtenerResultados(queryPrincipal);
+            DBConsulta.conexionCerrar();
         }
 
         private String extraerFechaSinHora(DateTime fecha) {
@@ -377,6 +386,7 @@ namespace PalcoNet.Comprar
         private void cambiarTamanio(String cantidad,object s, EventArgs e) {
             totalVistoPorPagina = Convert.ToInt32(cantidad);
             labelItemXHoja.Text = "Items por hoja \n" + cantidad;
+            //RECARGA LA GRILLA CON LA CONFIGURACION DE TAMANIO POR PAGINA
             button1_Click(s, e);
         }
 
@@ -428,6 +438,7 @@ namespace PalcoNet.Comprar
             }
             ConfirmarCompra a = new ConfirmarCompra(thi, IDCargados, userID);
             a.Show();
+            this.Hide();
         }
 
         public void vaciarIDCargada() {

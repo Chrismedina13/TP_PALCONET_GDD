@@ -32,14 +32,15 @@
             // 
             // labelPaginas
             // 
-            this.labelPaginas.Location = new System.Drawing.Point(509, 394);
-            this.labelPaginas.MinimumSize = new System.Drawing.Size(84, 0);
-            this.labelPaginas.Size = new System.Drawing.Size(84, 22);
+            this.labelPaginas.Location = new System.Drawing.Point(478, 394);
+            this.labelPaginas.MinimumSize = new System.Drawing.Size(150, 0);
+            this.labelPaginas.Size = new System.Drawing.Size(150, 22);
             this.labelPaginas.Text = "1 de 1";
             // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(12, 371);
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // botonsiguiente
             // 

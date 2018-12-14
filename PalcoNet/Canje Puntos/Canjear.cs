@@ -17,9 +17,10 @@ namespace PalcoNet.Canje_Puntos
         int puntosActuales;
         string ndocumento;
         string tdocumento;
-
-        public Canjear(int puntos,string numeroDocumento,string tipoDocumento)
+        canjePuntos cc;
+        public Canjear(int puntos,string numeroDocumento,string tipoDocumento, canjePuntos cj)
         {
+            cc = cj;
             InitializeComponent();
             textBoxPuntos.Text = Convert.ToString(puntos);
             puntosActuales = puntos;
@@ -69,8 +70,15 @@ namespace PalcoNet.Canje_Puntos
             else {
 
                 CanjePuntos.canje(ndocumento, tdocumento, Convert.ToInt32(textBoxValor.Text));
+                cc.Show();
                 this.Close();
             }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            cc.Show();
+            this.Close();
         }
     }
 }

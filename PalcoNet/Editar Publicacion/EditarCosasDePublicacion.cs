@@ -183,7 +183,9 @@ namespace PalcoNet.Editar_Publicacion
             
          //   DBConsulta.ConectarConsulta(update);
             if (noHayProblemaConLaFechaYHora()) {
+                DBConsulta.conexionAbrir();
                 DBConsulta.actualizarPublicidad(publicacionID, estado, buscarCategoriaYAgregar(), comboBoxGrados.SelectedIndex + 1, armarFechaYHoraYAgregarAUpdate(), Convert.ToInt32(textPuntaje.Text));
+                DBConsulta.conexionCerrar();
                 MessageBox.Show("Se ha actualizado la publicación");
                 ed.recargar();
                 this.Close();
@@ -194,7 +196,9 @@ namespace PalcoNet.Editar_Publicacion
 
         private bool noHayProblemaConLaFechaYHora() {
             String query = "SELECT publicacion_fecha_venc FROM SQLEADOS.Publicacion where publicacion_fecha_venc = '" + armarFechaYHoraYAgregarAUpdate()+"'";
+            DBConsulta.conexionAbrir();
             DataTable dt = DBConsulta.obtenerConsultaEspecifica(query);
+            DBConsulta.conexionCerrar();
             return dt.Rows.Count == 0;
         }
 
@@ -208,7 +212,9 @@ namespace PalcoNet.Editar_Publicacion
         private int buscarCategoriaYAgregar() {
 
             DataTable dt1 = new DataTable();
+            DBConsulta.conexionAbrir();
             dt1 = DBConsulta.obtenerConsultaEspecifica("SELECT rubro_id FROM SQLEADOS.Rubro where rubro_descripcion LIKE '" + labelCategoria.Text + "'");
+            DBConsulta.conexionCerrar();
             return Convert.ToInt32(dt1.Rows[0][0].ToString());
         }
 

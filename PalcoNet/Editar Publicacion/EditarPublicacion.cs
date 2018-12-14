@@ -16,9 +16,11 @@ namespace PalcoNet.Editar_Publicacion
         private int user;
         private bool esAdmin ;
         DataTable dt;
-        public EditarPublicacion(int Usuario)
+        Explorador exx;
+        public EditarPublicacion(Explorador exs)
         {
-            user = Usuario;
+            exx = exs;
+            user = Usuario.ID;
             dt = new DataTable();
             DBConsulta.conexionAbrir();
             String queryUserAdmin = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_administrador = 1";
@@ -29,6 +31,7 @@ namespace PalcoNet.Editar_Publicacion
             else {
                 esAdmin = false;
             }
+            DBConsulta.conexionCerrar();
             InitializeComponent();
             
         }
@@ -54,12 +57,16 @@ namespace PalcoNet.Editar_Publicacion
             {
                 //Encuentra todas los espectáculos
                 queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion";
+                DBConsulta.conexionAbrir();
                 dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
+                DBConsulta.conexionCerrar();
             }
             else { 
                 //Solo sirven los que publicó la empresa
                 queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable ="+ user;
+                DBConsulta.conexionAbrir();
                 dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
+                DBConsulta.conexionCerrar();
             }
             configuracionGrilla(dt);
         }
@@ -71,13 +78,17 @@ namespace PalcoNet.Editar_Publicacion
             {
                 //Encuentra todas los espectáculos
                 queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion";
+                DBConsulta.conexionAbrir();
                 dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
+                DBConsulta.conexionCerrar();
             }
             else
             {
                 //Solo sirven los que publicó la empresa
                 queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable =" + user;
+                DBConsulta.conexionAbrir();
                 dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
+                DBConsulta.conexionCerrar();
             }
             configuracionGrilla(dt);
         }
@@ -91,12 +102,13 @@ namespace PalcoNet.Editar_Publicacion
             }
             EditarCosasDePublicacion ex = new EditarCosasDePublicacion(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this);
             ex.Show();
+            this.Hide();
         }
 
         //BOTON VOLVER
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            DBConsulta.conexionCerrar();
+            exx.Show();
             this.Close();
         }
     }

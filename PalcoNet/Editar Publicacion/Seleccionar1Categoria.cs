@@ -23,7 +23,9 @@ namespace PalcoNet.Editar_Publicacion
         private void Seleccionar1Categoria_Load(object sender, EventArgs e)
         {
             String cadena = "SELECT rubro_descripcion FROM SQLEADOS.Rubro";
+            DBConsulta.conexionAbrir();
             dataGridView1.DataSource = DBConsulta.obtenerConsultaEspecifica(cadena);
+            DBConsulta.conexionCerrar();
         }
 
         //SELECCIONAR ELEJIDO

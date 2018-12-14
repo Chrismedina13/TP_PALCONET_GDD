@@ -661,7 +661,7 @@ insert into SQLEADOS.Usuario(usuario_nombre, usuario_password
 --,usuario_tipo, usuario_fecha_creacion
 	)
 select distinct 
-	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+A.Cli_Apeliido), -- as nombre_user
+	(LOWER(replace(A.Cli_Nombre, space(1), '_'))+'_'+replace(A.Cli_Apeliido, space(1), '_')), -- as nombre_user
 	(select top 1 HASHBYTES('SHA2_256',  (STR(1000000*RAND(convert(varbinary, newid())))))), 
 	--  contraseñas_autogeneradas,
 	--CONTRASEÑA AUTOGENERADA DE FORMA NUMÉRICA DECIMAL, ES POCO PROBABLE QUE SE REPITA, está entre 1 y 100000
@@ -2234,7 +2234,9 @@ SELECT TOP 1*/
 
 UPDATE SQLEADOS.Usuario
 SET usuario_password = HASHBYTES('SHA2_256', '123')
-WHERE usuario_Id < 15
+WHERE usuario_Id < 15 OR usuario_Id = 85
+
+SELECT * FROM SQLEADOS.Usuario where usuario_Id = 85
 
 /*
 SELECT * FROM SQLEADOS.Usuario
@@ -2252,3 +2254,5 @@ SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
  */
 
  select * from SQLEADOS.GradoPrioridad
+
+  select * from SQLEADOS.GradoPrioridad

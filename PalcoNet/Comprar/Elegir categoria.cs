@@ -47,7 +47,9 @@ namespace PalcoNet.Comprar
 
         private void Elegir_categoria_Load(object sender, EventArgs e)
         {
-            configuracionGrilla(DBConsulta.obtenerLosRubros());  
+            DBConsulta.conexionAbrir();
+            configuracionGrilla(DBConsulta.obtenerLosRubros());
+            DBConsulta.conexionCerrar();
         }
 
         //LIMPIAR LABEL CATEGORIA
@@ -56,7 +58,9 @@ namespace PalcoNet.Comprar
             labelCategorias.Text = "";
             cadenaCategorias ="";
             a.rellenarCategoríasSeleccionadas("");
-            configuracionGrilla(DBConsulta.obtenerLosRubros());  
+            DBConsulta.conexionAbrir();
+            configuracionGrilla(DBConsulta.obtenerLosRubros());
+            DBConsulta.conexionCerrar();
         }
 
         //Agrega al Label categorías aquellas categorías que no están en ella.

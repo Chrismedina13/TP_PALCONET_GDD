@@ -13,8 +13,10 @@ namespace PalcoNet.Canje_Puntos
 {
     public partial class canjePuntos : Form
     {
-        public canjePuntos(int usuario)
+        Explorador ex;
+        public canjePuntos(int usuario, Explorador exx)
         {
+            ex = exx;
             String[] datos = new string[5];
             InitializeComponent();
 
@@ -46,12 +48,18 @@ namespace PalcoNet.Canje_Puntos
         {
             int puntos = Convert.ToInt32(textBoxPuntaje.Text);
 
-            Canjear canje = new Canjear(puntos, textBoxNumeroDocumento.Text, textBoxTipoDocumento.Text);
+            Canjear canje = new Canjear(puntos, textBoxNumeroDocumento.Text, textBoxTipoDocumento.Text, this);
             this.Hide();
             canje.Closed += (s, args) => this.Close();
             canje.Show();
 
 
+        }
+        //BOTON VOLVER
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ex.Show();
+            this.Close();
         }
     }
 }

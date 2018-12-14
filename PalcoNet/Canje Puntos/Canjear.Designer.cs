@@ -37,6 +37,7 @@
             this.textBoxValor = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,11 +121,22 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Valor en puntos:";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(465, 146);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(93, 35);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "VOLVER";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // Canjear
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 268);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxValor);
@@ -154,5 +166,6 @@
         private System.Windows.Forms.TextBox textBoxValor;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button2;
     }
 }
