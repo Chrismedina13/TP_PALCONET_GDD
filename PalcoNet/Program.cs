@@ -66,7 +66,7 @@ namespace PalcoNet
 
           //  Application.Run(new ListadoEstadistico());
 
-            Application.Run(new AltaPublicacion(usuario));
+            Application.Run(new AltaPublicacion(new Explorador(new Inicio())));
 
             
 

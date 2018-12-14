@@ -234,7 +234,6 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Editar_Publicacion.EditarPublicacion.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Editar_Publicacion.Seleccionar1Categoria.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Generar_Publicacion.AltaPublicacion.resources
-C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial_de_cliente.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Historial_Cliente.Historial.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Listado_Estadistico.ListadoEstadistico.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Login_y_seguridad.LOGIN.resources
@@ -260,4 +259,3 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.ABMUSUARIO.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.IngresarNuevoAdmin.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.darDeBajaOtroAdmin.resources
-C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
