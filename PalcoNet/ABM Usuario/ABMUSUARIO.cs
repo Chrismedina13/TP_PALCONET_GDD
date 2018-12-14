@@ -21,6 +21,9 @@ namespace PalcoNet.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
+            darDeBajaOtroAdmin baja = new darDeBajaOtroAdmin(this);
+            baja.Show();
+            this.Hide();
             //ABM_Usuario.Form1 form1 = new Form1();
             //form1.Show();
             //this.Close();
@@ -40,6 +43,7 @@ namespace PalcoNet.ABM_Usuario
             //this.Close();
         }
 
+        //INGRESAR NUEVO ADMIN
         private void button3_Click(object sender, EventArgs e)
         {
             ABM_Usuario.IngresarNuevoAdmin form8 = new ABM_Usuario.IngresarNuevoAdmin(this);
@@ -55,8 +59,8 @@ namespace PalcoNet.ABM_Usuario
         //VOLVER
         private void button2_Click_1(object sender, EventArgs e)
         {
-            this.Close();
             ex.Show();
+            this.Close();
         }
     }
 }

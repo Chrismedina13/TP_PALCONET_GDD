@@ -8,17 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PalcoNet.Support;
+using PalcoNet.Registro_de_Usuario;
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class AltaEmpresa : Form
     {
-        int usuario;
-        
-        public AltaEmpresa(int usuarioRecibido)
+        ABMEmpresa ante;
+        RegistroUser reg;
+        bool deEmpresa;
+        public AltaEmpresa(ABMEmpresa empre, bool vieneDeEmpresa, RegistroUser regUser)
         {
+            deEmpresa = vieneDeEmpresa;
+            if (deEmpresa)
+            {
+                ante = empre;
+            }
+            else {
+                reg = regUser;
+            }
             InitializeComponent();
-            usuario = usuarioRecibido;
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
@@ -135,6 +144,14 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     mostrarResultado += "\n\nSe ha autogenerado una contraseña, es: " + contraautogenerada;
                 }
                 MessageBox.Show(mostrarResultado);
+                if (deEmpresa)
+                {
+                    ante.Show();
+                }
+                else {
+                    reg.terminar();
+                    reg.Show();
+                }
                 this.Close();
             }
             else {
@@ -162,6 +179,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void buttonVolver_Click(object sender, EventArgs e)
         {
+            if (deEmpresa)
+            {
+                ante.Show();
+            }
+            else {
+                reg.Show();
+            }
             this.Close();
         }
 

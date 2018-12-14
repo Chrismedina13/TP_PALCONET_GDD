@@ -14,15 +14,21 @@ namespace PalcoNet.Abm_Cliente
     public partial class ModificarCliente : volver
     {
         public static String userAModificar;
-
-        public ModificarCliente()
+        ABMCliente cliente;
+        //CRITERIOS ANTERIORES ANTES DE MODIFICAR UNO PUNTUAL
+        String nombre, apellido, numeroDNI, email;
+        public ModificarCliente(ABMCliente cl)
         {
+            nombre = "";
+            apellido = nombre;
+            numeroDNI = apellido;
+            email = numeroDNI;
+            cliente = cl;
             InitializeComponent();
         }
 
         private void ModificarCliente_Load_1(object sender, EventArgs e)
         {
-            DBConsulta.conexionAbrir();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -79,7 +85,6 @@ namespace PalcoNet.Abm_Cliente
                     return;
                 }
                 dataGridView1.DataSource = null;
-                String nombre = "", apellido = "", email = "", numeroDNI = "";
                 if (!esVacio(textBoxDNI.Text.Trim()))
                 {
                     numeroDNI = textBoxDNI.Text.Trim();
@@ -97,11 +102,19 @@ namespace PalcoNet.Abm_Cliente
                 {
                     apellido = textBoxApellido.Text.Trim();
                 }
-                DataTable ds = new DataTable();
-                ds = DBConsulta.buscarClienteSegunCriterios2(nombre, apellido, numeroDNI, email);
-                configuracionGrilla(dataGridView1, ds);
-                return;
+                BusquedadYLlenarGrilla();
             }
+        }
+
+        public void BusquedadYLlenarGrilla() {
+            DataTable ds = new DataTable();
+            //BUSCAR
+            DBConsulta.conexionAbrir();
+
+            ds = DBConsulta.buscarClienteSegunCriterios2(nombre, apellido, numeroDNI, email);
+            DBConsulta.conexionCerrar();
+            configuracionGrilla(dataGridView1, ds);
+            return;
         }
 
         // MODIFICA AL USER SELECIONADO, ABRIENDO UNA VENTANA NUEVA
@@ -117,14 +130,14 @@ namespace PalcoNet.Abm_Cliente
                 String user = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
                 int userID = Convert.ToInt32(user);
                 MessageBox.Show("ID user seleccionado: " + userID);
-                ModificarClienteSeleccionado mod = new ModificarClienteSeleccionado(userID);
+                ModificarClienteSeleccionado mod = new ModificarClienteSeleccionado(userID, this);
                 mod.Show();
             }
         }
 
         private void volver_boton_Click_1(object sender, EventArgs e)
         {
-            DBConsulta.conexionCerrar();
+            cliente.Show();
             this.Close();
         }
 

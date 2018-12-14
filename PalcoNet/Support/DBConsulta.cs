@@ -43,7 +43,7 @@ namespace PalcoNet.Support
         }
 
         public static int creacionNuevoUser(String nombre, String contra, String rol) {
-            
+            DBConsulta.conexionAbrir();
             try
             {
                 SqlCommand crearNuevoUser = new SqlCommand("[SQLeados].crearNuevoUserPorRegistroOABM", conexion);
@@ -54,9 +54,11 @@ namespace PalcoNet.Support
                 crearNuevoUser.Parameters.Add("@rol", SqlDbType.VarChar).Value = rol;
                 crearNuevoUser.BeginExecuteNonQuery();
                 MessageBox.Show("Se agregó el nuevo usuario y su rol");
+                DBConsulta.conexionCerrar();
                 return 1;
             }
             catch (Exception ex) {
+                DBConsulta.conexionCerrar();
                 MessageBox.Show("No se pudo agregar al usuario:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
@@ -246,10 +248,26 @@ namespace PalcoNet.Support
             return dt;
         }
 
+        public static DataTable buscarClienteSegunCriterios3(String nombre, String apellido, String numero, String mail)
+        {
+        
+            DataTable dt = new DataTable();
+            String comando = "SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario AND usuario_estado = 1 ";
+
+            comando = comando + agregarAComandoDeBusquedad(nombre, " AND cliente_nombre ");
+            comando = comando + agregarAComandoDeBusquedad(apellido, " AND cliente_apellido ");
+            comando = comando + agregarAComandoDeBusquedad(numero, " AND CONVERT(varchar(50), cliente_numero_documento) ");
+            comando = comando + agregarAComandoDeBusquedad(mail, " AND cliente_email ");
+
+            SqlCommand buscarClientes = new SqlCommand(comando, conexion);
+            dt.Load(buscarClientes.ExecuteReader());
+            return dt;
+        }
+
         public static DataTable buscarClienteSegunCriterios2(String nombre, String apellido, String numero, String mail)
         {
             DataTable dt = new DataTable();
-            String comando = "SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c JOIN SQLEADOS.Usuario u ON usuario_Id = cliente_id where usuario_estado = 1";
+            String comando = "SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c JOIN SQLEADOS.Usuario u ON usuario_Id = cliente_usuario";
 
             comando = comando + agregarAComandoDeBusquedad(nombre, " AND cliente_nombre ");
             comando = comando + agregarAComandoDeBusquedad(apellido, " AND cliente_apellido ");
@@ -442,6 +460,21 @@ namespace PalcoNet.Support
             SqlCommand ejecutador = new SqlCommand(cmd);
             ejecutador.Connection = conexion;
             ejecutador.ExecuteNonQuery();
+        }
+
+        public static DataTable AbrirCerrarObtenerConsulta(String cmd)
+        {
+            conexionAbrir();
+            DataTable dt = obtenerConsultaEspecifica(cmd);
+            conexionCerrar();
+            return dt;
+        }
+
+        public static void AbrirCerrarModificarDB(String cmd)
+        {
+            conexionAbrir();
+            modificarDatosDeDB(cmd);
+            conexionCerrar();
         }
     }
 }

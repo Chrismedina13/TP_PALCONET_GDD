@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using PalcoNet.Support;
 
 namespace PalcoNet
 {
@@ -18,63 +19,35 @@ namespace PalcoNet
 
         SqlConnection coneccion;
         SqlCommand cargarfun, cargaradmin;
-        public Explorador()
+        Inicio ini;
+        public Explorador(Inicio i)
         {
+            ini = i;
             rol = Usuario.Rol;
             InitializeComponent();
             coneccion = PalcoNet.Support.Conexion.conectar();
             coneccion.Open();
         }
 
+        private bool esRolAdmin(String rol) {
+
+            return true;
+        }
+
+    //CARGA DEL COMBOBOX
         private void Form2_Load(object sender, EventArgs e)
         {
+            String obtenerFuncionalidadSegunRol = "SELECT funcionalidad_descripcion FROM SQLEADOS.Funcionalidad JOIN SQLEADOS.FuncionalidadXRol ON funcionalidad_Id = funcionalidadXRol_funcionalidad JOIN SQLEADOS.ROl ON rol_Id = funcionalidadXRol_rol WHERE rol_nombre LIKE '"+Usuario.Rol+"'";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(obtenerFuncionalidadSegunRol);
 
-            this.Text = rol;
-            if (rol.Equals("Administrativo"))
-            {
-                cargaradmin = new SqlCommand("[SQLeados].listarFuncionalidades", coneccion);
-                cargaradmin.CommandType = CommandType.StoredProcedure;
-                SqlDataReader reader = cargaradmin.ExecuteReader();
-                List<string> funcionalidades = new List<string>();
-
-                while (reader.Read())
-                {
-                    funcionalidades.Add(reader.GetValue(0).ToString());
-                }
-                reader.Close();
-
-                listarFuncionalidades(funcionalidades);
-            }
-            else
-            {
-
-                cargarfun = new SqlCommand("[SQLeados].FuncionalidadesPorRol", coneccion);
-                cargarfun.Parameters.Add("@Rol", SqlDbType.VarChar).Value = rol;
-                cargarfun.CommandType = CommandType.StoredProcedure;
-
-                SqlDataReader reader = cargarfun.ExecuteReader();
-                List<string> funcionalidades = new List<string>();
-
-                while (reader.Read())
-                {
-                    funcionalidades.Add(reader.GetValue(0).ToString());
-                }
-                reader.Close();
-
-                listarFuncionalidades(funcionalidades);
+            for (int i = 0; i < dt.Rows.Count; i++) { 
+                comboBoxVistas.Items.Add(dt.Rows[i][0].ToString());
             }
         }
 
-        private void listarFuncionalidades(List<String> func)
-        {
-            int size = func.Count();
-            for (int i = 0; i < size; i++)
-            {
-                var aux = new ListViewItem(func[i]);
-                listView1.Items.Add(aux);
-            }
-        }
 
+
+        //ABMUSUARIO
         private void button2_Click(object sender, EventArgs e)
         {
             ABM_Usuario.ABMUSUARIO abmUser = new ABM_Usuario.ABMUSUARIO(this);
@@ -109,8 +82,8 @@ namespace PalcoNet
         //VOLVER, SI ENTRO POR AQUI, SOLO CONTINUA AL EXPLORADOR
         private void button2_Click_1(object sender, EventArgs e)
         {
-            PalcoNet.CambiarContra frm3 = new PalcoNet.CambiarContra(Usuario.username);
-            frm3.Show();
+            PalcoNet.CambiarContra xxx = new PalcoNet.CambiarContra(Usuario.username, this, null, false);
+            xxx.Show();
             this.Close();
         }
 
@@ -120,13 +93,56 @@ namespace PalcoNet
         {
             Usuario.username = "";
             Usuario.Rol = "";
+            ini.Show();
             this.Close();
         }
 
-        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        //IR A LA VISTA SELECCIONADA
+        private void button3_Click(object sender, EventArgs e)
         {
-            realizarAccion(e.Item.Text);
+            if (comboBoxVistas.SelectedItem == null)
+            {
+                MessageBox.Show("No has seleccionado un rol aún");
+                return;
+            }
+            String vista = comboBoxVistas.SelectedItem.ToString();
+            if (vista == "ABM de Rol") {
+                PalcoNet.ABM_Rol.ABMROL abmrol = new PalcoNet.ABM_Rol.ABMROL(this);
+                abmrol.Show();
+                this.Hide();
+            }
+            if (vista == "ABM de Clientes")
+            {
+                PalcoNet.Abm_Cliente.ABMCliente cliente = new PalcoNet.Abm_Cliente.ABMCliente(this);
+                cliente.Show();
+                this.Hide();
+            }
+            if (vista == "Registro de usuarios")
+            {
+                PalcoNet.ABM_Usuario.ABMUSUARIO user = new PalcoNet.ABM_Usuario.ABMUSUARIO(this);
+                user.Show();
+                this.Hide();
+            }
+            if (vista == "ABM de Empresa de espectaculo")
+            {
+                PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa emp = new PalcoNet.Abm_Empresa_Espectaculo.ABMEmpresa(this);
+                emp.Show();
+                this.Hide();
+            }
+            if (vista == "ABM Grado de publicacion")
+            {
+                PalcoNet.Abm_Grado.GradoPublicacion gr = new PalcoNet.Abm_Grado.GradoPublicacion(this);
+                gr.Show();
+            }
+            if (vista == "Generar Publicacion")
+            {
+                PalcoNet.Generar_Publicacion.AltaPublicacion altaPubl = new PalcoNet.Generar_Publicacion.AltaPublicacion(this);
+                altaPubl.Show();
+                this.Hide();
+            }
         }
+
+
 
     }
 }

@@ -22,10 +22,11 @@ namespace PalcoNet.Abm_Cliente
             apellido = false, telefono = false, tarjeta = false
             , piso = false, calle = false, nrocalle = false, localidad = false
             , estado = false, codigopostal = false, departamento = false;
+        ModificarCliente mcli;
 
-
-        public ModificarClienteSeleccionado(int user)
+        public ModificarClienteSeleccionado(int user, ModificarCliente md)
         {
+            mcli = md;
             usuarioSeleccionado = user;
             nombre = false;
             apellido = false; telefono = false; tarjeta = false;
@@ -36,8 +37,9 @@ namespace PalcoNet.Abm_Cliente
 
         private void cargarDatos()
         {
+            DBConsulta.conexionAbrir();
             DataTable dt = DBConsulta.obtenerTodosLosDatosRelevantesDe1Cliente(usuarioSeleccionado);
-
+            DBConsulta.conexionCerrar();
             labelnombre.Text = dt.Rows[0][0].ToString();
             labeApellido.Text = dt.Rows[0][1].ToString();
             labeTarjeta.Text = dt.Rows[0][2].ToString();
@@ -51,11 +53,13 @@ namespace PalcoNet.Abm_Cliente
 
             if (dt.Rows[0][10].ToString().Contains("True"))
             {
-                labelhabilitado.Text = "Estado: 1";
+                labelhabilitado.Text = "Estado: Habilitado";
+                checkBox1.Checked = true;
             }
             else
             {
-                labelhabilitado.Text = "Estado: 0";
+                labelhabilitado.Text = "Estado: Inhabilitado";
+                checkBox1.Checked = false;
             }
         }
 
@@ -80,6 +84,7 @@ namespace PalcoNet.Abm_Cliente
         // BOTON MODIFICAR LOS DATOS DEL CLIENTE
         private void button1_Click(object sender, EventArgs e)
         {
+            DBConsulta.conexionAbrir();
             camposConAlgunaModificacion();
             bool clienteTieneSet = false, domicilioTieneSet = false;
             String queryCliente = "UPDATE SQLEADOS.Cliente ";
@@ -245,9 +250,12 @@ namespace PalcoNet.Abm_Cliente
                     domicilioTieneSet = true;
                 }
             }
-            if (estado == true)
+            if (checkBox1.Checked)
             {
-                queryUser = "UPDATE SQLEADOS.Usuario SET usuario_estado = " + txtHabilitado.Text.Trim() + " where usuario_Id = " + usuarioSeleccionado;
+                queryUser = "UPDATE SQLEADOS.Usuario SET usuario_estado = " + 1 + " where usuario_Id = " + usuarioSeleccionado;
+            }
+            else {
+                queryUser = "UPDATE SQLEADOS.Usuario SET usuario_estado = " + 0 + " where usuario_Id = " + usuarioSeleccionado;
             }
 
             queryCliente += finalQueryCliente;
@@ -265,12 +273,13 @@ namespace PalcoNet.Abm_Cliente
                 DBConsulta.ModificarCliente(queryCliente);
                 //         this.Close();
             }
-            if (estado == true)
+            if (checkBox1.Checked)
             {
                 MessageBox.Show("MODIFICANDO ESTADO DE CLIENTE");
                 DBConsulta.ModificarCliente(queryUser);
             }
             cargarDatos();
+            DBConsulta.conexionCerrar();
         }
 
         private void reiniciarBooleanos()
@@ -324,20 +333,24 @@ namespace PalcoNet.Abm_Cliente
             {
                 codigopostal = true;
             }
-            if (txtHabilitado.Text.Trim() == "0")
-            {
-                estado = true;
-            }
-            if (txtHabilitado.Text.Trim() == "1")
-            {
-                estado = true;
-            }
         }
 
      
         
 
         private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void volver_boton_Click_1(object sender, EventArgs e)
+        {
+            mcli.BusquedadYLlenarGrilla();
+            mcli.Show();
+            this.Close();
+        }
+
+        private void label13_Click(object sender, EventArgs e)
         {
 
         }

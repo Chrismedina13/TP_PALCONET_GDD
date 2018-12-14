@@ -44,7 +44,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(551, 415);
+            this.btnModificar.Location = new System.Drawing.Point(1040, 414);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 34;
@@ -64,10 +64,14 @@
             // 
             // dataGriddView1
             // 
+            this.dataGriddView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGriddView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGriddView1.Location = new System.Drawing.Point(28, 196);
+            this.dataGriddView1.MultiSelect = false;
             this.dataGriddView1.Name = "dataGriddView1";
-            this.dataGriddView1.Size = new System.Drawing.Size(614, 213);
+            this.dataGriddView1.ReadOnly = true;
+            this.dataGriddView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGriddView1.Size = new System.Drawing.Size(1103, 213);
             this.dataGriddView1.TabIndex = 32;
             this.dataGriddView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGriddView1_CellContentClick);
             // 
@@ -90,7 +94,6 @@
             this.textBoxCuit.TabIndex = 29;
             this.textBoxCuit.TextChanged += new System.EventHandler(this.textBoxCuit_TextChanged);
             this.textBoxCuit.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCuit_KeyUp);
-
             // 
             // label5
             // 
@@ -110,7 +113,6 @@
             this.textBoxMail.TabIndex = 27;
             this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             this.textBoxMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMail_KeyUp);
-
             // 
             // textBoxRazonSocial
             // 
@@ -120,7 +122,6 @@
             this.textBoxRazonSocial.TabIndex = 26;
             this.textBoxRazonSocial.TextChanged += new System.EventHandler(this.textBoxRazonSocial_TextChanged);
             this.textBoxRazonSocial.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtRazonSocial_KeyUp);
-
             // 
             // label2
             // 
@@ -146,7 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 463);
+            this.ClientSize = new System.Drawing.Size(1143, 463);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dataGriddView1);

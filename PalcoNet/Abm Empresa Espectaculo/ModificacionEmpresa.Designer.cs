@@ -45,7 +45,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(34, 321);
+            this.label8.Location = new System.Drawing.Point(41, 398);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(227, 13);
             this.label8.TabIndex = 20;
@@ -53,16 +53,22 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(37, 195);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(582, 124);
+            this.dataGridView1.Size = new System.Drawing.Size(1007, 200);
             this.dataGridView1.TabIndex = 21;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(528, 347);
+            this.btnModificar.Location = new System.Drawing.Point(953, 424);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(91, 36);
             this.btnModificar.TabIndex = 23;
@@ -72,7 +78,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(37, 347);
+            this.btnVolver.Location = new System.Drawing.Point(37, 425);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(91, 35);
             this.btnVolver.TabIndex = 22;
@@ -97,7 +103,6 @@
             this.textBoxCuit.Size = new System.Drawing.Size(209, 20);
             this.textBoxCuit.TabIndex = 36;
             this.textBoxCuit.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCuit_KeyUp);
-
             // 
             // label5
             // 
@@ -115,7 +120,6 @@
             this.textBoxMail.Size = new System.Drawing.Size(209, 20);
             this.textBoxMail.TabIndex = 34;
             this.textBoxMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMail_KeyUp);
-
             // 
             // textBoxRazonSocial
             // 
@@ -147,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 385);
+            this.ClientSize = new System.Drawing.Size(1056, 473);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxCuit);
             this.Controls.Add(this.label5);

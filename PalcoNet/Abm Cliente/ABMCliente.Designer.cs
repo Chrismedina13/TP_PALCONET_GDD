@@ -37,6 +37,7 @@
             // 
             this.volver_boton.Location = new System.Drawing.Point(81, 254);
             this.volver_boton.Size = new System.Drawing.Size(131, 28);
+            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // buttonBAJACLIENTE
             // 

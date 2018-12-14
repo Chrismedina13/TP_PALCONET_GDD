@@ -80,20 +80,25 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
-            AltaCliente aclien = new AltaCliente(this, true);
+            AltaCliente aclien = new AltaCliente(this, true, null, false);
             aclien.Show();
             this.Close();
             return;
         }
 
 
+        public void terminar() {
+            MessageBox.Show("Se ha creado el usuario de rol empressa");
+            login.Show();
+            this.Close();
+        }
 
         //CREAR EMPRESA
         private void button1_Click_1(object sender, EventArgs e)
         {
-            AltaEmpresa aemp = new AltaEmpresa(0);
+            AltaEmpresa aemp = new AltaEmpresa(null, false, this);
             aemp.Show();
-            this.Close();
+            this.Hide();
             return;
         }
     }

@@ -47,8 +47,7 @@ namespace PalcoNet.ABM_Rol
         //VOLVER
         private void button4_Click(object sender, EventArgs e)
         {
-            Explorador ex = new Explorador();
-            ex.Show();
+            exx.Show();
             this.Close();
         }
 

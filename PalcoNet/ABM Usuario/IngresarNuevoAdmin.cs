@@ -32,8 +32,8 @@ namespace PalcoNet.ABM_Usuario
 
         private void buttonEmpresa_Click(object sender, EventArgs e)
         {
-            Abm_Empresa_Espectaculo.EliminarEmpresa form = new Abm_Empresa_Espectaculo.EliminarEmpresa();
-            form.Show();
+    //        Abm_Empresa_Espectaculo.EliminarEmpresa form = new Abm_Empresa_Espectaculo.EliminarEmpresa();
+            exx.Show();
             this.Close();
         }
 
@@ -44,14 +44,39 @@ namespace PalcoNet.ABM_Usuario
 
         private void botoncrear_Click(object sender, EventArgs e)
         {
+            if (textBoxcontra.Text.Trim() == "") {
+                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                return;
+            }
+            if (textBoxNombre.Text.Trim() == "")
+            {
+                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                return;
+            }
+            if (textBoxrepecontra.Text.Trim() == "")
+            {
+                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                return;
+            }
+            if (!AyudaExtra.esStringNumerico(textBoxcontra.Text)) {
+                MessageBox.Show("La contraseña debe ser numérica");
+                return;
+            }
+            if (!AyudaExtra.esStringNumerico(textBoxrepecontra.Text))
+            {
+                MessageBox.Show("La contraseña debe ser numérica");
+                return;
+            }
+
             if (textBoxcontra.Text != textBoxrepecontra.Text) {
                 MessageBox.Show("Las contraseñas no coinciden");
                 return;
             }
-            string comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('"+textBoxNombre.Text+"' , '"+textBoxcontra.Text+"', 1);";
-            DBConsulta.modificarDatosDeDB(comando);
+            string comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('"+textBoxNombre.Text+"' , "+textBoxcontra.Text+", 1);";
+            DBConsulta.AbrirCerrarModificarDB(comando);
+            String comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, rol_Id FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
+            DBConsulta.AbrirCerrarModificarDB(comando2);
+            MessageBox.Show("Se añadido el nuevo Administrador");
         }
-
-       
     }
 }

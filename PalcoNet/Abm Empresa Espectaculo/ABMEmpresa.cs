@@ -13,16 +13,19 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
     public partial class ABMEmpresa : Form
     {
         int USUARIO_ID;
-        public ABMEmpresa(int usuarioRecibido)
+        Explorador exx;
+        public ABMEmpresa(Explorador ex)
         {
+            exx = ex;
             InitializeComponent();
-            USUARIO_ID = usuarioRecibido;
+            USUARIO_ID = Usuario.ID;
         }
 
         private void buttonALTA_Click(object sender, EventArgs e)
         {
-            AltaEmpresa Aempresa = new AltaEmpresa(USUARIO_ID);
+            AltaEmpresa Aempresa = new AltaEmpresa(this, true, null);
             Aempresa.Show();
+            this.Hide();
         }
 
         private void buttonMODIFICAR_Click(object sender, EventArgs e)
@@ -39,6 +42,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void buttonVolver_Click(object sender, EventArgs e)
         {
+            exx.Show();
             this.Close();
         }
 

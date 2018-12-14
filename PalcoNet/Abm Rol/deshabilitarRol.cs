@@ -29,7 +29,7 @@ namespace PalcoNet.ABM_Rol
         }
 
         public void cargar() {
-            String status = "SELECT ROL.rol_nombre FROM SQLEADOS.ROL WHERE rol_Id != 1";
+            String status = "SELECT ROL.rol_nombre FROM SQLEADOS.ROL WHERE rol_Id > 1 AND rol_estado = 1";
             DBConsulta.conexionAbrir();
             DataTable dt = DBConsulta.obtenerConsultaEspecifica(status);
             DBConsulta.conexionCerrar();

@@ -13,8 +13,10 @@ namespace PalcoNet.Abm_Cliente
 {
     public partial class EliminarCliente : volver
     {
-        public EliminarCliente()
+        ABMCliente clie;
+        public EliminarCliente(ABMCliente abm)
         {
+            clie = abm;
             InitializeComponent();
         }
         
@@ -25,7 +27,6 @@ namespace PalcoNet.Abm_Cliente
 
         private void EliminarCliente_Load(object sender, EventArgs e)
         {
-            DBConsulta.conexionAbrir();
         }
 
       
@@ -42,6 +43,7 @@ namespace PalcoNet.Abm_Cliente
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            clie.Show();
             this.Close();
         }
 
@@ -102,8 +104,10 @@ namespace PalcoNet.Abm_Cliente
                     apellido = textBoxApellido.Text.Trim();
                 }
                 DataTable ds = new DataTable();
-                ds = DBConsulta.buscarClienteSegunCriterios2(nombre, apellido, numeroDNI, email);
+                DBConsulta.conexionAbrir();
+                ds = DBConsulta.buscarClienteSegunCriterios3(nombre, apellido, numeroDNI, email);
                 configuracionGrilla(dataGridView1, ds);
+                DBConsulta.conexionCerrar();
                 
      //           consultasSQLCliente.llenarDGVCliente(dataGridView1, nombre, apellido, numeroDNI, email);
 
@@ -142,10 +146,12 @@ namespace PalcoNet.Abm_Cliente
             }
             else
             {
-                String user = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
-                DBConsulta.darDeBajaUser(Int32.Parse(user));
+                String userId = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
+       //         DBConsulta.darDeBajaUser(Int32.Parse(user));
+                String comando =  "UPDATE SQLEADOS.Usuario SET usuario_estado = 0 WHERE usuario_Id = "+userId;
+                DBConsulta.AbrirCerrarModificarDB(comando);
                 dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
-
+                
        /*         DialogResult = DialogResult.OK;
         * */
           //      Close();
@@ -204,7 +210,7 @@ namespace PalcoNet.Abm_Cliente
 
         private void volver_boton_Click_1(object sender, EventArgs e)
         {
-            DBConsulta.conexionCerrar();
+            clie.Show();
             this.Close();
         }
 

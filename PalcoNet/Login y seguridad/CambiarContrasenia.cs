@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using PalcoNet.Login_y_seguridad;
+using PalcoNet.Support;
 
 namespace PalcoNet
 {
@@ -17,9 +18,16 @@ namespace PalcoNet
         SqlConnection coneccion;
         SqlCommand cambiar;
         String nom;
-
-        public CambiarContra(String nombre)
+        Explorador exx;
+        bool deInicio;
+        Inicio ini;
+        public CambiarContra(String nombre, Explorador ex, Inicio i, bool vieneDeInicio)
         {
+            if(vieneDeInicio) {
+                ini = i;
+            }
+            deInicio = vieneDeInicio;
+            exx = ex;
             nom = nombre;
             InitializeComponent();
             coneccion = PalcoNet.Support.Conexion.conectar();
@@ -27,9 +35,15 @@ namespace PalcoNet
 
         private void button1_Click(object sender, EventArgs e)
         {
-            PalcoNet.Explorador f2 = new PalcoNet.Explorador();
-            f2.Show();
-            this.Close();
+            if (deInicio)
+            {
+                ini.Show();
+                this.Close();
+            }
+            else {
+                exx.Show();
+                this.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -50,8 +64,23 @@ namespace PalcoNet
            String caption = "Password cambiada";
            MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
 
-           PalcoNet.Explorador f2 = new PalcoNet.Explorador();
-           f2.Show();
+           String nombre = Usuario.username;
+           String comando = "SELECT usuario_primer_ingreso FROM SQLEADOS.Usuario where usuario_nombre LIKE '" + nombre + "'";
+           DBConsulta.conexionAbrir();
+           DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+           DBConsulta.conexionCerrar();
+           //ES TIPO BIT, 1 SIGNIFICA QUE ES SU PRIMER INGRESO
+           string COSO = dt.Rows[0][0].ToString();
+           if (COSO == "True")
+           {
+               DBConsulta.conexionAbrir();
+               comando = "UPDATE SQLEADOS.Usuario SET usuario_primer_ingreso = 0  where usuario_nombre LIKE '" + nombre + "'";
+               DBConsulta.modificarDatosDeDB(comando);
+               DBConsulta.conexionCerrar();
+           }
+            
+
+           exx.Show();
            this.Close();
         }
 

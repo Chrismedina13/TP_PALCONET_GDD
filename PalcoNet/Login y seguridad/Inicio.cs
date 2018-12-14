@@ -31,6 +31,7 @@ namespace PalcoNet
             coneccion.Open();
         }
 
+        //INGRESAR
         private void button1_Click(object sender, EventArgs e)
         {
             if (validarCampos())
@@ -76,7 +77,7 @@ namespace PalcoNet
                         data = validarIntentos.ExecuteReader();
 
 
-
+                        
                         var resultadoIntentos2 = resultadoIntentos.Value;
 
                         data.Close();
@@ -237,14 +238,17 @@ namespace PalcoNet
                 
                 Usuario.Rol = rol;
                 Usuario.username = textBox1.Text;
+                String queryss = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_nombre LIKE '"+Usuario.username+"'";
+                DataTable dts = DBConsulta.AbrirCerrarObtenerConsulta(queryss);
+                Usuario.ID = Convert.ToInt32(dts.Rows[0][0].ToString());
                 if (primerLogin())
                 {
-                    CambiarContra ca = new CambiarContra(Usuario.username);
+                    CambiarContra ca = new CambiarContra(Usuario.username, new Explorador(this), this, true);
                     ca.Show();
                     this.Hide();
                 }
                 else {
-                    Explorador form = new Explorador();
+                    Explorador form = new Explorador(this);
                     form.Show();
                     this.Hide();
                 }
@@ -264,14 +268,28 @@ namespace PalcoNet
         private void button2_Click_1(object sender, EventArgs e)
         {
             Usuario.Rol = comboBox1.Text;
+            Usuario.username = textBox1.Text;
+            String queryss = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_nombre LIKE '" + Usuario.username + "'";
+            DataTable dts = DBConsulta.AbrirCerrarObtenerConsulta(queryss);
+            Usuario.ID = Convert.ToInt32(dts.Rows[0][0].ToString());
+            textBox1.Text = "";
+            textBox2.Text = "";
+            comboBox1.Visible = false;
+            button2.Visible = false;
+            label9.Visible = false;
+                
+                
             if (primerLogin())
             {
-                CambiarContra ca = new CambiarContra(Usuario.username);
+                CambiarContra ca = new CambiarContra(Usuario.username, new Explorador(this), this, true);
+                ca.Show();
+                this.Hide();
             }
-            
-            Explorador form = new Explorador();
-            form.Show();
-            this.Hide();
+            else {
+                Explorador form = new Explorador(this);
+                form.Show();
+                this.Hide();
+            }
         }
 
         private bool primerLogin() {
@@ -282,13 +300,14 @@ namespace PalcoNet
             DBConsulta.conexionCerrar();
             //ES TIPO BIT, 1 SIGNIFICA QUE ES SU PRIMER INGRESO
             string COSO = dt.Rows[0][0].ToString();
+            /*
             if (COSO == "True") {
                 DBConsulta.conexionAbrir();
                 comando = "UPDATE SQLEADOS.Usuario SET usuario_primer_ingreso = 0  where usuario_nombre LIKE '" + nombre + "'";
                 DBConsulta.modificarDatosDeDB(comando);
                 DBConsulta.conexionCerrar();
                 return true;
-            }
+            }*/
             return false;
         }
 

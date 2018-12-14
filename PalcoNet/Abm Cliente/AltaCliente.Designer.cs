@@ -415,7 +415,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(48, 242);
+            this.label5.Location = new System.Drawing.Point(47, 275);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 52;
@@ -433,7 +433,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(48, 98);
+            this.label2.Location = new System.Drawing.Point(48, 126);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 49;
@@ -532,7 +532,7 @@
             // labelContrasenia
             // 
             this.labelContrasenia.AutoSize = true;
-            this.labelContrasenia.Location = new System.Drawing.Point(47, 103);
+            this.labelContrasenia.Location = new System.Drawing.Point(46, 107);
             this.labelContrasenia.Name = "labelContrasenia";
             this.labelContrasenia.Size = new System.Drawing.Size(64, 13);
             this.labelContrasenia.TabIndex = 111113;

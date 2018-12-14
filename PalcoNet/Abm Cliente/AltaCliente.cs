@@ -17,11 +17,21 @@ namespace PalcoNet.Abm_Cliente
     {
     //    int usuario;
         RegistroUser registro;
-        bool esRegistro;
-        public AltaCliente(RegistroUser reg, bool algo)
+        bool esRegistro, esCliente;
+        ABMCliente ant;
+        public AltaCliente(RegistroUser reg, bool algo, ABMCliente anterior, bool esABMCliente)
         {
-            registro = reg;
+            esCliente = esABMCliente;
+            if (esABMCliente)
+            {
+                ant = anterior;
+            }
             esRegistro = algo;
+            if (esRegistro) {
+                registro = reg;
+            }
+            
+            
             InitializeComponent();
      //       usuario = usuarioRecibido;   
         }
@@ -143,11 +153,13 @@ namespace PalcoNet.Abm_Cliente
     //        debeSerTodoNumero(textBoxTelefono.Text, "Telefono");
 
             String tipo = "Cliente";
+            DBConsulta.conexionAbrir();
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
                 MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            DBConsulta.conexionCerrar();
        /*     if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
                 MessageBox.Show("El CUIT y el numero de documento no coindiden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -185,15 +197,21 @@ namespace PalcoNet.Abm_Cliente
                 DBConsulta.conexionCerrar();
                 return;
             }
+            DBConsulta.conexionCerrar();
+            DBConsulta.conexionAbrir();
             if (mailRepetido(mail))
             {
                 MessageBox.Show("El Email ingresado ya existe en la DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DBConsulta.conexionCerrar();
                 return;
             }
+            
+            
+            
             bool error = false;
             bool autocontra = false;
             String contraAutogenerada = autogenerarContrasenia.contraGeneradaAString();
+            
             if (textBoxContrasenia.Text.Trim() == "")
             {
                 autocontra = true;
@@ -209,10 +227,11 @@ namespace PalcoNet.Abm_Cliente
                     error = true;
                 }
             }
+            DBConsulta.conexionCerrar();
 
             if (!error)
             {
-                DBConsulta.conexionCerrar();
+                
                 if (creacionAbortada == false)
                 {
                     consultasSQLCliente.AgregarCliente(nombre, apellido, tipo_documento, numero_documento, mail, nro_tarjeta, cuit, telefono, fecha_nacimiento, DateTime.Today);
@@ -323,6 +342,12 @@ namespace PalcoNet.Abm_Cliente
         //BOTON VOLVER
         private void button1_Click(object sender, EventArgs e)
         {
+            if (esCliente) {
+                ant.Show();
+            }
+            if (esRegistro) {
+                registro.Show();
+            }
             this.Close();
         }
 

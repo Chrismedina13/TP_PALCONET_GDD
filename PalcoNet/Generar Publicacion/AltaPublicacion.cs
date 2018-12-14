@@ -13,10 +13,12 @@ namespace PalcoNet.Generar_Publicacion
 {
     public partial class AltaPublicacion : Form
     {
-        public AltaPublicacion(int usuario)
+        Explorador exx;
+        public AltaPublicacion(Explorador ex)
         {
+            exx = ex;
             InitializeComponent();
-            textBoxUsuario.Text =  Convert.ToString(usuario);
+            textBoxUsuario.Text =  Convert.ToString(Usuario.ID);
             textBoxCodigo.Text = GenerarPublicacion.obtenerCodigoPublicacion();
             GenerarPublicacion.llenarComboRubro(comboBoxRubro);
             GenerarPublicacion.llenarComboGrado(comboBoxGrado);
@@ -137,6 +139,18 @@ namespace PalcoNet.Generar_Publicacion
 
 
 
+        }
+
+        private void buttonGeneracionMAsiva_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //VOLVER
+        private void button3_Click(object sender, EventArgs e)
+        {
+            exx.Show();
+            this.Close();
         }
     }
 }

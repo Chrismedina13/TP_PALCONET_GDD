@@ -13,13 +13,16 @@ namespace PalcoNet.Abm_Grado
 {
     public partial class GradoPublicacion : Form
     {
+        Explorador exx;
         private int usuario;
-        public GradoPublicacion(int user)
+        public GradoPublicacion(Explorador ex)
         {
-            usuario = user;
+            exx = ex;
+            usuario = Usuario.ID;
             InitializeComponent();
             DBConsulta.conexionAbrir();
         }
+        //PONE A TODAS LAS PUBLICACIONES AL MISMO GRADO DE PRIORIDAD
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -38,21 +41,21 @@ namespace PalcoNet.Abm_Grado
         //BOTON ALTA PRIORIDAD
         private void button1_Click(object sender, EventArgs e)
         {
-            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 1 FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable = "+ usuario;
+            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 1 FROM SQLEADOS.Publicacion WHERE publicacion_estado ='Publicada' AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Alta");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 2 FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable = " + usuario;
+            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 2 FROM SQLEADOS.Publicacion WHERE publicacion_estado ='Publicada' AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Media");
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 3 FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable = " + usuario;
+            String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 3 FROM SQLEADOS.Publicacion WHERE publicacion_estado ='Publicada' AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Baja");
         }

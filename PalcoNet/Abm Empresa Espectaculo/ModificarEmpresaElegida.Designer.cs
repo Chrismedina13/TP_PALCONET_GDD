@@ -30,6 +30,9 @@
         {
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.textBoxLocalidad = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxCodigoPostal = new System.Windows.Forms.TextBox();
@@ -53,18 +56,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtHabilitado = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +86,6 @@
             // 
             this.groupBox1.Controls.Add(this.label22);
             this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.textBoxLocalidad);
             this.groupBox1.Controls.Add(this.label11);
@@ -108,6 +106,33 @@
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(268, 79);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(11, 13);
+            this.label22.TabIndex = 42;
+            this.label22.Text = "*";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(128, 49);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(11, 13);
+            this.label21.TabIndex = 42;
+            this.label21.Text = "*";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(350, 21);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(11, 13);
+            this.label19.TabIndex = 42;
+            this.label19.Text = "*";
             // 
             // textBoxLocalidad
             // 
@@ -298,23 +323,6 @@
             this.label12.TabIndex = 26;
             this.label12.Text = "Modifique datos:";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(25, 437);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(152, 13);
-            this.label13.TabIndex = 37;
-            this.label13.Text = "(1: habilitado / 0:deshabilitado)";
-            // 
-            // txtHabilitado
-            // 
-            this.txtHabilitado.Location = new System.Drawing.Point(96, 407);
-            this.txtHabilitado.MaxLength = 1;
-            this.txtHabilitado.Name = "txtHabilitado";
-            this.txtHabilitado.Size = new System.Drawing.Size(181, 20);
-            this.txtHabilitado.TabIndex = 36;
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -360,63 +368,46 @@
             this.label18.TabIndex = 41;
             this.label18.Text = "*";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(350, 21);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(11, 13);
-            this.label19.TabIndex = 42;
-            this.label19.Text = "*";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(174, 62);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(11, 13);
-            this.label20.TabIndex = 43;
-            this.label20.Text = "*";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(128, 49);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(11, 13);
-            this.label21.TabIndex = 42;
-            this.label21.Text = "*";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(268, 79);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(11, 13);
-            this.label22.TabIndex = 42;
-            this.label22.Text = "*";
-            // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(283, 407);
+            this.label23.Location = new System.Drawing.Point(121, 409);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(11, 13);
             this.label23.TabIndex = 44;
             this.label23.Text = "*";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(138, 413);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(193, 13);
+            this.label20.TabIndex = 53;
+            this.label20.Text = "(Lleno: habilitado / Vacio:deshabilitado)";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(90, 409);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(29, 17);
+            this.checkBox1.TabIndex = 62;
+            this.checkBox1.Text = " ";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // ModificarEmpresaElegida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 495);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.txtHabilitado);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.buttonAgregar);
@@ -448,14 +439,14 @@
             this.Controls.SetChildIndex(this.buttonAgregar, 0);
             this.Controls.SetChildIndex(this.label12, 0);
             this.Controls.SetChildIndex(this.label14, 0);
-            this.Controls.SetChildIndex(this.txtHabilitado, 0);
-            this.Controls.SetChildIndex(this.label13, 0);
             this.Controls.SetChildIndex(this.volver_boton, 0);
             this.Controls.SetChildIndex(this.label15, 0);
             this.Controls.SetChildIndex(this.label16, 0);
             this.Controls.SetChildIndex(this.label17, 0);
             this.Controls.SetChildIndex(this.label18, 0);
             this.Controls.SetChildIndex(this.label23, 0);
+            this.Controls.SetChildIndex(this.label20, 0);
+            this.Controls.SetChildIndex(this.checkBox1, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -480,8 +471,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxCalle;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtHabilitado;
         private System.Windows.Forms.Label label14;
         public System.Windows.Forms.TextBox textBoxCuit;
         public System.Windows.Forms.TextBox textBoxCiudad;
@@ -494,7 +483,6 @@
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
@@ -502,5 +490,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

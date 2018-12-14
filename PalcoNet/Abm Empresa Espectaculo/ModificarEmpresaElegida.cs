@@ -24,7 +24,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             textBoxCiudad.Text = datos[0];
             textBoxTelefono.Text = datos[1];
-            txtHabilitado.Text = datos[2];
+            if (datos[2] == "1")
+            {
+                checkBox1.Checked = true;
+            }
+            else {
+                checkBox1.Checked = false;
+            }
             textBoxCalle.Text = datos[3];
             textBoxNroCalle.Text = datos[4];
             textBoxPiso.Text = datos[5];
@@ -43,8 +49,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
 
-            if (textBoxRazonSocial.Text.Trim() == " " | textBoxCuit.Text.Trim() == " " | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == " "
-                | textBoxCodigoPostal.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | txtHabilitado.Text.Trim() == " ")
+            if (textBoxRazonSocial.Text.Trim() == "" | textBoxCuit.Text.Trim() == "" | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == ""
+                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "")
             {
 
                 MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -67,11 +73,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (txtHabilitado.Text != "1" && txtHabilitado.Text != "0")
-            {
-                MessageBox.Show("Sólo se permiten como estado 0 o 1", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             String razonSocial = textBoxRazonSocial.Text;
             String cuit = textBoxCuit.Text;
@@ -84,8 +85,14 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             String dto = textBoxDto.Text;
             int piso = Convert.ToInt32(textBoxPiso.Text);
             String localidad = textBoxLocalidad.Text;
-            int estado = Convert.ToInt32(txtHabilitado.Text);
-            
+            int estado;
+            if (checkBox1.Checked)
+            {
+                estado = 1;
+            }
+            else {
+                estado = 0;
+            }
             ConsultasSQLEmpresa.modificarEmpresa(razonSocial, cuit, ciudad, mail, telefono,estado);
             ConsultasSQLEmpresa.modificarEmpresaDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, cuit, razonSocial);
             this.limpiarCuadrosDeTexto();
@@ -106,7 +113,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             textBoxPiso.Text = "";
             textBoxLocalidad.Text = "";
             textBoxCuit.Text = "";
-            txtHabilitado.Text = "";
+//            txtHabilitado.Text = "";
         }
 
         private void ModificarEmpresaElegida_Load(object sender, EventArgs e)

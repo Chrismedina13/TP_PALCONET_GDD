@@ -45,7 +45,9 @@
             // 
             // volver_boton
             // 
-            this.volver_boton.Location = new System.Drawing.Point(19, 447);
+            this.volver_boton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.volver_boton.Location = new System.Drawing.Point(19, 433);
+            this.volver_boton.Size = new System.Drawing.Size(134, 37);
             this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // dataGridView1
@@ -61,6 +63,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(19, 202);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(865, 225);
             this.dataGridView1.TabIndex = 65;
@@ -151,10 +154,11 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(809, 447);
+            this.botonModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.botonModificar.Location = new System.Drawing.Point(751, 433);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.botonModificar.Size = new System.Drawing.Size(75, 23);
+            this.botonModificar.Size = new System.Drawing.Size(133, 37);
             this.botonModificar.TabIndex = 66;
             this.botonModificar.Text = "MODIFICAR";
             this.botonModificar.UseVisualStyleBackColor = true;

@@ -129,14 +129,14 @@ namespace PalcoNet.ABM_Rol
 
        
         
-        private void cargarFuncionalidadesPorRol(String rol) {
-
+        private void cargarFuncionalidadesPorRol(String rol) 
+        {
             List<String> funcionalidades = new List<string>();
             listBox2.Items.Clear();
             funcionesViejas.Clear();
             funcionalidades.Clear();
             funcion.Clear();
-            String comando = "SELECT funcionalidad_descripcion FROM SQLEADOS.Rol JOIN SQLEADOS.FuncionalidadXRol ON funcionalidadXRol_rol = rol_Id JOIN SQLEADOS.Funcionalidad ON funcionalidad_Id = funcionalidadXRol_funcionalidad";
+            String comando = "SELECT funcionalidad_descripcion FROM SQLEADOS.Rol JOIN SQLEADOS.FuncionalidadXRol ON funcionalidadXRol_rol = rol_Id JOIN SQLEADOS.Funcionalidad ON funcionalidad_Id = funcionalidadXRol_funcionalidad WHERE rol_nombre LIKE '" + rol + "'";
             DBConsulta.conexionAbrir();
             DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
             DBConsulta.conexionCerrar();

@@ -2228,3 +2228,14 @@ values ('SANCOR','12-34567891-12','asdf','ASDFA@gmail.com',123,0,'12/12/2018 0:0
 SELECT TOP 1 * FROM SQLEADOS.Empresa order by empresa_usuario ASC
 
 SELECT TOP 1*/
+
+SELECT * FROM SQLEADOS.ROL
+
+SELECT funcionalidad_descripcion FROM SQLEADOS.Funcionalidad
+
+SELECT * FROM SQLEADOS.
+
+SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
+
+ SELECT usuario_estado FROM SQLEADOS.Usuario order by usuario_Id desc 
+ SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario

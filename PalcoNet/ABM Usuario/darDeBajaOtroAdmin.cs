@@ -32,8 +32,8 @@ namespace PalcoNet.ABM_Usuario
         }
 
         private void llenarGrilla() {
-            String comando = "SELECT usuario_Id ,usuario_nombre FROM SQLEADOS.Usuario where usuario_administrador = 1 AND usuario_nombre NOT LIKE  '" + Usuario.username + "'";
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
+            String comando = "SELECT usuario_Id as 'ID' ,usuario_nombre as 'Nombre usuario', CASE WHEN usuario_estado = 1 THEN 'SI' ELSE 'NO' END as 'Habilitado' FROM SQLEADOS.Usuario where usuario_administrador = 1 AND usuario_nombre NOT LIKE  '" + Usuario.username + "'";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(comando);
             dataGridView1.DataSource = dt;
         }
 
@@ -42,7 +42,20 @@ namespace PalcoNet.ABM_Usuario
         {
             String id = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             String comando = "UPDATE SQLEADOS.Usuario SET usuario_estado = 0 where usuario_Id = " + id;
-            DBConsulta.modificarDatosDeDB(comando);
+            DBConsulta.AbrirCerrarModificarDB(comando);
+            llenarGrilla();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            String id = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+            String comando = "UPDATE SQLEADOS.Usuario SET usuario_estado = 1 where usuario_Id = " + id;
+            DBConsulta.AbrirCerrarModificarDB(comando);
             llenarGrilla();
         }
     }

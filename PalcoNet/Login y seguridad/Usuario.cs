@@ -10,5 +10,6 @@ namespace PalcoNet
     {
         public static String username;
         public static String Rol;
+        public static int ID;
     }
 }

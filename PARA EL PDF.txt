@@ -60,4 +60,11 @@ y evitar que el programa se rompa en caso de que se resuelvan mal los mismos.
 
 La fecha de publicacion se toma como la fecha actual que se crea la publicacion
 
-La fecha del espectaculo es editable la fecha y la hora, haciendo click y con las fechas arriba y abajo se puede editar cada valor de la fecha y hora
+La fecha del espectaculo es editable la fecha y la hora, haciendo click y con 
+las fechas arriba y abajo se puede editar cada valor de la fecha y hora
+
+Al ingresar un nuevo cliente o empresa. El CUIT o CUIL tomará como 1º código
+los primeros 2 dígitos, y como código final tomará los siguientes 1 o 2
+dígitos luego de haber leido el contenido del medio. En el caso del 
+cliente luego de corroborar que el número de documento está en el CUIL, y en 
+el caso de la empresa tomará siempre los últimos 2 dígitos.

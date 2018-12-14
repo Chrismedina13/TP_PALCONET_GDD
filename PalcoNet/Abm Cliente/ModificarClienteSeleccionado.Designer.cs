@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label13 = new System.Windows.Forms.Label();
-            this.txtHabilitado = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxTelefono = new System.Windows.Forms.TextBox();
@@ -65,6 +64,7 @@
             this.labeTarjeta = new System.Windows.Forms.Label();
             this.labeTelefono = new System.Windows.Forms.Label();
             this.labeApellido = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,22 +73,17 @@
             this.volver_boton.Location = new System.Drawing.Point(12, 394);
             this.volver_boton.Size = new System.Drawing.Size(105, 39);
             this.volver_boton.TabIndex = 15;
+            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(114, 208);
+            this.label13.Location = new System.Drawing.Point(93, 209);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(152, 13);
+            this.label13.Size = new System.Drawing.Size(193, 13);
             this.label13.TabIndex = 52;
-            this.label13.Text = "(1: habilitado / 0:deshabilitado)";
-            // 
-            // txtHabilitado
-            // 
-            this.txtHabilitado.Location = new System.Drawing.Point(71, 205);
-            this.txtHabilitado.Name = "txtHabilitado";
-            this.txtHabilitado.Size = new System.Drawing.Size(37, 20);
-            this.txtHabilitado.TabIndex = 11;
+            this.label13.Text = "(Lleno: habilitado / Vacio:deshabilitado)";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // label14
             // 
@@ -282,6 +277,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.labellocalidad);
             this.groupBox1.Controls.Add(this.textBoxLocalidad);
             this.groupBox1.Controls.Add(this.label11);
@@ -289,7 +285,6 @@
             this.groupBox1.Controls.Add(this.labelcodepostal);
             this.groupBox1.Controls.Add(this.textBoxCodigoPostal);
             this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.txtHabilitado);
             this.groupBox1.Controls.Add(this.labeldto);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.textBoxDto);
@@ -433,6 +428,16 @@
             this.labeApellido.Size = new System.Drawing.Size(150, 20);
             this.labeApellido.TabIndex = 58;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(71, 208);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(29, 17);
+            this.checkBox1.TabIndex = 61;
+            this.checkBox1.Text = " ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // ModificarClienteSeleccionado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -482,7 +487,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txNroTarjeta;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtHabilitado;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
         public System.Windows.Forms.TextBox textBoxTelefono;
@@ -518,5 +522,6 @@
         private System.Windows.Forms.Label labeTarjeta;
         private System.Windows.Forms.Label labeTelefono;
         private System.Windows.Forms.Label labeApellido;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
