@@ -17,11 +17,10 @@ namespace PalcoNet.Historial_Cliente
         private int paginaActual;
         private int ultimaHoja;
         private int totalVistoPorPagina = 10;
-        Explorador exx;
-        public Historial(Explorador ex)
+
+        public Historial(int user)
         {
-            exx = ex;
-            userID = Usuario.ID;
+            userID = user;
             paginaActual = 1;
             InitializeComponent();
             DBConsulta.conexionAbrir();
