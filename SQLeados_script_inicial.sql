@@ -395,7 +395,8 @@ publicacion_puntaje_venta int not null default 100, -- DEFAULT 100 ES ARBITRARIO
 pubicacion_putaje_compra int not null default 30, -- DEFAULT 30 ES ARBITRARIO (Cantidad de puntos que necesitas para comprarlo)
 publicacion_fecha datetime not null,
 publicacion_fecha_venc datetime not null,		--NUEVO CAMPO
-publicacion_estado_validacion int default 0		--NUEVO CAMPO
+publicacion_estado_validacion int default 0,		--NUEVO CAMPO
+publicacion_direccion varchar(255)
 )
 PRINT('Tabla creada: Publicacion') 
 
@@ -2249,3 +2250,5 @@ SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
  SELECT usuario_estado FROM SQLEADOS.Usuario order by usuario_Id desc 
  SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario
  */
+
+ select * from SQLEADOS.GradoPrioridad

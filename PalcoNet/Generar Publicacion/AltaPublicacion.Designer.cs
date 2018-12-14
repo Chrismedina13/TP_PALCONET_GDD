@@ -52,6 +52,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.dateTimePickerFechaPublicacion = new System.Windows.Forms.DateTimePicker();
             this.button3 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBoxDireccion = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -75,7 +77,7 @@
             // 
             // textBoxDescripcion
             // 
-            this.textBoxDescripcion.Location = new System.Drawing.Point(135, 68);
+            this.textBoxDescripcion.Location = new System.Drawing.Point(98, 60);
             this.textBoxDescripcion.Name = "textBoxDescripcion";
             this.textBoxDescripcion.Size = new System.Drawing.Size(429, 20);
             this.textBoxDescripcion.TabIndex = 2;
@@ -83,7 +85,7 @@
             // Descripcion
             // 
             this.Descripcion.AutoSize = true;
-            this.Descripcion.Location = new System.Drawing.Point(25, 71);
+            this.Descripcion.Location = new System.Drawing.Point(26, 67);
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.Size = new System.Drawing.Size(66, 13);
             this.Descripcion.TabIndex = 3;
@@ -92,7 +94,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 117);
+            this.label2.Location = new System.Drawing.Point(25, 149);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 5;
@@ -100,7 +102,7 @@
             // 
             // dateTimePickerFechaEspectaculo
             // 
-            this.dateTimePickerFechaEspectaculo.Location = new System.Drawing.Point(147, 157);
+            this.dateTimePickerFechaEspectaculo.Location = new System.Drawing.Point(147, 189);
             this.dateTimePickerFechaEspectaculo.Name = "dateTimePickerFechaEspectaculo";
             this.dateTimePickerFechaEspectaculo.Size = new System.Drawing.Size(234, 20);
             this.dateTimePickerFechaEspectaculo.TabIndex = 6;
@@ -108,7 +110,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 163);
+            this.label3.Location = new System.Drawing.Point(25, 195);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 13);
             this.label3.TabIndex = 7;
@@ -118,7 +120,7 @@
             // 
             this.comboBoxRubro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRubro.FormattingEnabled = true;
-            this.comboBoxRubro.Location = new System.Drawing.Point(143, 214);
+            this.comboBoxRubro.Location = new System.Drawing.Point(143, 246);
             this.comboBoxRubro.Name = "comboBoxRubro";
             this.comboBoxRubro.Size = new System.Drawing.Size(142, 21);
             this.comboBoxRubro.TabIndex = 8;
@@ -126,7 +128,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 222);
+            this.label4.Location = new System.Drawing.Point(25, 254);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 9;
@@ -136,7 +138,7 @@
             // 
             this.comboBoxGrado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGrado.FormattingEnabled = true;
-            this.comboBoxGrado.Location = new System.Drawing.Point(143, 259);
+            this.comboBoxGrado.Location = new System.Drawing.Point(143, 291);
             this.comboBoxGrado.Name = "comboBoxGrado";
             this.comboBoxGrado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxGrado.TabIndex = 10;
@@ -144,7 +146,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 267);
+            this.label5.Location = new System.Drawing.Point(25, 299);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 13);
             this.label5.TabIndex = 11;
@@ -175,7 +177,7 @@
             "Borrador",
             "Activa",
             "Finalizada"});
-            this.comboBoxEstado.Location = new System.Drawing.Point(143, 309);
+            this.comboBoxEstado.Location = new System.Drawing.Point(143, 341);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(142, 21);
             this.comboBoxEstado.TabIndex = 14;
@@ -184,7 +186,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 317);
+            this.label7.Location = new System.Drawing.Point(25, 349);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 15;
@@ -193,7 +195,7 @@
             // dataGridViewUbicaciones
             // 
             this.dataGridViewUbicaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewUbicaciones.Location = new System.Drawing.Point(441, 121);
+            this.dataGridViewUbicaciones.Location = new System.Drawing.Point(448, 149);
             this.dataGridViewUbicaciones.Name = "dataGridViewUbicaciones";
             this.dataGridViewUbicaciones.ReadOnly = true;
             this.dataGridViewUbicaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -203,7 +205,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(457, 105);
+            this.label8.Location = new System.Drawing.Point(464, 133);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(178, 13);
             this.label8.TabIndex = 17;
@@ -232,7 +234,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(441, 333);
+            this.dataGridView1.Location = new System.Drawing.Point(448, 361);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(504, 150);
@@ -241,7 +243,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(457, 316);
+            this.label9.Location = new System.Drawing.Point(464, 344);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(142, 13);
             this.label9.TabIndex = 21;
@@ -249,7 +251,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(651, 286);
+            this.button2.Location = new System.Drawing.Point(658, 314);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 37);
             this.button2.TabIndex = 22;
@@ -260,7 +262,7 @@
             // dateTimePickerFechaPublicacion
             // 
             this.dateTimePickerFechaPublicacion.Enabled = false;
-            this.dateTimePickerFechaPublicacion.Location = new System.Drawing.Point(147, 111);
+            this.dateTimePickerFechaPublicacion.Location = new System.Drawing.Point(147, 143);
             this.dateTimePickerFechaPublicacion.Name = "dateTimePickerFechaPublicacion";
             this.dateTimePickerFechaPublicacion.Size = new System.Drawing.Size(234, 20);
             this.dateTimePickerFechaPublicacion.TabIndex = 23;
@@ -275,11 +277,29 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(26, 108);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(55, 13);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "Direccion:";
+            // 
+            // textBoxDireccion
+            // 
+            this.textBoxDireccion.Location = new System.Drawing.Point(98, 101);
+            this.textBoxDireccion.Name = "textBoxDireccion";
+            this.textBoxDireccion.Size = new System.Drawing.Size(429, 20);
+            this.textBoxDireccion.TabIndex = 25;
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 519);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.textBoxDireccion);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.dateTimePickerFechaPublicacion);
             this.Controls.Add(this.button2);
@@ -340,5 +360,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaPublicacion;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBoxDireccion;
     }
 }

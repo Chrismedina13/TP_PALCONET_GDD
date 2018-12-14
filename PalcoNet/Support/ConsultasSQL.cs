@@ -907,7 +907,73 @@ namespace PalcoNet.Support
             connection.Close();
         }
 
- 
+
+        internal static string idRubro(string rubro)
+        {
+            string idRubro;
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand CPexistente = new SqlCommand("SELECT rubro_id FROM [GD2C2018].[SQLEADOS].[Rubro] WHERE rubro_descripcion = @rubro");
+            CPexistente.Parameters.AddWithValue("rubro", rubro);
+            CPexistente.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = CPexistente.ExecuteReader();
+            reader.Read();
+
+        
+            idRubro = reader["rubro_id"].ToString();    
+            
+
+            connection.Close();
+            return idRubro;
+        }
+
+        internal static string idGrado(string grado)
+        {
+            string idGrado;
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand CPexistente = new SqlCommand("SELECT grado_id FROM [GD2C2018].[SQLEADOS].[GradoPrioridad] WHERE grado_nombre = @grado");
+            CPexistente.Parameters.AddWithValue("grado", grado);
+            CPexistente.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = CPexistente.ExecuteReader();
+            reader.Read();
+
+
+            idGrado = reader["grado_id"].ToString();
+
+
+            connection.Close();
+            return idGrado;
+        }
+
+
+        internal static void insertarPublicacion(string codigo, string usuario, string rubroElegido, string gradoPublicacion, string descripcion, int cantidadDeUbicaciones, string estadoPublicacion, DateTime fechaPublicacion, DateTime fechaEspectaculo, string direccion)
+        {
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand insertPublicacion = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[Publicacion] (publicacion_usuario_responsable,publicacion_rubro,publicacion_grado,publicacion_descripcion,publicacion_stock,publicacion_estado,publicacion_puntaje_venta,pubicacion_putaje_compra,publicacion_fecha,publicacion_fecha_venc,publicacion_estado_validacion,publicacion_direccion) values (@usuario,@rubroElegido,@gradoPublicacion,@descripcion,@cantidadDeUbicaciones,@estadoPublicacion,100,30,@fechaPublicacion,@fechaEspectaculo,1,@direccion)");
+            insertPublicacion.Parameters.AddWithValue("usuario", usuario);
+
+            insertPublicacion.Parameters.AddWithValue("rubroElegido", rubroElegido);
+            insertPublicacion.Parameters.AddWithValue("gradoPublicacion", gradoPublicacion);
+            insertPublicacion.Parameters.AddWithValue("cantidadDeUbicaciones", cantidadDeUbicaciones);
+            insertPublicacion.Parameters.AddWithValue("estadoPublicacion", estadoPublicacion);
+            insertPublicacion.Parameters.AddWithValue("fechaPublicacion", fechaPublicacion);
+            insertPublicacion.Parameters.AddWithValue("fechaEspectaculo", fechaEspectaculo);
+            insertPublicacion.Parameters.AddWithValue("direccion", direccion);
+            insertPublicacion.Parameters.AddWithValue("descripcion", descripcion);
+
+
+            insertPublicacion.Connection = connection;
+            connection.Open();
+            int registrosModificados = insertPublicacion.ExecuteNonQuery();
+            connection.Close();
+            if (registrosModificados > 0) MessageBox.Show("Publicacion ingreada correctamente", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
     }
 
 

@@ -137,7 +137,27 @@ namespace PalcoNet.Generar_Publicacion
             
             }
 
+            string rubroElegido = GenerarPublicacion.idRubro(comboBoxRubro.SelectedItem.ToString());
 
+            string gradoPublicacion = GenerarPublicacion.idGrado(comboBoxGrado.SelectedItem.ToString());
+
+            int cantidadDeUbicaciones = dataGridView1.Rows.Count - 1 ;
+
+            string estadoPublicacion = comboBoxEstado.SelectedItem.ToString();
+
+
+            DateTime fechaPublicacion = dateTimePickerFechaPublicacion.Value;
+
+            DateTime fechaEspectaculo =dateTimePickerFechaEspectaculo.Value;
+
+            
+
+
+
+            GenerarPublicacion.insertarPublicacion(textBoxCodigo.Text,textBoxUsuario.Text,rubroElegido,gradoPublicacion,textBoxDescripcion.Text
+                ,cantidadDeUbicaciones,estadoPublicacion,fechaPublicacion,fechaEspectaculo,textBoxDireccion.Text);
+
+            this.Close();
 
         }
 
