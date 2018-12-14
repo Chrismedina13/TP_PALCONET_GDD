@@ -140,8 +140,14 @@ namespace PalcoNet
                 altaPubl.Show();
                 this.Hide();
             }
+            if (vista == "Historial de cliente")
+            {
+                PalcoNet.Historial_Cliente.Historial history = new PalcoNet.Historial_Cliente.Historial(this);
+                history.Show();
+                this.Hide();
+            }
         }
-
+        
 
 
     }

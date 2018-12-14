@@ -2229,6 +2229,15 @@ SELECT TOP 1 * FROM SQLEADOS.Empresa order by empresa_usuario ASC
 
 SELECT TOP 1*/
 
+-- HARDCODEAR LAS CONTRAS DE LAS EMPRESAS
+
+UPDATE SQLEADOS.Usuario
+SET usuario_password = HASHBYTES('SHA2_256', '123')
+WHERE usuario_Id < 15
+
+/*
+SELECT * FROM SQLEADOS.Usuario
+
 SELECT * FROM SQLEADOS.ROL
 
 SELECT funcionalidad_descripcion FROM SQLEADOS.Funcionalidad
@@ -2239,3 +2248,4 @@ SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
 
  SELECT usuario_estado FROM SQLEADOS.Usuario order by usuario_Id desc 
  SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario
+ */
