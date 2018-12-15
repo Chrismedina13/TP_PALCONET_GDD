@@ -169,6 +169,7 @@ namespace PalcoNet
             if (vista == "Generar rendicion de comisiones")
             {
                 PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones factura = new PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones(this);
+                factura.entrar();
                 factura.Show();
                 this.Hide();
             }
