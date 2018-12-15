@@ -166,12 +166,13 @@ namespace PalcoNet
                 this.Hide();
             }
 
-            if (vista == "Editar Publicacion")
+            if (vista == "Generar rendicion de comisiones")
             {
-                PalcoNet.Editar_Publicacion.EditarPublicacion editPublicacion = new PalcoNet.Editar_Publicacion.EditarPublicacion(this);
-                editPublicacion.Show();
+                PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones factura = new PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones(this);
+                factura.Show();
                 this.Hide();
             }
+
         }
         
 

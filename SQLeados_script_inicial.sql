@@ -26,7 +26,6 @@ PRINT('Eliminacion de Constraints anteriores')
 	EXEC  (@Sql)
 	PRINT('Eliminacion HECHA') 
 	/*
-
 	*/
 -------------------------------------
 --		ELIMINACION DE TABLAS
@@ -412,13 +411,16 @@ PRINT('Tabla creada: ubicacionXpublicacion')
 
 --TABLA NUEVA
 create table [SQLEADOS].Factura(
+
 factura_nro int primary key ,
 factura_empresa_cuit nvarchar(255),
 factura_empresa_razon_social varchar(255),
+factura_publicacion int,
 factura_fecha datetime,
 factura_total decimal(14,2) not null CHECK (factura_total>0),
 factura_forma_de_pago nvarchar(255),
 FOREIGN KEY (factura_empresa_cuit, factura_empresa_razon_social) REFERENCES [SQLEADOS].Empresa(empresa_cuit, empresa_razon_social),
+FOREIGN KEY (factura_publicacion) REFERENCES [SQLEADOS].Publicacion(publicacion_codigo),
 )
 PRINT('Tabla creada: Factura') 
 
@@ -828,7 +830,6 @@ ubiXpubli_Ubicacion int references [SQLEADOS].Ubicacion,
 ubiXpubli_Publicacion int references [SQLEADOS].Publicacion,
 ubiXpubli_precio int 
 )
-
 create table [SQLEADOS].Publicacion(
 publicacion_codigo int primary key identity(12353,1),
 publicacion_usuario_responsable int references [SQLEADOS].Usuario,
@@ -869,10 +870,10 @@ PRINT('HECHO')
 --Factura
 PRINT('MIGRANDO Factura') 
 GO
-insert into [SQLEADOS].Factura(factura_nro, factura_empresa_cuit, 
+insert into [SQLEADOS].Factura(factura_publicacion, factura_nro, factura_empresa_cuit, 
 								factura_empresa_razon_social, factura_fecha, 
 								factura_total, factura_forma_de_pago)
-	select distinct Factura_Nro, Espec_Empresa_Cuit, Espec_Empresa_Razon_Social, Factura_Fecha, Factura_Total, Forma_Pago_Desc
+	select distinct Espectaculo_Cod, Factura_Nro, Espec_Empresa_Cuit, Espec_Empresa_Razon_Social, Factura_Fecha, Factura_Total, Forma_Pago_Desc
 	from gd_esquema.Maestra
 	where Factura_Nro is not null
 	order by 1
@@ -987,7 +988,6 @@ PRINT('HECHO')
 
 /*
 PRINT('func_coincide_fecha_creacion HECHA') 
-
 CREATE FUNCTION SQLEADOS.func_coincide_fecha_creacion (@fechaUser datetime, @fechaBuscada datetime)
 RETURNS int 
 AS 
@@ -1091,7 +1091,6 @@ for insert as
 			@clienteNombre = c.cliente_nombre,
 			@clienteApellido = c.cliente_apellido
 			from SQLEADOS.Cliente c 
-
 		SELECT TOP 1
 			@userID = u.usuario_Id
 			from SQLEADOS.Usuario u WHERE u.usuario_nombre LIKE @clienteNombre+'_'+@clienteApellido+'%' order by u.usuario_Id desc
@@ -1118,7 +1117,6 @@ for insert as
 			@clienteNombre = c.cliente_nombre,
 			@clienteApellido = c.cliente_apellido
 			from SQLEADOS.Cliente c 
-
 		SELECT TOP 1
 			@userID = u.usuario_Id
 			from SQLEADOS.Usuario u WHERE u.usuario_nombre LIKE @clienteNombre+'_'+@clienteApellido+'%' order by u.usuario_Id desc
@@ -1577,7 +1575,6 @@ print('PROCEDURE [crearNuevoCliente]: OK')
 
 /*
 select * from SQLEADOS.Cliente where cliente_nombre LIKE 'dam%'
-
 select usuario_nombre, c.usuarioXRol_rol, r.rol_nombre  from SQLEADOS.Usuario u 
 	JOIN SQLEADOS.UsuarioXRol c ON c.usuarioXRol_usuario = u.usuario_Id 
 	JOIN SQLEADOS.Rol r ON r.rol_Id = c.usuarioXRol_rol order by usuario_Id desc
@@ -1968,14 +1965,11 @@ print('PROCEDURE [cargarDatosDeCompra]: OK')
 SELECT ux.ubiXpubli_ID as 'ID', p.publicacion_descripcion as 'Espectáculo',
 	u.ubicacion_asiento as 'Asiento', u.ubicacion_fila as 'Fila', u.ubicacion_Tipo_Descripcion as 'Tipo ubicación',
 	r.rubro_descripcion as 'Categoría', p.publicacion_fecha_venc as 'Fecha de evento', ux.ubiXpubli_precio as 'Precio en $'
-
 	FROM SQLEADOS.ubicacionXpublicacion ux
 	JOIN SQLEADOS.Publicacion p ON p.publicacion_codigo = ux.ubiXpubli_Publicacion
 	JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ux.ubiXpubli_Ubicacion
 	JOIN SQLEADOS.Rubro r ON r.rubro_id = p.publicacion_rubro
-
 SELECT cliente_datos_tarjeta FROM SQLEADOS.Cliente JOIN SQLEADOS.Usuario ON usuario_Id = cliente_usuario
-
 */
 
 --IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[obtenerTotalPublicacionesParaCompra]'))
@@ -2110,12 +2104,9 @@ insert into SQLEADOS.Usuario(usuario_nombre, usuario_password,usuario_estado, us
 HASHBYTES('SHA2_256', '1234'),
 1,
 1)
-
 insert into SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
 select r.rol_Id, u.usuario_Id from SQLEADOS.Usuario u, SQLEADOS.Rol r where r.rol_nombre in ('Cliente') AND u.usuario_nombre LIKE ('ricardo%')
-
 select * from SQLEADOS.Usuario order by usuario_Id desc
-
 select * from SQLEADOS.UsuarioXRol order by usuarioXRol_usuario desc
 */
 
@@ -2145,18 +2136,15 @@ select
 	usuario_Id
 	from SQLEADOS.Rol, SQLEADOS.Usuario
 		where usuario_nombre LIKE 'prueba'
-
 */
 /*
 select TOP 1 c.cliente_nombre, cliente_apellido, co.compra_id, co.compra_cantidad from SQLEADOS.Cliente c
 	JOIN SQLEADOS.Compra co ON co.compra_cliente_numero_documento = c.cliente_numero_documento
 						AND co.compra_cliente_tipo_documento LIKE c.cliente_tipo_documento
 						ORDER BY co.compra_id DESC
-
 Select punt_id ,punt_puntaje, punt_fecha_vencimiento ,cliente_datos_tarjeta, cliente_numero_documento, cliente_tipo_documento from SQLEADOS.puntaje JOIN SQLEADOS.Cliente c ON c.cliente_numero_documento = punt_cliente_numero_documento
 										AND c.cliente_tipo_documento LIKE punt_cliente_tipo_documento AND c.cliente_usuario =291
 							ORDER BY punt_id desc
-
 SELECT cliente_datos_tarjeta FROM SQLEADOS.Cliente WHERE cliente_usuario = 291
 		/*						JOIN SQLEADOS.Compra co ON co.compra_cliente_numero_documento = c.cliente_numero_documento
 						AND co.compra_cliente_tipo_documento LIKE c.cliente_tipo_documento
@@ -2182,20 +2170,14 @@ SELECT
 		ELSE 'NO'
 		END AS 'Se puede modificar'
 	FROM SQLEADOS.Publicacion
-
 SELECT publicacion_estado as 'ESTADO', publicacion_fecha_venc as 'FECHA', g.grado_nombre as 'GRADO', 
 	r.rubro_descripcion as 'Rubro', publicacion_puntaje_venta as 'PUNTAJE'
 	FROM SQLEADOS.Publicacion 
 		JOIN SQLEADOS.Rubro r ON r.rubro_id = publicacion_rubro
 		JOIN SQLEADOS.GradoPrioridad G on G.grado_id = publicacion_grado
 	where publicacion_codigo = 7000
-
 SELECT rubro_id FROM SQLEADOS.Rubro where rubro_descripcion LIKE
-
-
-
 SELECT TOP 1 * FROM SQLEADOS.Publicacion where publicacion_codigo = 13414 order by publicacion_codigo asc
-
 SELECT publicacion_fecha_venc
 	FROM SQLEADOS.Publicacion
 	*/
@@ -2204,30 +2186,20 @@ UPDATE SQLEADOS.Publicacion
 SET publicacion_grado = 1
 FROM SQLEADOS.Publicacion
 	WHERE publicacion_usuario_responsable = user
-
 SELECT * from SQLEADOS.Publicacion where publicacion_usuario_responsable = 11
 */
 /*
-
 DELETE FROM SQLEADOS.UsuarioXRol where usuarioXRol_usuario = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
 DELETE FROM SQLEADOS.Usuario where usuario_Id = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
-
-
 SELECT top 2 *
 	FROM SQLEADOS.Usuario order by usuario_Id DESC
-
 SELECT * FROM SQLEADOS.Cliente order by cliente_id DESC
-
 SELECT * FROM SQLEADOS.UsuarioXRol where usuarioXRol_usuario = (SELECT top 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC)
-
 SELECT DISTINCT ubicacion_asiento as 'ASIENTO', ubicacion_fila AS 'FILA'
 	FROM SQLEADOS.Ubicacion order by 1 ASC, 2 ASC
-
 insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) 
 values ('SANCOR','12-34567891-12','asdf','ASDFA@gmail.com',123,0,'12/12/2018 0:00:00')
-
 SELECT TOP 1 * FROM SQLEADOS.Empresa order by empresa_usuario ASC
-
 SELECT TOP 1*/
 
 -- HARDCODEAR LAS CONTRAS DE LAS EMPRESAS
@@ -2240,19 +2212,61 @@ SELECT * FROM SQLEADOS.Usuario where usuario_Id = 85
 
 /*
 SELECT * FROM SQLEADOS.Usuario
-
 SELECT * FROM SQLEADOS.ROL
-
 SELECT funcionalidad_descripcion FROM SQLEADOS.Funcionalidad
-
 SELECT * FROM SQLEADOS.
-
 SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
-
  SELECT usuario_estado FROM SQLEADOS.Usuario order by usuario_Id desc 
  SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario
  */
 
- select * from SQLEADOS.GradoPrioridad
+ select * from SQLEADOS.Funcionalidad
 
   select * from SQLEADOS.GradoPrioridad
+
+  SELECT COUNT(*)
+	FROM SQLEADOS.Publicacion
+	JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario
+		WHERE empresa_razon_social LIKE '"++"'
+			AND publicacion_estado LIKE 'Finalizada'
+			AND publicacion_codigo NOT IN (
+				SELECT factura_publicacion FROM SQLEADOS.Factura
+				)
+SELECT publicacion_codigo, publicacion_descripcion, publicacion_fecha FROM SQLEADOS.Publicacion
+
+SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' 
+	FROM SQLEADOS.Publicacion 
+	JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario 
+		WHERE empresa_razon_social LIKE '" + empresa + "' 
+			AND publicacion_estado LIKE 'Finalizada' 
+			AND publicacion_descripcion LIKE '%"++"%'
+			AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)
+
+SELECT 
+	
+	ub.ubiXpubli_Ubicacion as 'ID ubicación',
+	CONVERT(varchar(10),u.ubicacion_asiento) +'-'+ CONVERT(varchar(10),u.ubicacion_fila)  as 'Asiento',
+	u.ubicacion_Tipo_Descripcion as 'Sector',
+	c.compra_fecha as 'Fecha de venta',
+	ub.ubiXpubli_precio as 'Precio',
+	(ub.ubiXpubli_precio*gr.grado_comision)/100 as 'Comísión'
+	FROM SQLEADOS.Publicacion p
+	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = p.publicacion_codigo
+	JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID
+	JOIN SQLEADOS.Compra c ON c.compra_id = ubx.ubxpcomp_compra
+	JOIN SQLEADOS.GradoPrioridad gr ON gr.grado_id = p.publicacion_grado
+	JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ub.ubiXpubli_Ubicacion
+		WHERE p.publicacion_descripcion LIKE '"++"'
+
+SELECT 
+	p.publicacion_codigo as 'ID publicación',
+	p.publicacion_descripcion as 'Nombre publicación',
+	gr.grado_nombre as 'Grado de prioridad',
+	gr.grado_comision as 'porcentaje de comisión'
+	FROM SQLEADOS.Publicacion p
+	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = p.publicacion_codigo
+	JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID
+	JOIN SQLEADOS.Compra c ON c.compra_id = ubx.ubxpcomp_compra
+	JOIN SQLEADOS.GradoPrioridad gr ON gr.grado_id = p.publicacion_grado
+	JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ub.ubiXpubli_Ubicacion
+		WHERE p.publicacion_descripcion LIKE '"++"'
