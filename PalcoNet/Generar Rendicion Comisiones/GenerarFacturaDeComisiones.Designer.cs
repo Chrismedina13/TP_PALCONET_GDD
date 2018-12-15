@@ -46,6 +46,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.labelNombrePublicacion = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.labelEmpresa = new System.Windows.Forms.Label();
+            this.labelCUIT = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,11 +61,11 @@
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 187);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 215);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(648, 345);
+            this.dataGridView1.Size = new System.Drawing.Size(648, 410);
             this.dataGridView1.TabIndex = 0;
             // 
             // label1
@@ -97,7 +101,7 @@
             // botonvolver
             // 
             this.botonvolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonvolver.Location = new System.Drawing.Point(12, 577);
+            this.botonvolver.Location = new System.Drawing.Point(12, 670);
             this.botonvolver.Name = "botonvolver";
             this.botonvolver.Size = new System.Drawing.Size(147, 47);
             this.botonvolver.TabIndex = 4;
@@ -108,18 +112,19 @@
             // buttonGenerarFactura
             // 
             this.buttonGenerarFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGenerarFactura.Location = new System.Drawing.Point(360, 577);
+            this.buttonGenerarFactura.Location = new System.Drawing.Point(360, 670);
             this.buttonGenerarFactura.Name = "buttonGenerarFactura";
             this.buttonGenerarFactura.Size = new System.Drawing.Size(300, 47);
             this.buttonGenerarFactura.TabIndex = 5;
             this.buttonGenerarFactura.Text = "GENERAR NUEVA FACTURA";
             this.buttonGenerarFactura.UseVisualStyleBackColor = true;
+            this.buttonGenerarFactura.Click += new System.EventHandler(this.buttonGenerarFactura_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label3.Location = new System.Drawing.Point(182, 545);
+            this.label3.Location = new System.Drawing.Point(182, 638);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(161, 20);
             this.label3.TabIndex = 6;
@@ -132,7 +137,7 @@
             this.labelTotalACobrar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelTotalACobrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotalACobrar.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTotalACobrar.Location = new System.Drawing.Point(360, 539);
+            this.labelTotalACobrar.Location = new System.Drawing.Point(360, 632);
             this.labelTotalACobrar.MinimumSize = new System.Drawing.Size(300, 35);
             this.labelTotalACobrar.Name = "labelTotalACobrar";
             this.labelTotalACobrar.Size = new System.Drawing.Size(300, 35);
@@ -152,7 +157,7 @@
             this.labelNroFactura.AutoSize = true;
             this.labelNroFactura.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelNroFactura.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelNroFactura.Location = new System.Drawing.Point(96, 161);
+            this.labelNroFactura.Location = new System.Drawing.Point(105, 161);
             this.labelNroFactura.MinimumSize = new System.Drawing.Size(150, 20);
             this.labelNroFactura.Name = "labelNroFactura";
             this.labelNroFactura.Size = new System.Drawing.Size(150, 20);
@@ -172,7 +177,7 @@
             this.labelNroPublicacion.AutoSize = true;
             this.labelNroPublicacion.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelNroPublicacion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelNroPublicacion.Location = new System.Drawing.Point(96, 131);
+            this.labelNroPublicacion.Location = new System.Drawing.Point(105, 131);
             this.labelNroPublicacion.MinimumSize = new System.Drawing.Size(150, 20);
             this.labelNroPublicacion.Name = "labelNroPublicacion";
             this.labelNroPublicacion.Size = new System.Drawing.Size(150, 20);
@@ -237,11 +242,55 @@
             this.labelNombrePublicacion.Size = new System.Drawing.Size(0, 20);
             this.labelNombrePublicacion.TabIndex = 17;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(390, 192);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "CUIT Empresa:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 192);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(90, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Nombre empresa:";
+            // 
+            // labelEmpresa
+            // 
+            this.labelEmpresa.AutoSize = true;
+            this.labelEmpresa.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelEmpresa.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelEmpresa.Location = new System.Drawing.Point(105, 192);
+            this.labelEmpresa.MinimumSize = new System.Drawing.Size(150, 20);
+            this.labelEmpresa.Name = "labelEmpresa";
+            this.labelEmpresa.Size = new System.Drawing.Size(150, 20);
+            this.labelEmpresa.TabIndex = 20;
+            // 
+            // labelCUIT
+            // 
+            this.labelCUIT.AutoSize = true;
+            this.labelCUIT.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelCUIT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelCUIT.Location = new System.Drawing.Point(510, 192);
+            this.labelCUIT.MinimumSize = new System.Drawing.Size(150, 20);
+            this.labelCUIT.Name = "labelCUIT";
+            this.labelCUIT.Size = new System.Drawing.Size(150, 20);
+            this.labelCUIT.TabIndex = 21;
+            // 
             // GenerarFacturaDeComisiones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 628);
+            this.ClientSize = new System.Drawing.Size(672, 722);
+            this.Controls.Add(this.labelCUIT);
+            this.Controls.Add(this.labelEmpresa);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.labelNombrePublicacion);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label11);
@@ -289,5 +338,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label labelNombrePublicacion;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labelEmpresa;
+        private System.Windows.Forms.Label labelCUIT;
     }
 }
