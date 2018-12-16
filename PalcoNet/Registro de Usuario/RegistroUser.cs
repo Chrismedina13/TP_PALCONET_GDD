@@ -27,7 +27,27 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void RegistroUser_Load(object sender, EventArgs e)
         {
+            String query = "SELECT rol_nombre FROM SQLEADOS.Rol where rol_id > 3";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                comboBox1.Items.Add(dt.Rows[i][0].ToString());
+            }
 
+            //LOS BOTONES CLIENTE Y EMPRESA SE VUELVEN INVISIBLES SI NO ESTÁN HABILITADOS
+            if (!esRolHabilitado("Cliente"))
+            {
+                botonCliente.Visible = false;
+            }
+            if (!esRolHabilitado("Empresa"))
+            {
+                buttonEmpresa.Visible = false;
+            }
+        }
+
+        private bool esRolHabilitado(String tipo) {
+            String query = "SELECT COUNT(*) FROM SQLEADOS.Rol where rol_nombre LIKE '" + tipo + "' AND rol_estado = 1";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            return dt.Rows[0][0].ToString() == "1";
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -50,26 +70,7 @@ namespace PalcoNet.Registro_de_Usuario
         {
            
         }
-        /*
-        private bool comprobarSiDatosEstanLlenos() {
-            if (txtNombreUser.Text.Trim() == "")
-            {
-                MessageBox.Show("Ingrese nombre de usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (txtContra.Text.Trim() == "" || txtRepContra.Text.Trim()=="")
-            {
-                MessageBox.Show("Ingrese la contraseña en ambos campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (txtContra.Text.Trim() != txtRepContra.Text.Trim()) {
-                MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
-            
-        }*/
-
+        
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -78,6 +79,7 @@ namespace PalcoNet.Registro_de_Usuario
             huboerror = true;
         }
 
+        //REGISTRAR NUEVO CLIENTE
         private void botonRegistrar_Click(object sender, EventArgs e)
         {
             AltaCliente aclien = new AltaCliente(this, true, null, false);
@@ -86,9 +88,12 @@ namespace PalcoNet.Registro_de_Usuario
             return;
         }
 
+        private void rolHabilitado(String rol) {
+            String rolHabilitado = "SELECT CASE WHEN rol_estado = 1 THEN 'SI' ELSE 'NO' END AS 'Habilitado' FROM SQLEADOS.Rol where rol_nombre like '"+rol+"'";
+        }
+
 
         public void terminar() {
-            MessageBox.Show("Se ha creado el usuario de rol empressa");
             login.Show();
             this.Close();
         }
@@ -100,6 +105,19 @@ namespace PalcoNet.Registro_de_Usuario
             aemp.Show();
             this.Hide();
             return;
+        }
+
+        private void buttonRol_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("No has seleccionado un rol aún");
+                return;
+            }
+            String rol = comboBox1.SelectedItem.ToString();
+            ABM_Usuario.IngresarNuevoAdmin ad = new ABM_Usuario.IngresarNuevoAdmin(null, false, false, this, rol);
+            ad.Show();
+            this.Hide();
         }
     }
 }

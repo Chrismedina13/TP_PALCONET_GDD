@@ -46,7 +46,7 @@ namespace PalcoNet.ABM_Usuario
         //INGRESAR NUEVO ADMIN
         private void button3_Click(object sender, EventArgs e)
         {
-            ABM_Usuario.IngresarNuevoAdmin form8 = new ABM_Usuario.IngresarNuevoAdmin(this);
+            ABM_Usuario.tipoUserAAgregar form8 = new ABM_Usuario.tipoUserAAgregar(this);
             form8.Show();
             this.Hide();
         }
@@ -61,6 +61,21 @@ namespace PalcoNet.ABM_Usuario
         {
             ex.Show();
             this.Close();
+        }
+
+        private void buttonModificarRoles_Click(object sender, EventArgs e)
+        {
+            ModificarRolDeUser roluser = new ModificarRolDeUser(this);
+            roluser.Show();
+            this.Hide();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //MODIFICAR ROL DE UN USUARIO
+            ModificarRolDeUser mod = new ModificarRolDeUser(this);
+            mod.Show();
+            this.Hide();
         }
     }
 }

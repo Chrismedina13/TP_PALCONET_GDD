@@ -356,7 +356,7 @@ namespace PalcoNet.Support
             return empresaRS != null;
         }
         
-        internal static void AgregarEmpresa(string razonSocial, string cuit, string ciudad, string mail, string telefono, int usuario, DateTime fecha)
+        internal static void AgregarEmpresa(string razonSocial, string cuit, string ciudad, string mail, string telefono, int usuario, String fecha)
         {
 
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();

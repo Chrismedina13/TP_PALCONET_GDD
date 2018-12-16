@@ -51,22 +51,35 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 return;
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxCuit.Text, @"^\d+$"))
+            if (!AyudaExtra.esStringNumerico(textBoxCuit.Text))
             {
                 MessageBox.Show("Sólo se permiten numeros en el CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxNroCalle.Text, @"^\d+$"))
+            if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text))
             {
                 MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxPiso.Text, @"^\d+$"))
-            {
-                MessageBox.Show("Sólo se permiten numeros en el Piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (textBoxPiso.Text.Trim() != "") {
+                if (!AyudaExtra.esStringNumerico(textBoxPiso.Text))
+                {
+                    MessageBox.Show("Sólo se permiten numeros en el Piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            if (!AyudaExtra.esStringLetra(textBoxCiudad.Text)) {
+                MessageBox.Show("Sólo se permiten letras en el campo ciudad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxTelefono.Text, @"^\d+$"))
+            if (textBoxDto.Text.Trim() != "") {
+                if (!AyudaExtra.esStringLetra(textBoxDto.Text))
+                {
+                    MessageBox.Show("Sólo se permiten letras en el departamento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            if (!AyudaExtra.esStringNumerico(textBoxTelefono.Text))
             {
                 MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -100,7 +113,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             String calle = textBoxCalle.Text;
             String codPostal = textBoxCodigoPostal.Text;
             String dto = textBoxDto.Text;
-            int piso = Convert.ToInt32(textBoxPiso.Text);
+            int piso = 0;
+            if (textBoxPiso.Text != "") { 
+                piso = Convert.ToInt32(textBoxPiso.Text);
+            }
+             
             String localidad = textBoxLocalidad.Text;
 
             int usuarioNuevo =0;
@@ -109,6 +126,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             DBConsulta.conexionAbrir();
             bool autocontra = false;
             String contraautogenerada = autogenerarContrasenia.contraGeneradaAString();
+            //SE CREA EL USUARIO
             if (textBoxContrasenia.Text.Trim() == "")
             {
                 autocontra = true;
@@ -126,19 +144,27 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     error = true;
                 }
             }
+            //TERMINA CREA EL USUARIO
+            DBConsulta.conexionCerrar();
+            //CREA LA EMPRESA
             if (!error)
             {
                 DateTime hoy = DateTime.Today;
                 int ultimoUser;
 
                 String obtenerUltimoUser = "SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario order by usuario_Id DESC";
-                DataTable ds = DBConsulta.obtenerConsultaEspecifica(obtenerUltimoUser);
-                ConsultasSQLEmpresa.AgregarEmpresa(razonSocial, cuit, ciudad, mail, telefono, Convert.ToInt32(ds.Rows[0][0].ToString()), hoy);
-                ConsultasSQLEmpresa.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Empresa");
+                DataTable ds = DBConsulta.AbrirCerrarObtenerConsulta(obtenerUltimoUser);
+                ultimoUser = Convert.ToInt32(ds.Rows[0][0].ToString());
+                DBConsulta.creacionNuevoEmpresa(razonSocial,mail,cuit,hoy.ToString(),ultimoUser, ciudad, telefono);
+     ///           crearNuevaEmpresa(razonSocial, cuit, ciudad, mail, telefono, Convert.ToInt32(ds.Rows[0][0].ToString()), hoy);
+        //        ConsultasSQLEmpresa.AgregarEmpresa(razonSocial, cuit, ciudad, mail, telefono, Convert.ToInt32(ds.Rows[0][0].ToString()), hoy);
+                DBConsulta.crearNuevoDomicilioEmpresa(calle, nroCalle.ToString(), piso.ToString(), dto, codPostal, localidad, razonSocial, cuit);
+                
+        //        ConsultasSQLEmpresa.AgregarDomicilio(calle, nroCalle, piso, dto, localidad, codPostal, "Empresa");
                 this.limpiarCuadrosDeTexto();
                 String obtenerNombreUser = "SELECT TOP 1 usuario_nombre FROM SQLEADOS.Usuario order by usuario_Id DESC";
-                DataTable dt = DBConsulta.obtenerConsultaEspecifica(obtenerNombreUser);
-                DBConsulta.conexionCerrar();
+                DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(obtenerNombreUser);
+                
                 String mostrarResultado = "Se ha agregado el nuevo Usuario:\n\n" + dt.Rows[0][0].ToString();
                 if (autocontra) {
                     mostrarResultado += "\n\nSe ha autogenerado una contraseña, es: " + contraautogenerada;
@@ -150,7 +176,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 }
                 else {
                     reg.terminar();
-                    reg.Show();
                 }
                 this.Close();
             }
@@ -159,21 +184,22 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
+        private void crearNuevaEmpresa(String razonSocial, String cuit, String ciudad, String mail, string telefono, int user, DateTime fecha) { 
+            String query = "insert into [GD2C2018].[SQLEADOS].[Empresa] (empresa_razon_social,empresa_cuit,empresa_ciudad,empresa_email,empresa_telefono,empresa_usuario,empresa_fecha_creacion) values ('"+razonSocial+"','"+cuit+"','"+ciudad+"','"+mail+"','"+telefono+"',"+user+","+fecha+")";
+            DBConsulta.AbrirCerrarModificarDB(query);
+        }
+
         private bool existeRazonSocialYa(String nombre) {
             String comando = "SELECT empresa_razon_social FROM SQLEADOS.Empresa where empresa_razon_social = '" + nombre + "'";
 
-            DBConsulta.conexionAbrir();
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
-            DBConsulta.conexionCerrar();
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(comando);
             return dt.Rows.Count > 0;
         }
 
         private bool existeCuit(String cuit) {
             String comando = "SELECT empresa_cuit FROM SQLEADOS.Empresa where empresa_cuit = '"+cuit+"'";
 
-            DBConsulta.conexionAbrir();
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
-            DBConsulta.conexionCerrar();
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(comando);
             return dt.Rows.Count > 0;
         }
 
@@ -221,13 +247,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private bool mailRepetido(String mail) {
             String comando = "SELECT empresa_email FROM SQLEADOS.Empresa WHERE empresa_email LIKE '" + mail + "' UNION SELECT cliente_email FROM SQLEADOS.Cliente  WHERE cliente_email LIKE '" + mail + "'";
-            DBConsulta.conexionAbrir();
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(comando);
-            DBConsulta.conexionCerrar();
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(comando);
             return dt.Rows.Count > 0;
         }
 
         private void AltaEmpresa_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxNroCalle_TextChanged(object sender, EventArgs e)
         {
 
         }

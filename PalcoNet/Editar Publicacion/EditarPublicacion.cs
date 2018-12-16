@@ -56,10 +56,8 @@ namespace PalcoNet.Editar_Publicacion
             if (esAdmin)
             {
                 //Encuentra todas los espectáculos
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion";
-                DBConsulta.conexionAbrir();
-                dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
-                DBConsulta.conexionCerrar();
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
+                dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             else { 
                 //Solo sirven los que publicó la empresa

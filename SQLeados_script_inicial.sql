@@ -237,6 +237,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[lle
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ubicacionesXPublicidadComprada]'))
     DROP table SQLEADOS.[ubicacionesXPublicidadComprada]
 	
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[crearNuevoCliente]'))
+    DROP table SQLEADOS.[crearNuevoCliente]
 	
 PRINT('Validacion hecha y OK') 
 ----------------------------------------------------------------------------------------------
@@ -2205,11 +2207,107 @@ SELECT TOP 1*/
 -- HARDCODEAR LAS CONTRAS DE LAS EMPRESAS
 
 UPDATE SQLEADOS.Usuario
-SET usuario_password = HASHBYTES('SHA2_256', '123')
-WHERE usuario_Id < 15 OR usuario_Id = 85
+SET usuario_password = HASHBYTES('SHA2_256', '1234')
+WHERE usuario_Id < 3 OR usuario_Id = 85
 
-SELECT * FROM SQLEADOS.Usuario where usuario_Id = 85
+SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 85
+/*
+SELECT * FROM SQLEADOS.UsuarioXRol
+SELECT * FROM SQLEADOS.Rol
 
+*/
+SELECT 
+	publicacion_codigo as 'Codigo', 
+	publicacion_descripcion as 'Espectáculo', 
+	publicacion_fecha_venc as 'Fecha de estreno', 
+	publicacion_usuario_responsable as 'Empresa responsable', 
+	publicacion_estado as 'Estado', 
+	CASE 
+		WHEN publicacion_estado LIKE 'Borrador' then 'SI' 
+		ELSE 'NO' 
+	END AS 'Se puede modificar' 
+	FROM SQLEADOS.Publicacion
+	--	WHERE publicacion_estado LIKE 'Borrador'
+	ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC,
+		DATEPART(HOUR, GETDATE()) DESC, DATEPART(MINUTE, GETDATE()) DESC
+
+
+
+SELECT * FROM SQLEADOS.Usuario order by usuario_Id DESC
+SELECT TOP 1 * FROM SQLEADOS.Empresa order by empresa_usuario desc
+SELECT TOP 1 * FROM SQLEADOS.Domicilio ORDER BY domicilio_id DESC
+SELECT TOP 1 * FROM SQLEADOS.Cliente order by cliente_usuario desc
+
+SELECT rol_nombre FROM SQLEADOS.Rol where rol_Id != 2 AND rol_Id != 3
+
+SELECT DISTINCT
+	p.publicacion_codigo as 'ID publicación', 
+	p.publicacion_descripcion as 'Nombre publicación', 
+	gr.grado_nombre as 'Grado de prioridad', 
+	gr.grado_comision as 'porcentaje de comisión', 
+	e.empresa_razon_social as 'Nombre empresa', 
+	e.empresa_cuit as 'CUIT' 
+	FROM SQLEADOS.Publicacion p 
+		JOIN SQLEADOS.ubicacionXpublicacion ub 
+			ON ub.ubiXpubli_Publicacion = p.publicacion_codigo 
+		JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx 
+			ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID 
+		JOIN SQLEADOS.Compra c 
+			ON c.compra_id = ubx.ubxpcomp_compra 
+		JOIN SQLEADOS.GradoPrioridad gr 
+			ON gr.grado_id = p.publicacion_grado 
+		JOIN SQLEADOS.Empresa e
+			ON e.empresa_usuario = p.publicacion_usuario_responsable
+		JOIN SQLEADOS.Ubicacion u 
+			ON u.ubicacion_id = ub.ubiXpubli_Ubicacion 
+			WHERE p.publicacion_codigo = 18517;
+
+SELECT DISTINCT ub.ubiXpubli_Ubicacion as 'ID ubicación', 
+	CONVERT(varchar(10),u.ubicacion_asiento) +'-'+ CONVERT(varchar(10),u.ubicacion_fila)  as 'Asiento', 
+	u.ubicacion_Tipo_Descripcion as 'Sector', 
+	c.compra_fecha as 'Fecha de venta', 
+	'$ ' + CONVERT(varchar(20),ub.ubiXpubli_precio) as 'Precio', 
+	'$ ' + CONVERT(varchar(20),(ub.ubiXpubli_precio*gr.grado_comision)/100) as 'Comísión' 
+	FROM SQLEADOS.Publicacion p 
+		JOIN SQLEADOS.ubicacionXpublicacion ub 
+			ON ub.ubiXpubli_Publicacion = p.publicacion_codigo 
+		JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx 
+			ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID 
+		JOIN SQLEADOS.Compra c 
+			ON c.compra_id = ubx.ubxpcomp_compra 
+		JOIN SQLEADOS.GradoPrioridad gr 
+			ON gr.grado_id = p.publicacion_grado 
+		JOIN SQLEADOS.Ubicacion u 
+			ON u.ubicacion_id = ub.ubiXpubli_Ubicacion 
+		WHERE p.publicacion_codigo = 18517
+
+SELECT DISTINCT 
+	(ub.ubiXpubli_precio*gr.grado_comision)/100
+	FROM SQLEADOS.Publicacion p 
+		JOIN SQLEADOS.ubicacionXpublicacion ub 
+			ON ub.ubiXpubli_Publicacion = p.publicacion_codigo 
+		JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx 
+			ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID 
+		JOIN SQLEADOS.Compra c 
+			ON c.compra_id = ubx.ubxpcomp_compra 
+		JOIN SQLEADOS.GradoPrioridad gr 
+			ON gr.grado_id = p.publicacion_grado 
+		JOIN SQLEADOS.Ubicacion u 
+			ON u.ubicacion_id = ub.ubiXpubli_Ubicacion 
+			WHERE p.publicacion_codigo = 18517
+		GROUP BY ubiXpubli_precio, grado_comision
+		
+insert into [SQLEADOS].Factura 
+(factura_publicacion, factura_nro, factura_empresa_cuit, 
+factura_empresa_razon_social, factura_fecha, factura_total, 
+factura_forma_de_pago) 
+Values 
+(" + labelNroPublicacion.Text + ", " + labelNroFactura.Text + ", '" + labelCUIT.Text + "',
+ '" + labelEmpresa.Text + "', '" + AyudaExtra.stringAFormatoFechaSQLDate(hoy.ToString()) + "', " + labelTotalACobrar.Text + ", '
+ Tarjeta')
+
+SELECT TOP 1 * FROM SQLEADOS.Factura order by factura_nro DESC
+SELECT * FROM SQLEADOS.Funcionalidad
 /*
 SELECT * FROM SQLEADOS.Usuario
 SELECT * FROM SQLEADOS.ROL
@@ -2219,7 +2317,7 @@ SELECT * FROM SQLEADOS.Publicacion where publicacion_estado ='Publicada'
  SELECT usuario_estado FROM SQLEADOS.Usuario order by usuario_Id desc 
  SELECT c.cliente_usuario as 'ID', u.usuario_estado as 'Estado', c.cliente_nombre as 'Nombre', c.cliente_apellido as 'Apellido', cliente_tipo_documento 'Tipo documento', cliente_numero_documento as 'Número', c.cliente_email as 'Email' FROM SQLEADOS.Cliente c,  SQLEADOS.Usuario u WHERE usuario_Id = cliente_usuario
  */
-
+ /*
  select * from SQLEADOS.Funcionalidad
 
   select * from SQLEADOS.GradoPrioridad
@@ -2243,7 +2341,6 @@ SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectácul
 			AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)
 
 SELECT 
-	
 	ub.ubiXpubli_Ubicacion as 'ID ubicación',
 	CONVERT(varchar(10),u.ubicacion_asiento) +'-'+ CONVERT(varchar(10),u.ubicacion_fila)  as 'Asiento',
 	u.ubicacion_Tipo_Descripcion as 'Sector',
@@ -2262,11 +2359,31 @@ SELECT
 	p.publicacion_codigo as 'ID publicación',
 	p.publicacion_descripcion as 'Nombre publicación',
 	gr.grado_nombre as 'Grado de prioridad',
-	gr.grado_comision as 'porcentaje de comisión'
+	gr.grado_comision as 'porcentaje de comisión',
+	e.empresa_razon_social as 'Nombre empresa',
+	e.empresa_cuit as 'CUIT'
 	FROM SQLEADOS.Publicacion p
 	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = p.publicacion_codigo
 	JOIN SQLEADOS.ubicacionesXPublicidadComprada ubx ON ubxpcom_ubicacionXPublicidad = ub.ubiXpubli_ID
 	JOIN SQLEADOS.Compra c ON c.compra_id = ubx.ubxpcomp_compra
 	JOIN SQLEADOS.GradoPrioridad gr ON gr.grado_id = p.publicacion_grado
 	JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ub.ubiXpubli_Ubicacion
+	JOIN SQLEADOS.Empresa e ON e.empresa_usuario = p.publicacion_usuario_responsable
 		WHERE p.publicacion_descripcion LIKE '"++"'
+
+SELECT MAX(factura_nro)+1 as 'Nro Factura' FROM SQLEADOS.Factura
+
+
+insert into [SQLEADOS].Factura
+(factura_publicacion, factura_nro, factura_empresa_cuit, 
+	factura_empresa_razon_social, factura_fecha, factura_total, factura_forma_de_pago)
+	select distinct Espectaculo_Cod, Factura_Nro, Espec_Empresa_Cuit, Espec_Empresa_Razon_Social, Factura_Fecha, Factura_Total, Forma_Pago_Desc
+	from gd_esquema.Maestra
+	where Factura_Nro is not null
+	order by 1
+
+INSERT INTO SQLEADOS.UsuarioXRol(usuarioXRol_rol, usuarioXRol_usuario)
+SELECT rol_Id FROM SQLEADOS.Rol
+	WHERE rol_nombre LIKE '""'
+
+SELECT rol_Id FROM SQLEADOS.Rol where rol_nombre LIKE */

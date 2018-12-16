@@ -112,7 +112,7 @@ namespace PalcoNet
                             }
                             else
                             {
-
+                                //LA CONRTASEÑA ESTÁ MAL PERO EL USUARIO NO, POR LO TANTO SE INCREMENTA SUS INTENTOS FALLIDOS
                                 actualizarIntentos = new SqlCommand("SQLeados.agregarIntentoFallidos", coneccion);
 
                                 actualizarIntentos.CommandType = CommandType.StoredProcedure;
@@ -184,6 +184,11 @@ namespace PalcoNet
         //BUSCA ROLES, SI HAY 1 SOLO ENTRA AL BUSCADOR SINO DEBE ELEJIR ENTRE ELLOS
         private void encontrarRoles()
         {
+            if (!tieneAlgunRol(textBox1.Text))
+            {
+                MessageBox.Show("Usted no tiene ningún rol asignado o habilitado");
+                return;
+            }
             esAdmin = new SqlCommand("[SQLeados].esAdministrador", coneccion);
 
             esAdmin.CommandType = CommandType.StoredProcedure;
@@ -214,9 +219,9 @@ namespace PalcoNet
             if (((int)resultadoIntentos2) == 1)
             {
                 DataRow dr = tablaRoles.NewRow();
-                dr["Rol_nombre"] = "Administrador";
+                dr["Rol_nombre"] = "Seleccione un rol";
 
-                roleslist.Add("Elija rol");
+                roleslist.Add("Seleccione rol");
 
                 tablaRoles.Rows.InsertAt(dr, 0);
             }
@@ -259,14 +264,28 @@ namespace PalcoNet
         //        button1.Visible = false;
                 label9.Visible = true;
                 comboBox1.Visible = true;
+                comboBox1.Text = "Seleccione un rol";
                 button2.Visible = true;
             }
 
         }
 
+        private bool tieneAlgunRol(String nombreUser) {
+            String query = "SELECT COUNT(*) FROM SQLEADOS.Usuario JOIN SQLEADOS.UsuarioXRol us ON us.usuarioXRol_usuario = usuario_Id where usuario_nombre LIKE '" + nombreUser + "'";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            if (dt.Rows[0][0].ToString() == "0") {
+                return false;
+            }
+            return true;
+        }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex == 0)
+            {
+                MessageBox.Show("No has seleccionado ningún rol aún");
+                return;
+            }
             Usuario.Rol = comboBox1.Text;
             Usuario.username = textBox1.Text;
             String queryss = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_nombre LIKE '" + Usuario.username + "'";

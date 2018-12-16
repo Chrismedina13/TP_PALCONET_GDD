@@ -231,7 +231,7 @@
             // 
             // textBoxDto
             // 
-            this.textBoxDto.Location = new System.Drawing.Point(177, 49);
+            this.textBoxDto.Location = new System.Drawing.Point(196, 52);
             this.textBoxDto.Name = "textBoxDto";
             this.textBoxDto.Size = new System.Drawing.Size(66, 20);
             this.textBoxDto.TabIndex = 10;
@@ -269,6 +269,7 @@
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(66, 20);
             this.textBoxNroCalle.TabIndex = 9;
+            this.textBoxNroCalle.TextChanged += new System.EventHandler(this.textBoxNroCalle_TextChanged);
             // 
             // label7
             // 

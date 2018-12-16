@@ -165,6 +165,24 @@
     <Compile Include="ABM Usuario\IngresarNuevoAdmin.Designer.cs">
       <DependentUpon>IngresarNuevoAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\ModificarRolDeUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarRolDeUser.Designer.cs">
+      <DependentUpon>ModificarRolDeUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\rolesDeUserr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\rolesDeUserr.Designer.cs">
+      <DependentUpon>rolesDeUserr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\tipoUserAAgregar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\tipoUserAAgregar.Designer.cs">
+      <DependentUpon>tipoUserAAgregar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Canje Puntos\Canje puntos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,11 +273,29 @@
     <Compile Include="Generar Publicacion\tablaPublicacion.Designer.cs">
       <DependentUpon>tablaPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Rendicion Comisiones\BuscarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\BuscarEmpresa.Designer.cs">
+      <DependentUpon>BuscarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\BuscarPublicacionSinCobrar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\BuscarPublicacionSinCobrar.Designer.cs">
+      <DependentUpon>BuscarPublicacionSinCobrar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Rendicion Comisiones\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\GenerarFacturaDeComisiones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\GenerarFacturaDeComisiones.Designer.cs">
+      <DependentUpon>GenerarFacturaDeComisiones.cs</DependentUpon>
     </Compile>
     <Compile Include="Historial Cliente\Historial.cs">
       <SubType>Form</SubType>
@@ -389,6 +425,15 @@
     <EmbeddedResource Include="ABM Usuario\IngresarNuevoAdmin.resx">
       <DependentUpon>IngresarNuevoAdmin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ModificarRolDeUser.resx">
+      <DependentUpon>ModificarRolDeUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\rolesDeUserr.resx">
+      <DependentUpon>rolesDeUserr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\tipoUserAAgregar.resx">
+      <DependentUpon>tipoUserAAgregar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Canje puntos.resx">
       <DependentUpon>Canje puntos.cs</DependentUpon>
     </EmbeddedResource>
@@ -427,6 +472,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\tablaPublicacion.resx">
       <DependentUpon>tablaPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Rendicion Comisiones\BuscarEmpresa.resx">
+      <DependentUpon>BuscarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Rendicion Comisiones\BuscarPublicacionSinCobrar.resx">
+      <DependentUpon>BuscarPublicacionSinCobrar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Rendicion Comisiones\GenerarFacturaDeComisiones.resx">
+      <DependentUpon>GenerarFacturaDeComisiones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>

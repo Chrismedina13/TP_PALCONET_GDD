@@ -102,7 +102,7 @@ namespace PalcoNet
         {
             if (comboBoxVistas.SelectedItem == null)
             {
-                MessageBox.Show("No has seleccionado un rol aún");
+                MessageBox.Show("No has seleccionado ninguna vista aún");
                 return;
             }
             String vista = comboBoxVistas.SelectedItem.ToString();
@@ -156,6 +156,12 @@ namespace PalcoNet
             {
                 PalcoNet.Comprar.ComprarPrincipal compra = new PalcoNet.Comprar.ComprarPrincipal(Usuario.ID, this);
                 compra.Show();
+                this.Hide();
+            }
+            if (vista == "Editar Publicacion")
+            {
+                PalcoNet.Editar_Publicacion.EditarPublicacion edit = new PalcoNet.Editar_Publicacion.EditarPublicacion(this);
+                edit.Show();
                 this.Hide();
             }
 

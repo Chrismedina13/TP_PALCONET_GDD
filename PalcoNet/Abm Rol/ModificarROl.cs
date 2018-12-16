@@ -338,7 +338,6 @@ namespace PalcoNet.ABM_Rol
             listBox2.Items.Remove(listBox2.SelectedItem);
 
             funcion.Remove(text);
-
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -349,6 +348,7 @@ namespace PalcoNet.ABM_Rol
             //accionesRol.Show();
         }
 
+        //MODIFICAR ROL
         private void button2_Click(object sender, EventArgs e)
         {
             validarCampos();

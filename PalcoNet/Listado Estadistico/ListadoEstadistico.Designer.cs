@@ -62,6 +62,7 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TOP 5";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // añoNUD
             // 
@@ -130,9 +131,9 @@
             // cmbTrimestre
             // 
             this.cmbTrimestre.FormattingEnabled = true;
-            this.cmbTrimestre.Location = new System.Drawing.Point(105, 76);
+            this.cmbTrimestre.Location = new System.Drawing.Point(75, 76);
             this.cmbTrimestre.Name = "cmbTrimestre";
-            this.cmbTrimestre.Size = new System.Drawing.Size(181, 21);
+            this.cmbTrimestre.Size = new System.Drawing.Size(244, 21);
             this.cmbTrimestre.TabIndex = 10;
             this.cmbTrimestre.Text = "Seleccione";
             // 
@@ -152,9 +153,9 @@
             "Empresas con mayor cantidad de localidades no vendidas",
             "Clientes con mayores puntos vencidos",
             "Clientes con mayor cantidad de compras"});
-            this.cmbTipo.Location = new System.Drawing.Point(105, 32);
+            this.cmbTipo.Location = new System.Drawing.Point(75, 32);
             this.cmbTipo.Name = "cmbTipo";
-            this.cmbTipo.Size = new System.Drawing.Size(181, 21);
+            this.cmbTipo.Size = new System.Drawing.Size(348, 21);
             this.cmbTipo.TabIndex = 7;
             this.cmbTipo.Text = "Seleccione...";
             // 

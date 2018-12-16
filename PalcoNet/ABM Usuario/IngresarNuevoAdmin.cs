@@ -16,30 +16,88 @@ namespace PalcoNet.ABM_Usuario
 {
     public partial class IngresarNuevoAdmin : Form
     {
-        ABMUSUARIO exx;
-        public IngresarNuevoAdmin(ABMUSUARIO ex)
+        tipoUserAAgregar exx;
+        Registro_de_Usuario.RegistroUser registro;
+        bool esParaAdmin, deABMUser;
+        String rolUser;
+        public IngresarNuevoAdmin(tipoUserAAgregar ex, bool esAdmin, bool vieneDeABMUser, Registro_de_Usuario.RegistroUser reg, String rol)
         {
-            exx = ex;
+            if (esAdmin)
+            {
+                rolUser = "Administrativo";
+                exx = ex;
+                registro = null;
+            }
+            else {
+                if (vieneDeABMUser)
+                {
+                    rolUser = rol;
+                    exx = ex;
+                    registro = null;
+                }
+                else {
+                    exx = null;
+                    registro = reg;
+                    rolUser = rol;
+                }
+            }
+            deABMUser = vieneDeABMUser;
+            esParaAdmin = esAdmin;
+            
             InitializeComponent();
         }
 
         //BOTON VOLVER EN REALIDAD
         private void buttonCliente_Click(object sender, EventArgs e)
         {
-            exx.Show();
-            this.Close();
+            if (esParaAdmin)
+            {
+                exx.Show();
+                this.Close();
+            }
+            else
+            {
+                registro.terminar();
+                this.Close();
+            }
         }
-
+        //BOTON VOLVER
         private void buttonEmpresa_Click(object sender, EventArgs e)
         {
     //        Abm_Empresa_Espectaculo.EliminarEmpresa form = new Abm_Empresa_Espectaculo.EliminarEmpresa();
-            exx.Show();
-            this.Close();
+            if (esParaAdmin)
+            {
+                exx.Show();
+                this.Close();
+            }
+            else {
+                if (deABMUser)
+                {
+                    exx.Show();
+                    this.Close();
+                }
+                else {
+                    registro.terminar();
+                    this.Close();
+                }
+            }
         }
 
         private void Form8_Load(object sender, EventArgs e)
         {
-
+            if (esParaAdmin)
+            {
+                labelAdminTitulo.Text = "Crear nuevo ADMIN";
+                labelNOMBREROL.Text = "ADMINISTRADOR";
+                botoncrearAdmin.Text = "Crear nuevo Admin";
+            }
+            else
+            {
+                labelAdminTitulo.Text = "Crear nuevo Usuario";
+                labelNOMBREROL.Text = rolUser;
+                botoncrearAdmin.Text = "Crear nuevo User";
+            }
+            
         }
 
         private void botoncrear_Click(object sender, EventArgs e)
@@ -72,11 +130,31 @@ namespace PalcoNet.ABM_Usuario
                 MessageBox.Show("Las contraseñas no coinciden");
                 return;
             }
-            string comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('"+textBoxNombre.Text+"' , "+textBoxcontra.Text+", 1);";
+            String comando, comando2;
+            if (esParaAdmin)
+            {
+                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('" + textBoxNombre.Text + "' , " + textBoxcontra.Text + ", 1);";
+                comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, rol_Id FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
+            }
+            else {
+                String obtenerIDRol = "SELECT rol_Id FROM SQLEADOS.Rol WHERE rol_nombre LIKE '"+rolUser+"'";
+                DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(obtenerIDRol);
+                //ID DE ROL
+                String ID = dt.Rows[0][0].ToString();
+                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password) VALUES ('" + textBoxNombre.Text + "' , " + textBoxcontra.Text + ");";
+                comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, "+ID+" FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
+            }
+            
             DBConsulta.AbrirCerrarModificarDB(comando);
-            String comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, rol_Id FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
             DBConsulta.AbrirCerrarModificarDB(comando2);
-            MessageBox.Show("Se añadido el nuevo Administrador");
+            MessageBox.Show("Se añadido el nuevo "+ rolUser);
+
+            if (!esParaAdmin) { 
+                //VUELVE, PORQUE SOLO SE HACE UN SOLO INSERT SI NO EL CREADOR NO ES UN ADMIN
+                registro.terminar();
+                this.Close();
+            }
+
         }
     }
 }

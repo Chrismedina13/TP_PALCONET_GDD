@@ -245,6 +245,14 @@ namespace PalcoNet.Abm_Cliente
                     }
                     MessageBox.Show(comentario);
                     DBConsulta.conexionCerrar();
+                    if (esRegistro)
+                    {
+                        registro.terminar();
+                        registro.Show();
+                    }
+                    else {
+                        ant.Show();
+                    }
                     this.Close();
                 }
                 else

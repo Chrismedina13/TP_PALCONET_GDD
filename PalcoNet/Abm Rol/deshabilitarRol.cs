@@ -120,9 +120,14 @@ namespace PalcoNet.ABM_Rol
        //     int currentMyComboBoxIndex = comboBoxRoles.SelectedIndex;
             string current = this.comboBoxRoles.GetItemText(this.comboBoxRoles.SelectedItem);
             String comando = "UPDATE SQLEADOS.Rol SET rol_estado = 0 WHERE rol_nombre LIKE '" + current +"'";
-            DBConsulta.conexionAbrir();
-            DBConsulta.modificarDatosDeDB(comando);
-            DBConsulta.conexionCerrar();
+            
+            DBConsulta.AbrirCerrarModificarDB(comando);
+            
+            //QUITAR EL ROL A TODAS LOS USUARIOS QUE LO TENINA POR ESTAR INHABILITADO
+            String query = "SELECT rol_Id FROM SQLEADOS.Rol where rol_nombre LIKE '" + current + "'";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            comando = "DELETE FROM SQLEADOS.UsuarioXRol WHERE usuarioXRol_rol = "+dt.Rows[0][0].ToString();
+            DBConsulta.AbrirCerrarModificarDB(comando);
             MessageBox.Show("El rol " + current + " fue inhabilitado");
             cargar();
             return;

@@ -154,6 +154,23 @@ namespace PalcoNet.Support
             return;
         }
 
+        public static void creacionNuevoEmpresa
+            (String razonSocial, String mail, String cuit, String fechaOriginal, int userCorrespondiente, String ciudad,
+            String telefono)
+        {
+            String fecha = AyudaExtra.stringAFormatoFechaSQLDate(fechaOriginal);
+            String cadena = "insert into [SQLEADOS].Empresa (empresa_razon_social, empresa_cuit, empresa_email, empresa_ciudad, empresa_fecha_creacion, empresa_usuario, empresa_telefono) values ('" + razonSocial + "', '" + cuit + "', '" + mail + "', '" + ciudad + "', '" + fecha + "', " + userCorrespondiente + ", '" + telefono + "')";
+            DBConsulta.AbrirCerrarModificarDB(cadena);
+            MessageBox.Show("Se agregó la nueva empresa");
+        }
+
+        public static void crearNuevoDomicilioEmpresa(String calle, String nroCalle, String piso, String dpt,
+            String codigoPostal, String localidad, String razonSocial, String cuit) 
+        {
+            String cadena = "insert into [SQLEADOS].Domicilio (domicilio_calle, domicilio_numero, domicilio_piso, domicilio_dto, domicilio_localidad, domicilio_codigo_postal, domicilio_empresa_cuit, domicilio_empresa_razon_social) values ('" + calle + "', " + nroCalle + ", " + piso + ", '" + dpt + "', '" + localidad + "', '" + codigoPostal + "', '" + cuit + "', '" + razonSocial + "')";
+            DBConsulta.AbrirCerrarModificarDB(cadena);
+        }
+
         public static DataTable obtenerPKdelUltimoClienteOEmpresaIngresada()
         {
             DataTable dt = new DataTable();

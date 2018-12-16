@@ -88,6 +88,40 @@ namespace PalcoNet.Support
         public static String FechaEnSQLDate(DateTime myDateTime) {
             return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
         }
+
+        public static String stringAFormatoFechaSQLDateSinHora(String fecha) {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+                res += parte + "-";
+                dia = parte;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+
+                res += parte + "-";
+                mes = parte;
+                anio = restoFecha;
+            }
+            if (anio.Contains(":"))
+            {
+                String primerAnio = anio.Substring(0, 4);
+                res = primerAnio + "-" + mes + "-" + dia;
+            }
+            MessageBox.Show(res);
+            return res;
+        }
+
         public static String stringAFormatoFechaSQLDate(String fecha) 
         {
             String res = "", fechaAux = fecha, anio = "", mes = "", dia="", parte = "", restoFecha = "";
@@ -113,8 +147,15 @@ namespace PalcoNet.Support
                 mes = parte;
                 anio = restoFecha;
             }
-                res = anio+"-"+mes+"-"+dia + " 0:00:00.000";
-                MessageBox.Show(res);
+            if (anio.Contains(":"))
+            {
+                String primerAnio = anio.Substring(0, 4);
+                res = primerAnio + "-" + mes + "-" + dia + " 0:00:00.000";
+            }
+            else {
+                res = anio + "-" + mes + "-" + dia + " 0:00:00.000";
+            }
+            MessageBox.Show(res);
             return res;
         }
 

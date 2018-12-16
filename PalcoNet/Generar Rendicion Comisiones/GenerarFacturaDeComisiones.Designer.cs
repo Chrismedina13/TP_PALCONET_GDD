@@ -65,7 +65,8 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(648, 410);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(648, 355);
             this.dataGridView1.TabIndex = 0;
             // 
             // label1
@@ -87,6 +88,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Buscar Empresa";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
@@ -101,7 +103,7 @@
             // botonvolver
             // 
             this.botonvolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonvolver.Location = new System.Drawing.Point(12, 670);
+            this.botonvolver.Location = new System.Drawing.Point(13, 620);
             this.botonvolver.Name = "botonvolver";
             this.botonvolver.Size = new System.Drawing.Size(147, 47);
             this.botonvolver.TabIndex = 4;
@@ -112,7 +114,7 @@
             // buttonGenerarFactura
             // 
             this.buttonGenerarFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGenerarFactura.Location = new System.Drawing.Point(360, 670);
+            this.buttonGenerarFactura.Location = new System.Drawing.Point(361, 620);
             this.buttonGenerarFactura.Name = "buttonGenerarFactura";
             this.buttonGenerarFactura.Size = new System.Drawing.Size(300, 47);
             this.buttonGenerarFactura.TabIndex = 5;
@@ -124,7 +126,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label3.Location = new System.Drawing.Point(182, 638);
+            this.label3.Location = new System.Drawing.Point(183, 588);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(161, 20);
             this.label3.TabIndex = 6;
@@ -137,7 +139,7 @@
             this.labelTotalACobrar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelTotalACobrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotalACobrar.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTotalACobrar.Location = new System.Drawing.Point(360, 632);
+            this.labelTotalACobrar.Location = new System.Drawing.Point(361, 582);
             this.labelTotalACobrar.MinimumSize = new System.Drawing.Size(300, 35);
             this.labelTotalACobrar.Name = "labelTotalACobrar";
             this.labelTotalACobrar.Size = new System.Drawing.Size(300, 35);
@@ -286,7 +288,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 722);
+            this.ClientSize = new System.Drawing.Size(672, 674);
             this.Controls.Add(this.labelCUIT);
             this.Controls.Add(this.labelEmpresa);
             this.Controls.Add(this.label9);

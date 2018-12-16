@@ -32,7 +32,6 @@ namespace PalcoNet.Listado_Estadistico
             if (cmbTipo.SelectedIndex <= -1 | cmbTrimestre.SelectedIndex <= -1) MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-
                 switch (cmbTipo.Text)
                 {
                     case "Empresas con mayor cantidad de localidades no vendidas":
@@ -64,6 +63,11 @@ namespace PalcoNet.Listado_Estadistico
         {
             cmbTrimestre.DataSource = trimestres;
             cmbTrimestre.DisplayMember = "nombre";
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
 
 
