@@ -54,8 +54,17 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxDireccion = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Fecha_De_Espectaculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateTimePickerGeneracionMasiva = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.buttonHorario = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxCodigo
@@ -292,11 +301,80 @@
             this.textBoxDireccion.Size = new System.Drawing.Size(429, 20);
             this.textBoxDireccion.TabIndex = 25;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.buttonHorario);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.dateTimePickerGeneracionMasiva);
+            this.groupBox1.Controls.Add(this.dataGridView2);
+            this.groupBox1.Location = new System.Drawing.Point(980, 23);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(245, 484);
+            this.groupBox1.TabIndex = 27;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Generacion Masiva";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(798, 62);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(154, 17);
+            this.checkBox1.TabIndex = 28;
+            this.checkBox1.Text = "Activar Generacion Masiva";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Fecha_De_Espectaculo});
+            this.dataGridView2.Location = new System.Drawing.Point(29, 120);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(193, 345);
+            this.dataGridView2.TabIndex = 0;
+            // 
+            // Fecha_De_Espectaculo
+            // 
+            this.Fecha_De_Espectaculo.HeaderText = "Fecha de Espectaculo";
+            this.Fecha_De_Espectaculo.Name = "Fecha_De_Espectaculo";
+            this.Fecha_De_Espectaculo.ReadOnly = true;
+            this.Fecha_De_Espectaculo.Width = 150;
+            // 
+            // dateTimePickerGeneracionMasiva
+            // 
+            this.dateTimePickerGeneracionMasiva.Location = new System.Drawing.Point(29, 51);
+            this.dateTimePickerGeneracionMasiva.Name = "dateTimePickerGeneracionMasiva";
+            this.dateTimePickerGeneracionMasiva.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerGeneracionMasiva.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(26, 32);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(121, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Fecha de Publicaciones";
+            // 
+            // buttonHorario
+            // 
+            this.buttonHorario.Location = new System.Drawing.Point(66, 85);
+            this.buttonHorario.Name = "buttonHorario";
+            this.buttonHorario.Size = new System.Drawing.Size(114, 23);
+            this.buttonHorario.TabIndex = 3;
+            this.buttonHorario.Text = "Agregar Horario";
+            this.buttonHorario.UseVisualStyleBackColor = true;
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 519);
+            this.ClientSize = new System.Drawing.Size(1237, 519);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBoxDireccion);
             this.Controls.Add(this.button3);
@@ -328,6 +406,9 @@
             this.Load += new System.EventHandler(this.AltaPublicacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,5 +442,12 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBoxDireccion;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Fecha_De_Espectaculo;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dateTimePickerGeneracionMasiva;
+        private System.Windows.Forms.Button buttonHorario;
     }
 }

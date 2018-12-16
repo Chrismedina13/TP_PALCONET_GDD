@@ -19,6 +19,13 @@ namespace PalcoNet.Generar_Publicacion
             exx = ex;
             InitializeComponent();
 
+            checkBox1.Checked = false;
+            buttonGeneracionMAsiva.Enabled = false;
+            button1.Enabled = true;
+            dateTimePickerFechaEspectaculo.Enabled = true;
+            dataGridView2.Enabled = false;
+            dateTimePickerGeneracionMasiva.Enabled = false;
+            buttonHorario.Enabled = false;
 
         }
 
@@ -126,8 +133,15 @@ namespace PalcoNet.Generar_Publicacion
             dateTimePickerFechaPublicacion.Format = DateTimePickerFormat.Custom;
             dateTimePickerFechaPublicacion.CustomFormat = "dd/MM/yyyy";
 
+
+            dateTimePickerGeneracionMasiva.Format = DateTimePickerFormat.Custom;
+            dateTimePickerGeneracionMasiva.CustomFormat = "dd/MM/yyyy h: mm:ss tt";
+
             dataGridView1.AllowUserToAddRows = false;
             dataGridViewUbicaciones.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -140,7 +154,7 @@ namespace PalcoNet.Generar_Publicacion
 
             string gradoPublicacion = GenerarPublicacion.idGrado(comboBoxGrado.SelectedItem.ToString());
 
-            int cantidadDeUbicaciones = dataGridView1.Rows.Count - 1;
+            int cantidadDeUbicaciones = dataGridView1.Rows.Count;
 
             string estadoPublicacion = comboBoxEstado.SelectedItem.ToString();
 
@@ -174,7 +188,7 @@ namespace PalcoNet.Generar_Publicacion
 
         private void buttonGeneracionMAsiva_Click(object sender, EventArgs e)
         {
-
+           
         }
 
         //VOLVER
@@ -250,6 +264,38 @@ namespace PalcoNet.Generar_Publicacion
             dataGridViewUbicaciones.ClearSelection();
 
         
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked == true)
+            {
+
+                button1.Enabled = false;
+                buttonGeneracionMAsiva.Enabled = true;
+                dateTimePickerFechaEspectaculo.Enabled = false;
+                dataGridView2.Enabled = true;
+                dateTimePickerGeneracionMasiva.Enabled = true;
+                buttonHorario.Enabled = true;
+
+
+            }
+            else {
+
+                buttonGeneracionMAsiva.Enabled = false;
+                button1.Enabled = true;
+                dateTimePickerFechaEspectaculo.Enabled = true;
+                dataGridView2.Enabled = false;
+                dateTimePickerGeneracionMasiva.Enabled = false;
+                buttonHorario.Enabled = false;
+
+            
+            }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
 
     }
