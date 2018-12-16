@@ -84,7 +84,7 @@ namespace PalcoNet
         {
             PalcoNet.CambiarContra xxx = new PalcoNet.CambiarContra(Usuario.username, this, null, false);
             xxx.Show();
-            this.Close();
+            this.Hide();
         }
 
 

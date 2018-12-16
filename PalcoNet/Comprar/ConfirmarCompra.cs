@@ -155,6 +155,7 @@ namespace PalcoNet.Comprar
         //BOTON VOLVER, SOLO VUELVE A LA ANTERIOR VISTA
         private void button4_Click(object sender, EventArgs e)
         {
+            aVolver.Show();
             this.Close();
         }
 

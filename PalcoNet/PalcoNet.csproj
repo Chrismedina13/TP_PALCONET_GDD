@@ -255,6 +255,12 @@
     <Compile Include="Editar Publicacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editar Publicacion\PonerCaracteristicasDeUbicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\PonerCaracteristicasDeUbicacion.Designer.cs">
+      <DependentUpon>PonerCaracteristicasDeUbicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editar Publicacion\Seleccionar1Categoria.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -463,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EditarUbicaciones.resx">
       <DependentUpon>EditarUbicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\PonerCaracteristicasDeUbicacion.resx">
+      <DependentUpon>PonerCaracteristicasDeUbicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\Seleccionar1Categoria.resx">
       <DependentUpon>Seleccionar1Categoria.cs</DependentUpon>

@@ -29,6 +29,8 @@ namespace PalcoNet.Editar_Publicacion
         String anioFinal, mesFinal, diaFinal, horaFinal, minutoFinal;
         String anioInicial, mesInicial, diaInicial, horaInicial, minutoInicial;
 
+        DateTime fechaFinal; //LA FECHA QUE LUEGO SE VERÁ SI ESTÁ REPETIDA O NO
+
         class ubicacionYPrecio 
         {
             public static List<int> ubicacion = new List<int>();
@@ -127,8 +129,8 @@ namespace PalcoNet.Editar_Publicacion
             horaFinal = hora;
             minutoFinal = minuto;
 
-            textBoxHoraInicial.Text = hora;
-            textBoxMinutoInicial.Text = minuto;
+            textBoxHoraFinal.Text = hora;
+            textBoxMinutoFinal.Text = minuto;
         }
 
         private void obtenerDatosDeFechasYHorarioInicial(String fechaYHora) 
@@ -171,12 +173,22 @@ namespace PalcoNet.Editar_Publicacion
         {
             if (AyudaExtra.esStringVacio(textBoxHoraInicial.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunas campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
                 return false;
             }
             if (AyudaExtra.esStringVacio(textBoxMinutoInicial.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunas campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                return false;
+            }
+            if (AyudaExtra.esStringVacio(textBoxHoraFinal.Text) == true)
+            {
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                return false;
+            }
+            if (AyudaExtra.esStringVacio(textBoxMinutoFinal.Text) == true)
+            {
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
                 return false;
             }
            
@@ -190,13 +202,38 @@ namespace PalcoNet.Editar_Publicacion
                 MessageBox.Show("El campo minuto no es numérico");
                 return false;
             }
-
-                if (Convert.ToInt32(textBoxMinutoInicial.Text) < 60 && Convert.ToInt32(textBoxHoraInicial.Text) < 24)
+                if (!AyudaExtra.esStringNumerico(textBoxHoraFinal.Text))
                 {
-                    return true;
+                    MessageBox.Show("El campo hora no es numérico");
+                    return false;
                 }
-                MessageBox.Show("Alguno de los campos de Horario tiene un número inválido");
-                return false; 
+                if (!AyudaExtra.esStringNumerico(textBoxMinutoFinal.Text))
+                {
+                    MessageBox.Show("El campo minuto no es numérico");
+                    return false;
+                }
+
+                if (Convert.ToInt32(textBoxMinutoInicial.Text) >= 60)
+                {
+                    MessageBox.Show("En el campo minuto de publicación, número no es válido");
+                    return false;
+                }
+                if (Convert.ToInt32(textBoxHoraInicial.Text) >= 24) {
+                    MessageBox.Show("En el campo hora de publicación, número no es válido");
+                    return false;
+                }
+                if (Convert.ToInt32(textBoxMinutoFinal.Text) >= 60)
+                {
+                    MessageBox.Show("En el campo minuto de estreno, número no es válido");
+                    return false;
+                }
+                if (Convert.ToInt32(textBoxHoraFinal.Text) >= 24)
+                {
+                    MessageBox.Show("En el campo hora de estreno, número no es válido");
+                    return false;
+                }
+                
+                return true; 
         }
 
         //MODIFICAR DATOS
@@ -217,30 +254,8 @@ namespace PalcoNet.Editar_Publicacion
                 estado = "Publicada";
             }
             
-
-            if (todosLosHorariosSonValidos())
-            {
-                //ARMAR FECHA CON HORA
-            }
-            else {
-                return;
-            }
-            //AGREGAR AHORA CATEGORÍA
-
-       //     update += buscarCategoriaYAgregar();
-
-            if (!AyudaExtra.esStringVacio(textPuntaje.Text)) {
-                if (!AyudaExtra.esStringNumerico(textPuntaje.Text))
-                {
-                    MessageBox.Show("El puntaje no fue ingresado no es un número");
-                    return;
-                }
-            } else {
-                MessageBox.Show("El puntaje no fue ingresado");
-                return;
-            }
-
-
+            String fecha_publicacion = "";
+            String fecha_estreno = "";
             if (AyudaExtra.fechaMenorQueActual(dateTimePicker1.Value))
             {
                 MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
@@ -251,25 +266,123 @@ namespace PalcoNet.Editar_Publicacion
                 MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
                 return;
             }
+            if (AyudaExtra.fechaMenorQueActual(dateTimePickerFechaFinal.Value))
+            {
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                return;
+            }
+            if (AyudaExtra.fechaIgualQueActual(dateTimePickerFechaFinal.Value))
+            {
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                return;
+            }
+
+            DateTime fechaInicial = dateTimePicker1.Value;
+            fechaFinal = dateTimePickerFechaFinal.Value;
+
+            if (todosLosHorariosSonValidos())
+            {
+                //ARMAR FECHA CON HORA
+                
+                //EMPIEZO POR FECHA DE PUBLICACION
+                fecha_publicacion = fechaInicial.Year + "-" + fechaInicial.Month + "-" + fechaInicial.Day + " " + textBoxHoraInicial + ":" + textBoxMinutoInicial + ":00.000";
+                //PASO POR FECHA DE ESTRENO DE OBRA
+                fecha_estreno = fechaFinal.Year + "-" + fechaFinal.Month + "-" + fechaFinal.Day + " " + textBoxHoraFinal + ":" + textBoxMinutoFinal + ":00.000";
+            }
+            else {
+                return;
+            }
+            bool problemaConFechas = false;
+
+            if (Convert.ToInt32(fechaFinal.Year) > Convert.ToInt32(fechaInicial.Year))
+            {
+                //NO HAY PROBLEMA
+            }
+            else if (Convert.ToInt32(fechaFinal.Year) == Convert.ToInt32(fechaInicial.Year)) 
+            {
+                if (Convert.ToInt32(fechaFinal.Month) > Convert.ToInt32(fechaInicial.Month))
+                {
+                    //NO HAY PROBLEMA
+                }
+                else
+                {
+                    if (Convert.ToInt32(fechaFinal.Month) == Convert.ToInt32(fechaInicial.Month))
+                    {
+                        if (Convert.ToInt32(fechaFinal.Day) > Convert.ToInt32(fechaInicial.Day))
+                        {
+                            //NO HAY PROBLEMA ALGUNO
+                        }
+                        else
+                        {
+                            //PROBLEMA CON EL DIA
+                            problemaConFechas = true;
+                        }
+                    }
+                    else
+                    {
+                        //PROBLEMA CON EL MES
+                        problemaConFechas = true;
+                    }
+                }
+            }
+            else 
+            { 
+                //PROBLEMA CON EL AÑO    
+                problemaConFechas = true; 
+            }
+
+            if(problemaConFechas) {
+                MessageBox.Show("La fecha de estreno es inferior o\nigual que la fecha de publicación");
+                return;
+            }
+
+
+
+            //AGREGAR AHORA CATEGORÍA
+
+            int idCategoria = buscarCategoriaYAgregar();
+
+            if (!AyudaExtra.esStringVacio(textPuntaje.Text)) {
+                if (!AyudaExtra.esStringNumerico(textPuntaje.Text))
+                {
+                    MessageBox.Show("El puntaje ingresado no es un número");
+                    return;
+                }
+            } else {
+                MessageBox.Show("El puntaje no fue ingresado");
+                return;
+            }
+
+
+            
             
          //   DBConsulta.ConectarConsulta(update);
             if (noHayProblemaConLaFechaYHora()) {
+                hacerUpdateDePublicacionEspecifica(publicacionID, estado, idCategoria, comboBoxGrados.SelectedIndex + 1, fecha_estreno, fecha_publicacion, Convert.ToInt32(textPuntaje.Text));
+                /*
                 DBConsulta.conexionAbrir();
-                DBConsulta.actualizarPublicidad(publicacionID, estado, buscarCategoriaYAgregar(), comboBoxGrados.SelectedIndex + 1, armarFechaYHoraYAgregarAUpdate(), Convert.ToInt32(textPuntaje.Text));
+                DBConsulta.actualizarPublicidad(publicacionID, estado, idCategoria, comboBoxGrados.SelectedIndex + 1, armarFechaYHoraYAgregarAUpdate(), Convert.ToInt32(textPuntaje.Text));
                 DBConsulta.conexionCerrar();
+                 * */
                 MessageBox.Show("Se ha actualizado la publicación");
                 ed.recargar();
+                ed.Show();
                 this.Close();
             } else {
                 MessageBox.Show("A la fecha que se quiere indicar ya existe otra función,\nSeleccione otra fecha");
+                return;
             }
         }
 
+        private void hacerUpdateDePublicacionEspecifica(int IDPublicaciones, String estado, int categoria, int idGrado, String fechaEstreno, String fechaEmpieza, int puntaje) {
+            String query = "UPDATE SQLEADOS.Publicacion SET publicacion_estado = '"+estado+"',pubicacion_putaje_compra = " + puntaje + ", publicacion_puntaje_venta = " + puntaje + ", publicacion_fecha_venc = '" + fechaFinal + "', publicacion_fecha = '" + fechaEmpieza + "', publicacion_grado = " + idGrado + ", publicacion_rubro = " + categoria + " WHERE publicacion_codigo = " + IDPublicaciones + "";
+        }
+
         private bool noHayProblemaConLaFechaYHora() {
-            String query = "SELECT publicacion_fecha_venc FROM SQLEADOS.Publicacion where publicacion_fecha_venc = '" + armarFechaYHoraYAgregarAUpdate()+"'";
-            DBConsulta.conexionAbrir();
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(query);
-            DBConsulta.conexionCerrar();
+            //corrabora si no hay otra función en ese mismo horario
+            String query = "SELECT publicacion_fecha_venc FROM SQLEADOS.Publicacion where publicacion_fecha_venc = '" + fechaFinal+"'";
+
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             return dt.Rows.Count == 0;
         }
 
@@ -299,7 +412,9 @@ namespace PalcoNet.Editar_Publicacion
         // EDITAR UBICACIONES
         private void button3_Click(object sender, EventArgs e)
         {
-
+            EditarUbicaciones edit = new EditarUbicaciones(this, publicacionID);
+            edit.Show();
+            this.Close();
         }
 
         private void labelCategoria_Click(object sender, EventArgs e)

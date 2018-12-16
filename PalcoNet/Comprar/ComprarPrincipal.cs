@@ -438,7 +438,7 @@ namespace PalcoNet.Comprar
                 MessageBox.Show("No has seleccionado nada para comprar");
                 return;
             }
-            ConfirmarCompra a = new ConfirmarCompra(thi, IDCargados, userID);
+            ConfirmarCompra a = new ConfirmarCompra(this, IDCargados, userID);
             a.Show();
             this.Hide();
         }
@@ -465,6 +465,13 @@ namespace PalcoNet.Comprar
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        //VOLVER
+        private void button3_Click(object sender, EventArgs e)
+        {
+            exx.Show();
+            this.Close();
         }
     }
 }

@@ -266,3 +266,4 @@ C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.rolesDeUserr.resources
 C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.ABM_Usuario.tipoUserAAgregar.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Editar_Publicacion.PonerCaracteristicasDeUbicacion.resources

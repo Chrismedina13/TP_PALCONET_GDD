@@ -1968,8 +1968,8 @@ print('PROCEDURES HECHOS')
 
 
 -- HARDCODEAR LAS CONTRAS DE LAS EMPRESAS
-
+print('Actualización de contraseñas para pruebas')
 UPDATE SQLEADOS.Usuario
 SET usuario_password = HASHBYTES('SHA2_256', '1234')
 WHERE usuario_Id < 2 OR usuario_Id = 85
-
+print('PROCEDURES HECHOS')

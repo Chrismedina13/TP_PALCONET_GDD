@@ -19,6 +19,13 @@ namespace PalcoNet.Support
         
         }
         */
+        public bool AmenorqueB(int a, int b) {
+            return a < b;
+        }
+        public bool AigualqueB(int a, int b)
+        {
+            return a == b;
+        }
 
         public bool esFechaHoy(DateTime dt) {
             DateTime hoy = DateTime.Today;

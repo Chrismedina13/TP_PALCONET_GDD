@@ -69,7 +69,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(559, 241);
+            this.button1.Location = new System.Drawing.Point(580, 270);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(180, 29);
             this.button1.TabIndex = 12;
@@ -298,7 +298,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(141, 241);
+            this.button4.Location = new System.Drawing.Point(137, 270);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 29);
             this.button4.TabIndex = 62;
@@ -405,7 +405,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(4, 241);
+            this.button5.Location = new System.Drawing.Point(0, 270);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(131, 29);
             this.button5.TabIndex = 74;
@@ -417,7 +417,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 277);
+            this.ClientSize = new System.Drawing.Size(772, 311);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.textBoxMinutoFinal);
             this.Controls.Add(this.label18);

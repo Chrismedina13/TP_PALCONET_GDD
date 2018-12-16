@@ -38,6 +38,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonActualizar = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -53,27 +55,30 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 55);
+            this.label2.Location = new System.Drawing.Point(14, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.Size = new System.Drawing.Size(103, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Usuario: ";
+            this.label2.Text = "Usuario a modificar: ";
             // 
             // labelUSER
             // 
             this.labelUSER.AutoSize = true;
-            this.labelUSER.Location = new System.Drawing.Point(85, 55);
+            this.labelUSER.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.labelUSER.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelUSER.Location = new System.Drawing.Point(14, 68);
+            this.labelUSER.MinimumSize = new System.Drawing.Size(212, 0);
             this.labelUSER.Name = "labelUSER";
-            this.labelUSER.Size = new System.Drawing.Size(27, 13);
+            this.labelUSER.Size = new System.Drawing.Size(212, 15);
             this.labelUSER.TabIndex = 8;
             this.labelUSER.Text = "user";
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(11, 88);
+            this.comboBox1.Location = new System.Drawing.Point(12, 135);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(203, 21);
+            this.comboBox1.Size = new System.Drawing.Size(212, 21);
             this.comboBox1.TabIndex = 9;
             this.comboBox1.Text = "Roles disponibles";
             // 
@@ -82,19 +87,20 @@
             this.button1.BackColor = System.Drawing.Color.Green;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(11, 115);
+            this.button1.Location = new System.Drawing.Point(12, 88);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(203, 41);
+            this.button1.Size = new System.Drawing.Size(212, 41);
             this.button1.TabIndex = 10;
-            this.button1.Text = "Añadir";
+            this.button1.Text = "AÑADIR ROL";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button4
             // 
-            this.button4.BackColor = System.Drawing.Color.MintCream;
+            this.button4.BackColor = System.Drawing.Color.Firebrick;
             this.button4.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(230, 251);
+            this.button4.ForeColor = System.Drawing.SystemColors.Control;
+            this.button4.Location = new System.Drawing.Point(231, 284);
             this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(217, 34);
@@ -107,7 +113,7 @@
             // 
             this.button2.BackColor = System.Drawing.Color.MintCream;
             this.button2.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(11, 251);
+            this.button2.Location = new System.Drawing.Point(12, 284);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(70, 34);
@@ -144,7 +150,7 @@
             // 
             this.buttonActualizar.BackColor = System.Drawing.Color.MintCream;
             this.buttonActualizar.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonActualizar.Location = new System.Drawing.Point(85, 251);
+            this.buttonActualizar.Location = new System.Drawing.Point(86, 284);
             this.buttonActualizar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonActualizar.Name = "buttonActualizar";
             this.buttonActualizar.Size = new System.Drawing.Size(139, 34);
@@ -153,11 +159,36 @@
             this.buttonActualizar.UseVisualStyleBackColor = false;
             this.buttonActualizar.Click += new System.EventHandler(this.buttonActualizar_Click);
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Yellow;
+            this.button3.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(12, 161);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(213, 74);
+            this.button3.TabIndex = 88;
+            this.button3.Text = "Limpiar cambios antes de actualizar*";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 251);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(392, 26);
+            this.label4.TabIndex = 89;
+            this.label4.Text = "*Una vez que se ha apretado el boton actualizar, los cambios serán permanentes \r\n" +
+    "y no hay forma de volver atrás";
+            // 
             // rolesDeUserr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 296);
+            this.ClientSize = new System.Drawing.Size(459, 329);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.buttonActualizar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listBox1);
@@ -188,5 +219,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonActualizar;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label4;
     }
 }

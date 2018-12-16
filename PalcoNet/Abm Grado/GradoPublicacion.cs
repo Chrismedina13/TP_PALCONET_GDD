@@ -67,5 +67,10 @@ namespace PalcoNet.Abm_Grado
             DBConsulta.conexionCerrar();
             this.Close();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

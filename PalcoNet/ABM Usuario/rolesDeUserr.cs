@@ -120,5 +120,11 @@ namespace PalcoNet.ABM_Usuario
             String query = "DELETE FROM SQLEADOS.UsuarioXRol WHERE usuarioXRol_usuario = " + idUser;
             DBConsulta.AbrirCerrarModificarDB(query);
         }
+
+        //VOLVER A ESTADO ANTES DE ACTUALIZAR
+        private void button3_Click(object sender, EventArgs e)
+        {
+            cargarListaBox();
+        }
     }
 }

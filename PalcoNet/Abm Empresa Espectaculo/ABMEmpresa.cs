@@ -32,12 +32,14 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             ModificacionEmpresa ModEmpresa = new ModificacionEmpresa(this);
             ModEmpresa.Show();
+            this.Hide();
         }
 
         private void buttonBAJA_Click(object sender, EventArgs e)
         {
             EliminarEmpresa EliEmpresa = new EliminarEmpresa(this);
             EliEmpresa.Show();
+            this.Hide();
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
