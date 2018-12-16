@@ -53,6 +53,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxLocalidad = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.labellocalidad = new System.Windows.Forms.Label();
             this.labelcodepostal = new System.Windows.Forms.Label();
             this.labeldto = new System.Windows.Forms.Label();
@@ -64,7 +65,7 @@
             this.labeTarjeta = new System.Windows.Forms.Label();
             this.labeTelefono = new System.Windows.Forms.Label();
             this.labeApellido = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -307,6 +308,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Direccion";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(71, 208);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(29, 17);
+            this.checkBox1.TabIndex = 61;
+            this.checkBox1.Text = " ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // labellocalidad
             // 
             this.labellocalidad.AutoSize = true;
@@ -428,20 +439,21 @@
             this.labeApellido.Size = new System.Drawing.Size(150, 20);
             this.labeApellido.TabIndex = 58;
             // 
-            // checkBox1
+            // button2
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(71, 208);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(29, 17);
-            this.checkBox1.TabIndex = 61;
-            this.checkBox1.Text = " ";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.button2.Location = new System.Drawing.Point(568, 394);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(105, 39);
+            this.button2.TabIndex = 59;
+            this.button2.Text = "Limpiar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // ModificarClienteSeleccionado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(796, 445);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.labeApellido);
             this.Controls.Add(this.labeTelefono);
             this.Controls.Add(this.labeTarjeta);
@@ -475,6 +487,7 @@
             this.Controls.SetChildIndex(this.labeTarjeta, 0);
             this.Controls.SetChildIndex(this.labeTelefono, 0);
             this.Controls.SetChildIndex(this.labeApellido, 0);
+            this.Controls.SetChildIndex(this.button2, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -523,5 +536,6 @@
         private System.Windows.Forms.Label labeTelefono;
         private System.Windows.Forms.Label labeApellido;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button2;
     }
 }

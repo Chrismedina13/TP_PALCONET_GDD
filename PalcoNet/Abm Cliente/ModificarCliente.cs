@@ -129,7 +129,6 @@ namespace PalcoNet.Abm_Cliente
             {
                 String user = Convert.ToString(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
                 int userID = Convert.ToInt32(user);
-                MessageBox.Show("ID user seleccionado: " + userID);
                 ModificarClienteSeleccionado mod = new ModificarClienteSeleccionado(userID, this);
                 mod.Show();
             }
@@ -139,6 +138,15 @@ namespace PalcoNet.Abm_Cliente
         {
             cliente.Show();
             this.Close();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            //LIMPIAR CRITERIOS
+            textBoxApellido.Text = "";
+            textBoxDNI.Text = "";
+            textBoxEmail.Text = "";
+            textBoxNombre.Text = "";
         }
 
 

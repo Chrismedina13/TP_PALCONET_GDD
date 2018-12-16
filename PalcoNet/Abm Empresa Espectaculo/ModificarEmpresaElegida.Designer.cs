@@ -64,13 +64,15 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // volver_boton
             // 
-            this.volver_boton.Location = new System.Drawing.Point(28, 462);
+            this.volver_boton.Location = new System.Drawing.Point(28, 463);
             this.volver_boton.Size = new System.Drawing.Size(89, 23);
+            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // buttonAgregar
             // 
@@ -396,11 +398,22 @@
             this.checkBox1.Text = " ";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(207, 463);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 22);
+            this.button1.TabIndex = 63;
+            this.button1.Text = "LIMPIAR";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ModificarEmpresaElegida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 495);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label23);
@@ -447,6 +460,7 @@
             this.Controls.SetChildIndex(this.label23, 0);
             this.Controls.SetChildIndex(this.label20, 0);
             this.Controls.SetChildIndex(this.checkBox1, 0);
+            this.Controls.SetChildIndex(this.button1, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -492,5 +506,6 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button1;
     }
 }

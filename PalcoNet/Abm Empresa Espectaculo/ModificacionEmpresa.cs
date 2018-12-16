@@ -12,8 +12,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ModificacionEmpresa : Form
     {
-        public ModificacionEmpresa()
+        ABMEmpresa empresa;
+        public ModificacionEmpresa(ABMEmpresa em)
         {
+            empresa = em;
             InitializeComponent();
         }
 
@@ -46,6 +48,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            empresa.Show();
             this.Close();
         }
 
@@ -64,11 +67,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             else
             {
 
-                    ModificarEmpresaElegida form = new ModificarEmpresaElegida(razonSocial, email, cuit);
+                    ModificarEmpresaElegida form = new ModificarEmpresaElegida(this, razonSocial, email, cuit);
                     form.Show();
                     this.limpiarCuadrosDeTexto();
                     ConsultasSQLEmpresa.cargarGriddEmpresa(dataGridView1, "", "", "");
-                    this.Close();
+                    this.Hide();
                 
             }
 
@@ -98,6 +101,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
             ConsultasSQLEmpresa.cargarGriddEmpresa(dataGridView1, textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBoxCuit.Text = "";
+            textBoxMail.Text = "";
+            textBoxRazonSocial.Text = "";
         }
     }
 }

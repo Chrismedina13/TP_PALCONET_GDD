@@ -62,6 +62,7 @@
             this.button500 = new System.Windows.Forms.Button();
             this.labelItemXHoja = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,7 +129,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(853, 52);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 52);
+            this.button1.Size = new System.Drawing.Size(153, 23);
             this.button1.TabIndex = 27;
             this.button1.Text = "BUSCAR";
             this.button1.UseVisualStyleBackColor = true;
@@ -150,6 +151,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(297, 20);
             this.dateTimePicker1.TabIndex = 25;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label5
             // 
@@ -218,6 +220,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 206);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(994, 335);
             this.dataGridView1.TabIndex = 16;
@@ -418,11 +421,22 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(853, 82);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(153, 23);
+            this.buttonLimpiar.TabIndex = 48;
+            this.buttonLimpiar.Text = "LIMPIAR CRITERIOS";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
             // ComprarPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 613);
+            this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.labelItemXHoja);
             this.Controls.Add(this.button500);
@@ -502,5 +516,6 @@
         private System.Windows.Forms.Button button500;
         public System.Windows.Forms.Label labelItemXHoja;
         public System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonLimpiar;
     }
 }

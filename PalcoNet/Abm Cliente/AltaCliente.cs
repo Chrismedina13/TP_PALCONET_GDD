@@ -249,11 +249,8 @@ namespace PalcoNet.Abm_Cliente
                     {
                         registro.terminar();
                         registro.Show();
+                        this.Close();
                     }
-                    else {
-                        ant.Show();
-                    }
-                    this.Close();
                 }
                 else
                 {
@@ -263,9 +260,7 @@ namespace PalcoNet.Abm_Cliente
                 }
             }
 
-       //     this.limpiarCuadrosDeTexto();
-            return;
-
+            this.limpiarCuadrosDeTexto();
         }
 
         private bool contieneNumeroTIPODocumento(String caracteres) {
@@ -289,19 +284,21 @@ namespace PalcoNet.Abm_Cliente
 
         private void limpiarCuadrosDeTexto()
         {
-            textBoxNombre.Text = "";
             textBoxApellido.Text = "";
-            textBoxTIPODOC.Text = "";
-            textBoxDOCNUMERO.Text = "";
-            textBoxMail.Text = "";
-            textBoxTelefono.Text = "";
-            textBoxNroCalle.Text = "";
             textBoxCalle.Text = "";
             textBoxCodigoPostal.Text = "";
-            textBoxDto.Text = "";
-            textBoxPiso.Text = "";
-            textBoxLocalidad.Text = "";
+            textBoxContrasenia.Text = "";
             textBoxCuit.Text = "";
+            textBoxDOCNUMERO.Text = "";
+            textBoxDto.Text = "";
+            textBoxLocalidad.Text = "";
+            textBoxMail.Text = "";
+            textBoxNombre.Text = "";
+            textBoxNroCalle.Text = "";
+            textBoxPiso.Text = "";
+            textBoxTarjeta.Text = "";
+            textBoxTelefono.Text = "";
+            textBoxTIPODOC.Text = "";
         }
 
         public String armarCuit(String cuitSinArmar)
@@ -374,6 +371,10 @@ namespace PalcoNet.Abm_Cliente
 
         }
         #endregion
-    
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            limpiarCuadrosDeTexto();
+        }
     }
 }
