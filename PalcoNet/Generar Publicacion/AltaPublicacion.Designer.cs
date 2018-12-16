@@ -55,12 +55,12 @@
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxDireccion = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonHorario = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dateTimePickerGeneracionMasiva = new System.Windows.Forms.DateTimePicker();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Fecha_De_Espectaculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateTimePickerGeneracionMasiva = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
-            this.buttonHorario = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -315,16 +315,31 @@
             this.groupBox1.Text = "Generacion Masiva";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // checkBox1
+            // buttonHorario
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(798, 62);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(154, 17);
-            this.checkBox1.TabIndex = 28;
-            this.checkBox1.Text = "Activar Generacion Masiva";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.buttonHorario.Location = new System.Drawing.Point(66, 85);
+            this.buttonHorario.Name = "buttonHorario";
+            this.buttonHorario.Size = new System.Drawing.Size(114, 23);
+            this.buttonHorario.TabIndex = 3;
+            this.buttonHorario.Text = "Agregar Horario";
+            this.buttonHorario.UseVisualStyleBackColor = true;
+            this.buttonHorario.Click += new System.EventHandler(this.buttonHorario_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(26, 32);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(121, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Fecha de Publicaciones";
+            // 
+            // dateTimePickerGeneracionMasiva
+            // 
+            this.dateTimePickerGeneracionMasiva.Location = new System.Drawing.Point(29, 51);
+            this.dateTimePickerGeneracionMasiva.Name = "dateTimePickerGeneracionMasiva";
+            this.dateTimePickerGeneracionMasiva.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerGeneracionMasiva.TabIndex = 1;
             // 
             // dataGridView2
             // 
@@ -343,30 +358,16 @@
             this.Fecha_De_Espectaculo.ReadOnly = true;
             this.Fecha_De_Espectaculo.Width = 150;
             // 
-            // dateTimePickerGeneracionMasiva
+            // checkBox1
             // 
-            this.dateTimePickerGeneracionMasiva.Location = new System.Drawing.Point(29, 51);
-            this.dateTimePickerGeneracionMasiva.Name = "dateTimePickerGeneracionMasiva";
-            this.dateTimePickerGeneracionMasiva.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickerGeneracionMasiva.TabIndex = 1;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(26, 32);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(121, 13);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "Fecha de Publicaciones";
-            // 
-            // buttonHorario
-            // 
-            this.buttonHorario.Location = new System.Drawing.Point(66, 85);
-            this.buttonHorario.Name = "buttonHorario";
-            this.buttonHorario.Size = new System.Drawing.Size(114, 23);
-            this.buttonHorario.TabIndex = 3;
-            this.buttonHorario.Text = "Agregar Horario";
-            this.buttonHorario.UseVisualStyleBackColor = true;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(798, 62);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(154, 17);
+            this.checkBox1.TabIndex = 28;
+            this.checkBox1.Text = "Activar Generacion Masiva";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // AltaPublicacion
             // 

@@ -139,8 +139,6 @@ namespace PalcoNet.Generar_Publicacion
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridViewUbicaciones.AllowUserToAddRows = false;
-            dataGridView2.AllowUserToAddRows = false;
-
 
         }
 
@@ -295,6 +293,15 @@ namespace PalcoNet.Generar_Publicacion
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
+
+        }
+
+        private void buttonHorario_Click(object sender, EventArgs e)
+        {
+            String horarioAIngresar = dateTimePickerGeneracionMasiva.Value.ToString();
+
+     
+            dataGridView2.Rows.Add(horarioAIngresar);
 
         }
 
