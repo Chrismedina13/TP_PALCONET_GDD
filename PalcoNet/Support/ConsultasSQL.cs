@@ -974,6 +974,28 @@ namespace PalcoNet.Support
             else MessageBox.Show("Error al cargar registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
+
+
+
+        internal static void ubixPubli(string idUbi,string codigo,string precio)
+        {
+
+
+            SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
+            SqlCommand insertUbiXPublo = new SqlCommand("insert into [GD2C2018].[SQLEADOS].[ubicacionXpublicacion] (ubiXpubli_Publicacion,ubiXpubli_Ubicacion,ubiXpubli_precio) values (@codigo,@idUbi,@precio)");
+
+            insertUbiXPublo.Parameters.AddWithValue("idUbi", idUbi);
+
+            insertUbiXPublo.Parameters.AddWithValue("codigo", codigo);
+            insertUbiXPublo.Parameters.AddWithValue("precio", precio);
+
+
+            insertUbiXPublo.Connection = connection;
+            connection.Open();
+            int registrosModificados = insertUbiXPublo.ExecuteNonQuery();
+            connection.Close();
+        
+        }
     }
 
 
