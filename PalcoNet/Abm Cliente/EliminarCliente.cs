@@ -214,5 +214,14 @@ namespace PalcoNet.Abm_Cliente
             this.Close();
         }
 
+        //LIMPIAR CRITERIOS
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            textBoxApellido.Text = "";
+            textBoxDNI.Text = "";
+            textBoxEmail.Text = "";
+            textBoxNombre.Text = "";
+        }
+
     }
 }

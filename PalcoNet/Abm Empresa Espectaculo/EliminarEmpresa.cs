@@ -13,8 +13,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class EliminarEmpresa : Form
     {
-        public EliminarEmpresa()
+        ABMEmpresa em;
+        public EliminarEmpresa(ABMEmpresa empresa)
         {
+            em = empresa;
             InitializeComponent();
         }
 
@@ -38,6 +40,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            em.Show();
             this.Close();
         }
 
@@ -139,6 +142,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
             ConsultasSQLEmpresa.cargarGriddEmpresa(dataGriddView1, textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBoxCuit.Text = "";
+            textBoxMail.Text = "";
+            textBoxRazonSocial.Text = "";
         }
 
      

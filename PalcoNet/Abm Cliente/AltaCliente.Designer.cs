@@ -81,6 +81,7 @@
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -217,7 +218,7 @@
             // 
             // buttonAgregar
             // 
-            this.buttonAgregar.Location = new System.Drawing.Point(330, 490);
+            this.buttonAgregar.Location = new System.Drawing.Point(330, 506);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(89, 22);
             this.buttonAgregar.TabIndex = 16;
@@ -505,7 +506,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(44, 489);
+            this.button1.Location = new System.Drawing.Point(44, 505);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(89, 23);
             this.button1.TabIndex = 17;
@@ -567,11 +568,22 @@
             this.label33.TabIndex = 111116;
             this.label33.Text = "Rellene el formulario de cliente";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(139, 506);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(89, 23);
+            this.button2.TabIndex = 111117;
+            this.button2.Text = "Limpiar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 540);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label31);
@@ -674,6 +686,7 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button button2;
 
     }
 }

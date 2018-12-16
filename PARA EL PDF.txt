@@ -1,12 +1,31 @@
--- EL USER ADMIN ES:
+-- Para probar las distintas funcionalidades hemos decidido dejar 3 usuarios
+con sus respectivas contraseñas para podes realizar todas las pruebas
+necesarias.
+
+EL USER ADMIN ES:
 
 USERNAME: ADMIN
+PASSWORD: 1234
+
+EL USER EMPRESA ES:
+
+USERNAME: razon_social_nº:10
+PASSWORD: 1234
+
+EL USER CLIENTE ES:
+
+USERNAME: aparicio_Ortiz
 PASSWORD: 1234
 
 AUTOGENERACION DE CONTRASEÑAS:
 
 Generará una contraseña aleatoria de 7 dígitos de forma numérica.
-Dicha contraseña será encriptada cuando la misma es pasada al SQL SERVER
+Dicha contraseña será encriptada cuando la misma es pasada al SQL SERVER.
+Si en el caso del ingreso de nuevas usuarios (para los casos de rol
+Cliente y Empresa), si la contraseña no es definida de forma explícita,
+entonces se publicará por única vez por pantalla la contraseña para el que
+lo creó así pueda  ingresar. Una vez ingresado se le dará la libertad de cambiar
+dicha contraseña.
 
 
 Durante la migración, los mails de los clientes tienen espacios entre sí, pero
@@ -68,3 +87,35 @@ los primeros 2 dígitos, y como código final tomará los siguientes 1 o 2
 dígitos luego de haber leido el contenido del medio. En el caso del 
 cliente luego de corroborar que el número de documento está en el CUIL, y en 
 el caso de la empresa tomará siempre los últimos 2 dígitos.
+
+
+GENERAR COMISIONES:
+
+Para el caso de generar comisiones, hemos tomado la decisión que solo aquellas
+publicaciones que se encuentran en estado de Finalizado y que aún no hayan
+sido incluidas en alguna factura previa, entonces se procederá a realizar
+la facturación de la comisión. Como la comisión es única para todos las
+publicaciones de la empresa, entonces se tomará en consideración el
+grado de publicación que tiene al momento de facturar.
+
+BAJA LÓGICA DE ROL:
+
+Para realizar una baja lógica de un rol, también debemos realizar
+una baja física de la relación UsuarioXRol, debido a que según el texto:
+
+"No está permitido la asignación de un rol inhabilitado a un usuario, por
+ende, se le debe quitar el rol inhabilitado a todos aquellos usuarios 
+que lo posean."
+
+Entonces hemos considerado que la baja lógica de rol significa además la 
+baja física de UsuarioXRol para todos los usuarios que tengan dicho rol.
+Cabe aclarar además que para ingresar se requiere un rol y para registrarse
+no se podrá con aquellos roles que fueron inhabilitados, además del rol
+ADMINISTRADOR. Dicho rol ADMINISTRADOR no podrá ser dado de baja bajo
+ninguna circustancia.
+
+LOGIN:
+
+En el login, no se podrá bloquear bajo ninguna manera a un administrador a
+pesar de todos los intentos fallidos que se quieran realizar.
+

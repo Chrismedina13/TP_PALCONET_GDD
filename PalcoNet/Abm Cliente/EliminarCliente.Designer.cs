@@ -41,6 +41,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btt_buscar = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,9 +146,9 @@
             // 
             // btt_buscar
             // 
-            this.btt_buscar.Location = new System.Drawing.Point(646, 148);
+            this.btt_buscar.Location = new System.Drawing.Point(605, 149);
             this.btt_buscar.Name = "btt_buscar";
-            this.btt_buscar.Size = new System.Drawing.Size(75, 23);
+            this.btt_buscar.Size = new System.Drawing.Size(116, 23);
             this.btt_buscar.TabIndex = 53;
             this.btt_buscar.Text = "Buscar";
             this.btt_buscar.UseVisualStyleBackColor = true;
@@ -181,11 +182,22 @@
             this.dataGridView1.TabIndex = 54;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridEliminarEmpresa_CellContentClick);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(605, 110);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 23);
+            this.button1.TabIndex = 55;
+            this.button1.Text = "Limpiar criterios";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // EliminarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(897, 482);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btt_buscar);
             this.Controls.Add(this.textBoxEmail);
@@ -214,6 +226,7 @@
             this.Controls.SetChildIndex(this.btt_buscar, 0);
             this.Controls.SetChildIndex(this.dataGridView1, 0);
             this.Controls.SetChildIndex(this.volver_boton, 0);
+            this.Controls.SetChildIndex(this.button1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -234,5 +247,6 @@
         public System.Windows.Forms.Button btnModificar;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
     }
 }

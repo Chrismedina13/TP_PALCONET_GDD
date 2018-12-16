@@ -263,19 +263,16 @@ namespace PalcoNet.Abm_Cliente
 
             if (queryDomicilio.Contains("SET"))
             {
-                MessageBox.Show("MODIFICANDO DOMICILIO");
                 DBConsulta.ModificarCliente(queryDomicilio);
                 //       this.Close();
             }
             if (queryCliente.Contains("SET"))
             {
-                MessageBox.Show("MODIFICANDO CLIENTE");
                 DBConsulta.ModificarCliente(queryCliente);
                 //         this.Close();
             }
             if (checkBox1.Checked)
             {
-                MessageBox.Show("MODIFICANDO ESTADO DE CLIENTE");
                 DBConsulta.ModificarCliente(queryUser);
             }
             cargarDatos();
@@ -353,6 +350,28 @@ namespace PalcoNet.Abm_Cliente
         private void label13_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBoxApellido.Text = labeApellido.Text;
+            textBoxCalle.Text = textBoxCalle.Text;
+            textBoxCodigoPostal.Text = labelcodepostal.Text;
+            textBoxDto.Text = labeldto.Text;
+            textBoxLocalidad.Text = labellocalidad.Text;
+            textBoxNombre.Text = labelnombre.Text;
+            textBoxNroCalle.Text = labenrocalle.Text;
+            textBoxPiso.Text = labelpiso.Text;
+            textBoxTarjeta.Text = labeTarjeta.Text;
+            textBoxTelefono.Text = labeTelefono.Text;
+
+            if (labelhabilitado.Text.Contains("in"))
+            {
+                checkBox1.Checked = false;
+            }
+            else {
+                checkBox1.Checked = true;
+            }
         }
     }
 }

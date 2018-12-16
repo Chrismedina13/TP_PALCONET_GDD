@@ -67,6 +67,7 @@
             this.textBoxContrasenia = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -425,11 +426,22 @@
             this.label33.TabIndex = 111119;
             this.label33.Text = "Rellene el formulario de empresa";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(102, 473);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 22);
+            this.button1.TabIndex = 111120;
+            this.button1.Text = "Limpiar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AltaEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 507);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label31);
@@ -505,5 +517,6 @@
         public System.Windows.Forms.TextBox textBoxContrasenia;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button button1;
     }
 }

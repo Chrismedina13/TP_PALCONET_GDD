@@ -89,6 +89,126 @@ namespace PalcoNet.Support
             return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
         }
 
+        public String fechaObtenerMinuto(String fecha) {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+                res += parte + "-";
+                dia = parte;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+
+                res += parte + "-";
+                mes = parte;
+                anio = restoFecha;
+            }
+            String minuto;
+            aux = fechaAux.IndexOf(":");
+            String primerAnio = anio.Substring(0, 4);
+            minuto = anio.Substring(aux, 2);
+            res = primerAnio + "-" + mes + "-" + dia + " 0:00:00.000";
+
+            return minuto;
+        }
+
+        public String fechaObtenerHora(String fecha) {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+                res += parte + "-";
+                dia = parte;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+
+                res += parte + "-";
+                mes = parte;
+                anio = restoFecha;
+            }
+            String hora;
+                aux = fechaAux.IndexOf(":");
+                String primerAnio = anio.Substring(0, 4);
+                 hora = anio.Substring(5, 2);
+                res = primerAnio + "-" + mes + "-" + dia + " 0:00:00.000";
+            
+            return hora;
+        }
+
+        public String fechaObtenerDia(String fecha) {
+            String res = "", fechaAux = fecha, dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+                dia = parte;
+            }
+            return dia;
+        }
+
+        public String fechaObtenerMes(String fecha) {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+                mes = parte;
+            }
+            return mes;
+        }
+
+        public String fechaObtenerAnio(String fecha) {
+            String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
+            int aux;
+            if (fechaAux.Contains("/"))
+            {
+                aux = fecha.IndexOf("/");
+                parte = fechaAux.Substring(0, aux);
+
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                fechaAux = restoFecha;
+                res += parte + "-";
+                dia = parte;
+            }
+            if (fechaAux.Contains("/"))
+            {
+                aux = fechaAux.IndexOf("/");
+                restoFecha = fechaAux.Substring(aux + 1, fechaAux.Length - aux - 1);
+                anio = restoFecha;
+            }
+            return anio.Substring(0, 4);
+        }
+
         public static String stringAFormatoFechaSQLDateSinHora(String fecha) {
             String res = "", fechaAux = fecha, anio = "", mes = "", dia = "", parte = "", restoFecha = "";
             int aux;

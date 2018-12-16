@@ -40,6 +40,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.botonModificar = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,9 +71,9 @@
             // 
             // btt_buscar
             // 
-            this.btt_buscar.Location = new System.Drawing.Point(654, 145);
+            this.btt_buscar.Location = new System.Drawing.Point(613, 145);
             this.btt_buscar.Name = "btt_buscar";
-            this.btt_buscar.Size = new System.Drawing.Size(75, 23);
+            this.btt_buscar.Size = new System.Drawing.Size(116, 23);
             this.btt_buscar.TabIndex = 64;
             this.btt_buscar.Text = "Buscar";
             this.btt_buscar.UseVisualStyleBackColor = true;
@@ -164,10 +165,21 @@
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(613, 107);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(116, 23);
+            this.button2.TabIndex = 67;
+            this.button2.Text = "Limpiar criterios";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // ModificarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(896, 482);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btt_buscar);
@@ -195,6 +207,7 @@
             this.Controls.SetChildIndex(this.btt_buscar, 0);
             this.Controls.SetChildIndex(this.dataGridView1, 0);
             this.Controls.SetChildIndex(this.botonModificar, 0);
+            this.Controls.SetChildIndex(this.button2, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -216,5 +229,6 @@
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button botonModificar;
+        private System.Windows.Forms.Button button2;
     }
 }

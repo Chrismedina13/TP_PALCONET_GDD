@@ -66,5 +66,11 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             return Convert.ToInt32(dt.Rows[0][0].ToString()) > 0;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //limpiar
+            textBox1.Text = "";
+        }
     }
 }

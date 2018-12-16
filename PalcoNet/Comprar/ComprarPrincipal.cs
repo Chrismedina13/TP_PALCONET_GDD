@@ -19,6 +19,8 @@ namespace PalcoNet.Comprar
         private bool fueCargadaCategoria, fueCargadaPublicacion, fueCargadaTipoUbicaciones;
         private int userID;
         private DateTime f1, f2;
+        DateTime fecha1;
+        DateTime fecha2;
         List<String> IDCargados;
         Explorador exx;
         public ComprarPrincipal(int usuario, Explorador ex)
@@ -28,8 +30,8 @@ namespace PalcoNet.Comprar
             userID = usuario;
 
             IDCargados = new List<String>();
-            DateTime fecha1 = DateTime.Today;
-            DateTime fecha2 = DateTime.Today;
+            fecha1 = DateTime.Today;
+            fecha2 = DateTime.Today;
             fecha2.AddDays(1);
             f1 = fecha1;
             f2 = fecha2;
@@ -387,7 +389,7 @@ namespace PalcoNet.Comprar
             totalVistoPorPagina = Convert.ToInt32(cantidad);
             labelItemXHoja.Text = "Items por hoja \n" + cantidad;
             //RECARGA LA GRILLA CON LA CONFIGURACION DE TAMANIO POR PAGINA
-            button1_Click(s, e);
+         //   button1_Click(s, e);
         }
 
         //EN REALIDAD ESTE ES PARA EL BOTON QUE DICE 50, PERO NO SE ACTUALIZÓ EL NOMBRE DE LA FUNCION
@@ -447,6 +449,22 @@ namespace PalcoNet.Comprar
                 IDCargados.Clear();
             }
             
+        }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            labelCategoria.Text = "";
+            labelTipoUbicaciones.Text = "";
+            textBoxPublicacion.Text = "";
+            cambiarTamanio("10", sender, e);
+
+            dateTimePicker1.Value = new DateTime(f1.Year, f1.Month, f1.Day);
+            dateTimePicker2.Value = new DateTime(f2.Year, f2.Month, f2.Day);
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

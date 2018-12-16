@@ -260,6 +260,12 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
         }
+
+        //LIMPIAR
+        private void button1_Click(object sender, EventArgs e)
+        {
+            limpiarCuadrosDeTexto();
+        }
       
     }
 }
