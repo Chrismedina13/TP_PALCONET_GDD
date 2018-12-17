@@ -269,6 +269,7 @@ namespace PalcoNet.Editar_Publicacion
             String query = "SELECT COUNT(*) FROM SQLEADOS.ubicacionXpublicacion ub JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ub.ubiXpubli_Ubicacion	WHERE UB.ubiXpubli_Publicacion = " + idpublicacion + " AND ubicacion_Tipo_Descripcion LIKE '" + tipoUbicacion + "' AND u.ubicacion_fila LIKE '" + fila + "' AND u.ubicacion_asiento =" + ubicacion;
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             return Convert.ToInt32(dt.Rows[0][0].ToString()) > 0;
+            //dataGridViewAdentro.RowRem
         }
     }
 }

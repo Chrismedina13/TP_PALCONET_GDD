@@ -324,6 +324,9 @@
             this.buttonHorario.TabIndex = 3;
             this.buttonHorario.Text = "Agregar Horario";
             this.buttonHorario.UseVisualStyleBackColor = true;
+
+            this.buttonHorario.Click += new System.EventHandler(this.buttonHorario_Click);
+
             // 
             // label11
             // 
