@@ -95,7 +95,7 @@ namespace PalcoNet.Editar_Publicacion
         private void button4_Click(object sender, EventArgs e)
         {
             //QUITAR UBICACION
-            dataGridViewAdentro.RowRem
+            //dataGridViewAdentro.RowRem
         }
     }
 }
