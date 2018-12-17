@@ -237,6 +237,12 @@
     <Compile Include="Editar Publicacion\EditarCosasDePublicacion.Designer.cs">
       <DependentUpon>EditarCosasDePublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editar Publicacion\editarInfoOUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\editarInfoOUbicaciones.Designer.cs">
+      <DependentUpon>editarInfoOUbicaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editar Publicacion\EditarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -463,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EditarCosasDePublicacion.resx">
       <DependentUpon>EditarCosasDePublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\editarInfoOUbicaciones.resx">
+      <DependentUpon>editarInfoOUbicaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>

@@ -298,5 +298,10 @@ namespace PalcoNet.Generar_Publicacion
 
         }
 
+        private void dataGridViewUbicaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
     }
 }

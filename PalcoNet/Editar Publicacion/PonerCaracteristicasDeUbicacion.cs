@@ -15,8 +15,10 @@ namespace PalcoNet.Editar_Publicacion
     {
         EditarUbicaciones editar;
         String fi, ass;
-        public PonerCaracteristicasDeUbicacion(EditarUbicaciones ed ,String fila, String asiento)
+        public PonerCaracteristicasDeUbicacion(EditarUbicaciones ed ,String fila, String asiento, String precio, String sector)
         {
+            textBox1.Text = precio;
+            comboBox1.Text = sector;
             editar = ed;
             fi = fila;
             ass = asiento;

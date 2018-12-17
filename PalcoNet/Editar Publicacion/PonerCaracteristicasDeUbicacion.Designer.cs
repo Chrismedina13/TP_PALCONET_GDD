@@ -55,7 +55,7 @@
             this.comboBox1.Location = new System.Drawing.Point(110, 123);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(223, 21);
-            this.comboBox1.TabIndex = 1;
+            this.comboBox1.TabIndex = 2;
             // 
             // label2
             // 
@@ -80,7 +80,7 @@
             this.textBox1.Location = new System.Drawing.Point(110, 87);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(223, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBox1.TabIndex = 1;
             // 
             // labelUBICACION
             // 
@@ -108,7 +108,7 @@
             this.button1.Location = new System.Drawing.Point(215, 158);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(118, 32);
-            this.button1.TabIndex = 7;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Agregar publicación";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -118,7 +118,7 @@
             this.button2.Location = new System.Drawing.Point(15, 158);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(118, 32);
-            this.button2.TabIndex = 8;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);

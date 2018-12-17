@@ -48,10 +48,6 @@
             this.textBoxMinutoInicial = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.labelIDUbicaciones = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -80,7 +76,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 25);
+            this.label1.Location = new System.Drawing.Point(393, 142);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 1;
@@ -139,7 +135,7 @@
             // radioButtonPublicada
             // 
             this.radioButtonPublicada.AutoSize = true;
-            this.radioButtonPublicada.Location = new System.Drawing.Point(91, 25);
+            this.radioButtonPublicada.Location = new System.Drawing.Point(481, 142);
             this.radioButtonPublicada.Name = "radioButtonPublicada";
             this.radioButtonPublicada.Size = new System.Drawing.Size(72, 17);
             this.radioButtonPublicada.TabIndex = 1;
@@ -150,7 +146,7 @@
             // radioButtonBorrador
             // 
             this.radioButtonBorrador.AutoSize = true;
-            this.radioButtonBorrador.Location = new System.Drawing.Point(206, 25);
+            this.radioButtonBorrador.Location = new System.Drawing.Point(568, 140);
             this.radioButtonBorrador.Name = "radioButtonBorrador";
             this.radioButtonBorrador.Size = new System.Drawing.Size(65, 17);
             this.radioButtonBorrador.TabIndex = 2;
@@ -161,7 +157,7 @@
             // radioButtonFinalizada
             // 
             this.radioButtonFinalizada.AutoSize = true;
-            this.radioButtonFinalizada.Location = new System.Drawing.Point(298, 23);
+            this.radioButtonFinalizada.Location = new System.Drawing.Point(671, 142);
             this.radioButtonFinalizada.Name = "radioButtonFinalizada";
             this.radioButtonFinalizada.Size = new System.Drawing.Size(72, 17);
             this.radioButtonFinalizada.TabIndex = 3;
@@ -254,47 +250,6 @@
             this.label10.Size = new System.Drawing.Size(39, 13);
             this.label10.TabIndex = 57;
             this.label10.Text = "Minuto";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(385, 134);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 13);
-            this.label6.TabIndex = 59;
-            this.label6.Text = "Ubicaciones";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(484, 125);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(276, 30);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Editar ubicaciones";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(385, 162);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(85, 26);
-            this.label12.TabIndex = 60;
-            this.label12.Text = "IDs Ubicaciones\r\nModificadas\r\n";
-            // 
-            // labelIDUbicaciones
-            // 
-            this.labelIDUbicaciones.AutoSize = true;
-            this.labelIDUbicaciones.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.labelIDUbicaciones.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelIDUbicaciones.Location = new System.Drawing.Point(484, 158);
-            this.labelIDUbicaciones.MaximumSize = new System.Drawing.Size(885, 23);
-            this.labelIDUbicaciones.MinimumSize = new System.Drawing.Size(276, 23);
-            this.labelIDUbicaciones.Name = "labelIDUbicaciones";
-            this.labelIDUbicaciones.Size = new System.Drawing.Size(276, 23);
-            this.labelIDUbicaciones.TabIndex = 61;
-            this.labelIDUbicaciones.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button4
             // 
@@ -427,10 +382,6 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.labelIDUbicaciones);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBoxMinutoInicial);
@@ -485,10 +436,6 @@
         private System.Windows.Forms.TextBox textBoxMinutoInicial;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label12;
-        public System.Windows.Forms.Label labelIDUbicaciones;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;

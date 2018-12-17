@@ -62,7 +62,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             //BUSCA SI LA PUBLICACIÓN DE LA EMPRESA AL CUAL LE QUIERO COBRAR 
             //ESTÁ EN ESTADO FINALIZADO Y ADEMÁS NO FUE ANTERIORMENTE
             //REGISTRADO EN UNA ANTERIOR FACTURA
-            String query = "SELECT COUNT(*) FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "'";// AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura) AND publicacion_estado LIKE 'Finalizada'";
+            String query = "SELECT COUNT(*) FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura) AND publicacion_estado LIKE 'Finalizada'";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             return Convert.ToInt32(dt.Rows[0][0].ToString()) > 0;
         }

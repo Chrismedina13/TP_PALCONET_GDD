@@ -47,9 +47,12 @@ namespace PalcoNet.Editar_Publicacion
                 return Text;
             }
         }
-        
-        public EditarCosasDePublicacion(int publicacion, EditarPublicacion eddy)
+
+        editarInfoOUbicaciones editinfoubi;
+
+        public EditarCosasDePublicacion(int publicacion, EditarPublicacion eddy, editarInfoOUbicaciones infoOUbicacion)
         {
+            editinfoubi = infoOUbicacion;
             ed = eddy;
             publicacionID = publicacion;
             InitializeComponent();
@@ -285,9 +288,9 @@ namespace PalcoNet.Editar_Publicacion
                 //ARMAR FECHA CON HORA
                 
                 //EMPIEZO POR FECHA DE PUBLICACION
-                fecha_publicacion = fechaInicial.Year + "-" + fechaInicial.Month + "-" + fechaInicial.Day + " " + textBoxHoraInicial + ":" + textBoxMinutoInicial + ":00.000";
+                fecha_publicacion = fechaInicial.Year + "-" + fechaInicial.Month + "-" + fechaInicial.Day + " " + textBoxHoraInicial.Text + ":" + textBoxMinutoInicial.Text + ":00.000";
                 //PASO POR FECHA DE ESTRENO DE OBRA
-                fecha_estreno = fechaFinal.Year + "-" + fechaFinal.Month + "-" + fechaFinal.Day + " " + textBoxHoraFinal + ":" + textBoxMinutoFinal + ":00.000";
+                fecha_estreno = fechaFinal.Year + "-" + fechaFinal.Month + "-" + fechaFinal.Day + " " + textBoxHoraFinal.Text + ":" + textBoxMinutoFinal.Text + ":00.000";
             }
             else {
                 return;
@@ -357,7 +360,7 @@ namespace PalcoNet.Editar_Publicacion
             
             
          //   DBConsulta.ConectarConsulta(update);
-            if (noHayProblemaConLaFechaYHora()) {
+            if (noHayProblemaConLaFechaYHora(fecha_estreno)) {
                 hacerUpdateDePublicacionEspecifica(publicacionID, estado, idCategoria, comboBoxGrados.SelectedIndex + 1, fecha_estreno, fecha_publicacion, Convert.ToInt32(textPuntaje.Text));
                 /*
                 DBConsulta.conexionAbrir();
@@ -375,12 +378,13 @@ namespace PalcoNet.Editar_Publicacion
         }
 
         private void hacerUpdateDePublicacionEspecifica(int IDPublicaciones, String estado, int categoria, int idGrado, String fechaEstreno, String fechaEmpieza, int puntaje) {
-            String query = "UPDATE SQLEADOS.Publicacion SET publicacion_estado = '"+estado+"',pubicacion_putaje_compra = " + puntaje + ", publicacion_puntaje_venta = " + puntaje + ", publicacion_fecha_venc = '" + fechaFinal + "', publicacion_fecha = '" + fechaEmpieza + "', publicacion_grado = " + idGrado + ", publicacion_rubro = " + categoria + " WHERE publicacion_codigo = " + IDPublicaciones + "";
+            String query = "UPDATE SQLEADOS.Publicacion SET publicacion_estado = '" + estado + "',pubicacion_putaje_compra = " + puntaje + ", publicacion_puntaje_venta = " + puntaje + ", publicacion_fecha_venc = '" + fechaEstreno + "', publicacion_fecha = '" + fechaEmpieza + "', publicacion_grado = " + idGrado + ", publicacion_rubro = " + categoria + " WHERE publicacion_codigo = " + IDPublicaciones + "";
+            DBConsulta.AbrirCerrarModificarDB(query);
         }
 
-        private bool noHayProblemaConLaFechaYHora() {
+        private bool noHayProblemaConLaFechaYHora(String fechaEstreno) {
             //corrabora si no hay otra función en ese mismo horario
-            String query = "SELECT publicacion_fecha_venc FROM SQLEADOS.Publicacion where publicacion_fecha_venc = '" + fechaFinal+"'";
+            String query = "SELECT publicacion_fecha_venc FROM SQLEADOS.Publicacion where publicacion_fecha_venc = '" + fechaEstreno + "'";
 
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             return dt.Rows.Count == 0;
@@ -407,14 +411,6 @@ namespace PalcoNet.Editar_Publicacion
         {
             Seleccionar1Categoria sel = new Seleccionar1Categoria(this);
             sel.Show();
-        }
-
-        // EDITAR UBICACIONES
-        private void button3_Click(object sender, EventArgs e)
-        {
-            EditarUbicaciones edit = new EditarUbicaciones(this, publicacionID);
-            edit.Show();
-            this.Close();
         }
 
         private void labelCategoria_Click(object sender, EventArgs e)
@@ -447,6 +443,7 @@ namespace PalcoNet.Editar_Publicacion
         private void button5_Click(object sender, EventArgs e)
         {
             ed.Show();
+            editinfoubi.cerrar();
             this.Close();
         }
 

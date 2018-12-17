@@ -297,6 +297,7 @@ namespace PalcoNet.Comprar
                 where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date) + "' AND '" + extraerFechaSinHora(dateTimePicker2.Value.Date) + "' ";
             }
 
+            where += " AND ubiXpubli_ID NOT IN (SELECT x.ubxpcom_ubicacionXPublicidad FROM SQLEADOS.ubicacionesXPublicidadComprada x)";
             //         cadena += "OR ('" + extraerFechaSinHora(dateTimePicker2.Value.Date) + "' BETWEEN publicacion_fecha_venc AND publicacion_fecha)) ";
 
   //          where += " AND up.ubiXpubli_ID NOT IN (SELECT ubicacion_id FROM SQLEADOS.ubicacionXpublicacion JOIN SQLEADOS.Compra c ON c.compra_ubiXpubli = ubiXpubli_ID JOIN SQLEADOS.Ubicacion u ON u.ubicacion_id = ubiXpubli_Ubicacion) ";
