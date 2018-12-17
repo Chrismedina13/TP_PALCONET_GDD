@@ -30,6 +30,7 @@ namespace PalcoNet.Generar_Publicacion
             dateTimePickerGeneracionMasiva.Enabled = false;
             buttonHorario.Enabled = false;
 
+
         }
 
         private void comboBoxEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -142,7 +143,8 @@ namespace PalcoNet.Generar_Publicacion
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridViewUbicaciones.AllowUserToAddRows = false;
-
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -200,8 +202,50 @@ namespace PalcoNet.Generar_Publicacion
                 return;
             }
 
-            int hola;
 
+            string rubroElegido = GenerarPublicacion.idRubro(comboBoxRubro.SelectedItem.ToString());
+
+            string gradoPublicacion = GenerarPublicacion.idGrado(comboBoxGrado.SelectedItem.ToString());
+
+            int cantidadDeUbicaciones = dataGridView1.Rows.Count;
+
+            string estadoPublicacion = comboBoxEstado.SelectedItem.ToString();
+
+
+            DateTime fechaPublicacion = dateTimePickerFechaPublicacion.Value;
+
+
+            int id = Convert.ToInt32(textBoxCodigo.Text);
+
+            string precioUbi;
+            string idUbicacion;
+            string idAingresar; 
+
+            foreach (DataGridViewRow fila in dataGridView2.Rows)
+            {
+
+                DateTime fechaEspectaculo = DateTime.Parse(fila.Cells[0].Value.ToString());
+
+                GenerarPublicacion.insertarPublicacion(textBoxCodigo.Text, textBoxUsuario.Text, rubroElegido, gradoPublicacion, textBoxDescripcion.Text
+                , cantidadDeUbicaciones, estadoPublicacion, fechaPublicacion, fechaEspectaculo, textBoxDireccion.Text);
+
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+
+                    idUbicacion = row.Cells[0].Value.ToString();
+                    precioUbi = row.Cells[6].Value.ToString();
+                    idAingresar = Convert.ToString(id);
+
+                    GenerarPublicacion.ubixPubli(idUbicacion,idAingresar, precioUbi);
+
+                }
+
+                id = id + 1;
+                
+            }
+
+            limpiar();
         }
 
         //VOLVER
@@ -282,7 +326,7 @@ namespace PalcoNet.Generar_Publicacion
                 return 0;
             }
 
-            if (dataGridView2.Rows.Count -2 == 0)
+            if (dataGridView2.Rows.Count -1 == 0)
             {
 
                 MessageBox.Show("Esta en generacion masiva tiene que ingresar mas de un horario de publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -327,6 +371,8 @@ namespace PalcoNet.Generar_Publicacion
 
             dataGridViewUbicaciones.ClearSelection();
             dataGridView2.Rows.Clear();
+            DateTime fechaUltima = DateTime.Today;
+
         
         }
 
