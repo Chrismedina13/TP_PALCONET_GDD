@@ -83,7 +83,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         private void buttonGenerarFactura_Click(object sender, EventArgs e)
         {
             if (!hayDatos) {
-                MessageBox.Show("No hay nada puesto");
+                MessageBox.Show("No hay nada puesto en la grilla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
        //     String buscarIDPublicacion = "SELECT publicacion_codigo FROM SQLEADOS.Publicacion where publicacion_codigo = " + labelNroPublicacion;

@@ -176,63 +176,63 @@ namespace PalcoNet.Editar_Publicacion
         {
             if (AyudaExtra.esStringVacio(textBoxHoraInicial.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (AyudaExtra.esStringVacio(textBoxMinutoInicial.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (AyudaExtra.esStringVacio(textBoxHoraFinal.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (AyudaExtra.esStringVacio(textBoxMinutoFinal.Text) == true)
             {
-                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos");
+                MessageBox.Show("En la sección HORARIOS, algunos campos están vacíos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
            
             if (!AyudaExtra.esStringNumerico(textBoxHoraInicial.Text))
-            { 
-                MessageBox.Show("El campo hora no es numérico");
+            {
+                MessageBox.Show("El campo hora no es numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
                 if (!AyudaExtra.esStringNumerico(textBoxMinutoInicial.Text))
-            { 
-                MessageBox.Show("El campo minuto no es numérico");
+            {
+                MessageBox.Show("El campo minuto no es numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
                 if (!AyudaExtra.esStringNumerico(textBoxHoraFinal.Text))
                 {
-                    MessageBox.Show("El campo hora no es numérico");
+                    MessageBox.Show("El campo hora no es numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (!AyudaExtra.esStringNumerico(textBoxMinutoFinal.Text))
                 {
-                    MessageBox.Show("El campo minuto no es numérico");
+                    MessageBox.Show("El campo minuto no es numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
                 if (Convert.ToInt32(textBoxMinutoInicial.Text) >= 60)
                 {
-                    MessageBox.Show("En el campo minuto de publicación, número no es válido");
+                    MessageBox.Show("En el campo minuto de publicación, número no es válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (Convert.ToInt32(textBoxHoraInicial.Text) >= 24) {
-                    MessageBox.Show("En el campo hora de publicación, número no es válido");
+                    MessageBox.Show("En el campo hora de publicación, número no es válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (Convert.ToInt32(textBoxMinutoFinal.Text) >= 60)
                 {
-                    MessageBox.Show("En el campo minuto de estreno, número no es válido");
+                    MessageBox.Show("En el campo minuto de estreno, número no es válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (Convert.ToInt32(textBoxHoraFinal.Text) >= 24)
                 {
-                    MessageBox.Show("En el campo hora de estreno, número no es válido");
+                    MessageBox.Show("En el campo hora de estreno, número no es válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 
@@ -261,22 +261,22 @@ namespace PalcoNet.Editar_Publicacion
             String fecha_estreno = "";
             if (AyudaExtra.fechaMenorQueActual(dateTimePicker1.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (AyudaExtra.fechaIgualQueActual(dateTimePicker1.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (AyudaExtra.fechaMenorQueActual(dateTimePickerFechaFinal.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (AyudaExtra.fechaIgualQueActual(dateTimePickerFechaFinal.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy");
+                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -335,7 +335,7 @@ namespace PalcoNet.Editar_Publicacion
             }
 
             if(problemaConFechas) {
-                MessageBox.Show("La fecha de estreno es inferior o\nigual que la fecha de publicación");
+                MessageBox.Show("La fecha de estreno es inferior o\nigual que la fecha de publicación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -348,11 +348,11 @@ namespace PalcoNet.Editar_Publicacion
             if (!AyudaExtra.esStringVacio(textPuntaje.Text)) {
                 if (!AyudaExtra.esStringNumerico(textPuntaje.Text))
                 {
-                    MessageBox.Show("El puntaje ingresado no es un número");
+                    MessageBox.Show("El puntaje ingresado no es un número", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             } else {
-                MessageBox.Show("El puntaje no fue ingresado");
+                MessageBox.Show("El puntaje no fue ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -372,7 +372,7 @@ namespace PalcoNet.Editar_Publicacion
                 ed.Show();
                 this.Close();
             } else {
-                MessageBox.Show("A la fecha que se quiere indicar ya existe otra función,\nSeleccione otra fecha");
+                MessageBox.Show("A la fecha que se quiere indicar ya existe otra función,\nSeleccione otra fecha", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

@@ -141,6 +141,12 @@
     <Compile Include="Abm Rol\deshabilitarRol.Designer.cs">
       <DependentUpon>deshabilitarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rubro\ABMRUBRO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rubro\ABMRUBRO.Designer.cs">
+      <DependentUpon>ABMRUBRO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Rubro\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\deshabilitarRol.resx">
       <DependentUpon>deshabilitarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rubro\ABMRUBRO.resx">
+      <DependentUpon>ABMRUBRO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ABMUSUARIO.resx">
       <DependentUpon>ABMUSUARIO.cs</DependentUpon>

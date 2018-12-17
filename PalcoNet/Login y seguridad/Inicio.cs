@@ -113,29 +113,37 @@ namespace PalcoNet
                             else
                             {
                                 //LA CONRTASEÑA ESTÁ MAL PERO EL USUARIO NO, POR LO TANTO SE INCREMENTA SUS INTENTOS FALLIDOS
-                                actualizarIntentos = new SqlCommand("SQLeados.agregarIntentoFallidos", coneccion);
-
-                                actualizarIntentos.CommandType = CommandType.StoredProcedure;
-                                actualizarIntentos.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
-
-                                actualizarIntentos.ExecuteNonQuery();
-
-                                if ((((int)resultadoIntentos2) + 1) > 2)
+                                String mensaje = "";
+                                if (esRolAdmin(textBox1.Text))
                                 {
-
-                                    bloquearUsuario = new SqlCommand("[SQLeados].bloquearUsuario", coneccion);
-
-                                    bloquearUsuario.CommandType = CommandType.StoredProcedure;
-                                    bloquearUsuario.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
-
-                                    bloquearUsuario.ExecuteNonQuery();
+                                    mensaje = "Nombre de usuario o contraseña incorrecta";
                                 }
+                                else 
+                                {
+                                    actualizarIntentos = new SqlCommand("SQLeados.agregarIntentoFallidos", coneccion);
 
-                                String mensaje = "Nombre de usuario o contraseña incorrecto, ha perdido un intento de 3";
+                                    actualizarIntentos.CommandType = CommandType.StoredProcedure;
+                                    actualizarIntentos.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
+
+                                    actualizarIntentos.ExecuteNonQuery();
+
+                                    if ((((int)resultadoIntentos2) + 1) > 2)
+                                    {
+
+                                        bloquearUsuario = new SqlCommand("[SQLeados].bloquearUsuario", coneccion);
+
+                                        bloquearUsuario.CommandType = CommandType.StoredProcedure;
+                                        bloquearUsuario.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
+
+                                        bloquearUsuario.ExecuteNonQuery();
+                                    }
+                                    mensaje = "Nombre de usuario o contraseña incorrecta, ha perdido un intento de 3";
+                                }
                                 String caption = "Error en iniciar sesion";
                                 textBox1.Clear();
                                 textBox2.Clear();
                                 MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
+                                
                             }
                         }
                     }
@@ -342,5 +350,18 @@ namespace PalcoNet
 
         }
 
+
+        private bool esRolAdmin(String text) 
+        {
+            String queryBuscar = "SELECT usuario_administrador FROM SQLEADOS.Usuario WHERE usuario_nombre LIKE '" + text + "'";
+
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscar);
+            String respuesta = dt.Rows[0][0].ToString();
+            if (respuesta == "True")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

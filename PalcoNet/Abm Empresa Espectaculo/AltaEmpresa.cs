@@ -140,7 +140,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 }
                 else
                 {
-                    MessageBox.Show("La contraseña debe ser numérica");
+                    MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     error = true;
                 }
             }

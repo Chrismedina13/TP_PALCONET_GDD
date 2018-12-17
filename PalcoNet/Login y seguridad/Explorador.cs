@@ -172,6 +172,13 @@ namespace PalcoNet
                 this.Hide();
             }
 
+            if (vista == "ABM de Rubro")
+            {
+                PalcoNet.Abm_Rubro.ABMRUBRO RUBRO = new Abm_Rubro.ABMRUBRO(this);
+                RUBRO.Show();
+                this.Hide();
+            }
+
             if (vista == "Generar rendicion de comisiones")
             {
                 PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones factura = new PalcoNet.Generar_Rendicion_Comisiones.GenerarFacturaDeComisiones(this);

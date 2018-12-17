@@ -35,11 +35,11 @@ namespace PalcoNet.ABM_Usuario
         {
             if (comboBox1.SelectedItem == null)
             {
-                MessageBox.Show("No has seleccionado ningún rol aún");
+                MessageBox.Show("No has seleccionado ningún rol aún", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             IngresarNuevoAdmin n;
-            if (comboBox1.SelectedItem == "Administrativo")
+            if (comboBox1.SelectedItem.ToString() == "Administrativo")
             {
                 n = new IngresarNuevoAdmin(this, true, false, null, null);
             }

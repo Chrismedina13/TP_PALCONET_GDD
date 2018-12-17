@@ -48,7 +48,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             if (dt.Rows.Count == 0)
             {
-                MessageBox.Show("No existe ninguna publicación con ese nombre");
+                MessageBox.Show("No existe ninguna publicación con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             dataGridView1.DataSource = dt;

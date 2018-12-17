@@ -1972,4 +1972,6 @@ print('Actualización de contraseñas para pruebas')
 UPDATE SQLEADOS.Usuario
 SET usuario_password = HASHBYTES('SHA2_256', '1234')
 WHERE usuario_Id < 2 OR usuario_Id = 85
-print('ACTUALIZACIÓN HECHA')
+print('ACTUALIZACIÓN PARA PRUEBA HECHA')
+
+SELECT rubro_id AS 'ID', rubro_descripcion AS 'Nombre' FROM SQLEADOS.Rubro

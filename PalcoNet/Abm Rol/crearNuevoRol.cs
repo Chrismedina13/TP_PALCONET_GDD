@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using PalcoNet.Support;
 
 
 namespace PalcoNet.ABM_Rol
@@ -60,6 +61,12 @@ namespace PalcoNet.ABM_Rol
 
         private void validarCampos()
         {
+            if (!AyudaExtra.esStringLetra(textBox1.Text)) {
+                String mensaje = "El campo nombre debe ser alfabético";
+                String caption = "Error al crear el rol";
+                MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
+            }
+            
             if (string.IsNullOrEmpty(textBox1.Text) || (int)listBox2.Items.Count == 0)
             {
                 String mensaje = "Los campos nombre y funcionalidades son obligatorios";

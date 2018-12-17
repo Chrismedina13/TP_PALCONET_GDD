@@ -109,6 +109,7 @@ namespace PalcoNet.Editar_Publicacion
             ubicacionesQuitadas = new List<int>();
             textBoxPrecio.Text = "500";
             comboBox1.Text = "Tipo de ubicación";
+            comboBox1.SelectedItem = null;
         }
 
         private void dataGridViewAdentro_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -125,22 +126,22 @@ namespace PalcoNet.Editar_Publicacion
             //VERIFICAR SI YA FUE INGRESADO
             if (yafueingresado(fila, asiento))
             {
-                MessageBox.Show("Esta ubicación ya fue ingresada");
+                MessageBox.Show("Esta ubicación ya fue ingresada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else { 
                 //PROCEDE A INGRESAR NUEVO ASIENTO Y A PONER SU PRECIO Y TAMBIÉN SU TIPO DE UBICACION
                 if (comboBox1.SelectedItem == null)
                 {
-                    MessageBox.Show("No has seleccionado ningún tipo de ubicación aún");
+                    MessageBox.Show("No has seleccionado ningún tipo de ubicación aún", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (textBoxPrecio.Text == "") {
-                    MessageBox.Show("No has ingresado el precio");
+                    MessageBox.Show("No has ingresado el precio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (!AyudaExtra.esStringNumerico(textBoxPrecio.Text))
                 {
-                    MessageBox.Show("El precio ingresado no es un número.");
+                    MessageBox.Show("El precio ingresado no es un número.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 agregarUbicacionConPrecioYTipo(fila, asiento, textBoxPrecio.Text, comboBox1.SelectedItem.ToString());

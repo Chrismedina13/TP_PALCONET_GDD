@@ -103,37 +103,38 @@ namespace PalcoNet.ABM_Usuario
         private void botoncrear_Click(object sender, EventArgs e)
         {
             if (textBoxcontra.Text.Trim() == "") {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (textBoxNombre.Text.Trim() == "")
             {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (textBoxrepecontra.Text.Trim() == "")
             {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos");
+                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (!AyudaExtra.esStringNumerico(textBoxcontra.Text)) {
-                MessageBox.Show("La contraseña debe ser numérica");
+                MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (!AyudaExtra.esStringNumerico(textBoxrepecontra.Text))
             {
-                MessageBox.Show("La contraseña debe ser numérica");
+                MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (textBoxcontra.Text != textBoxrepecontra.Text) {
-                MessageBox.Show("Las contraseñas no coinciden");
+                MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             String comando, comando2;
+            String nombreUser = textBoxNombre.Text.Replace(" ", "_");
             if (esParaAdmin)
             {
-                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('" + textBoxNombre.Text + "' , " + textBoxcontra.Text + ", 1);";
+                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password, usuario_administrador) VALUES ('" + nombreUser + "' , " + textBoxcontra.Text + ", 1);";
                 comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, rol_Id FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
             }
             else {
@@ -141,8 +142,8 @@ namespace PalcoNet.ABM_Usuario
                 DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(obtenerIDRol);
                 //ID DE ROL
                 String ID = dt.Rows[0][0].ToString();
-                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password) VALUES ('" + textBoxNombre.Text + "' , " + textBoxcontra.Text + ");";
-                comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT usuario_Id, "+ID+" FROM SQLEADOS.Usuario, SQLEADOS.Rol WHERE usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
+                comando = "INSERT INTO SQLEADOS.Usuario(usuario_nombre, usuario_password) VALUES ('" + nombreUser + "' , " + textBoxcontra.Text + ");";
+                comando2 = "INSERT INTO SQLEADOS.UsuarioXRol (usuarioXRol_usuario, usuarioXRol_rol) SELECT S.usuario_Id, "+ID+" FROM SQLEADOS.Usuario S WHERE S.usuario_Id = (SELECT TOP 1 usuario_Id FROM SQLEADOS.Usuario U ORDER BY U.usuario_Id DESC)";
             }
             
             DBConsulta.AbrirCerrarModificarDB(comando);

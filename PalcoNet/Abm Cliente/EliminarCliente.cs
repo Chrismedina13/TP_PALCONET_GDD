@@ -73,17 +73,17 @@ namespace PalcoNet.Abm_Cliente
         {
             if (esVacio(textBoxDNI.Text.Trim()) && esVacio(textBoxEmail.Text.Trim()) && esVacio(textBoxApellido.Text.Trim()) && esVacio(textBoxNombre.Text.Trim()))
             {
-                MessageBox.Show("Usted no ha puesto ningún criterio de busquedad. Rellene los campos por favor");
+                MessageBox.Show("Usted no ha puesto ningún criterio de busquedad. Rellene los campos por favor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else {
                 if (!textBoxNombre.Text.Trim().Equals("") && !AyudaExtra.esStringLetra(textBoxNombre.Text.Trim()) || !textBoxApellido.Text.Trim().Equals("") && !AyudaExtra.esStringLetra(textBoxApellido.Text.Trim()))
                 {
-                    MessageBox.Show("Los campos Nombre y Apellido no pueden contener numeros");
+                    MessageBox.Show("Los campos Nombre y Apellido no pueden contener numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (!textBoxDNI.Text.Trim().Equals("") && !AyudaExtra.esStringNumerico(textBoxDNI.Text.Trim())) {
-                    MessageBox.Show("El campo numero de documento no puede contener letras");
+                    MessageBox.Show("El campo numero de documento no puede contener letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 dataGridView1.DataSource = null;
@@ -141,8 +141,7 @@ namespace PalcoNet.Abm_Cliente
            
             if (dataGridView1.RowCount == 0)
             {
-                MessageBox.Show("No has buscado a ningún usuario aún");
-                return;
+                MessageBox.Show("No has buscado a ningún usuario aún", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

@@ -39,11 +39,11 @@ namespace PalcoNet.Comprar
                     this.Close();
                 }
                 else {
-                    MessageBox.Show("El número de tarjeta no se repite, vuelva a ingresarla");
+                    MessageBox.Show("El número de tarjeta no se repite, vuelva a ingresarla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else {
-                MessageBox.Show("Uno de los 2 campos ingresados, o ambos, no son numéricos");
+                MessageBox.Show("Uno de los 2 campos ingresados, o ambos, no son numéricos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

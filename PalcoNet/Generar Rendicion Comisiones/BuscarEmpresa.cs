@@ -32,7 +32,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             String query = "SELECT empresa_razon_social FROM SQLEADOS.Empresa where empresa_razon_social LIKE '%" + textBox1.Text.Trim() + "%'";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             if (dt.Rows.Count == 0) {
-                MessageBox.Show("No existe ninguna empresa con ese nombre");
+                MessageBox.Show("No existe ninguna empresa con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             dataGridView1.DataSource = dt;

@@ -19,6 +19,31 @@ namespace PalcoNet.Support
         
         }
         */
+        public static bool fechaEsMayorA18Anios(DateTime fechaDeNacimiento)
+        {
+            DateTime hoy = DateTime.Today;
+
+            int edad = 0;
+            int anioHoy = hoy.Year;
+            int anioNacimiento = fechaDeNacimiento.Year;
+            if(anioHoy >= anioNacimiento) {
+                //EL -1 LO PONGO PORQUE PARA LUEGO VER SI LA FECHA DE HOY ES MAYOR QUE EL MES Y DIA 
+                //DE NACIMIENTO
+                edad = anioHoy - anioNacimiento -1;
+            }
+            if (hoy.Month > fechaDeNacimiento.Month)
+            {
+                edad++;
+            }
+            else if (hoy.Month == fechaDeNacimiento.Month)
+            {
+                if (hoy.Day >= fechaDeNacimiento.Day) {
+                    edad++;
+                } 
+            }
+            return edad >= 18;
+        }
+
         public bool AmenorqueB(int a, int b) {
             return a < b;
         }
@@ -48,7 +73,7 @@ namespace PalcoNet.Support
         }
 
         public static bool esStringConLetraONumero(String a) {
-            return (Regex.Matches(a, @"[a-zA-Z]").Count > 1) || a.Any(c => char.IsDigit(c));
+            return Regex.IsMatch(a, @"^[a-zA-Z0-9]+$");
         }
 
         public static bool esStringConLetraONumeroYSinEspacio(String a) {
@@ -70,9 +95,14 @@ namespace PalcoNet.Support
             return nro.Length +3 <= cuil.Length;
         }
 
-         public static bool esStringNumerico(String s) { 
-            int n;
-            return int.TryParse(s, out n);
+         public static bool esStringNumerico(String s) {
+             foreach (char c in s)
+             {
+                 if (c < '0' || c > '9')
+                     return false;
+             }
+
+             return true;
         }
 
         public static bool esStringLetra(String input) {

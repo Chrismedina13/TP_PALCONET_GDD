@@ -44,9 +44,9 @@
             this.button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button3.Location = new System.Drawing.Point(12, 395);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(136, 48);
+            this.button3.Size = new System.Drawing.Size(169, 49);
             this.button3.TabIndex = 17;
-            this.button3.Text = "Añadir seleccionados";
+            this.button3.Text = "Añadir seleccionados y volver";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -67,9 +67,9 @@
             // buttonAgregar
             // 
             this.buttonAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAgregar.Location = new System.Drawing.Point(402, 399);
+            this.buttonAgregar.Location = new System.Drawing.Point(391, 399);
             this.buttonAgregar.Name = "buttonAgregar";
-            this.buttonAgregar.Size = new System.Drawing.Size(132, 45);
+            this.buttonAgregar.Size = new System.Drawing.Size(143, 45);
             this.buttonAgregar.TabIndex = 23;
             this.buttonAgregar.Text = "Agregar categoria";
             this.buttonAgregar.UseVisualStyleBackColor = true;
@@ -109,9 +109,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(164, 395);
+            this.button1.Location = new System.Drawing.Point(187, 395);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(221, 49);
+            this.button1.Size = new System.Drawing.Size(198, 49);
             this.button1.TabIndex = 27;
             this.button1.Text = "Limpiar categorías seleccionadas";
             this.button1.UseVisualStyleBackColor = true;

@@ -37,7 +37,7 @@ namespace PalcoNet.ABM_Usuario
         {
             if (comboBox1.SelectedItem == null)
             {
-                MessageBox.Show("No has seleccionado un rol aún");
+                MessageBox.Show("No has seleccionado un rol aún", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             

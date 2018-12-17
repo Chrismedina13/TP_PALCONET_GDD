@@ -67,9 +67,18 @@ namespace PalcoNet.Abm_Cliente
                 MessageBox.Show("La fecha ingresada es mayor o igual que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
+            if (!AyudaExtra.fechaEsMayorA18Anios(dateFecha.Value.Date)) {
+                MessageBox.Show("La fecha ingresada no cumple los requisitos de que el usuario debe ser mayor a 18 años", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
             if (!AyudaExtra.CUILYNroDocSeCorresponden(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
             {
                 MessageBox.Show("El CUIL no corresponde al documento ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!AyudaExtra.esStringNumerico(textBoxContrasenia.Text)) {
+                MessageBox.Show("La contraseña debe ser un número", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
 
@@ -223,7 +232,7 @@ namespace PalcoNet.Abm_Cliente
                     int usuarioNuevo = ConsultasSQL.crearUser(nombre.Replace(" ", "_") + "_" + apellido.Replace(" ", "_"), creacionAbortada, textBoxContrasenia.Text.Trim(), "Cliente");
                 }
                 else {
-                    MessageBox.Show("La contraseña debe ser numérica");
+                    MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     error = true;
                 }
             }
@@ -248,7 +257,6 @@ namespace PalcoNet.Abm_Cliente
                     if (esRegistro)
                     {
                         registro.terminar();
-                        registro.Show();
                         this.Close();
                     }
                 }
@@ -351,7 +359,7 @@ namespace PalcoNet.Abm_Cliente
                 ant.Show();
             }
             if (esRegistro) {
-                registro.Show();
+       //         registro.Show();
             }
             this.Close();
         }
