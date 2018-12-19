@@ -494,9 +494,8 @@ canje_cliente_tipo_documento varchar(5),
 canje_cliente_numero_documento numeric(18,0),
 canje_fecha datetime,
 canje_puntos_gastados int,
-canje_producto int
+canje_producto nvarchar(255),
 FOREIGN KEY (canje_cliente_tipo_documento, canje_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
-FOREIGN KEY (canje_producto) REFERENCES [SQLEADOS].canjeproducto(canj_id)
 )
 
 PRINT('Tabla creada: Canjes') 
@@ -1992,11 +1991,8 @@ SET usuario_password = HASHBYTES('SHA2_256', '1234')
 WHERE usuario_Id < 2 OR usuario_Id = 85
 
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
+
 /*
-SELECT * FROM SQLEADOS.Usuario where usuario_Id = 85
-
-INSERT INTO SQLEADOS.Canjes(canje_cliente_numero_documento,canje_cliente_tipo_documento, canje_fecha, canje_puntos_gastados)
-
 SELECT TOP 1 punt_id ,punt_puntaje FROM SQLEADOS.puntaje
 	JOIN SQLEADOS.Cliente c ON c.cliente_numero_documento = punt_cliente_numero_documento
 		AND c.cliente_tipo_documento LIKE punt_cliente_tipo_documento
