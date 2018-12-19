@@ -63,7 +63,7 @@
             // 
             // textBoxTipoDocumento
             // 
-            this.textBoxTipoDocumento.Location = new System.Drawing.Point(148, 108);
+            this.textBoxTipoDocumento.Location = new System.Drawing.Point(148, 116);
             this.textBoxTipoDocumento.Name = "textBoxTipoDocumento";
             this.textBoxTipoDocumento.ReadOnly = true;
             this.textBoxTipoDocumento.Size = new System.Drawing.Size(58, 20);
@@ -106,7 +106,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(53, 115);
+            this.label3.Location = new System.Drawing.Point(53, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 13);
             this.label3.TabIndex = 7;

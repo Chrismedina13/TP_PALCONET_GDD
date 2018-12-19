@@ -133,7 +133,7 @@ namespace PalcoNet.Comprar
             String nroDoc = datosPKCliente.Rows[0]["NUMERO DOCUMENTO"].ToString();
 
             DateTime a = DateTime.Now;
-            a.AddYears(1);
+            a = a.AddYears(1);
             String HOY = a.ToString("yyyy/MM/dd");
             HOY += " 0:00:00.000";
 
@@ -141,7 +141,7 @@ namespace PalcoNet.Comprar
           
             DBConsulta.realizarUpdateConQuery(queryUpdatePuntaje);
             MessageBox.Show("El puntaje fue actualizado");
-            aVolver.Close();
+            aVolver.Show();
             this.Close();
         }
 

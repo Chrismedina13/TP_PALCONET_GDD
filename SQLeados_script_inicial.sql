@@ -238,7 +238,11 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[ubi
     DROP table SQLEADOS.[ubicacionesXPublicidadComprada]
 	
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[crearNuevoCliente]'))
-    DROP table SQLEADOS.[crearNuevoCliente]
+    DROP proc SQLEADOS.[crearNuevoCliente]
+	
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLEADOS.[Canjes]'))
+    DROP table SQLEADOS.Canjes
+
 	
 PRINT('Validacion hecha y OK') 
 ----------------------------------------------------------------------------------------------
@@ -490,10 +494,20 @@ canje_cliente_tipo_documento varchar(5),
 canje_cliente_numero_documento numeric(18,0),
 canje_fecha datetime,
 canje_puntos_gastados int,
-FOREIGN KEY (canje_cliente_tipo_documento, canje_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento)
+canje_producto int
+FOREIGN KEY (canje_cliente_tipo_documento, canje_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento),
+FOREIGN KEY (canje_producto) REFERENCES [SQLEADOS].canjeproducto(canj_id)
 )
 
-
+PRINT('Tabla creada: Canjes') 
+/*
+NO SE SI LO VOY  AUSAR AL FINAL ESTO
+create table [SQLEADOS].CanjeXPunto(
+canxpun_puntaje int,
+canxpun_canje int,
+FOREIGN KEY (canxpun_canje) REFERENCES [SQLEADOS].Canjes(canjes_id),
+FOREIGN KEY (canxpun_puntaje) REFERENCES [SQLEADOS].puntaje(punt_id)
+)*/
 ----------------------------------------------------------------------------------------------
 								/** insertar en tablas **/
 ----------------------------------------------------------------------------------------------
@@ -553,8 +567,7 @@ select
 	where 
 		(funcionalidad_descripcion LIKE 'Comprar' 
 		OR funcionalidad_descripcion LIKE 'Historial de cliente' 
-		OR funcionalidad_descripcion LIKE 'Canje y Administracion de puntos'
-		OR funcionalidad_descripcion LIKE 'Registro de usuarios')
+		OR funcionalidad_descripcion LIKE 'Canje y Administracion de puntos')
 		AND R.rol_nombre like 'Cliente'
 	order by 1
 PRINT('Migracion terminada para funcionalidadxrol para Cliente') 
@@ -570,10 +583,8 @@ select distinct
 	where 
 		(funcionalidad_descripcion LIKE 'Generar Publicacion' 
 		OR funcionalidad_descripcion LIKE 'ABM de Rubro' 
-		OR funcionalidad_descripcion LIKE 'Generar rendicion de comisiones'
 		OR funcionalidad_descripcion LIKE 'Editar Publicacion'
-		OR funcionalidad_descripcion LIKE 'Registro de usuarios'
-		OR funcionalidad_descripcion LIKE 'ABM de Empresas de espectaculo')
+		OR funcionalidad_descripcion LIKE 'ABM Grado de publicacion')
 		AND R.rol_nombre like 'Empresa'
 	order by 1
 PRINT('Migracion terminada para funcionalidadxrol para Empresas') 
@@ -1981,3 +1992,56 @@ SET usuario_password = HASHBYTES('SHA2_256', '1234')
 WHERE usuario_Id < 2 OR usuario_Id = 85
 
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
+/*
+SELECT * FROM SQLEADOS.Usuario where usuario_Id = 85
+
+INSERT INTO SQLEADOS.Canjes(canje_cliente_numero_documento,canje_cliente_tipo_documento, canje_fecha, canje_puntos_gastados)
+
+SELECT TOP 1 punt_id ,punt_puntaje FROM SQLEADOS.puntaje
+	JOIN SQLEADOS.Cliente c ON c.cliente_numero_documento = punt_cliente_numero_documento
+		AND c.cliente_tipo_documento LIKE punt_cliente_tipo_documento
+	WHERE punt_id NOT IN (SELECT pp.punt_id FROM SQLEADOS.puntaje pp WHERE pp.punt_fecha_vencimiento <= GETDATE())
+		AND cliente_usuario = 85
+	ORDER BY punt_fecha_vencimiento ASC
+
+SELECT SUM(punt_puntaje) as 'Puntaje' 
+	FROM SQLEADOS.puntaje p 
+	JOIN SQLEADOS.Cliente  
+		ON p.punt_cliente_numero_documento = cliente_numero_documento 
+		AND p.punt_cliente_tipo_documento LIKE cliente_tipo_documento 
+	WHERE p.punt_id NOT IN (SELECT pp.punt_id FROM SQLEADOS.puntaje pp WHERE pp.punt_fecha_vencimiento <= GETDATE())
+		AND cliente_usuario = 85
+
+
+SELECT 
+	cliente_apellido as 'Apellido', 
+	cliente_nombre as 'Nombre', 
+	cliente_tipo_documento as 'TIPO DOCUMENTO',
+	cliente_numero_documento as 'Numero', 
+	(SELECT SUM(punt_puntaje) 
+		FROM SQLEADOS.puntaje p 
+		WHERE p.punt_cliente_numero_documento = cliente_numero_documento 
+			AND p.punt_cliente_tipo_documento LIKE cliente_tipo_documento AND
+			p.punt_id NOT IN (SELECT pp.punt_id FROM SQLEADOS.puntaje pp WHERE pp.punt_fecha_vencimiento <= GETDATE())	
+			) as 'Puntaje' 
+	FROM SQLEADOS.Cliente 
+	WHERE cliente_usuario = 85
+	GROUP BY cliente_apellido, cliente_nombre, cliente_tipo_documento, cliente_numero_documento
+
+SELECT * FROM SQLEADOS.puntaje ORDER BY punt_id desc
+
+SELECT SUM(punt_puntaje)
+	FROM SQLEADOS.puntaje p
+	JOIN SQLEADOS.Cliente c ON p.punt_cliente_numero_documento = cliente_numero_documento
+						AND p.punt_cliente_tipo_documento = cliente_tipo_documento
+						WHERE cliente_usuario = 85
+							AND p.punt_id NOT IN (SELECT px.punt_id FROM SQLEADOS.puntaje px WHERE px.punt_fecha_vencimiento < GETDATE())
+
+SELECT punt_id, punt_fecha_vencimiento, GETDATE()
+	FROM SQLEADOS.puntaje p
+	JOIN SQLEADOS.Cliente c ON p.punt_cliente_numero_documento = cliente_numero_documento
+						AND p.punt_cliente_tipo_documento = cliente_tipo_documento
+						WHERE cliente_usuario = 85
+							AND p.punt_id NOT IN 
+								(SELECT px.punt_id FROM SQLEADOS.puntaje px WHERE px.punt_fecha_vencimiento < GETDATE())
+								*/
