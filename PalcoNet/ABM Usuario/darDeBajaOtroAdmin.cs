@@ -32,7 +32,7 @@ namespace PalcoNet.ABM_Usuario
         }
 
         private void llenarGrilla() {
-            String comando = "SELECT usuario_Id as 'ID' ,usuario_nombre as 'Nombre usuario', CASE WHEN usuario_estado = 1 THEN 'SI' ELSE 'NO' END as 'Habilitado' FROM SQLEADOS.Usuario where usuario_administrador = 1 AND usuario_nombre NOT LIKE  '" + Usuario.username + "'";
+            String comando = "SELECT usuario_Id as 'ID' ,usuario_nombre as 'Nombre usuario', rol.rol_nombre as 'ROL', CASE WHEN usuario_estado = 1 THEN 'SI' ELSE 'NO' END as 'Habilitado' FROM SQLEADOS.Usuario JOIN SQLEADOS.UsuarioXRol ON usuario_Id = usuarioXRol_usuario JOIN SQLEADOS.Rol ON rol_Id = usuarioXRol_rol WHERE (rol_Id = 1 OR rol_Id > 3) AND usuario_nombre NOT LIKE  '" + Usuario.username + "'";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(comando);
             dataGridView1.DataSource = dt;
         }

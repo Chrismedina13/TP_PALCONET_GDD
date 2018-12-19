@@ -43,9 +43,9 @@
             this.button1.Location = new System.Drawing.Point(11, 153);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(356, 78);
+            this.button1.Size = new System.Drawing.Size(480, 78);
             this.button1.TabIndex = 16;
-            this.button1.Text = "DAR DE BAJA O HABILITAR ADMIN\r\n";
+            this.button1.Text = "DAR DE BAJA O HABILITAR USUARIO NO CLIENTES NI EMPRESA";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -56,7 +56,7 @@
             this.button3.Location = new System.Drawing.Point(11, 87);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(356, 62);
+            this.button3.Size = new System.Drawing.Size(480, 62);
             this.button3.TabIndex = 18;
             this.button3.Text = "CREAR NUEVO USUARIO";
             this.button3.UseVisualStyleBackColor = false;
@@ -66,7 +66,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(29, 33);
+            this.label6.Location = new System.Drawing.Point(96, 32);
             this.label6.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(327, 39);
@@ -90,7 +90,7 @@
             // 
             this.button2.BackColor = System.Drawing.Color.MintCream;
             this.button2.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(110, 301);
+            this.button2.Location = new System.Drawing.Point(181, 301);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(160, 62);
@@ -106,7 +106,7 @@
             this.button5.Location = new System.Drawing.Point(11, 235);
             this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(356, 62);
+            this.button5.Size = new System.Drawing.Size(480, 62);
             this.button5.TabIndex = 23;
             this.button5.Text = "MODIFICAR ROL DE USUARIO";
             this.button5.UseVisualStyleBackColor = false;
@@ -117,7 +117,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumAquamarine;
-            this.ClientSize = new System.Drawing.Size(375, 370);
+            this.ClientSize = new System.Drawing.Size(502, 370);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button4);

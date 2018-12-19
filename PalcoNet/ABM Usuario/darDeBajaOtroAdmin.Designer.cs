@@ -59,9 +59,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(21, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(415, 62);
+            this.label1.Size = new System.Drawing.Size(340, 62);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Elija el administrador para dar de \r\nbaja o alta";
+            this.label1.Text = "Elija el usuario para dar de \r\nbaja o alta";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2

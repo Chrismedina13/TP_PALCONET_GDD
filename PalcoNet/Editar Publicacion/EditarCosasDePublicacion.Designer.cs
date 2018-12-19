@@ -33,13 +33,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textPuntaje = new System.Windows.Forms.TextBox();
             this.radioButtonPublicada = new System.Windows.Forms.RadioButton();
             this.radioButtonBorrador = new System.Windows.Forms.RadioButton();
             this.radioButtonFinalizada = new System.Windows.Forms.RadioButton();
-            this.comboBoxGrados = new System.Windows.Forms.ComboBox();
             this.labelCategoria = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -107,15 +105,6 @@
             this.label3.TabIndex = 39;
             this.label3.Text = "Categoría";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 184);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 26);
-            this.label4.TabIndex = 41;
-            this.label4.Text = "Grado de \r\npublicacion";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -164,18 +153,6 @@
             this.radioButtonFinalizada.TabStop = true;
             this.radioButtonFinalizada.Text = "Finalizada";
             this.radioButtonFinalizada.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxGrados
-            // 
-            this.comboBoxGrados.FormattingEnabled = true;
-            this.comboBoxGrados.Items.AddRange(new object[] {
-            "Alta",
-            "Media",
-            "Baja"});
-            this.comboBoxGrados.Location = new System.Drawing.Point(94, 191);
-            this.comboBoxGrados.Name = "comboBoxGrados";
-            this.comboBoxGrados.Size = new System.Drawing.Size(276, 21);
-            this.comboBoxGrados.TabIndex = 9;
             // 
             // labelCategoria
             // 
@@ -390,13 +367,11 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.labelCategoria);
-            this.Controls.Add(this.comboBoxGrados);
             this.Controls.Add(this.radioButtonFinalizada);
             this.Controls.Add(this.radioButtonBorrador);
             this.Controls.Add(this.radioButtonPublicada);
             this.Controls.Add(this.textPuntaje);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label2);
@@ -421,13 +396,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textPuntaje;
         private System.Windows.Forms.RadioButton radioButtonPublicada;
         private System.Windows.Forms.RadioButton radioButtonBorrador;
         private System.Windows.Forms.RadioButton radioButtonFinalizada;
-        private System.Windows.Forms.ComboBox comboBoxGrados;
         public System.Windows.Forms.Label labelCategoria;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
