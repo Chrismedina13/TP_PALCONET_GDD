@@ -50,7 +50,6 @@ namespace PalcoNet.Editar_Publicacion
         }
 
         editarInfoOUbicaciones editinfoubi;
-
         public EditarCosasDePublicacion(int publicacion, EditarPublicacion eddy, editarInfoOUbicaciones infoOUbicacion)
         {
             editinfoubi = infoOUbicacion;

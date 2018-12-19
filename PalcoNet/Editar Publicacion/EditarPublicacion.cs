@@ -17,6 +17,7 @@ namespace PalcoNet.Editar_Publicacion
         private bool esAdmin ;
         DataTable dt;
         Explorador exx;
+
         public EditarPublicacion(Explorador exs)
         {
             exx = exs;
@@ -33,7 +34,6 @@ namespace PalcoNet.Editar_Publicacion
             }
             DBConsulta.conexionCerrar();
             InitializeComponent();
-            
         }
 
         private void configuracionGrilla(DataTable dt)
@@ -51,20 +51,23 @@ namespace PalcoNet.Editar_Publicacion
 
         private void botonEditar_Load(object sender, EventArgs e)
         {
+            cargar();
+        }
+
+        public void carga() {
             String queryBuscador = "";
-            
+
             if (esAdmin)
             {
-                //Encuentra todas los espectáculos
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
+                //Encuentra todos los espectáculos en estado BORRADOR y PUBLICADO
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
                 dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
-            else { 
+            else
+            {
                 //Solo sirven los que publicó la empresa
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable ="+ user;
-                DBConsulta.conexionAbrir();
-                dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
-                DBConsulta.conexionCerrar();
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') AND publicacion_usuario_responsable =" + user;
+                dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             configuracionGrilla(dt);
         }
@@ -75,18 +78,14 @@ namespace PalcoNet.Editar_Publicacion
             if (esAdmin)
             {
                 //Encuentra todas los espectáculos
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE publicacion_estado LIKE 'Borrador'";
-                DBConsulta.conexionAbrir();
-                dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
-                DBConsulta.conexionCerrar();
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
+                dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             else
             {
                 //Solo sirven los que publicó la empresa
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE publicacion_estado LIKE 'Borrador' AND publicacion_usuario_responsable =" + user;
-                DBConsulta.conexionAbrir();
-                dt = DBConsulta.obtenerConsultaEspecifica(queryBuscador);
-                DBConsulta.conexionCerrar();
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') AND publicacion_usuario_responsable =" + user;
+                dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             configuracionGrilla(dt);
         }
@@ -94,12 +93,16 @@ namespace PalcoNet.Editar_Publicacion
         //BOTON EDITAR
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells[5].Value.ToString() =="No") {
+            if (dataGridView1.SelectedCells[5].Value.ToString() == "No")
+            {
                 MessageBox.Show("Esta publicación no se puede editar\nporque no está en estado BORRADOR");
-                return;
+                EditarCosasDePublicacion info = new EditarCosasDePublicacion(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this, null, true);
+                info.Show();
             }
-            editarInfoOUbicaciones info = new editarInfoOUbicaciones(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this);
-            info.Show();
+            else {
+                editarInfoOUbicaciones info = new editarInfoOUbicaciones(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this);
+                info.Show();
+            }
             this.Hide();
         }
 
