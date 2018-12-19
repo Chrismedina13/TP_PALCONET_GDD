@@ -237,7 +237,8 @@ namespace PalcoNet
             if (comboBox1.Items.Count == 1)
             {
                 //PASA DIRECTO AL EXPLORADOR
-
+                elRolEsAdmin();
+                
                 String rol;
                 if (roleslist.Count != 0)
                 {
@@ -278,6 +279,16 @@ namespace PalcoNet
 
         }
 
+        private void elRolEsAdmin() {
+            String queryss = "SELECT usuarioXRol_rol FROM SQLEADOS.UsuarioXRol JOIN SQLEADOS.Usuario u ON u.usuario_Id = usuarioXRol_usuario WHERE usuario_nombre LIKE" + textBox1.Text;
+            DataTable ddt = DBConsulta.AbrirCerrarObtenerConsulta(queryss);
+            if (Convert.ToInt32(ddt.Rows[0][0].ToString()) == 0)
+            {
+                // ES ADMIN
+                Usuario.esAdmin = 1;
+            }
+        }
+
         private bool tieneAlgunRol(String nombreUser) {
             String query = "SELECT COUNT(*) FROM SQLEADOS.Usuario JOIN SQLEADOS.UsuarioXRol us ON us.usuarioXRol_usuario = usuario_Id where usuario_nombre LIKE '" + nombreUser + "'";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
@@ -287,6 +298,19 @@ namespace PalcoNet
             return true;
         }
 
+        private void buscarRolYSaberSiEsAdmin(String rol, String nombreUser) {
+            String query = "SELECT rol_Id FROM SQLEADOS.Rol WHERE rol_nombre LIKE "+ rol;
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            if (dt.Rows[0][0].ToString() == "1")
+            {
+                Usuario.esAdmin = 1;
+            }
+            else 
+            {
+                Usuario.esAdmin = 0;
+            }
+        }
+
         private void button2_Click_1(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == 0)
@@ -294,6 +318,8 @@ namespace PalcoNet
                 MessageBox.Show("No has seleccionado ningún rol aún");
                 return;
             }
+            buscarRolYSaberSiEsAdmin(comboBox1.Text, textBox1.Text);
+
             Usuario.Rol = comboBox1.Text;
             Usuario.username = textBox1.Text;
             String queryss = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_nombre LIKE '" + Usuario.username + "'";

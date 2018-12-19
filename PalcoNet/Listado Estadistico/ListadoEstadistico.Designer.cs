@@ -68,7 +68,7 @@
             // 
             this.añoNUD.Location = new System.Drawing.Point(356, 77);
             this.añoNUD.Maximum = new decimal(new int[] {
-            2018,
+            2019,
             0,
             0,
             0});

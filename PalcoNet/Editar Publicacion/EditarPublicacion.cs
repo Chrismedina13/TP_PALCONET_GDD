@@ -51,7 +51,7 @@ namespace PalcoNet.Editar_Publicacion
 
         private void botonEditar_Load(object sender, EventArgs e)
         {
-            cargar();
+            carga();
         }
 
         public void carga() {
@@ -96,7 +96,8 @@ namespace PalcoNet.Editar_Publicacion
             if (dataGridView1.SelectedCells[5].Value.ToString() == "No")
             {
                 MessageBox.Show("Esta publicación no se puede editar\nporque no está en estado BORRADOR");
-                EditarCosasDePublicacion info = new EditarCosasDePublicacion(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this, null, true);
+                FINALIZARUNAPUBLICACION info = new FINALIZARUNAPUBLICACION(this, dataGridView1.SelectedCells[0].Value.ToString());
+     //           EditarCosasDePublicacion info = new EditarCosasDePublicacion(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), this);
                 info.Show();
             }
             else {

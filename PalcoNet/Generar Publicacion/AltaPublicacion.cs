@@ -149,6 +149,10 @@ namespace PalcoNet.Generar_Publicacion
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1) {
+                MessageBox.Show("Un administrador no puede generar publicaciones", "Error");
+                return;
+            }
 
             int resultado = validarAlta();
 
@@ -195,6 +199,11 @@ namespace PalcoNet.Generar_Publicacion
 
         private void buttonGeneracionMAsiva_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede generar publicaciones", "Error");
+                return;
+            }
 
             int resultado = validarAltaGeneracionMasiva();
             if(resultado == 0){

@@ -1988,9 +1988,14 @@ print('PROCEDURES HECHOS')
 print('Actualización de contraseñas para pruebas')
 UPDATE SQLEADOS.Usuario
 SET usuario_password = HASHBYTES('SHA2_256', '1234')
-WHERE usuario_Id < 2 OR usuario_Id = 85
+WHERE usuario_Id <= 2 OR usuario_Id = 85
 
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
+
+SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 85
+SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 2
+
+	
 
 /*
 SELECT TOP 1 punt_id ,punt_puntaje FROM SQLEADOS.puntaje

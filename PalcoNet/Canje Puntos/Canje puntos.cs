@@ -67,6 +67,12 @@ namespace PalcoNet.Canje_Puntos
 
         private void btCanje_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede comprar", "Error");
+                return;
+            }
+
             int puntos = Convert.ToInt32(textBoxPuntaje.Text);
 
             Canjear canje = new Canjear(puntos, textBoxNumeroDocumento.Text, textBoxTipoDocumento.Text, this);

@@ -47,9 +47,7 @@ namespace PalcoNet.Listado_Estadistico
                         MessageBox.Show("Problemas al cargar la grilla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
                 }
-
             }
-
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

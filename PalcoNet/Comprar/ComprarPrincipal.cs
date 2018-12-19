@@ -57,30 +57,37 @@ namespace PalcoNet.Comprar
 
         private void configuracionGrilla(DataTable dt)
         {
-            String espectaculo = dt.Rows[0]["Espectáculo"].ToString();  //0
-            String Asiento = dt.Rows[0]["Asiento"].ToString();          //1
-            String Fila = dt.Rows[0]["Fila"].ToString();                //2
-            String Precio = dt.Rows[0]["Precio"].ToString();            //3
-            String fecha = dt.Rows[0]["Fecha de evento"].ToString();    //4
-            String Categoria = dt.Rows[0]["Categoría"].ToString();      //5
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No se han encontrado publicaciones con estos criterios");
+            }
+            else {
+                String espectaculo = dt.Rows[0]["Espectáculo"].ToString();  //0
+                String Asiento = dt.Rows[0]["Asiento"].ToString();          //1
+                String Fila = dt.Rows[0]["Fila"].ToString();                //2
+                String Precio = dt.Rows[0]["Precio"].ToString();            //3
+                String fecha = dt.Rows[0]["Fecha de evento"].ToString();    //4
+                String Categoria = dt.Rows[0]["Categoría"].ToString();      //5
 
 
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = dt;
-            DataGridViewColumn column = dataGridView1.Columns[1];
-            column.Width = 250;
-            DataGridViewColumn column1 = dataGridView1.Columns[2];
-            column1.Width = 50;
-            DataGridViewColumn column2 = dataGridView1.Columns[3];
-            column2.Width = 50;
-            DataGridViewColumn column3 = dataGridView1.Columns[4];
-            column3.Width = 80;
-            DataGridViewColumn column4 = dataGridView1.Columns[5];
-            column4.Width = 100;
-            DataGridViewColumn column5 = dataGridView1.Columns[6];
-            column4.Width = 90;
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = dt;
+                DataGridViewColumn column = dataGridView1.Columns[1];
+                column.Width = 250;
+                DataGridViewColumn column1 = dataGridView1.Columns[2];
+                column1.Width = 50;
+                DataGridViewColumn column2 = dataGridView1.Columns[3];
+                column2.Width = 50;
+                DataGridViewColumn column3 = dataGridView1.Columns[4];
+                column3.Width = 80;
+                DataGridViewColumn column4 = dataGridView1.Columns[5];
+                column4.Width = 100;
+                DataGridViewColumn column5 = dataGridView1.Columns[6];
+                column4.Width = 90;
 
-            labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+                labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
+            }
+            
             return;
         }
 
@@ -445,6 +452,12 @@ namespace PalcoNet.Comprar
         //BOTON PARA CONFIRMAR LA COMPRA O SEA PAGAR
         private void button2_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede comprar", "Error");
+                return;
+            }
+
             ComprarPrincipal thi = this;
 
             if (!IDCargados.Any())

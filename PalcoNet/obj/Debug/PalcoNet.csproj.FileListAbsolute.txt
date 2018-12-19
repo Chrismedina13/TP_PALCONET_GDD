@@ -315,3 +315,4 @@ C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.R
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.TablaPaginadas.resources
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Support.volver.resources
 C:\Users\chris\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.tablaPaginada.resources
+C:\Damian\TP DE GDD\TP_PALCONET_GDD\DESCARTE\TP_PALCONET_GDD\PalcoNet\obj\Debug\PalcoNet.Editar_Publicacion.FINALIZARUNAPUBLICACION.resources

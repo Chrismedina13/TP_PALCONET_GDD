@@ -41,6 +41,12 @@ namespace PalcoNet.Abm_Grado
         //BOTON ALTA PRIORIDAD
         private void button1_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede modificar el grado de publicación", "Error");
+                return;
+            }
+            
             String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 1 FROM SQLEADOS.Publicacion WHERE (publicacion_estado ='Publicada' or publicacion_estado ='Borrador') AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Alta");
@@ -49,6 +55,12 @@ namespace PalcoNet.Abm_Grado
         //BOTON MEDIA PRIORIDAD
         private void button3_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede modificar el grado de publicación", "Error");
+                return;
+            }
+            
             String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 2 FROM SQLEADOS.Publicacion WHERE (publicacion_estado ='Publicada' or publicacion_estado ='Borrador') AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Media");
@@ -57,6 +69,12 @@ namespace PalcoNet.Abm_Grado
         //BOTON BAJA PRIORIDAD
         private void button4_Click(object sender, EventArgs e)
         {
+            if (Usuario.esAdmin == 1)
+            {
+                MessageBox.Show("Un administrador no puede modificar el grado de publicación", "Error");
+                return;
+            }
+            
             String quertyy = "UPDATE SQLEADOS.Publicacion SET publicacion_grado = 3 FROM SQLEADOS.Publicacion WHERE (publicacion_estado ='Publicada' or publicacion_estado ='Borrador') AND publicacion_usuario_responsable = " + usuario;
             DBConsulta.ConectarConsulta(quertyy);
             mensajeExito("Baja");
