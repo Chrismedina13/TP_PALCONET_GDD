@@ -130,16 +130,16 @@ namespace PalcoNet.Generar_Publicacion
 
 
             dateTimePickerFechaEspectaculo.Format = DateTimePickerFormat.Custom;
-            dateTimePickerFechaEspectaculo.CustomFormat = "dd/MM/yyyy h: mm:ss tt";
+            dateTimePickerFechaEspectaculo.CustomFormat = "dd/MM/yyyy h: mm tt";
             dateTimePickerFechaEspectaculo.ShowUpDown = true;
 
 
             dateTimePickerFechaPublicacion.Format = DateTimePickerFormat.Custom;
-            dateTimePickerFechaPublicacion.CustomFormat = "dd/MM/yyyy h: mm:ss tt";
+            dateTimePickerFechaPublicacion.CustomFormat = "dd/MM/yyyy h: mmtt";
 
 
             dateTimePickerGeneracionMasiva.Format = DateTimePickerFormat.Custom;
-            dateTimePickerGeneracionMasiva.CustomFormat = "dd/MM/yyyy h: mm:ss tt";
+            dateTimePickerGeneracionMasiva.CustomFormat = "dd/MM/yyyy h: mm tt";
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridViewUbicaciones.AllowUserToAddRows = false;

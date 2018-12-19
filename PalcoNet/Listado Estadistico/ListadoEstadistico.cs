@@ -20,10 +20,9 @@ namespace PalcoNet.Listado_Estadistico
             exx = ex;
             InitializeComponent();
             trimestres = new List<Trimestre>();
-            trimestres.Add(new Trimestre(1, 1, 31, 3, "1° Trimestre (Enero - Marzo)"));
-            trimestres.Add(new Trimestre(1, 4, 30, 6, "2° Trimestre (Abril - Junio)"));
-            trimestres.Add(new Trimestre(1, 7, 30, 9, "3° Trimestre (Julio - Septiembre)"));
-            trimestres.Add(new Trimestre(1, 10, 31, 12, "4° Trimestre (Octubre - Diciembre)"));
+            trimestres.Add(new Trimestre(1, 1, 30, 4, "1° Trimestre (Enero - Abril)"));
+            trimestres.Add(new Trimestre(1, 5, 31, 8, "2° Trimestre (Mayo - Agosto)"));
+            trimestres.Add(new Trimestre(1, 9, 31, 12, "3° Trimestre (Septiembre - Diciembre)"));
         }
 
         private void btnConsultar_Click(object sender, EventArgs e)

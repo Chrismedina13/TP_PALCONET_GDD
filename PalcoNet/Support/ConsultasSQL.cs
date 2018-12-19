@@ -733,7 +733,7 @@ namespace PalcoNet.Support
 
         internal static void cargarGriddClientesMeyorCompras(DataGridView dataGridView1, Trimestre trimestre, decimal año)
         {
-            SqlCommand command = new SqlCommand("");
+            SqlCommand command = new SqlCommand("SELECT top 5 cl.cliente_nombre,cl.cliente_apellido,	SUM(c.compra_cantidad) as 'Cantidad comprada',	c.compra_cliente_numero_documento as 'Numero documento', c.compra_cliente_tipo_documento as 'TIPO DOCUMENTO',e.empresa_razon_social FROM SQLEADOS.Cliente cl JOIN SQLEADOS.Compra c ON c.compra_cliente_numero_documento = cl.cliente_numero_documento AND c.compra_cliente_tipo_documento = cl.cliente_tipo_documento JOIN SQLEADOS.ubicacionesXPublicidadComprada ub ON ub.ubxpcomp_compra = c.compra_id JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_ID = ub.ubxpcom_ubicacionXPublicidad JOIN SQLEADOS.Publicacion p ON p.publicacion_codigo = u.ubiXpubli_Publicacion JOIN SQLEADOS.Empresa e ON e.empresa_usuario = p.publicacion_usuario_responsable where c.compra_fecha > @inicioFecha AND c.compra_fecha < @finFecha GROUP BY c.compra_cantidad, e.empresa_id, c.compra_cliente_numero_documento, c.compra_cliente_tipo_documento,e.empresa_razon_social,cl.cliente_nombre,cl.cliente_apellido ORDER BY SUM(c.compra_cantidad) DESC");
             obtenerEstadistica(dataGridView1, trimestre, año, command);
         }
 
@@ -767,7 +767,7 @@ namespace PalcoNet.Support
         {
             String[] datos = new string[5];
             SqlConnection connection = PalcoNet.Support.Conexion.conexionObtener();
-            SqlCommand getDatosClienteCommand = new SqlCommand("select sum(punt_puntaje) -(select sum(canje_puntos_gastados) from SQLEADOS.Canjes where canje_cliente_numero_documento = cliente_numero_documento and canje_cliente_tipo_documento = cliente_tipo_documento) as puntaje,cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento from SQLEADOS.puntaje,SQLEADOS.Cliente where cliente_usuario = @usuario and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and GETDATE() < punt_fecha_vencimiento  group by cliente_apellido,cliente_nombre, cliente_tipo_documento, cliente_numero_documento");
+            SqlCommand getDatosClienteCommand = new SqlCommand("select case when (sum(punt_puntaje) -(select sum(canje_puntos_gastados) from SQLEADOS.Canjes where canje_cliente_numero_documento = cliente_numero_documento and canje_cliente_tipo_documento = cliente_tipo_documento)) is null then 0 else sum(punt_puntaje) -(select sum(canje_puntos_gastados) from SQLEADOS.Canjes where canje_cliente_numero_documento = cliente_numero_documento and canje_cliente_tipo_documento = cliente_tipo_documento) end  as puntaje,cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento from SQLEADOS.Cliente left join SQLEADOS.puntaje on punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento where cliente_usuario = 194 and GETDATE() < punt_fecha_vencimiento  group by cliente_apellido,cliente_nombre, cliente_tipo_documento, cliente_numero_documento");
             getDatosClienteCommand.Parameters.AddWithValue("usuario", usuario);
             getDatosClienteCommand.Connection = connection;
             connection.Open();
