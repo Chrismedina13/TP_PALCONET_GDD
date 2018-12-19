@@ -28,10 +28,21 @@ namespace PalcoNet.Canje_Puntos
             textBoxApellido.Text = datos[3];
             textBoxPuntaje.Text = datos[4];
 
-            if (Convert.ToInt32(textBoxPuntaje.Text) < 0) {
-
+            if (textBoxPuntaje.Text == "")
+            {
+                MessageBox.Show("Es un administrador no puede canjear puntos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 textBoxPuntaje.Text = "0";
             }
+            else {
+
+                if (Convert.ToInt32(textBoxPuntaje.Text) < 0)
+                {
+
+                    textBoxPuntaje.Text = "0";
+                }
+
+            }
+         
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

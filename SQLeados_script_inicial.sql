@@ -484,7 +484,14 @@ canj_producto varchar(50),
 )
 PRINT('Tabla creada: canjeproducto') 
 
-
+create table [SQLEADOS].Canjes(
+canjes_id int primary key identity,
+canje_cliente_tipo_documento varchar(5),
+canje_cliente_numero_documento numeric(18,0),
+canje_fecha datetime,
+canje_puntos_gastados int,
+FOREIGN KEY (canje_cliente_tipo_documento, canje_cliente_numero_documento) REFERENCES [SQLEADOS].Cliente(cliente_tipo_documento,cliente_numero_documento)
+)
 
 
 ----------------------------------------------------------------------------------------------
@@ -1973,5 +1980,3 @@ UPDATE SQLEADOS.Usuario
 SET usuario_password = HASHBYTES('SHA2_256', '1234')
 WHERE usuario_Id < 2 OR usuario_Id = 85
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
-
-SELECT rubro_id AS 'ID', rubro_descripcion AS 'Nombre' FROM SQLEADOS.Rubro
