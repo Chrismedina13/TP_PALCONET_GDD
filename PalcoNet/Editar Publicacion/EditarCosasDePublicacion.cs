@@ -18,6 +18,7 @@ namespace PalcoNet.Editar_Publicacion
         private DataTable dt;
         private EditarPublicacion ed;
         String categoriaOriginal;
+        String gradoDePublicacion;
 
    //     var ubicacionesYPrecio = new List<Tuple<int, int>>();
         List<Tuple<int, int>> ubicacionesYPrecio;
@@ -84,7 +85,8 @@ namespace PalcoNet.Editar_Publicacion
         {
             radioButtonBorrador.Checked = true;
             textPuntaje.Text = dt.Rows[0]["PUNTAJE"].ToString();
-            comboBoxGrados.Text = dt.Rows[0]["GRADO"].ToString();
+            gradoDePublicacion = dt.Rows[0]["GRADO"].ToString();
+       //     comboBoxGrados.Text = dt.Rows[0]["GRADO"].ToString();
             obtenerDatosDeFechasYHorarioInicial(dt.Rows[0]["FECHA INICIAL"].ToString());
             obtenerDatosDeFechasYHorarioFinal(dt.Rows[0]["FECHA FINAL"].ToString());
             labelCategoria.Text = dt.Rows[0]["Rubro"].ToString();
@@ -361,7 +363,8 @@ namespace PalcoNet.Editar_Publicacion
             
          //   DBConsulta.ConectarConsulta(update);
             if (noHayProblemaConLaFechaYHora(fecha_estreno)) {
-                hacerUpdateDePublicacionEspecifica(publicacionID, estado, idCategoria, comboBoxGrados.SelectedIndex + 1, fecha_estreno, fecha_publicacion, Convert.ToInt32(textPuntaje.Text));
+                int idGrado = buscarIDGrado(gradoDePublicacion);
+                hacerUpdateDePublicacionEspecifica(publicacionID, estado, idCategoria, idGrado, fecha_estreno, fecha_publicacion, Convert.ToInt32(textPuntaje.Text));
                 /*
                 DBConsulta.conexionAbrir();
                 DBConsulta.actualizarPublicidad(publicacionID, estado, idCategoria, comboBoxGrados.SelectedIndex + 1, armarFechaYHoraYAgregarAUpdate(), Convert.ToInt32(textPuntaje.Text));
@@ -375,6 +378,12 @@ namespace PalcoNet.Editar_Publicacion
                 MessageBox.Show("A la fecha que se quiere indicar ya existe otra función,\nSeleccione otra fecha", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private int buscarIDGrado(String nombreGrado) {
+            String query = "SELECT grado_id FROM SQLEADOS.GradoPrioridad WHERE grado_nombre like '"+nombreGrado+"'";
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
+            return Convert.ToInt32(dt.Rows[0][0].ToString());
         }
 
         private void hacerUpdateDePublicacionEspecifica(int IDPublicaciones, String estado, int categoria, int idGrado, String fechaEstreno, String fechaEmpieza, int puntaje) {
@@ -426,7 +435,7 @@ namespace PalcoNet.Editar_Publicacion
             radioButtonPublicada.Checked = false;
 
             textPuntaje.Text = puntajeOriginal;
-            comboBoxGrados.Text = gradoOriginal;
+           // comboBoxGrados.Text = gradoOriginal;
             labelCategoria.Text = categoriaOriginal;
             ubicacionesYPrecio = ubicacionesOriginales;
 

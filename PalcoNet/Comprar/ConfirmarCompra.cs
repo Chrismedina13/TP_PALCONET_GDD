@@ -44,7 +44,7 @@ namespace PalcoNet.Comprar
             }
             agregado += "ux.ubiXpubli_ID = " + IDs[i] + ")";
             query += agregado;
-            dataGridView1.DataSource =  DBConsulta.obtenerConsultaEspecifica(query);
+            dataGridView1.DataSource =  DBConsulta.AbrirCerrarObtenerConsulta(query);
             DataGridViewColumn column = dataGridView1.Columns[1];
             column.Width = 250;
             
@@ -147,7 +147,7 @@ namespace PalcoNet.Comprar
 
         private bool elUserTieneTarjeta(int user) {
             String query = "SELECT cliente_datos_tarjeta AS 'DATOS', cliente_usuario FROM SQLEADOS.Cliente WHERE cliente_usuario = " + user;
-            DataTable dt = DBConsulta.obtenerConsultaEspecifica(query);
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             String cellValue = dt.Rows[0][0].ToString();
             return !AyudaExtra.esStringVacio(cellValue);
         }
@@ -163,6 +163,7 @@ namespace PalcoNet.Comprar
         private void button2_Click(object sender, EventArgs e)
         {
             aVolver.vaciarIDCargada();
+            aVolver.cargarDeNuevo();
             aVolver.Show();
             this.Close();
         }

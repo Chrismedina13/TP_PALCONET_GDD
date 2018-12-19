@@ -17,10 +17,10 @@ namespace PalcoNet.Canje_Puntos
         int puntosActuales;
         string ndocumento;
         string tdocumento;
-        canjePuntos cc;
+        canjePuntos volver;
         public Canjear(int puntos,string numeroDocumento,string tipoDocumento, canjePuntos cj)
         {
-            cc = cj;
+            volver = cj;
             InitializeComponent();
             textBoxPuntos.Text = Convert.ToString(puntos);
             puntosActuales = puntos;
@@ -49,14 +49,7 @@ namespace PalcoNet.Canje_Puntos
                     MessageBox.Show("Puntos Insuficientes", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                    
                 }
-
-
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -70,14 +63,16 @@ namespace PalcoNet.Canje_Puntos
             else {
 
                 CanjePuntos.canje(ndocumento, tdocumento, Convert.ToInt32(textBoxValor.Text));
-                cc.Show();
+                volver.Show();
                 this.Close();
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+
+        private void button3_Click(object sender, EventArgs e)
         {
-            cc.Show();
+            //VOLVER
+            volver.Show();
             this.Close();
         }
     }

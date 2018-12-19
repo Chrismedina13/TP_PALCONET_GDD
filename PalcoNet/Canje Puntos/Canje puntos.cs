@@ -60,9 +60,9 @@ namespace PalcoNet.Canje_Puntos
             int puntos = Convert.ToInt32(textBoxPuntaje.Text);
 
             Canjear canje = new Canjear(puntos, textBoxNumeroDocumento.Text, textBoxTipoDocumento.Text, this);
-            this.Hide();
-            canje.Closed += (s, args) => this.Close();
+     //       canje.Closed += (s, args) => this.Close();
             canje.Show();
+            this.Hide();
 
 
         }

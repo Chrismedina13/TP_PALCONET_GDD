@@ -224,7 +224,7 @@ namespace PalcoNet.Comprar
             String queryPrincipal = "SELECT "+ conTop(totalVistoPorPagina) + " ";
             queryPrincipal += "up.ubiXpubli_ID as 'ID',  p.publicacion_descripcion as 'Espectáculo' ,ubicacion_asiento as 'Asiento', ubicacion_fila as 'Fila', u.ubicacion_Tipo_Descripcion as 'Tipo ubicación', ";
             queryPrincipal += "'$ ' +CONVERT(varchar(15), ubiXpubli_precio)  as 'Precio', ";
-            queryPrincipal += "CONVERT(nvarchar(15), DAY(publicacion_fecha))+'/'+CONVERT(nvarchar(15), MONTH(publicacion_fecha))+'/'+CONVERT(nvarchar(15), YEAR(publicacion_fecha)) as 'Fecha de evento', r.rubro_descripcion as 'Categoría', g.grado_id as 'GRADO ID' ";
+            queryPrincipal += "CONVERT(nvarchar(15), DAY(publicacion_fecha_venc))+'/'+CONVERT(nvarchar(15), MONTH(publicacion_fecha_venc))+'/'+CONVERT(nvarchar(15), YEAR(publicacion_fecha_venc)) +  ' ' + CONVERT(nvarchar(15), DATEPART(HOUR, publicacion_fecha_venc)) +':'+ CONVERT(nvarchar(15), DATEPART(MINUTE, publicacion_fecha_venc)) as 'Fecha de evento', r.rubro_descripcion as 'Categoría', g.grado_id as 'GRADO ID' ";
             queryPrincipal += " FROM [SQLEADOS].Publicacion p ";
             queryPrincipal += cargarJoins();
             queryPrincipal += comandoWhere();
@@ -272,7 +272,7 @@ namespace PalcoNet.Comprar
             where += " WHERE p.publicacion_estado LIKE 'Publicada' ";
             if (textBoxPublicacion.Text != "")
             {
-                where += "AND p.publicacion_descripcion LIKE '" + textBoxPublicacion.Text.Trim() + "%' ";
+                where += "AND p.publicacion_descripcion LIKE '%" + textBoxPublicacion.Text.Trim() + "%' ";
             }
 
             if (fueCargadaCategoria)
@@ -304,37 +304,50 @@ namespace PalcoNet.Comprar
             return where;
         }
 
+        public void cargarDeNuevo() {
+            cargaDeLaGrilla();
+        }
+
         //BOTON BUSCAR
         // PRIMERO ARMO PARA QUE ME CUENTE LA CANTIDAD TOTAL DE IDS, LUEGO LOS BUSCA
         private void button1_Click(object sender, EventArgs e)
         {
+            cargaDeLaGrilla();
+        }
+
+        private void cargaDeLaGrilla() 
+        {
             //string theDate = dateTimePickeValuer1.Value.ToString("yyyy-MM-dd");
             //string theDate2 = dateTimePicker2..ToString("yyyy-MM-dd");
-            if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
             {
-                MessageBox.Show("La segunda fecha no puede ser inferior a la primera \nFECHA 1:" + dateTimePicker1.Text+"\nFECHA 2:"+dateTimePicker2.Text);
+                MessageBox.Show("La segunda fecha no puede ser inferior o igual a la primera \nFECHA 1:" + dateTimePicker1.Text + "\nFECHA 2:" + dateTimePicker2.Text);
                 return;
             }
             DateTime hoy = DateTime.Today;
-            if (hoy > dateTimePicker1.Value.Date) {
+            if (hoy > dateTimePicker1.Value.Date)
+            {
                 MessageBox.Show("La fecha inicial no puede ser menor que la actual");
                 return;
             }
             String queryPrincipal;
-            if (paginaActual != 1) {
+            if (paginaActual != 1)
+            {
                 queryPrincipal = cargar10QuerysParaNPagina();
-            } else {
+            }
+            else
+            {
                 queryPrincipal = cargarPrimeros10Querys();
             }
-            
+
             String comandoContadorTotalIDs = "SELECT DISTINCT COUNT(*) as 'ID' FROM [SQLEADOS].Publicacion p ";
             comandoContadorTotalIDs += cargarJoins();
-     //       cadena += "JOIN [SQLEADOS].Compra c ON c.compra_ubiXpubli != up.ubiXpubli_ID ";
+            //       cadena += "JOIN [SQLEADOS].Compra c ON c.compra_ubiXpubli != up.ubiXpubli_ID ";
 
             comandoContadorTotalIDs += comandoWhere();
-            queryPrincipal += " "+ ordenamiento();
-   //         MessageBox.Show(queryPrincipal);
-         //   comandoContadorTotalIDs += queryExcluyenteSinTop();
+            queryPrincipal += " " + ordenamiento();
+            //         MessageBox.Show(queryPrincipal);
+            //   comandoContadorTotalIDs += queryExcluyenteSinTop();
             DBConsulta.conexionAbrir();
             ponerBienLasHojas(comandoContadorTotalIDs);
             obtenerResultados(queryPrincipal);
