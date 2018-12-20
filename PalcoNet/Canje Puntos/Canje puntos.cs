@@ -14,7 +14,7 @@ namespace PalcoNet.Canje_Puntos
     public partial class canjePuntos : Form
     {
         Explorador ex;
-        public canjePuntos(int usuario, Explorador exx)
+        public canjePuntos(Explorador exx)
         {
             ex = exx;
             String[] datos = new string[5];

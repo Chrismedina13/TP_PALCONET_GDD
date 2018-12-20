@@ -280,7 +280,7 @@ namespace PalcoNet
         }
 
         private void elRolEsAdmin() {
-            String queryss = "SELECT usuarioXRol_rol FROM SQLEADOS.UsuarioXRol JOIN SQLEADOS.Usuario u ON u.usuario_Id = usuarioXRol_usuario WHERE usuario_nombre LIKE" + textBox1.Text;
+            String queryss = "SELECT usuarioXRol_rol FROM SQLEADOS.UsuarioXRol JOIN SQLEADOS.Usuario u ON u.usuario_Id = usuarioXRol_usuario WHERE usuario_nombre LIKE '" + textBox1.Text + "'";
             DataTable ddt = DBConsulta.AbrirCerrarObtenerConsulta(queryss);
             if (Convert.ToInt32(ddt.Rows[0][0].ToString()) == 0)
             {
@@ -299,7 +299,7 @@ namespace PalcoNet
         }
 
         private void buscarRolYSaberSiEsAdmin(String rol, String nombreUser) {
-            String query = "SELECT rol_Id FROM SQLEADOS.Rol WHERE rol_nombre LIKE "+ rol;
+            String query = "SELECT rol_Id FROM SQLEADOS.Rol WHERE rol_nombre LIKE '"+ rol+"'";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             if (dt.Rows[0][0].ToString() == "1")
             {

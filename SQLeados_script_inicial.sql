@@ -898,12 +898,6 @@ insert into [SQLEADOS].Factura(factura_publicacion, factura_nro, factura_empresa
 	order by 1
 PRINT('HECHO')
 
---ItemFactura--
-PRINT('MIGRANDO ItemFactura') 
-GO
-insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
-select Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad from gd_esquema.Maestra where Factura_Nro is not null order by Factura_Nro
-PRINT('HECHO')
 --COMPRA--
 
 PRINT('MIGRANDO Compra') 
@@ -917,7 +911,8 @@ insert into SQLEADOS.Compra(
 			compra_precio,
 			compra_ubiXpubli,
 			compra_forma_de_pago)
-select distinct m.Factura_Nro,'DNI',m.Cli_Dni,m.Compra_Fecha, m.Compra_Cantidad,x.ubiXpubli_precio,x.ubiXpubli_ID, 'Efectivo' from gd_esquema.Maestra m
+select distinct m.Factura_Nro,'DNI',m.Cli_Dni,m.Compra_Fecha, m.Compra_Cantidad,x.ubiXpubli_precio,x.ubiXpubli_ID, 'Efectivo' 
+from gd_esquema.Maestra m
 join SQLeados.ubicacionXpublicacion x on m.Espectaculo_Cod = x.ubiXpubli_Publicacion 
 join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubicacion_Fila = u.ubicacion_fila and m.Ubicacion_Sin_numerar = u.Ubicacion_Sin_numerar
 and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
@@ -930,6 +925,21 @@ INSERT INTO [SQLEADOS].ubicacionesXPublicidadComprada
 	(ubxpcomp_compra, ubxpcom_ubicacionXPublicidad)
 SELECT DISTINCT c.compra_id, c.compra_ubiXpubli FROM SQLEADOS.Compra c
 
+PRINT('HECHO')
+
+--ItemFactura--
+PRINT('MIGRANDO ItemFactura') 
+GO
+insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
+select DISTINCT Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad, u.ubicacion_id
+	from gd_esquema.Maestra m
+	join SQLeados.ubicacionXpublicacion x on m.Espectaculo_Cod = x.ubiXpubli_Publicacion 
+	join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubicacion_Fila = u.ubicacion_fila and m.Ubicacion_Sin_numerar = u.Ubicacion_Sin_numerar
+	and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
+	where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
+	AND Factura_Nro is not null 
+	--AND up.ubiXpubli_Publicacion = m.Espectaculo_Cod
+	order by Factura_Nro
 PRINT('HECHO')
 
 PRINT('Actualizando TABLA COMPRA') 	
@@ -1992,10 +2002,15 @@ WHERE usuario_Id <= 2 OR usuario_Id = 85
 
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
 
+/*
+SELECT * FROM SQLEADOS.Usuario ORDER BY usuario_Id
+
+
+
 SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 85
 SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 2
 
-	
+	*/
 
 /*
 SELECT TOP 1 punt_id ,punt_puntaje FROM SQLEADOS.puntaje

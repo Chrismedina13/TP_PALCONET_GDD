@@ -148,7 +148,7 @@ namespace PalcoNet
             }
             if (vista == "Canje y Administracion de puntos")
             {
-                PalcoNet.Canje_Puntos.canjePuntos canjepu = new PalcoNet.Canje_Puntos.canjePuntos(Usuario.ID ,this);
+                PalcoNet.Canje_Puntos.canjePuntos canjepu = new PalcoNet.Canje_Puntos.canjePuntos(this);
                 canjepu.Show();
                 this.Hide();
             }

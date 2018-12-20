@@ -41,7 +41,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 return;
                 
             }
-
+            String error = "";
             if (!AyudaExtra.esUnMail(textBoxMail.Text)) {
                 MessageBox.Show("Ingrese un mail valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -121,7 +121,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             String localidad = textBoxLocalidad.Text;
 
             int usuarioNuevo =0;
-            bool error = false;
+            bool errores = false;
 
             DBConsulta.conexionAbrir();
             bool autocontra = false;
@@ -141,13 +141,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 else
                 {
                     MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    error = true;
+                    errores = true;
                 }
             }
             //TERMINA CREA EL USUARIO
             DBConsulta.conexionCerrar();
             //CREA LA EMPRESA
-            if (!error)
+            if (!errores)
             {
                 DateTime hoy = DateTime.Today;
                 int ultimoUser;
