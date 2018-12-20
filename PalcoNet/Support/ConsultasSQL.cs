@@ -727,7 +727,7 @@ namespace PalcoNet.Support
 
         internal static void cargarGriddClientesMasPuntosVencidos(DataGridView dataGridView1, Trimestre trimestre, decimal p)
         {
-            SqlCommand command = new SqlCommand("");
+            SqlCommand command = new SqlCommand("select cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento,sum(punt_puntaje) from SQLEADOS.puntaje,SQLEADOS.Cliente where punt_fecha_vencimiento < GETDATE() and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and punt_fecha_vencimiento > @inicioFecha AND punt_fecha_vencimiento < @finFecha group by cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento order by sum(punt_puntaje) desc");
             obtenerEstadistica(dataGridView1, trimestre, p, command);
         }
 
