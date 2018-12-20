@@ -372,6 +372,7 @@
     <Compile Include="Registro de Usuario\RegistroUser.Designer.cs">
       <DependentUpon>RegistroUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\ArchivoDeConfiguracion.cs" />
     <Compile Include="Support\CasoData.cs" />
     <Compile Include="Support\DBConsulta.cs" />
     <Compile Include="Support\ConsultasSQL.cs" />

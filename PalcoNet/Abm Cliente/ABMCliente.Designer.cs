@@ -31,13 +31,8 @@
             this.buttonBAJACLIENTE = new System.Windows.Forms.Button();
             this.buttonMODIFICARCLIENTE = new System.Windows.Forms.Button();
             this.buttonALTACLIENTE = new System.Windows.Forms.Button();
+            this.Volver = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // volver_boton
-            // 
-            this.volver_boton.Location = new System.Drawing.Point(81, 254);
-            this.volver_boton.Size = new System.Drawing.Size(131, 28);
-            this.volver_boton.Click += new System.EventHandler(this.volver_boton_Click_1);
             // 
             // buttonBAJACLIENTE
             // 
@@ -69,22 +64,29 @@
             this.buttonALTACLIENTE.UseVisualStyleBackColor = true;
             this.buttonALTACLIENTE.Click += new System.EventHandler(this.buttonALTA_Click);
             // 
+            // Volver
+            // 
+            this.Volver.Location = new System.Drawing.Point(81, 251);
+            this.Volver.Name = "Volver";
+            this.Volver.Size = new System.Drawing.Size(131, 45);
+            this.Volver.TabIndex = 7;
+            this.Volver.Text = "BAJA CLIENTE";
+            this.Volver.UseVisualStyleBackColor = true;
+            this.Volver.Click += new System.EventHandler(this.Volver_Click);
+            // 
             // ABMCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Aquamarine;
             this.ClientSize = new System.Drawing.Size(288, 318);
+            this.Controls.Add(this.Volver);
             this.Controls.Add(this.buttonBAJACLIENTE);
             this.Controls.Add(this.buttonMODIFICARCLIENTE);
             this.Controls.Add(this.buttonALTACLIENTE);
             this.Name = "ABMCliente";
             this.Text = "ABMCliente";
             this.Load += new System.EventHandler(this.ABMCliente_Load);
-            this.Controls.SetChildIndex(this.buttonALTACLIENTE, 0);
-            this.Controls.SetChildIndex(this.buttonMODIFICARCLIENTE, 0);
-            this.Controls.SetChildIndex(this.buttonBAJACLIENTE, 0);
-            this.Controls.SetChildIndex(this.volver_boton, 0);
             this.ResumeLayout(false);
 
         }
@@ -94,5 +96,6 @@
         private System.Windows.Forms.Button buttonBAJACLIENTE;
         private System.Windows.Forms.Button buttonMODIFICARCLIENTE;
         private System.Windows.Forms.Button buttonALTACLIENTE;
+        private System.Windows.Forms.Button Volver;
     }
 }

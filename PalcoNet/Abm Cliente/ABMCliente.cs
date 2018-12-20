@@ -11,7 +11,7 @@ using PalcoNet.Support;
 
 namespace PalcoNet.Abm_Cliente
 {
-    public partial class ABMCliente : volver
+    public partial class ABMCliente : Form
     {
         Explorador exx;
         
@@ -55,6 +55,12 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private void volver_boton_Click_1(object sender, EventArgs e)
+        {
+            exx.Show();
+            this.Close();
+        }
+
+        private void Volver_Click(object sender, EventArgs e)
         {
             exx.Show();
             this.Close();

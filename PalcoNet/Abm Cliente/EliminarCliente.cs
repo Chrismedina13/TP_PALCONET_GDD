@@ -227,6 +227,7 @@ namespace PalcoNet.Abm_Cliente
             textBoxDNI.Text = "";
             textBoxEmail.Text = "";
             textBoxNombre.Text = "";
+            dataGridView1.DataSource = new DataTable();
         }
 
     }

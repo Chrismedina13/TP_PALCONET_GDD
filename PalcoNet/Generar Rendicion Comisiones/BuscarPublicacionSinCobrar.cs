@@ -68,7 +68,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         private void button3_Click(object sender, EventArgs e)
         {
             //Limpiar
-
+            dataGridView1.DataSource = new DataTable();
             textBox1.Text = "";
         }
     }

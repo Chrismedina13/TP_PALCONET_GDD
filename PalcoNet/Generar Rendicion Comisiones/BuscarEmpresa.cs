@@ -71,6 +71,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         {
             //limpiar
             textBox1.Text = "";
+            dataGridView1.DataSource = new DataTable();
         }
     }
 }

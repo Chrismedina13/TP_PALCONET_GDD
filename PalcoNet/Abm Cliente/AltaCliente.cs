@@ -358,7 +358,7 @@ namespace PalcoNet.Abm_Cliente
 
         private void AltaCliente_Load(object sender, EventArgs e)
         {
-
+            dateFecha.Value = ArchivoDeConfiguracion.fechaReferencia;
         }
 
         private void label30_Click(object sender, EventArgs e)
@@ -402,6 +402,7 @@ namespace PalcoNet.Abm_Cliente
         private void button2_Click(object sender, EventArgs e)
         {
             limpiarCuadrosDeTexto();
+            dateFecha.Value = ArchivoDeConfiguracion.fechaReferencia;
         }
     }
 }

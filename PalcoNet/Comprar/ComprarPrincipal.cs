@@ -46,8 +46,10 @@ namespace PalcoNet.Comprar
 
         private void Comprar_Load(object sender, EventArgs e)
         {
-            dateTimePicker1.Value = new DateTime(f1.Year, f1.Month, f1.Day);
-            dateTimePicker2.Value = new DateTime(f2.Year, f2.Month, f2.Day);
+            dateTimePicker1.Value = ArchivoDeConfiguracion.fechaReferencia;
+            DateTime tiempo = ArchivoDeConfiguracion.fechaReferencia;
+            tiempo = tiempo.AddDays(1);
+            dateTimePicker2.Value = tiempo;
             
        //     String res = DBConsulta.obtenerTotalUbicacionDePublicacion(publicacionID).Rows[0][0].ToString();
       //      int cantidad = Convert.ToInt32(res);
@@ -498,8 +500,12 @@ namespace PalcoNet.Comprar
             textBoxPublicacion.Text = "";
             cambiarTamanio("10", sender, e);
 
-            dateTimePicker1.Value = new DateTime(f1.Year, f1.Month, f1.Day);
-            dateTimePicker2.Value = new DateTime(f2.Year, f2.Month, f2.Day);
+            dateTimePicker1.Value = ArchivoDeConfiguracion.fechaReferencia;
+            DateTime tiempo = ArchivoDeConfiguracion.fechaReferencia;
+            tiempo = tiempo.AddDays(1);
+            dateTimePicker2.Value = tiempo;
+
+            dataGridView1.DataSource = new DataTable();
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

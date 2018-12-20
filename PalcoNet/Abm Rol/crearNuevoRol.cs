@@ -61,21 +61,26 @@ namespace PalcoNet.ABM_Rol
 
         private void validarCampos()
         {
+            String mensaje ="";
             if (!AyudaExtra.esStringLetra(textBox1.Text)) {
-                String mensaje = "El campo nombre debe ser alfabético";
+                mensaje += "El campo nombre debe ser alfabético\n";
                 String caption = "Error al crear el rol";
-                MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
+         //       MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
             }
             
             if (string.IsNullOrEmpty(textBox1.Text) || (int)listBox2.Items.Count == 0)
             {
-                String mensaje = "Los campos nombre y funcionalidades son obligatorios";
+                mensaje += "Los campos nombre y funcionalidades son obligatorios";
                 String caption = "Error al crear el rol";
                 MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
 
             }
                else
             {
+                if (mensaje != "") {
+                    String caption = "Error al crear el rol";
+                    MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
+                }
                 coneccion.Open();
                 existeRol = new SqlCommand("SQLeados.existeRol", coneccion);
                 existeRol.CommandType = CommandType.StoredProcedure;
@@ -89,7 +94,7 @@ namespace PalcoNet.ABM_Rol
 
                 if ((int)existeR == 1)
                 {
-                    String mensaje = "El rol ya exisste, ingrese otro nombre";
+                    mensaje += "El rol ya exisste, ingrese otro nombre";
                     String caption = "Error al crear el rol";
                     MessageBox.Show(mensaje, caption, MessageBoxButtons.OK);
                 }

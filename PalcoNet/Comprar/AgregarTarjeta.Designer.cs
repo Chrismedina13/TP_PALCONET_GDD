@@ -37,6 +37,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.labelUSERID = new System.Windows.Forms.Label();
             this.labelNombreUser = new System.Windows.Forms.Label();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -127,11 +128,22 @@
             this.labelNombreUser.TabIndex = 31;
             this.labelNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(17, 181);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(86, 34);
+            this.buttonLimpiar.TabIndex = 32;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
             // AgregarTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(347, 227);
+            this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.labelNombreUser);
             this.Controls.Add(this.labelUSERID);
             this.Controls.Add(this.label4);
@@ -160,5 +172,6 @@
         private System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label labelUSERID;
         public System.Windows.Forms.Label labelNombreUser;
+        private System.Windows.Forms.Button buttonLimpiar;
     }
 }

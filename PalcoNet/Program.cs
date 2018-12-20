@@ -25,6 +25,7 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
+            ArchivoDeConfiguracion.fechaReferencia = new DateTime(2018, 12, 1);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

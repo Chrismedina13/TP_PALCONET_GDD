@@ -48,5 +48,12 @@ namespace PalcoNet.ABM_Usuario
             user.Show();
             this.Close();
         }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            //LIMPIAR
+            textBox1.Text = "";
+            dataGridView1.DataSource = new DataTable();
+        }
     }
 }

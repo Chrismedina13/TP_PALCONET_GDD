@@ -102,32 +102,31 @@ namespace PalcoNet.ABM_Usuario
 
         private void botoncrear_Click(object sender, EventArgs e)
         {
+            String error = "";
             if (textBoxcontra.Text.Trim() == "") {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "El campos contraseña está vacio, debe rellenarlo\n";
             }
             if (textBoxNombre.Text.Trim() == "")
             {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "El campos nombre de usuario está vacio, debe rellenarlo\n";
             }
             if (textBoxrepecontra.Text.Trim() == "")
             {
-                MessageBox.Show("Hay campos vacios, debe rellenarlos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "El campos repetir la contraseña está vacio, debe rellenarlo\n";
             }
             if (!AyudaExtra.esStringNumerico(textBoxcontra.Text)) {
-                MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "La contraseña debe ser numérica, debe rellenarlo\n";
             }
             if (!AyudaExtra.esStringNumerico(textBoxrepecontra.Text))
             {
-                MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "La contraseña debe ser numéricao, debe rellenarlo\n";
             }
 
             if (textBoxcontra.Text != textBoxrepecontra.Text) {
-                MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error += "Las contraseñas ingresadas no coinciden\n";
+            }
+            if(error !="") {
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             String comando, comando2;

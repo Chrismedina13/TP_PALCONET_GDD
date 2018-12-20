@@ -55,5 +55,12 @@ namespace PalcoNet.Comprar
             DBConsulta.conexionCerrar();
             labelUSERID.Text = userID.ToString();
         }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            //LIMPIAR
+            textBox1.Text = "";
+            textBox2.Text = "";
+        }
     }
 }

@@ -149,6 +149,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             textBoxCuit.Text = "";
             textBoxMail.Text = "";
             textBoxRazonSocial.Text = "";
+
         }
 
      

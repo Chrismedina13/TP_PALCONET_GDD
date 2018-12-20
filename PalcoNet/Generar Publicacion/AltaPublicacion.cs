@@ -132,14 +132,15 @@ namespace PalcoNet.Generar_Publicacion
             dateTimePickerFechaEspectaculo.Format = DateTimePickerFormat.Custom;
             dateTimePickerFechaEspectaculo.CustomFormat = "dd/MM/yyyy h: mm tt";
             dateTimePickerFechaEspectaculo.ShowUpDown = true;
-
+            dateTimePickerFechaEspectaculo.Value = ArchivoDeConfiguracion.fechaReferencia;
 
             dateTimePickerFechaPublicacion.Format = DateTimePickerFormat.Custom;
             dateTimePickerFechaPublicacion.CustomFormat = "dd/MM/yyyy h: mmtt";
-
+            dateTimePickerFechaPublicacion.Value = ArchivoDeConfiguracion.fechaReferencia;
 
             dateTimePickerGeneracionMasiva.Format = DateTimePickerFormat.Custom;
             dateTimePickerGeneracionMasiva.CustomFormat = "dd/MM/yyyy h: mm tt";
+            dateTimePickerGeneracionMasiva.Value = ArchivoDeConfiguracion.fechaReferencia;
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridViewUbicaciones.AllowUserToAddRows = false;
@@ -471,6 +472,29 @@ namespace PalcoNet.Generar_Publicacion
                 MessageBox.Show("Fecha aingresar tiene que ser mayor al anterior ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //LIMPIAR
+            textBoxDescripcion.Text = "";
+            textBoxDireccion.Text = "";
+            comboBoxEstado.Text = "";
+            comboBoxEstado.SelectedIndex = -1;
+            comboBoxGrado.SelectedIndex = -1;
+            comboBoxGrado.Text = "";
+            comboBoxRubro.Text = "";
+            comboBoxRubro.SelectedIndex = -1;
+
+
+            dateTimePickerFechaEspectaculo.Value = ArchivoDeConfiguracion.fechaReferencia;
+            dateTimePickerGeneracionMasiva.Value = ArchivoDeConfiguracion.fechaReferencia;
+            DataTable dt = new DataTable();
+            dataGridView1.DataSource = dt;
+
+            checkBox1.Checked = false;
+
+            dataGridView2.DataSource = dt;
         }
 
     }

@@ -43,46 +43,54 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             String error = "";
             if (!AyudaExtra.esUnMail(textBoxMail.Text)) {
-                MessageBox.Show("Ingrese un mail valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Ingrese un mail valido\n";
+         //       MessageBox.Show("Ingrese un mail valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return;
             }
             if (mailRepetido(textBoxMail.Text)) {
-                MessageBox.Show("Mail repetido, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Mail repetido, ingrese otro\n";
+         //       MessageBox.Show("Mail repetido, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return;
             }
 
             if (!AyudaExtra.esStringNumerico(textBoxCuit.Text))
             {
-                MessageBox.Show("Sólo se permiten numeros en el CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Sólo se permiten numeros en el CUIT\n";
+           //     MessageBox.Show("Sólo se permiten numeros en el CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
             }
             if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text))
             {
-                MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Sólo se permiten numeros en el Nro de calle\n";
+        //        MessageBox.Show("Sólo se permiten numeros en el Nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
             }
             if (textBoxPiso.Text.Trim() != "") {
                 if (!AyudaExtra.esStringNumerico(textBoxPiso.Text))
                 {
-                    MessageBox.Show("Sólo se permiten numeros en el Piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "Sólo se permiten numeros en el Pisoe\n";
+           //         MessageBox.Show("Sólo se permiten numeros en el Piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        return;
                 }
             }
             if (!AyudaExtra.esStringLetra(textBoxCiudad.Text)) {
-                MessageBox.Show("Sólo se permiten letras en el campo ciudad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Sólo se permiten letras en el campo ciudad\n";
+            //    MessageBox.Show("Sólo se permiten letras en el campo ciudad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          //      return;
             }
             if (textBoxDto.Text.Trim() != "") {
                 if (!AyudaExtra.esStringLetra(textBoxDto.Text))
                 {
-                    MessageBox.Show("Sólo se permiten letras en el departamento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "Sólo se permiten letras en el departamento\n";
+           //         MessageBox.Show("Sólo se permiten letras en el departamento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+           //         return;
                 }
             }
             if (!AyudaExtra.esStringNumerico(textBoxTelefono.Text))
             {
-                MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Sólo se permiten numeros en el Telefono\n";
+          //      MessageBox.Show("Sólo se permiten numeros en el Telefono", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return;
             }
             /*
               if (textBoxCuit.TextLength != 11)
@@ -94,8 +102,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             String razonSocial = textBoxRazonSocial.Text;
             if(existeRazonSocialYa(razonSocial) ){
-                MessageBox.Show("Ya se encuentra registrado esa razon social, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Ya se encuentra registrado esa razon social, ingrese otro\n";
+         //       MessageBox.Show("Ya se encuentra registrado esa razon social, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return;
             }
 
             String cuit = armarCuit(textBoxCuit.Text);
@@ -103,8 +112,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             if (existeCuit(cuit))
             {
-                MessageBox.Show("Ya se encuentra registrado el numero de CUIT, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Ya se encuentra registrado el numero de CUIT, ingrese otro\n";
+    //            MessageBox.Show("Ya se encuentra registrado el numero de CUIT, ingrese otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //           return;
             }
 
             String mail = textBoxMail.Text;
@@ -127,22 +137,32 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             bool autocontra = false;
             String contraautogenerada = autogenerarContrasenia.contraGeneradaAString();
             //SE CREA EL USUARIO
-            if (textBoxContrasenia.Text.Trim() == "")
-            {
-                autocontra = true;
-                usuarioNuevo = ConsultasSQL.crearUser(textBoxRazonSocial.Text.Trim().Replace(" ", "_"), false, contraautogenerada, "Empresa");
-            }
-            else
+            if (textBoxContrasenia.Text.Trim() != "")
             {
                 if (AyudaExtra.esStringNumerico(textBoxContrasenia.Text.Trim()))
                 {
+                    if (error != "") {
+                        error += "La contraseña debe ser numérica\n";
+                        MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     usuarioNuevo = ConsultasSQL.crearUser(textBoxRazonSocial.Text.Trim().Replace(" ", "_"), false, textBoxContrasenia.Text.Trim(), "Empresa");
                 }
                 else
                 {
-                    MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    errores = true;
+                    error += "La contraseña debe ser numérica\n";
+                    MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                    //         MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //       errores = true;
                 }
+            }
+            else
+            {
+                autocontra = true;
+                usuarioNuevo = ConsultasSQL.crearUser(textBoxRazonSocial.Text.Trim().Replace(" ", "_"), false, contraautogenerada, "Empresa");
+
+                
             }
             //TERMINA CREA EL USUARIO
             DBConsulta.conexionCerrar();

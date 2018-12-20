@@ -62,6 +62,7 @@
             this.Fecha_De_Espectaculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -382,11 +383,22 @@
             this.label12.Text = "*Debe poner un precio antes de generar la publicación.\r\n*Para poner un precio deb" +
     "e mover la barra de las ubicaciones seleccionadas\r\n* hacia la derecha";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(244, 466);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(174, 41);
+            this.button4.TabIndex = 30;
+            this.button4.Text = "LIMPIAR TODO";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 519);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox1);
@@ -465,5 +477,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerGeneracionMasiva;
         private System.Windows.Forms.Button buttonHorario;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button4;
     }
 }
