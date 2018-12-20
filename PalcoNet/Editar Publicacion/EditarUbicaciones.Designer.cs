@@ -131,7 +131,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(550, 25);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Ubicaciones no ingresadas";
+            this.label2.Text = "Ubicaciones en el local";
             // 
             // label3
             // 

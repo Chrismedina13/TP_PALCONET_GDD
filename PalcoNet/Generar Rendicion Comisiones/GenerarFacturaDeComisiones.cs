@@ -99,7 +99,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             }
        //     String buscarIDPublicacion = "SELECT publicacion_codigo FROM SQLEADOS.Publicacion where publicacion_codigo = " + labelNroPublicacion;
        //     String idPubl = DBConsulta.AbrirCerrarObtenerConsulta(buscarIDPublicacion).Rows[0][0].ToString();
-            DateTime hoy = DateTime.Today;
+            DateTime hoy = ArchivoDeConfiguracion.fechaReferencia;
             String montoTotal = cantidadTotal.ToString();
             montoTotal = montoTotal.Replace(",", ".");
             String guardarNuevaFactura = "insert into [SQLEADOS].Factura (factura_publicacion, factura_nro, factura_empresa_cuit, factura_empresa_razon_social, factura_fecha, factura_total, factura_forma_de_pago) Values (" + labelNroPublicacion.Text + ", " + labelNroFactura.Text + ", '" + labelCUIT.Text + "', '" + labelEmpresa.Text + "', '" + AyudaExtra.stringAFormatoFechaSQLDateSinHora(hoy.ToString()) + "', " + montoTotal + ", 'Tarjeta')";

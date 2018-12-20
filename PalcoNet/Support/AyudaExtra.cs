@@ -53,7 +53,7 @@ namespace PalcoNet.Support
         }
 
         public bool esFechaHoy(DateTime dt) {
-            DateTime hoy = DateTime.Today;
+            DateTime hoy = ArchivoDeConfiguracion.fechaReferencia;
             if (hoy.Year == dt.Year && hoy.Month == dt.Month && hoy.Day == dt.Day) {
                 return true;
             }
@@ -65,11 +65,11 @@ namespace PalcoNet.Support
         }
         
         public static bool fechaMenorQueActual(DateTime fecha) {
-            return fecha < DateTime.Today;
+            return fecha < ArchivoDeConfiguracion.fechaReferencia;
         }
 
         public static bool fechaIgualQueActual(DateTime fecha) {
-            return fecha == DateTime.Today;
+            return fecha == ArchivoDeConfiguracion.fechaReferencia;
         }
 
         public static bool esStringConLetraONumero(String a) {

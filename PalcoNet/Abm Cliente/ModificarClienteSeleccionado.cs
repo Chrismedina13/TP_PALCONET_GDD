@@ -93,12 +93,16 @@ namespace PalcoNet.Abm_Cliente
             String finalQueryDomicilio = " where domicilio_cliente_numero_documento = (SELECT TOP 1 cliente_numero_documento from SQLEADOS.Cliente where cliente_usuario =" + usuarioSeleccionado + ") AND domicilio_cliente_tipo_documento = (SELECT TOP 1 cliente_tipo_documento from SQLEADOS.Cliente where cliente_usuario =" + usuarioSeleccionado + ")";
             String finalQueryCliente = " where cliente_usuario = " + usuarioSeleccionado;
 
+            String error = "";
             if (apellido == true)
             {
                 if (!AyudaExtra.esStringLetra(textBoxApellido.Text.Trim()))
                 {
-                    MessageBox.Show("El campo Apellido solo admite letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo Apellido solo admite letras\n";
+                }
+                else {
+                    queryCliente += " SET cliente_apellido = '" + textBoxApellido.Text.Trim() + "'";
+                    clienteTieneSet = true;
                 }
                 queryCliente += " SET cliente_apellido = '" + textBoxApellido.Text.Trim() + "'";
                 clienteTieneSet = true;
@@ -108,54 +112,60 @@ namespace PalcoNet.Abm_Cliente
             {
                 if (!AyudaExtra.esStringLetra(textBoxNombre.Text.Trim()))
                 {
-                    MessageBox.Show("El campo Nombre solo admite letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo Nombre solo admite letras\n";
                 }
-                if (clienteTieneSet)
-                {
-                    queryCliente += " , cliente_nombre = '" + textBoxNombre.Text.Trim() + "'";
+                else {
+                    if (clienteTieneSet)
+                    {
+                        queryCliente += " , cliente_nombre = '" + textBoxNombre.Text.Trim() + "'";
+                    }
+                    else
+                    {
+                        queryCliente += " SET cliente_nombre = '" + textBoxNombre.Text.Trim() + "'";
+                        clienteTieneSet = true;
+                    }
                 }
-                else
-                {
-                    queryCliente += " SET cliente_nombre = '" + textBoxNombre.Text.Trim() + "'";
-                    clienteTieneSet = true;
-                }
+                
             }
 
             if (tarjeta == true)
             {
                 if (!AyudaExtra.esStringNumerico(textBoxTarjeta.Text.Trim()))
                 {
-                    MessageBox.Show("El campo tarjeta solo admite numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo tarjeta solo admite numeros\n";
                 }
-                if (clienteTieneSet)
-                {
-                    queryCliente += " , cliente_datos_tarjeta = " + textBoxTarjeta.Text.Trim();
+                else {
+                    if (clienteTieneSet)
+                    {
+                        queryCliente += " , cliente_datos_tarjeta = " + textBoxTarjeta.Text.Trim();
+                    }
+                    else
+                    {
+                        queryCliente += " SET cliente_datos_tarjeta = " + textBoxTarjeta.Text.Trim();
+                        clienteTieneSet = true;
+                    }
                 }
-                else
-                {
-                    queryCliente += " SET cliente_datos_tarjeta = " + textBoxTarjeta.Text.Trim();
-                    clienteTieneSet = true;
-                }
+                
             }
 
             if (telefono == true)
             {
                 if (!AyudaExtra.esStringNumerico(textBoxTelefono.Text.Trim()))
                 {
-                    MessageBox.Show("El campo telefono solo admite numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo telefono solo admite numeros\n";
                 }
-                if (clienteTieneSet)
-                {
-                    queryCliente += " , cliente_telefono = " + textBoxTelefono.Text.Trim();
+                else {
+                    if (clienteTieneSet)
+                    {
+                        queryCliente += " , cliente_telefono = " + textBoxTelefono.Text.Trim();
+                    }
+                    else
+                    {
+                        queryCliente += " SET  cliente_telefono = " + textBoxTelefono.Text.Trim();
+                        clienteTieneSet = true;
+                    }
                 }
-                else
-                {
-                    queryCliente += " SET  cliente_telefono = " + textBoxTelefono.Text.Trim();
-                    clienteTieneSet = true;
-                }
+                
             }
 
             if (calle == true)
@@ -168,26 +178,26 @@ namespace PalcoNet.Abm_Cliente
             {
                 if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text.Trim()))
                 {
-                    MessageBox.Show("El campo número de calle solo admite números", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo número de calle solo admite números\n";
                 }
-                if (domicilioTieneSet)
-                {
-                    queryDomicilio += " , domicilio_numero = " + textBoxNroCalle.Text.Trim();
-                }
-                else
-                {
-                    queryDomicilio += " SET  domicilio_numero = " + textBoxNroCalle.Text.Trim();
-                    domicilioTieneSet = true;
-                }
+                else {
+                    if (domicilioTieneSet)
+                    {
+                        queryDomicilio += " , domicilio_numero = " + textBoxNroCalle.Text.Trim();
+                    }
+                    else
+                    {
+                        queryDomicilio += " SET  domicilio_numero = " + textBoxNroCalle.Text.Trim();
+                        domicilioTieneSet = true;
+                    }
+                }     
             }
 
             if (piso == true)
             {
                 if (!AyudaExtra.esStringNumerico(textBoxPiso.Text))
                 {
-                    MessageBox.Show("El campo piso solo admite números", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo piso solo admite números\n";
                 }
 
                 if (domicilioTieneSet)
@@ -205,8 +215,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 if (!AyudaExtra.esStringLetra(textBoxPiso.Text.Trim()))
                 {
-                    MessageBox.Show("El campo departamento solo admite letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "El campo departamento solo admite letras\n";
                 }
 
                 if (domicilioTieneSet)
@@ -237,7 +246,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 if (AyudaExtra.esStringNumerico(textBoxCodigoPostal.Text.Trim()))
                 {
-                    MessageBox.Show("El campo número de Código postal solo admite números", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
 
                 if (domicilioTieneSet)
@@ -250,6 +259,11 @@ namespace PalcoNet.Abm_Cliente
                     domicilioTieneSet = true;
                 }
             }
+            if (error != "") { 
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (checkBox1.Checked)
             {
                 queryUser = "UPDATE SQLEADOS.Usuario SET usuario_estado = " + 1 + " where usuario_Id = " + usuarioSeleccionado;

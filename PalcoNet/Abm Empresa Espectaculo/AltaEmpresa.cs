@@ -30,18 +30,56 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             InitializeComponent();
         }
 
-        private void buttonAgregar_Click(object sender, EventArgs e)
+        private String validarCamposIniciales()
         {
+            String error = "";
 
             if (textBoxRazonSocial.Text.Trim() == "" | textBoxCuit.Text.Trim() == "" | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == ""
-                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "")
+                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxCiudad.Text.Trim() == "" | textBoxCalle.Text.Trim() == "")
             {
-
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-                
+                error += "Faltan completar campos\n";
+                //             MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //             return;
+                if (textBoxRazonSocial.Text.Trim() == "")
+                {
+                    error += "Faltan completar el nombre de la empresa\n";
+                }
+                if (textBoxCuit.Text.Trim() == "")
+                {
+                    error += "Faltan completar el CUIT de la empresa\n";
+                }
+                if (textBoxTelefono.Text.Trim() == "")
+                {
+                    error += "Faltan completar el número de telefono de la empresa\n";
+                }
+                if (textBoxCodigoPostal.Text.Trim() == "")
+                {
+                    error += "Faltan completar el código postal de la empresa\n";
+                }
+                if (textBoxNroCalle.Text.Trim() == "")
+                {
+                    error += "Faltan completar el número de calle de la empresa\n";
+                }
+                if (textBoxMail.Text.Trim() == "")
+                {
+                    error += "Faltan completar el mail de la empresa\n";
+                }
+                if (textBoxCiudad.Text.Trim() == "")
+                {
+                    error += "Faltan completar la ciudad de la empresa\n";
+                }
+                if (textBoxCalle.Text.Trim() == "")
+                {
+                    error += "Faltan completar la dirección de calle de la empresa\n";
+                }
             }
-            String error = "";
+            return error;
+        }
+
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+            String error = validarCamposIniciales();
+            
             if (!AyudaExtra.esUnMail(textBoxMail.Text)) {
                 error += "Ingrese un mail valido\n";
          //       MessageBox.Show("Ingrese un mail valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

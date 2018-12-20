@@ -77,11 +77,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(828, 324);
+            this.button2.Location = new System.Drawing.Point(774, 324);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 23);
+            this.button2.Size = new System.Drawing.Size(176, 23);
             this.button2.TabIndex = 19;
-            this.button2.Text = "Cancelar Compra";
+            this.button2.Text = "Limpiar (Cancelar compra)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -109,7 +109,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(700, 324);
+            this.button4.Location = new System.Drawing.Point(631, 324);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(122, 23);
             this.button4.TabIndex = 39;

@@ -346,10 +346,10 @@ namespace PalcoNet.Comprar
                 MessageBox.Show("La segunda fecha no puede ser inferior o igual a la primera \nFECHA 1:" + dateTimePicker1.Text + "\nFECHA 2:" + dateTimePicker2.Text);
                 return;
             }
-            DateTime hoy = DateTime.Today;
+            DateTime hoy = ArchivoDeConfiguracion.fechaReferencia;
             if (hoy > dateTimePicker1.Value.Date)
             {
-                MessageBox.Show("La fecha inicial no puede ser menor que la actual");
+                MessageBox.Show("La fecha inicial no puede ser menor que la fecha del sistema", "Error");
                 return;
             }
             String queryPrincipal;

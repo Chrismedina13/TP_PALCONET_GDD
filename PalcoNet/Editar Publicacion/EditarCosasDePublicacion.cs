@@ -260,24 +260,28 @@ namespace PalcoNet.Editar_Publicacion
             
             String fecha_publicacion = "";
             String fecha_estreno = "";
+            String error = "";
             if (AyudaExtra.fechaMenorQueActual(dateTimePicker1.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "La fecha del espectáculo debe ser mayor que la fecha del sistema\n";
             }
             if (AyudaExtra.fechaIgualQueActual(dateTimePicker1.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "La fecha del espectáculo debe ser mayor que la fecha del sistema\n";
+
             }
             if (AyudaExtra.fechaMenorQueActual(dateTimePickerFechaFinal.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "La fecha del espectáculo debe ser mayor que la fecha del sistema\n";
+
             }
             if (AyudaExtra.fechaIgualQueActual(dateTimePickerFechaFinal.Value))
             {
-                MessageBox.Show("La fecha del espectáculo debe ser mayor que la fecha de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error += "La fecha del espectáculo debe ser mayor que la fecha del sistema\n";
+
+            }
+            if (error != "") {
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -453,6 +457,11 @@ namespace PalcoNet.Editar_Publicacion
             ed.Show();
             editinfoubi.cerrar();
             this.Close();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
         

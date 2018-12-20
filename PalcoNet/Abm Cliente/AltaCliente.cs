@@ -51,11 +51,55 @@ namespace PalcoNet.Abm_Cliente
             
             if (textBoxNombre.Text.Trim() == "" | textBoxApellido.Text.Trim() == "" | textBoxCuit.Text.Trim() == "" | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == ""
                 | textBoxTIPODOC.Text.Trim() == "" | textBoxDOCNUMERO.Text.Trim() == "" | textBoxTarjeta.Text.Trim() == ""
-                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "")
+                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxCalle.Text.Trim() == "")
             {
+                error += "Faltan completar campos\n";
+                if (textBoxNombre.Text.Trim() == "") {
+                    error += "Faltan completar el nombre\n";
+                }
+                if (textBoxApellido.Text.Trim() == "")
+                {
+                    error += "Faltan completar el apellido\n";
+                }
+                if (textBoxCuit.Text.Trim() == "")
+                {
+                    error += "Faltan completar el CUIT\n";
+                }
+                if (textBoxTIPODOC.Text.Trim() == "")
+                {
+                    error += "Faltan completar el tipo de documento\n";
+                }
+                if (textBoxDOCNUMERO.Text.Trim() == "")
+                {
+                    error += "Faltan completar el número de documento\n";
+                }
+                if (textBoxTelefono.Text.Trim() == "")
+                {
+                    error += "Faltan completar el telefono\n";
+                }
+                if (textBoxMail.Text.Trim() == "")
+                {
+                    error += "Faltan completar el mail\n";
+                }
+                if (textBoxTarjeta.Text.Trim() == "")
+                {
+                    error += "Faltan completar el número de tarjeta\n";
+                }
+                if (textBoxCodigoPostal.Text.Trim() == "")
+                {
+                    error += "Faltan completar el código postal\n";
+                }
+                if (textBoxNroCalle.Text.Trim() == "")
+                {
+                    error += "Faltan completar el número de calle\n";
+                }
+                if (textBoxCalle.Text.Trim() == "")
+                {
+                    error += "Faltan completar la calle del cliente\n";
+                }
 
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+         //       MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return true;
 
             }
             if (!AyudaExtra.CUILYContraseniaParecenRespetarTamanios(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
@@ -165,12 +209,14 @@ namespace PalcoNet.Abm_Cliente
 
             // Porque no es campo obligatorio
             bool ingresoPisoYDPT = false;
+            String error = "";
             if (textBoxPiso.Text.Trim() != "" && textBoxDto.Text.Trim() != "")
             {
                 if (!AyudaExtra.esStringNumerico(textBoxPiso.Text.Trim()))
                 {
-                    MessageBox.Show("Debe ingresar el numero de piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "Debe ingresar el numero de piso\n";
+     //               MessageBox.Show("Debe ingresar el numero de piso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //               return;
                 }
                 else {
                     ingresoPisoYDPT = true;
@@ -184,10 +230,16 @@ namespace PalcoNet.Abm_Cliente
             DBConsulta.conexionAbrir();
             if (consultasSQLCliente.existeCuit(textBoxCuit.Text, tipo))
             {
-                MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                error += "Ya se encuentra registrado el numero de CUIT\n";
+  //              MessageBox.Show("Ya se encuentra registrado el numero de CUIT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //           return;
             }
             DBConsulta.conexionCerrar();
+
+            if (error != "") {
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
        /*     if (!cuitYNroDocumentoSonCorrectos(textBoxCuit.Text, textBoxDOCNUMERO.Text)) {
                 MessageBox.Show("El CUIT y el numero de documento no coindiden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -236,7 +288,7 @@ namespace PalcoNet.Abm_Cliente
             
             
             
-            bool error = false;
+            bool errors = false;
             bool autocontra = false;
             String contraAutogenerada = autogenerarContrasenia.contraGeneradaAString();
             
@@ -252,12 +304,12 @@ namespace PalcoNet.Abm_Cliente
                 }
                 else {
                     MessageBox.Show("La contraseña debe ser numérica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    error = true;
+                    errors = true;
                 }
             }
             DBConsulta.conexionCerrar();
 
-            if (!error)
+            if (!errors)
             {
                 
                 if (creacionAbortada == false)

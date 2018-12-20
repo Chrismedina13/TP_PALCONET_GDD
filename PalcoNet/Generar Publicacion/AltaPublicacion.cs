@@ -265,23 +265,51 @@ namespace PalcoNet.Generar_Publicacion
             this.Close();
         }
 
-        public int validarAlta() {
-
-
+        private String validarCamposComunes() {
+            String error = "";
             if (textBoxDescripcion.Text.Trim() == "" | dateTimePickerFechaEspectaculo.Text.Trim() == "" | dateTimePickerFechaPublicacion.Text.Trim() == "" | comboBoxEstado.Text.Trim() == ""
                | comboBoxRubro.Text.Trim() == "" | comboBoxGrado.Text.Trim() == "")
             {
+                error = "Faltan completar campos\n\n";
 
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
+                if (textBoxDescripcion.Text.Trim() == "")
+                {
+                    error += "No has puesto una descripcion del espectáculo\n";
+                }
+                if (dateTimePickerFechaEspectaculo.Text.Trim() == "")
+                {
+                    error += "No se ha seleccionado una fecha de inicio de la publicación\n";
+                }
+                if (dateTimePickerFechaPublicacion.Text.Trim() == "")
+                {
+                    error += "No se ha seleccionado una fecha de inicio del estreno de obra\n";
+                }
+                if (comboBoxEstado.Text.Trim() == "")
+                {
+                    error += "No se eligió un estado para la publicación\n";
+                }
+                if (comboBoxRubro.Text.Trim() == "")
+                {
+                    error += "No se ha elegido un rubro para la publicación\n";
+                }
+                if (comboBoxGrado.Text.Trim() == "")
+                {
+                    error += "No se eligió un grado de prioridad\n";
+                }
+
 
             }
+            return error;
+        }
+
+        public int validarAlta() {
+
+
+            String error = validarCamposComunes();
 
             if (dataGridView1.Rows.Count == 0)
             {
-
-                MessageBox.Show("Tiene que seleccionar ubicaciones de la publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
+                error += "Tiene que seleccionar ubicaciones de la publicacion\n";
             }
 
 
@@ -289,9 +317,8 @@ namespace PalcoNet.Generar_Publicacion
             fechaPublicacionAComparar = dateTimePickerFechaPublicacion.Value;
             if (DateTime.Compare(fechaPublicacionAComparar,fechaIngresadaEspectaculo) >= 0)
             {
+                error += "La fecha de espectaculo tiene que ser mayor a la fecha de Publicacion\n";
 
-                MessageBox.Show("La fecha de espectaculo tiene que ser mayor a la fecha de Publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
 
             }
 
@@ -300,19 +327,22 @@ namespace PalcoNet.Generar_Publicacion
 
                 if (fila.Cells[6].Value == null)
                 {
-                    MessageBox.Show("Falta completar el precio de asientos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return 0;
+                    error += "Falta completar el precio de asientos\n";
+
                 }
 
 
                 if (!System.Text.RegularExpressions.Regex.IsMatch(fila.Cells[6].Value.ToString(), @"^\d+$"))
                 {
-                    MessageBox.Show("Sólo se permiten numeros en el precio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return 0;
+                    error += "Sólo se permiten numeros en el precio\n";
+                    
                 }
             }
-
-            return 1;
+            if(error =="") {
+                return 1;
+            }
+            MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 0;
         
         }
 
@@ -320,26 +350,19 @@ namespace PalcoNet.Generar_Publicacion
         {
 
 
-            if (textBoxDescripcion.Text.Trim() == "" | dateTimePickerFechaPublicacion.Text.Trim() == "" | comboBoxEstado.Text.Trim() == ""
-               | comboBoxRubro.Text.Trim() == "" | comboBoxGrado.Text.Trim() == "")
-            {
-
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
-
-            }
+            String error = validarCamposComunes();
 
             if (dataGridView1.Rows.Count == 0)
             {
-
-                MessageBox.Show("Tiene que seleccionar ubicaciones de la publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error = "Tiene que seleccionar ubicaciones de la publicacion\n";
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
 
             if (dataGridView2.Rows.Count -1 == 0)
             {
-
-                MessageBox.Show("Esta en generacion masiva tiene que ingresar mas de un horario de publicacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error = "Esta en generacion masiva tiene que ingresar mas de un horario de publicacion\n";
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
 
@@ -349,13 +372,15 @@ namespace PalcoNet.Generar_Publicacion
 
                 if (fila.Cells[6].Value == null)
                 {
-                    MessageBox.Show("Falta completar el precio de asientos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    error = "Falta completar el precio de asientos\n";
+                    MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return 0;
                 }
 
 
                 if (!System.Text.RegularExpressions.Regex.IsMatch(fila.Cells[6].Value.ToString(), @"^\d+$"))
                 {
+                    error = "Sólo se permiten numeros en el precio\n";
                     MessageBox.Show("Sólo se permiten numeros en el precio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return 0;
                 }
@@ -432,7 +457,7 @@ namespace PalcoNet.Generar_Publicacion
 
             int resultado;
 
-            fechaPublicacionAComparar = dateTimePickerFechaPublicacion.Value;
+            fechaPublicacionAComparar = ArchivoDeConfiguracion.fechaReferencia;
 
 
             if (DateTime.Compare(fechaPublicacionAComparar, fechaAingresar) >= 0)
@@ -494,7 +519,12 @@ namespace PalcoNet.Generar_Publicacion
 
             checkBox1.Checked = false;
 
-            dataGridView2.DataSource = dt;
+            int i = dataGridView2.RowCount -1;
+            while (i >= 0) {
+                dataGridView1.Rows.RemoveAt(i);
+
+                i--;
+            }
         }
 
     }
