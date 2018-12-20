@@ -71,6 +71,7 @@ namespace PalcoNet.Abm_Cliente
         /* BOTON BUSCAR*/
         private void button1_Click(object sender, EventArgs e)
         {
+            String error = "";
             if (esVacio(textBoxDNI.Text.Trim()) && esVacio(textBoxEmail.Text.Trim()) && esVacio(textBoxApellido.Text.Trim()) && esVacio(textBoxNombre.Text.Trim()))
             {
                 MessageBox.Show("Usted no ha puesto ningún criterio de busquedad. Rellene los campos por favor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -79,11 +80,17 @@ namespace PalcoNet.Abm_Cliente
             else {
                 if (!textBoxNombre.Text.Trim().Equals("") && !AyudaExtra.esStringLetra(textBoxNombre.Text.Trim()) || !textBoxApellido.Text.Trim().Equals("") && !AyudaExtra.esStringLetra(textBoxApellido.Text.Trim()))
                 {
-                    MessageBox.Show("Los campos Nombre y Apellido no pueden contener numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    error += "Los campos Nombre y Apellido no pueden contener numeros\n";
+      //              MessageBox.Show("Los campos Nombre y Apellido no pueden contener numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      //              return;
                 }
                 if (!textBoxDNI.Text.Trim().Equals("") && !AyudaExtra.esStringNumerico(textBoxDNI.Text.Trim())) {
-                    MessageBox.Show("El campo numero de documento no puede contener letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    error += "El campo numero de documento no puede contener letras\n";
+          //          MessageBox.Show("El campo numero de documento no puede contener letras", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            return;
+                }
+                if (error != "") {
+                    MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 dataGridView1.DataSource = null;

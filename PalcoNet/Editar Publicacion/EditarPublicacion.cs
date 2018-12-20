@@ -22,17 +22,27 @@ namespace PalcoNet.Editar_Publicacion
         {
             exx = exs;
             user = Usuario.ID;
-            dt = new DataTable();
-            DBConsulta.conexionAbrir();
+           
+ 
             String queryUserAdmin = "SELECT usuario_Id FROM SQLEADOS.Usuario where usuario_administrador = 1";
-            if (AyudaExtra.intPerteneceADataTable(user, DBConsulta.obtenerConsultaEspecifica(queryUserAdmin)))
+            String queryUserEsUnAdmin = "SELECT usuario_administrador FROM SQLEADOS.Usuario WHERE usuario_Id = " + Usuario.ID;
+            DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(queryUserEsUnAdmin);
+   //         int numero = 
+            if (Usuario.esAdmin == 1)
             {
                 esAdmin = true;
             }
             else {
                 esAdmin = false;
             }
-            DBConsulta.conexionCerrar();
+
+            /*if (AyudaExtra.intPerteneceADataTable(user, DBConsulta.obtenerConsultaEspecifica(queryUserAdmin)))
+            {
+                esAdmin = true;
+            }
+            else {
+                esAdmin = false;
+            }*/
             InitializeComponent();
         }
 
@@ -60,13 +70,13 @@ namespace PalcoNet.Editar_Publicacion
             if (esAdmin)
             {
                 //Encuentra todos los espectáculos en estado BORRADOR y PUBLICADO
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicada') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
                 dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             else
             {
                 //Solo sirven los que publicó la empresa
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') AND publicacion_usuario_responsable =" + user;
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicada') AND publicacion_usuario_responsable =" + user + " ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
                 dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             configuracionGrilla(dt);
@@ -78,13 +88,13 @@ namespace PalcoNet.Editar_Publicacion
             if (esAdmin)
             {
                 //Encuentra todas los espectáculos
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicada') ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
                 dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             else
             {
                 //Solo sirven los que publicó la empresa
-                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicado') AND publicacion_usuario_responsable =" + user;
+                queryBuscador = "SELECT publicacion_codigo as 'Codigo', publicacion_descripcion as 'Espectáculo', publicacion_fecha_venc as 'Fecha de estreno', publicacion_usuario_responsable as 'Empresa responsable', publicacion_estado as 'Estado', CASE WHEN publicacion_estado LIKE 'Borrador' then 'SI' ELSE 'NO' END AS 'Se puede modificar' FROM SQLEADOS.Publicacion WHERE (publicacion_estado LIKE 'Borrador' OR publicacion_estado LIKE 'Publicada') AND publicacion_usuario_responsable =" + user + " ORDER BY YEAR(publicacion_fecha_venc) DESC, MONTH(publicacion_fecha_venc) DESC, DAY(publicacion_fecha_venc) DESC";
                 dt = DBConsulta.AbrirCerrarObtenerConsulta(queryBuscador);
             }
             configuracionGrilla(dt);
@@ -93,7 +103,8 @@ namespace PalcoNet.Editar_Publicacion
         //BOTON EDITAR
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells[5].Value.ToString() == "No")
+            String valor = dataGridView1.SelectedCells[5].Value.ToString();
+            if (valor == "NO")
             {
                 MessageBox.Show("Esta publicación no se puede editar\nporque no está en estado BORRADOR");
                 FINALIZARUNAPUBLICACION info = new FINALIZARUNAPUBLICACION(this, dataGridView1.SelectedCells[0].Value.ToString());

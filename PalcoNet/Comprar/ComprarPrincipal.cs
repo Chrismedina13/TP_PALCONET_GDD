@@ -297,7 +297,9 @@ namespace PalcoNet.Comprar
             {
                 //PARA CUMPLIR CON EL REQUISITO EXTRA DE QUE SI LA FECHA DE COMPRA DESDE ES EL MISMO DÍA QUE EL DE COMPRA, ENTONCES
                 //SE DEBE COMPRAR CON ANTICIPACIÓN 1 DÍA ANTES DE LA FUNCIÓN
-                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date.AddDays(1)) + "' AND '" + extraerFechaSinHora(dateTimePicker2.Value.Date) + "' ";
+
+
+                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date.AddDays(1)) + "' AND '" + dateTimePicker2.Value.ToString("yyyyMMdd") + "23:59:00.000" +"' ";
             }
             else
             {

@@ -47,9 +47,11 @@ namespace PalcoNet.Abm_Cliente
         }
 
         private bool camposInvalidos() {
-            if (textBoxNombre.Text.Trim() == " " | textBoxApellido.Text.Trim() == " " | textBoxCuit.Text.Trim() == " " | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == " "
-                | textBoxTIPODOC.Text.Trim() == " " | textBoxDOCNUMERO.Text.Trim() == " " | textBoxTarjeta.Text.Trim() == " "
-                | textBoxCodigoPostal.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " " | textBoxNroCalle.Text.Trim() == " ")
+            String error = "";
+            
+            if (textBoxNombre.Text.Trim() == "" | textBoxApellido.Text.Trim() == "" | textBoxCuit.Text.Trim() == "" | textBoxTelefono.Text.Trim() == "" | textBoxMail.Text.Trim() == ""
+                | textBoxTIPODOC.Text.Trim() == "" | textBoxDOCNUMERO.Text.Trim() == "" | textBoxTarjeta.Text.Trim() == ""
+                | textBoxCodigoPostal.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "" | textBoxNroCalle.Text.Trim() == "")
             {
 
                 MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -58,67 +60,79 @@ namespace PalcoNet.Abm_Cliente
             }
             if (!AyudaExtra.CUILYContraseniaParecenRespetarTamanios(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
             {
-                MessageBox.Show("El tamaño del campo CUIL es menor que el numero de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error = "El tamaño del campo CUIL es menor que el numero de documento\n";
+         //       MessageBox.Show("El tamaño del campo CUIL es menor que el numero de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return true;
             }
 
             if (!AyudaExtra.fechaMenorQueActual(dateFecha.Value.Date))
             {
-                MessageBox.Show("La fecha ingresada es mayor o igual que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "La fecha ingresada es mayor o igual que la actual\n";
+       //         MessageBox.Show("La fecha ingresada es mayor o igual que la actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return true;
             }
             if (!AyudaExtra.fechaEsMayorA18Anios(dateFecha.Value.Date)) {
-                MessageBox.Show("La fecha ingresada no cumple los requisitos de que el usuario debe ser mayor a 18 años", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "La fecha ingresada no cumple los requisitos de que el usuario debe ser mayor a 18 años\n";
+      //          MessageBox.Show("La fecha ingresada no cumple los requisitos de que el usuario debe ser mayor a 18 años", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //           return true;
             }
             if (!AyudaExtra.CUILYNroDocSeCorresponden(textBoxDOCNUMERO.Text.Trim(), textBoxCuit.Text.Trim()))
             {
-                MessageBox.Show("El CUIL no corresponde al documento ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El CUIL no corresponde al documento ingresado\n";
+    //            MessageBox.Show("El CUIL no corresponde al documento ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //           return true;
             }
 
             if (!AyudaExtra.esStringNumerico(textBoxContrasenia.Text)) {
-                MessageBox.Show("La contraseña debe ser un número", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "La contraseña debe ser un número\n";
+         //       MessageBox.Show("La contraseña debe ser un número", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         //       return true;
             }
 
             if (!AyudaExtra.esStringNumerico(textBoxNroCalle.Text.Trim()))
             {
-                MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El numero de calle debe ser numerico\n";
+        //        MessageBox.Show("El numero de calle debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       //         return true;
             }
             if (!AyudaExtra.esStringNumerico(textBoxTarjeta.Text.Trim()))
             {
-                MessageBox.Show("El numero de tarjeta debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El numero de tarjeta debe ser numerico\n";
+       //         MessageBox.Show("El numero de tarjeta debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       //         return true;
             }
             if (!AyudaExtra.esStringNumerico(textBoxTelefono.Text.Trim()))
             {
-                MessageBox.Show("El numero de telefono debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El numero de telefono debe ser numerico\n";
+        //        MessageBox.Show("El numero de telefono debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       //         return true;
             }
 
             if (!AyudaExtra.esUnMail(textBoxMail.Text.Trim()))
             {
-                MessageBox.Show("El campo mail está mal ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El campo mail está mal ingresado\n";
+    //            MessageBox.Show("El campo mail está mal ingresado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    //            return true;
             }
 
             if (!AyudaExtra.esStringNumerico(textBoxDOCNUMERO.Text.Trim()))
             {
-                MessageBox.Show("El numero de documento debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El numero de documento debe ser numerico\n";
+       //         MessageBox.Show("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      //          return true;
             }
 
             if (!AyudaExtra.esStringLetra(textBoxTIPODOC.Text.Trim()))
             {
-                MessageBox.Show("Sólo se permiten letras en el Tipo de documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "Sólo se permiten letras en el Tipo de documento\n";
+         //       MessageBox.Show("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          //      return true;
             }
             if (!AyudaExtra.esStringLetra(textBoxApellido.Text.Trim()) || !AyudaExtra.esStringLetra(textBoxNombre.Text.Trim()))
             {
-                MessageBox.Show("Sólo se permiten letras en el campo nombre y apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "Sólo se permiten letras en el campo nombre y apellido\n";
+       //         MessageBox.Show("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      //          return true;
             }
 
 
@@ -132,10 +146,15 @@ namespace PalcoNet.Abm_Cliente
 
             if (textBoxTIPODOC.TextLength != 3)
             {
-                MessageBox.Show("El TIPO DE DOCUMENTO tiene que tener 3 digitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                error += "El TIPO DE DOCUMENTO tiene que tener 3 digitos\n";
+       //         MessageBox.Show("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return true;
             }
-            return false;
+            if (error == "") {
+                return false;
+            }
+            MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return true;
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
