@@ -93,6 +93,8 @@ namespace PalcoNet
         {
             Usuario.username = "";
             Usuario.Rol = "";
+            Usuario.ID = 0;
+            Usuario.esAdmin = 0;
             ini.Show();
             this.Close();
         }

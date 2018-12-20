@@ -96,7 +96,9 @@ namespace PalcoNet.Comprar
             if(dataGridView1.Rows.Count != 0) {
                 paginaActual = 1;
                 DBConsulta.conexionAbrir();
-                obtenerResultados(cargarPrimeros10Querys());
+                String comando = cargar10QuerysParaNPagina();
+                comando += " " + ordenamiento();
+                obtenerResultados(comando);
                 DBConsulta.conexionCerrar();
                 //       configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
@@ -110,7 +112,9 @@ namespace PalcoNet.Comprar
                 {
                     paginaActual -= 1;
                     DBConsulta.conexionAbrir();
-                    obtenerResultados(cargar10QuerysParaNPagina());
+                    String comando = cargar10QuerysParaNPagina();
+                    comando += " " + ordenamiento();
+                    obtenerResultados(comando);
                     DBConsulta.conexionCerrar();
                     //           configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                     labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
@@ -126,7 +130,9 @@ namespace PalcoNet.Comprar
                 {
                     paginaActual += 1;
                     DBConsulta.conexionAbrir();
-                    obtenerResultados(cargar10QuerysParaNPagina());
+                    String comando = cargar10QuerysParaNPagina();
+                    comando += " " + ordenamiento();
+                    obtenerResultados(comando);
                     DBConsulta.conexionCerrar();
                     //          configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                     labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
@@ -140,7 +146,10 @@ namespace PalcoNet.Comprar
             {
                 paginaActual = ultimaHoja;
                 DBConsulta.conexionAbrir();
-                obtenerResultados(cargar10QuerysParaNPagina());
+                String comando = cargar10QuerysParaNPagina();
+                comando += " " + ordenamiento();
+
+                obtenerResultados(comando);
                 DBConsulta.conexionCerrar();
                 //      configuracionGrilla(DBConsulta.obtenerUbicacionDePublicacion(publicacionID, paginaActual, totalVistoPorPagina));
                 labelPaginas.Text = paginaActual.ToString() + " de " + ultimaHoja.ToString();
@@ -249,9 +258,8 @@ namespace PalcoNet.Comprar
             queryExcluyente += "up.ubiXpubli_ID";
             queryExcluyente += " FROM [SQLEADOS].Publicacion p ";
             queryExcluyente += cargarJoins();
-            queryExcluyente += comandoWhere()+ ") ";
+            queryExcluyente += comandoWhere() +" " + ordenamiento() +") ";
             queryPrincipal += queryExcluyente;
-            queryPrincipal += " " + ordenamiento();
             return queryPrincipal;
         }
 
@@ -283,13 +291,13 @@ namespace PalcoNet.Comprar
                 where += "AND p.publicacion_descripcion LIKE '%" + textBoxPublicacion.Text.Trim() + "%' ";
             }
 
-            if (fueCargadaCategoria)
+            if (labelCategoria.Text != "")
             {
                 where += crearComandoParaCategoria();
             }
 
 
-            if (fueCargadaTipoUbicaciones)
+            if (labelTipoUbicaciones.Text != "")
             {
                 where += crearComandoParaTipoUbicacion();
             }
@@ -299,14 +307,16 @@ namespace PalcoNet.Comprar
                 //PARA CUMPLIR CON EL REQUISITO EXTRA DE QUE SI LA FECHA DE COMPRA DESDE ES EL MISMO DÍA QUE EL DE COMPRA, ENTONCES
                 //SE DEBE COMPRAR CON ANTICIPACIÓN 1 DÍA ANTES DE LA FUNCIÓN
 
-
+                //RANGO DE FECHAS
                 where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date.AddDays(1)) + "' AND '" + dateTimePicker2.Value.ToString("yyyy/MM/dd") + " 23:59:00.000" +"' ";
             }
             else
             {
+                //RANGO DE FECHAS
                 where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date) + "' AND '" +  dateTimePicker2.Value.ToString("yyyy/MM/dd") + " 23:59:00.000"+ "' ";
             }
 
+            //EXCLUYO TODAS LAS UBICACIONES QUE YA FUERON COMPRADAS
             where += " AND ubiXpubli_ID NOT IN (SELECT x.ubxpcom_ubicacionXPublicidad FROM SQLEADOS.ubicacionesXPublicidadComprada x)";
             //         cadena += "OR ('" + extraerFechaSinHora(dateTimePicker2.Value.Date) + "' BETWEEN publicacion_fecha_venc AND publicacion_fecha)) ";
 
