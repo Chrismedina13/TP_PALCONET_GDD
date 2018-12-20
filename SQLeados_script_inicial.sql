@@ -1028,7 +1028,6 @@ INNER JOIN SQLEADOS.Factura AS f
 
 PRINT('HECHO')
 
-SELECT * FROM SQLEADOS.Publicacion
 
 /*
 PRINT('func_coincide_fecha_creacion HECHA') 
@@ -1117,7 +1116,7 @@ for insert as
 		go
 print('HECHO')
 
-
+/*
 PRINT('Comienza TRIG_si_tiene_factura_entonces_es_publicacion_finalizada') 
 GO
 CREATE TRIGGER 
@@ -1131,7 +1130,8 @@ for insert as
 				@publicacionID = publicacion_codigo,
 				@publicacionNombre = publicacion_descripcion
 				FROM SQLEADOS.Publicacion
-		
+				
+				
 						UPDATE SQLEADOS.Publicacion
 						SET publicacion_estado = 'Finalizado'
 							WHERE publicacion_codigo = @publicacionID
@@ -1139,7 +1139,7 @@ for insert as
 		go
 print('HECHO')
 
-
+*/
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2043,7 +2043,7 @@ WHERE usuario_Id <= 2 OR usuario_Id = 85
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
 
 
-/*
+
 SELECT TOP 1 * FROM SQLEADOS.ItemFactura ORDER BY item_factura_id DESC
 SELECT publicacion_descripcion, ubiXpubli_ID, ubiXpubli_precio FROM SQLEADOS.ubicacionXpublicacion 
 JOIN SQLEADOS.Publicacion ON publicacion_codigo = ubiXpubli_Publicacion
@@ -2051,8 +2051,9 @@ WHERE ubiXpubli_ID = 94144
 
 SELECT * FROM SQLEADOS.Usuario where usuario_Id = 2 OR usuario_Id = 85
 
+SELECT * FROM SQLEADOS.Publicacion ORDER BY publicacion_codigo DESC
 
-
+/*
 
 SELECT publicacion_codigo, publicacion_descripcion, publicacion_estado, ubiXpubli_ID
 FROM  SQLEADOS.Publicacion p 
