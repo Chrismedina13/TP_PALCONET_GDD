@@ -26,7 +26,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
 
         private void BuscarPublicacionSinCobrar_Load(object sender, EventArgs e)
         {
-            String query = "SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizada' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)";
+            String query = "SELECT DISTINCT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo	WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizad%' AND (publicacion_codigo NOT IN (Select factura_publicacion FROM SQLEADOS.Factura)) UNION SELECT DISTINCT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizad%' AND publicacion_codigo IN (Select factura_publicacion FROM SQLEADOS.Factura JOIN SQLEADOS.ItemFactura i ON i.item_factura_nro = factura_nro AND i.item_factura_ubicacion != ub.ubiXpubli_ID)";
             dataGridView1.DataSource = DBConsulta.AbrirCerrarObtenerConsulta(query);
             cargarGrilla();
         }
@@ -43,8 +43,8 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             {
                 MessageBox.Show("Ingrese un nombre válido");
                 return;
-            }*/
-            String query = "SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_descripcion LIKE '%" + textBox1.Text.Trim() + "%' AND publicacion_estado LIKE 'Finalizada' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)";
+            }*/    
+            String query = "SELECT DISTINCT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo	WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_descripcion LIKE '%" + textBox1.Text.Trim() +"%' AND publicacion_estado LIKE 'Finalizad%' AND (publicacion_codigo NOT IN (Select factura_publicacion FROM SQLEADOS.Factura)) UNION SELECT DISTINCT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_descripcion LIKE '%" + textBox1.Text.Trim()+ "%' AND publicacion_estado LIKE 'Finalizad%' AND publicacion_codigo IN (Select factura_publicacion FROM SQLEADOS.Factura JOIN SQLEADOS.ItemFactura i ON i.item_factura_nro = factura_nro AND i.item_factura_ubicacion != ub.ubiXpubli_ID)";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
             if (dt.Rows.Count == 0)
             {

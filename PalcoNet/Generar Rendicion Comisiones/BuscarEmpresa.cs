@@ -62,9 +62,9 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             //BUSCA SI LA PUBLICACIÓN DE LA EMPRESA AL CUAL LE QUIERO COBRAR 
             //ESTÁ EN ESTADO FINALIZADO Y ADEMÁS NO FUE ANTERIORMENTE
             //REGISTRADO EN UNA ANTERIOR FACTURA
-            String query = "SELECT COUNT(*) FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura) AND publicacion_estado LIKE 'Finalizada'";
+            String query = " SELECT DISTINCTpublicacion_codigo, publicacion_descripcion, publicacion_estado FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizad%' AND ( publicacion_codigo NOT IN (Select factura_publicacion FROM SQLEADOS.Factura)) UNION SELECT DISTINCT publicacion_codigo, publicacion_descripcion, publicacion_estado FROM  SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizad%' AND publicacion_codigo IN (Select factura_publicacion FROM SQLEADOS.Factura JOIN SQLEADOS.ItemFactura i ON i.item_factura_nro = factura_nro AND i.item_factura_ubicacion != ub.ubiXpubli_ID)";
             DataTable dt = DBConsulta.AbrirCerrarObtenerConsulta(query);
-            return Convert.ToInt32(dt.Rows[0][0].ToString()) > 0;
+            return dt.Rows.Count > 0;
         }
 
         private void button3_Click(object sender, EventArgs e)

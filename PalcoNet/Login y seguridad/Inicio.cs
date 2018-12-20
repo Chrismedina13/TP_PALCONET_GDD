@@ -28,7 +28,7 @@ namespace PalcoNet
             InitializeComponent();
      //       coneccion = Support.Conexion.conectar();
             coneccion = new SqlConnection(@"Data source=.\SQLSERVER2012;Initial Catalog=GD2C2018;User id=gdEspectaculos2018;Password=gd2018");
-            coneccion.Open();
+            
         }
 
         //INGRESAR
@@ -36,6 +36,7 @@ namespace PalcoNet
         {
             if (validarCampos())
             {
+                coneccion.Open();
                 validarUsuario = new SqlCommand("[SQLeados].ValidarUsuario", coneccion);
 
                 validarUsuario.CommandType = CommandType.StoredProcedure;
@@ -59,12 +60,13 @@ namespace PalcoNet
                 data = validarBloqueo.ExecuteReader();
                 data.Close();
 
+                coneccion.Close();
                 var bloqueado = bloq.Value;
                 if ((int)resultado2 == 1)
                 {
                     if ((int)bloqueado == 1)
                     {
-
+                        coneccion.Open();
 
                         validarIntentos = new SqlCommand("[SQLeados].intentosFallidos", coneccion);
 
@@ -79,11 +81,11 @@ namespace PalcoNet
 
                         
                         var resultadoIntentos2 = resultadoIntentos.Value;
-
+                        coneccion.Close();
                         data.Close();
                         if (((int)resultadoIntentos2) < 3)
                         {
-
+                            coneccion.Open();
                             validarContra = new SqlCommand("[SQLeados].ValidarContra", coneccion);
 
                             validarContra.CommandType = CommandType.StoredProcedure;
@@ -95,9 +97,11 @@ namespace PalcoNet
                             data = validarContra.ExecuteReader();
                             var resultadoContra = resultadoC.Value;
                             data.Close();
-
+                            coneccion.Close();
                             if ((int)resultadoContra == 1)
                             {
+
+                                coneccion.Open();
                                 // LA CONTRA Y EL USER SON VALIDOS, PASA A BUSCAR ROLES, SI HAY SOLO 1 PASA DE UNA, SINO ELIJE
                                 resetearIntentos = new SqlCommand("[SQLeados].resetearIntentoFallidos", coneccion);
 
@@ -105,7 +109,7 @@ namespace PalcoNet
                                 resetearIntentos.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
 
                                 resetearIntentos.ExecuteNonQuery();
-
+                                coneccion.Close();
                                 encontrarRoles();
                                 Usuario.username = textBox1.Text;
                                 
@@ -120,22 +124,24 @@ namespace PalcoNet
                                 }
                                 else 
                                 {
+                                    coneccion.Open();
                                     actualizarIntentos = new SqlCommand("SQLeados.agregarIntentoFallidos", coneccion);
 
                                     actualizarIntentos.CommandType = CommandType.StoredProcedure;
                                     actualizarIntentos.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
 
                                     actualizarIntentos.ExecuteNonQuery();
-
+                                    coneccion.Close();
                                     if ((((int)resultadoIntentos2) + 1) > 2)
                                     {
-
+                                        coneccion.Open();
                                         bloquearUsuario = new SqlCommand("[SQLeados].bloquearUsuario", coneccion);
 
                                         bloquearUsuario.CommandType = CommandType.StoredProcedure;
                                         bloquearUsuario.Parameters.Add("@Username", SqlDbType.VarChar).Value = textBox1.Text;
 
                                         bloquearUsuario.ExecuteNonQuery();
+                                        coneccion.Close();
                                     }
                                     mensaje = "Nombre de usuario o contraseña incorrecta, ha perdido un intento de 3";
                                 }
@@ -197,6 +203,7 @@ namespace PalcoNet
                 MessageBox.Show("Usted no tiene ningún rol asignado o habilitado");
                 return;
             }
+            coneccion.Open();
             esAdmin = new SqlCommand("[SQLeados].esAdministrador", coneccion);
 
             esAdmin.CommandType = CommandType.StoredProcedure;
@@ -223,7 +230,7 @@ namespace PalcoNet
 
             comboBox1.DataSource = tablaRoles;
             comboBox1.DisplayMember = "Rol_nombre";
-
+            coneccion.Close();
             if (((int)resultadoIntentos2) == 1)
             {
                 DataRow dr = tablaRoles.NewRow();
@@ -313,6 +320,7 @@ namespace PalcoNet
 
         private void button2_Click_1(object sender, EventArgs e)
         {
+            //BOTON SELECCIONAR UN ROL EN ESPECÍFICO
             if (comboBox1.SelectedIndex == 0)
             {
                 MessageBox.Show("No has seleccionado ningún rol aún");

@@ -184,7 +184,7 @@
             this.comboBoxEstado.FormattingEnabled = true;
             this.comboBoxEstado.Items.AddRange(new object[] {
             "Borrador",
-            "Activa",
+            "Publicada",
             "Finalizada"});
             this.comboBoxEstado.Location = new System.Drawing.Point(143, 341);
             this.comboBoxEstado.Name = "comboBoxEstado";
@@ -324,9 +324,7 @@
             this.buttonHorario.TabIndex = 3;
             this.buttonHorario.Text = "Agregar Horario";
             this.buttonHorario.UseVisualStyleBackColor = true;
-
             this.buttonHorario.Click += new System.EventHandler(this.buttonHorario_Click);
-
             // 
             // label11
             // 

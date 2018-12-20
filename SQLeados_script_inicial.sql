@@ -462,6 +462,7 @@ item_factura_nro int References SQLEADOS.FACTURA,
 item_factura_monto decimal(16,2),
 item_factura_cantidad numeric(18,0),
 item_factura_descripcion nvarchar(60),
+item_factura_ubicacion int
 )
 
 
@@ -930,12 +931,13 @@ PRINT('HECHO')
 --ItemFactura--
 PRINT('MIGRANDO ItemFactura') 
 GO
-insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad)
-select DISTINCT Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad, u.ubicacion_id
+insert into [SQLEADOS].ItemFactura(item_factura_nro, item_factura_monto, item_factura_descripcion, item_factura_cantidad, item_factura_ubicacion)
+select DISTINCT Factura_Nro, Item_Factura_Monto, Item_Factura_Descripcion, Item_Factura_Cantidad, x.ubiXpubli_ID
 	from gd_esquema.Maestra m
 	join SQLeados.ubicacionXpublicacion x on m.Espectaculo_Cod = x.ubiXpubli_Publicacion 
 	join SQLeados.Ubicacion u on u.ubicacion_asiento = m.Ubicacion_Asiento and m.Ubicacion_Fila = u.ubicacion_fila and m.Ubicacion_Sin_numerar = u.Ubicacion_Sin_numerar
 	and m.Ubicacion_Tipo_Codigo = u.ubicacion_Tipo_codigo and u.ubicacion_Tipo_Descripcion = m.Ubicacion_Tipo_Descripcion 
+	JOIN SQLEADOS.ubicacionesXPublicidadComprada uxp ON uxp.ubxpcom_ubicacionXPublicidad = x.ubiXpubli_ID 
 	where (m.Compra_Fecha is not null) and (m.Factura_Fecha is not null) and x.ubiXpubli_Ubicacion = u.ubicacion_id 
 	AND Factura_Nro is not null 
 	--AND up.ubiXpubli_Publicacion = m.Espectaculo_Cod
@@ -2002,16 +2004,115 @@ WHERE usuario_Id <= 2 OR usuario_Id = 85
 
 print('ACTUALIZACIÓN PARA PRUEBA HECHA')
 
-/*
+
+
+(
+SELECT 
+	publicacion_codigo as 'ID', 
+	publicacion_descripcion as 'Nombre espectáculo', 
+	publicacion_fecha as 'Fecha' 
+	FROM SQLEADOS.Publicacion 
+	JOIN SQLEADOS.Empresa 
+		ON publicacion_usuario_responsable = empresa_usuario 
+	WHERE empresa_razon_social LIKE '" + empresa + "' 
+		AND publicacion_estado LIKE 'Finalizada' 
+		AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)
+		)
+		UNION ALL
+		(
+SELECT 
+	publicacion_codigo as 'ID', 
+	publicacion_descripcion as 'Nombre espectáculo', 
+	publicacion_fecha as 'Fecha' 
+	FROM SQLEADOS.Publicacion 
+	JOIN SQLEADOS.Empresa 
+		ON publicacion_usuario_responsable = empresa_usuario
+	JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_Publicacion = publicacion_codigo
+	WHERE empresa_razon_social LIKE '" + empresa + "' 
+		AND publicacion_estado LIKE 'Finalizada' 
+		AND publicacion_codigo IN (SELECT factura_publicacion FROM SQLEADOS.Factura)
+		AND u.ubiXpubli_ID NOT IN (SELECT i.item_factura_ubicacion FROM SQLEADOS.ItemFactura i JOIN SQLEADOS.Factura f ON f.factura_nro = i.item_factura_nro)
+)
+
 SELECT * FROM SQLEADOS.Usuario ORDER BY usuario_Id
 
+SELECT * FROM SQLEADOS.Publicacion order by publicacion_codigo desc
 
+SELECT DISTINCT COUNT(*) as 'ID' FROM [SQLEADOS].Publicacion p  
+JOIN [SQLEADOS].ubicacionXpublicacion  up ON up.ubiXpubli_Publicacion = p.publicacion_codigo 
+JOIN [SQLEADOS].Rubro r on r.rubro_id = p.publicacion_rubro 
+JOIN [SQLEADOS].Ubicacion u ON u.ubicacion_id = up.ubiXpubli_Ubicacion 
+JOIN [SQLEADOS].GradoPrioridad g ON g.grado_id = p.publicacion_grado  
+WHERE p.publicacion_estado LIKE 'Publicada' AND p.publicacion_descripcion LIKE '%AQUAMAN%'  AND ( )  AND publicacion_fecha_venc BETWEEN '2018-12-20' AND '2022/12/19 23:59:00.000'  
+
+AND ubiXpubli_ID NOT IN (SELECT x.ubxpcom_ubicacionXPublicidad FROM SQLEADOS.ubicacionesXPublicidadComprada x
 
 SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 85
 SELECT * FROM SQLEADOS.Usuario WHERE usuario_Id = 2
 
-	*/
 
+SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo', publicacion_fecha as 'Fecha' FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '" + empresa + "' AND publicacion_estado LIKE 'Finalizad%' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura)
+
+UNION ALL 
+(
+SELECT publicacion_codigo as 'ID', publicacion_descripcion as 'Nombre espectáculo',
+ publicacion_fecha as 'Fecha' 
+ FROM SQLEADOS.Publicacion 
+ JOIN SQLEADOS.Empresa 
+ ON publicacion_usuario_responsable = empresa_usuario 
+ JOIN SQLEADOS.ubicacionXpublicacion u 
+ ON u.ubiXpubli_Publicacion = publicacion_codigo 
+ WHERE empresa_razon_social LIKE 'Razon Social Nº:10' AND publicacion_estado LIKE 'Finalizad%' 
+ AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura) AND u.ubiXpubli_ID NOT IN (SELECT i.item_factura_ubicacion FROM SQLEADOS.ItemFactura i JOIN SQLEADOS.Factura f ON f.factura_nro = i.item_factura_nro)
+
+
+ SELECT * FROM  SQLEADOS.Publicacion p 
+	JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario
+	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo
+	WHERE empresa_razon_social LIKE 'Razon Social Nº:10' 
+		AND publicacion_estado LIKE 'Finalizad%'
+		AND (
+			publicacion_codigo NOT IN (Select factura_publicacion FROM SQLEADOS.Factura)
+			OR (
+				publicacion_codigo IN (Select factura_publicacion FROM SQLEADOS.Factura 
+						JOIN SQLEADOS.ItemFactura i ON i.item_factura_nro = factura_nro
+						AND i.item_factura_ubicacion != ub.ubiXpubli_ID
+						)
+						))
+
+SELECT * FROM  SQLEADOS.Publicacion p 
+	JOIN SQLEADOS.Empresa E on p.publicacion_usuario_responsable = e.empresa_usuario
+	JOIN SQLEADOS.ubicacionXpublicacion ub ON ub.ubiXpubli_Publicacion = publicacion_codigo
+	WHERE empresa_razon_social LIKE 'Razon Social Nº:10' 
+		AND publicacion_estado LIKE 'Finalizad%'
+		AND publicacion_codigo IN (Select factura_publicacion FROM SQLEADOS.Factura 
+						JOIN SQLEADOS.ItemFactura i ON i.item_factura_nro = factura_nro
+						AND i.item_factura_ubicacion != ub.ubiXpubli_ID
+						)
+
+SELECT ubiXpubli_ID, p.publicacion_descripcion
+	FROM SQLEADOS.ubicacionesXPublicidadComprada 
+	JOIN SQLEADOS.ubicacionXpublicacion u ON u.ubiXpubli_ID = ubxpcom_ubicacionXPublicidad
+	JOIN SQLEADOS.Publicacion p ON publicacion_codigo = u.ubiXpubli_Publicacion
+	JOIN SQLEADOS.Empresa e ON e.empresa_usuario = p.publicacion_usuario_responsable
+		WHERE empresa_razon_social LIKE 'Razon Social Nº:10' 
+		ORDER BY ubiXpubli_ID desc
+
+						
+
+
+
+
+
+	JOIN SQLEADOS.Publicacion p ON p.publicacion_usuario_responsable = e.empresa_usuario
+		WHERE p.publicacion_codigo != f.factura_publicacion
+
+SELECT publicacion_descripcion FROM SQLEADOS.Publicacion p JOIN SQLEADOS.Empresa ON empresa_usuario = publicacion_usuario_responsable
+	WHERE empresa_razon_social LIKE 'Razon Social Nº:10' AND publicacion_fecha_venc > GETDATE()
+
+ SELECT empresa_razon_social FROM SQLEADOS.Empresa WHERE empresa_usuario = 2
+ SELECT COUNT(*) FROM SQLEADOS.Publicacion JOIN SQLEADOS.Empresa ON publicacion_usuario_responsable = empresa_usuario WHERE empresa_razon_social LIKE '"Razon Social Nº:10"' AND publicacion_codigo NOT IN (SELECT factura_publicacion FROM SQLEADOS.Factura) AND publicacion_estado LIKE 'Finalizad%'
+ SELECT * FROM SQLEADOS.Publicacion WHERE publicacion_usuario_responsable = 2 ORDER BY publicacion_codigo DESC
 /*
 SELECT TOP 1 punt_id ,punt_puntaje FROM SQLEADOS.puntaje
 	JOIN SQLEADOS.Cliente c ON c.cliente_numero_documento = punt_cliente_numero_documento

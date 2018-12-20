@@ -65,7 +65,7 @@ namespace PalcoNet.Generar_Publicacion
 
         private void AltaPublicacion_Load(object sender, EventArgs e)
         {
-
+            
             textBoxUsuario.Text = Convert.ToString(Usuario.ID);
             textBoxCodigo.Text = GenerarPublicacion.obtenerCodigoPublicacion();
             GenerarPublicacion.llenarComboRubro(comboBoxRubro);

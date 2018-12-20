@@ -251,6 +251,7 @@ namespace PalcoNet.Comprar
             queryExcluyente += cargarJoins();
             queryExcluyente += comandoWhere()+ ") ";
             queryPrincipal += queryExcluyente;
+            queryPrincipal += " " + ordenamiento();
             return queryPrincipal;
         }
 
@@ -299,11 +300,11 @@ namespace PalcoNet.Comprar
                 //SE DEBE COMPRAR CON ANTICIPACIÓN 1 DÍA ANTES DE LA FUNCIÓN
 
 
-                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date.AddDays(1)) + "' AND '" + dateTimePicker2.Value.ToString("yyyyMMdd") + "23:59:00.000" +"' ";
+                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date.AddDays(1)) + "' AND '" + dateTimePicker2.Value.ToString("yyyy/MM/dd") + " 23:59:00.000" +"' ";
             }
             else
             {
-                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date) + "' AND '" + extraerFechaSinHora(dateTimePicker2.Value.Date) + "' ";
+                where += " AND publicacion_fecha_venc BETWEEN '" + extraerFechaSinHora(dateTimePicker1.Value.Date) + "' AND '" +  dateTimePicker2.Value.ToString("yyyy/MM/dd") + " 23:59:00.000"+ "' ";
             }
 
             where += " AND ubiXpubli_ID NOT IN (SELECT x.ubxpcom_ubicacionXPublicidad FROM SQLEADOS.ubicacionesXPublicidadComprada x)";

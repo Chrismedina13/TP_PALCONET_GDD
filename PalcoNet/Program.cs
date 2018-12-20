@@ -25,52 +25,12 @@ namespace PalcoNet
         [STAThread]
         static void Main()
         {
-            int usuario = 291;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-
-        //    Application.Run(new EditarPublicacion(11));
-            /*
-            DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
-            Application.Run(dac);
-            DBConsulta.conexionCerrar();
-            */
-
-      //      Application.Run(new GradoPublicacion(11));
-            
-     //       DateTime dt = DateTime.ParseExact("25/12/2018", "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-     //       ComprarPrincipal dac = new ComprarPrincipal(usuario, null, null, DateTime.Today, dt);
-     //       Application.Run(dac);
-     //       DBConsulta.conexionCerrar();
-         //   Application.Run(new Inicio());
-            //Application.Run(new LOGIN());
-    //        Historial hs = new Historial(usuario);
-    //        Application.Run(hs);
-        //    Historial hs = new Historial(usuario);
-        //    Application.Run(hs);
-     //       Application.Run(new ABMCliente(usuario));
-     //      Application.Run(new tablaPaginada());
-      //     Application.Run(new ABMEmpresa(usuario));
-
-        //    Application.Run(new ABMCliente(usuario));
-  //         Application.Run(new canjePuntos(usuario));
-
 
             // ESTE ES EL QUE DA INICIO
 
             Application.Run(new Inicio());
-
-            //Application.Run(new Form1());
-
-          //  Application.Run(new ListadoEstadistico());
-
- //           Application.Run(new AltaPublicacion(new Explorador(new Inicio())));
-
-            
-
-
         }
     }
 }
