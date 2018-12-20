@@ -720,14 +720,14 @@ namespace PalcoNet.Support
     {
         internal static void cargarGriddLocalidadesNoVendidas(DataGridView dataGridView1, Trimestre trimestre, decimal p)
         {
-            SqlCommand command = new SqlCommand("");
+            SqlCommand command = new SqlCommand("select top 5 e.empresa_razon_social,e.empresa_cuit,count(u.ubiXpubli_ID) -(select count(uxc.ubxpcomp_id) from SQLEADOS.ubicacionesXPublicidadComprada uxc,SQLEADOS.ubicacionXpublicacion uxp,SQLEADOS.Publicacion pu,SQLEADOS.Compra com2 where pu.publicacion_usuario_responsable = p.publicacion_usuario_responsable and pu.publicacion_codigo = uxp.ubiXpubli_Publicacion and uxc.ubxpcom_ubicacionXPublicidad = uxp.ubiXpubli_ID and com2.compra_ubiXpubli = uxp.ubiXpubli_ID and com2.compra_fecha > @inicioFecha AND com2.compra_fecha < @finFecha) as Cantidad_no_vendida from SQLEADOS.Empresa e left join SQLEADOS.Publicacion p on e.empresa_usuario = p.publicacion_usuario_responsable left join SQLEADOS.ubicacionXpublicacion u on u.ubiXpubli_Publicacion = p.publicacion_codigo left join SQLEADOS.Compra com on com.compra_ubiXpubli = u.ubiXpubli_ID where com.compra_fecha > @inicioFecha AND com.compra_fecha < @finFecha group by e.empresa_usuario,e.empresa_razon_social,e.empresa_cuit,p.publicacion_usuario_responsable order by count(u.ubiXpubli_ID) -( select count(uxc.ubxpcomp_id) from SQLEADOS.ubicacionesXPublicidadComprada uxc,SQLEADOS.ubicacionXpublicacion uxp,SQLEADOS.Publicacion pu,SQLEADOS.Compra com2 where pu.publicacion_usuario_responsable = p.publicacion_usuario_responsable and pu.publicacion_codigo = uxp.ubiXpubli_Publicacion and uxc.ubxpcom_ubicacionXPublicidad = uxp.ubiXpubli_ID and com2.compra_ubiXpubli = uxp.ubiXpubli_ID and com2.compra_fecha > @inicioFecha AND com2.compra_fecha < @finFecha) desc");
             obtenerEstadistica(dataGridView1, trimestre, p, command);
 
         }
 
         internal static void cargarGriddClientesMasPuntosVencidos(DataGridView dataGridView1, Trimestre trimestre, decimal p)
         {
-            SqlCommand command = new SqlCommand("select cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento,sum(punt_puntaje) from SQLEADOS.puntaje,SQLEADOS.Cliente where punt_fecha_vencimiento < GETDATE() and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and punt_fecha_vencimiento > @inicioFecha AND punt_fecha_vencimiento < @finFecha group by cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento order by sum(punt_puntaje) desc");
+            SqlCommand command = new SqlCommand("select top 5 cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento,sum(punt_puntaje) from SQLEADOS.puntaje,SQLEADOS.Cliente where punt_fecha_vencimiento < GETDATE() and punt_cliente_numero_documento = cliente_numero_documento and cliente_tipo_documento = punt_cliente_tipo_documento and punt_fecha_vencimiento > @inicioFecha AND punt_fecha_vencimiento < @finFecha group by cliente_apellido,cliente_nombre,cliente_tipo_documento,cliente_numero_documento order by sum(punt_puntaje) desc");
             obtenerEstadistica(dataGridView1, trimestre, p, command);
         }
 
