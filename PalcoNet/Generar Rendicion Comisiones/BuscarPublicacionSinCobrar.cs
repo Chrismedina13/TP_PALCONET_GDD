@@ -33,7 +33,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
 
         private void cargarGrilla() 
         {
-            DataGridViewColumn column1 = dataGridView1.Columns[2];
+            DataGridViewColumn column1 = dataGridView1.Columns[1];
             column1.Width = 250;
         }
 

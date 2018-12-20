@@ -61,6 +61,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Fecha_De_Espectaculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUbicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -252,7 +253,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(464, 344);
+            this.label9.Location = new System.Drawing.Point(445, 344);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(142, 13);
             this.label9.TabIndex = 21;
@@ -260,7 +261,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(658, 314);
+            this.button2.Location = new System.Drawing.Point(448, 304);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 37);
             this.button2.TabIndex = 22;
@@ -370,11 +371,23 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label12.Location = new System.Drawing.Point(588, 316);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(371, 41);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "*Debe poner un precio antes de generar la publicación.\r\n*Para poner un precio deb" +
+    "e mover la barra de las ubicaciones seleccionadas\r\n* hacia la derecha";
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 519);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label10);
@@ -451,5 +464,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DateTimePicker dateTimePickerGeneracionMasiva;
         private System.Windows.Forms.Button buttonHorario;
+        private System.Windows.Forms.Label label12;
     }
 }

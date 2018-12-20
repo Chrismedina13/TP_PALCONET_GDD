@@ -50,14 +50,14 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(929, 275);
+            this.dataGridView1.Size = new System.Drawing.Size(1066, 275);
             this.dataGridView1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(821, 324);
+            this.button1.Location = new System.Drawing.Point(956, 324);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 23);
             this.button1.TabIndex = 17;
@@ -77,7 +77,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(681, 324);
+            this.button2.Location = new System.Drawing.Point(828, 324);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(122, 23);
             this.button2.TabIndex = 19;
@@ -109,7 +109,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(553, 324);
+            this.button4.Location = new System.Drawing.Point(700, 324);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(122, 23);
             this.button4.TabIndex = 39;
@@ -121,7 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(953, 352);
+            this.ClientSize = new System.Drawing.Size(1090, 352);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.labelImporte);
             this.Controls.Add(this.label1);
